@@ -1,3 +1,1 @@
 # burakkarakaya.github.io
-
-test
