@@ -125,5 +125,99 @@
                 "discount": "20"
             }
         ]
+    },
+    {
+        "type": "inspire",
+        "prop": [
+            {
+                "src": "https://service.paximum.com/media/images/product/2/1/0/2/2/102335;1;jpg/anemon_izmir.jpg?width=480",
+                "title": "3 days family trip to Ephesus",
+                "price": 462,
+                "destination": "IZMIR, TURKEY"
+            },
+            {
+                "src": "https://service.paximum.com/media/images/product/2/1/0/2/2/102812;1;jpg/karaca_otel.jpg?width=480",
+                "title": "2 days London bars with friends",
+                "price": 653,
+                "destination": "IZMIR, TURKEY"
+            },
+            {
+                "src": "https://service.paximum.com/media/images/product/2/1/0/2/2/102926;1;jpg/swissôtel_buyuk_efes.jpg?width=480",
+                "title": "3 days family trip to Ephesus",
+                "price": 1.038,
+                "destination": "IZMIR, TURKEY"
+            },
+            {
+                "src": "https://service.paximum.com/media/images/product/2/1/0/2/2/103997;1;jpg/kanuni_kervansaray_historical_hotel.jpg?width=480",
+                "title": "3 days family trip to Ephesus",
+                "price": 5.053,
+                "destination": "IZMIR, TURKEY"
+            },
+            {
+                "src": "https://service.paximum.com/media/images/product/2/1/0/2/2/103718;2;jpg/marlight_boutique.jpg?width=480",
+                "title": "2 days London bars with friends",
+                "price": 79.47,
+                "destination": "IZMIR, TURKEY"
+            },
+            {
+                "src": "https://service.paximum.com/media/images/product/2/1/0/2/2/102928;1;jpg/movenpick_hotel_izmir.jpg?width=480",
+                "title": "3 days family trip to Ephesus",
+                "price": 1.588,
+                "destination": "IZMIR, TURKEY"
+            },
+            {
+                "src": "https://service.paximum.com/media/images/product/2/1/0/2/2/103361;1;jpg/oglakcioglu_park_boutique_hotel.jpg?width=480",
+                "title": "3 days family trip to Ephesus",
+                "price": 317,
+                "destination": "IZMIR, TURKEY"
+            },
+            {
+                "src": "https://service.paximum.com/media/images/product/2/1/0/2/2/105298;1;jpg/ibis_izmir_alsancak_oteli.jpg?width=480",
+                "title": "3 days family trip to Ephesus",
+                "price": 552,
+                "destination": "IZMIR, TURKEY"
+            }
+        ]
+    },
+    {
+        "type": "whereToStay",
+        "prop": [
+            {
+                "src": "https://service.paximum.com/media/images/product/2/1/0/2/2/100122;1;jpg/limak_lara_deluxe_hotel___resort.jpg?width=480",
+                "title": "Limak Lara Deluxe Hotel & Resort ",
+                "price": 1.378,
+                "destination": "ANTALYA"
+            },
+            {
+                "src": "https://service.paximum.com/media/images/product/2/1/0/2/2/100896;2;jpg/papillon_ayscha_hotel.jpg?width=480",
+                "title": "Papillon Ayscha Hotel ",
+                "price": 16.309,
+                "destination": "ANTALYA"
+            },
+            {
+                "src": "https://service.paximum.com/media/images/product/2/1/0/2/2/102020;1;jpg/limak_atlantis_de_luxe_hotel___resort.jpg?width=480",
+                "title": "Limak Atlantis de Luxe Hotel & Resort ",
+                "price": 1.226,
+                "destination": "ANTALYA"
+            },
+            {
+                "src": "https://service.paximum.com/media/images/product/2/1/0/2/2/100023;1;jpg/limak_arcadia_sport_resort_hotel.jpg?width=480",
+                "title": "Limak Arcadia Sport Resort Hotel ",
+                "price": 1.151,
+                "destination": "ANTALYA"
+            },
+            {
+                "src": "https://service.paximum.com/media/images/product/2/1/0/2/2/101012;2;jpg/barut_hemera.jpg?width=480",
+                "title": "Barut Hemera ",
+                "price": 1.743,
+                "destination": "ANTALYA"
+            },
+            {
+                "src": "https://service.paximum.com/media/images/product/2/1/0/2/2/101025;17;jpg/lara_barut_collection.jpg?width=480",
+                "title": "Lara Barut Collection ",
+                "price": 2.193,
+                "destination": "ANTALYA"
+            }
+        ]
     }
 ]
