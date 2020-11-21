@@ -1,0 +1,129 @@
+[
+    {
+        "type": "popularDestinations",
+        "prop": [
+            {
+                "src": "https://www.shallwego.com/Upload/HomeCountry/turkey.jpg",
+                "title": "İstanbul",
+                "subtitle": "Turkey"
+            },
+            {
+                "src": "https://www.shallwego.com/Upload/HomeCountry/us.jpg",
+                "title": "Washington, DC",
+                "subtitle": "USA"
+            },
+            {
+                "src": "https://www.shallwego.com/Upload/HomeCountry/ukraine.jpg",
+                "title": "Kiev",
+                "subtitle": "Ukrain"
+            },
+            {
+                "src": "https://www.shallwego.com/Upload/HomeCountry/france.jpg",
+                "title": "Paris",
+                "subtitle": "France"
+            },
+            {
+                "src": "https://www.shallwego.com/Upload/HomeCountry/india.jpg",
+                "title": "Yeni Delhi",
+                "subtitle": "India"
+            },
+            {
+                "src": "https://www.shallwego.com/Upload/HomeCountry/uk.jpg",
+                "title": "Londra",
+                "subtitle": ""
+            },
+            {
+                "src": "https://www.shallwego.com/Upload/HomeCountry/germany.jpg",
+                "title": "Berlin",
+                "subtitle": "England"
+            },
+            {
+                "src": "https://www.shallwego.com/Upload/HomeCountry/greece.jpg",
+                "title": "Atina",
+                "subtitle": "Greece"
+            },
+            {
+                "src": "https://www.shallwego.com/Upload/HomeCountry/italy.jpg",
+                "title": "Roma",
+                "subtitle": "Italy"
+            }
+        ]
+    },
+    {
+        "type": "specialOffers",
+        "prop": [
+            {
+                "src": "https://service.paximum.com/media/images/product/2/1/0/2/2/104267;1;jpg/tempo_caglayan.jpg?width=480",
+                "title": "Tempo Caglayan ",
+                "subtitle": "2 rooms left",
+                "salesPrice": "$428",
+                "price": "$589",
+                "destination": "ISTANBUL",
+                "discount": "20"
+            },
+            {
+                "src": "https://service.paximum.com/media/images/product/2/1/0/2/2/106435;1;jpg/the_sultans_royal.jpg?width=480",
+                "title": "The Sultans Royal ",
+                "subtitle": "2 rooms left",
+                "salesPrice": "$428",
+                "price": "$589",
+                "destination": "ISTANBUL",
+                "discount": "20"
+            },
+            {
+                "src": "https://service.paximum.com/media/images/product/2/1/0/2/2/104134;1;jpg/rose_garden_suites.jpg?width=480",
+                "title": "Rose Garden Suites ",
+                "subtitle": "Special Offer",
+                "salesPrice": "$428",
+                "price": "$589",
+                "destination": "ISTANBUL",
+                "discount": "20"
+            },
+            {
+                "src": "https://service.paximum.com/media/images/product/2/1/0/2/2/102749;2;jpg/sumahan_on_the_water.jpg?width=480",
+                "title": "Sumahan On The Water ",
+                "subtitle": "2 rooms left",
+                "salesPrice": "$428",
+                "price": "$589",
+                "destination": "ISTANBUL",
+                "discount": "20"
+            },
+            {
+                "src": "https://service.paximum.com/media/images/product/2/1/0/2/2/104695;1;jpg/peradays.jpg?width=480",
+                "title": "Peradays ",
+                "subtitle": "Special Offer",
+                "salesPrice": "$428",
+                "price": "$589",
+                "destination": "ISTANBUL",
+                "discount": "20"
+            },
+            {
+                "src": "https://service.paximum.com/media/images/product/2/1/0/2/2/102602;1;jpg/divan_istanbul_city.jpg?width=480",
+                "title": "Divan Istanbul City ",
+                "subtitle": "5 rooms left",
+                "salesPrice": "$428",
+                "price": "$589",
+                "destination": "ISTANBUL",
+                "discount": "20"
+            },
+            {
+                "src": "https://service.paximum.com/media/images/product/2/1/0/2/2/105916;1;jpg/sari_konak.jpg?width=480",
+                "title": "Sari Konak ",
+                "subtitle": "Special Offer",
+                "salesPrice": "$428",
+                "price": "$589",
+                "destination": "ISTANBUL",
+                "discount": "20"
+            },
+            {
+                "src": "https://service.paximum.com/media/images/product/2/1/0/2/2/102462;985598f10a8594a3901cc4d850bcfd1b;jpg/valide_sultan_konagi.jpg?width=480",
+                "title": "Valide Sultan Konagi ",
+                "subtitle": "2 rooms left",
+                "salesPrice": "$428",
+                "price": "$589",
+                "destination": "ISTANBUL",
+                "discount": "20"
+            }
+        ]
+    }
+]
