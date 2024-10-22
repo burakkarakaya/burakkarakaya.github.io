@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta charset="utf-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+		<title>SVG CSS sprite preview | svg-sprite</title>
+		<style>@charset "UTF-8";body{padding:0;margin:0;color:#666;background:#fafafa;font-family:Arial,Helvetica,sans-serif;font-size:1em;line-height:1.4}header{display:block;padding:3em 3em 2em 3em;background-color:#fff}header p{margin:2em 0 0 0}section{border-top:1px solid #eee;padding:2em 3em 0 3em}section ul{margin:0;padding:0}section li{display:inline;display:inline-block;background-color:#fff;position:relative;margin:0 2em 2em 0;vertical-align:top;border:1px solid #ccc;padding:1em 1em 3em 1em;cursor:default}.icon-box{margin:0;width:144px;height:144px;position:relative;background:#ccc url("data:image/gif;base64,R0lGODlhDAAMAIAAAMzMzP///yH/C1hNUCBEYXRhWE1QPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS4wLWMwNjEgNjQuMTQwOTQ5LCAyMDEwLzEyLzA3LTEwOjU3OjAxICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1LjEgV2luZG93cyIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozQjk4OTI0MUY5NTIxMUUyQkJDMEI5NEFEM0Y1QTYwQyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozQjk4OTI0MkY5NTIxMUUyQkJDMEI5NEFEM0Y1QTYwQyI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjNCOTg5MjNGRjk1MjExRTJCQkMwQjk0QUQzRjVBNjBDIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjNCOTg5MjQwRjk1MjExRTJCQkMwQjk0QUQzRjVBNjBDIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+Af/+/fz7+vn49/b19PPy8fDv7u3s6+rp6Ofm5eTj4uHg397d3Nva2djX1tXU09LR0M/OzczLysnIx8bFxMPCwcC/vr28u7q5uLe2tbSzsrGwr66trKuqqainpqWko6KhoJ+enZybmpmYl5aVlJOSkZCPjo2Mi4qJiIeGhYSDgoGAf359fHt6eXh3dnV0c3JxcG9ubWxramloZ2ZlZGNiYWBfXl1cW1pZWFdWVVRTUlFQT05NTEtKSUhHRkVEQ0JBQD8+PTw7Ojk4NzY1NDMyMTAvLi0sKyopKCcmJSQjIiEgHx4dHBsaGRgXFhUUExIREA8ODQwLCgkIBwYFBAMCAQAAIfkEAAAAAAAsAAAAAAwADAAAAhaEH6mHmmzcgzJAUG/NVGrfOZ8YLlABADs=") top left repeat;border:1px solid #ccc;display:table-cell;vertical-align:middle;text-align:center}.icon{display:inline;display:inline-block}h1{margin-top:0}h2{margin:0;padding:0;font-size:1em;font-weight:normal;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;position:absolute;left:1em;right:1em;bottom:1em}footer{display:block;margin:0;padding:0 3em 3em 3em}footer p{margin:0;font-size:.7em}footer a{color:#0f7595;margin-left:0}</style>
+		<style>i{text-indent:200%;white-space:nowrap;overflow:hidden;display:inline-block;background-size:68px 1246px!important}</style>
+
+<!--
+
+Sprite CSS
+====================================================================================================
+This is an all-in-one inline version of the CSS necessary to use the SVG sprite.
+
+-->
+
+<style type="text/css">
+.svg-arrow-b {
+	background: url("sprite-bg.svg") 0 0 no-repeat;
+	width: 32px;
+	height: 32px;
+}
+.svg-arrow-b-w {
+	background: url("sprite-bg.svg") 0 2.6359143327841843% no-repeat;
+	width: 32px;
+	height: 32px;
+}
+.svg-arrow-d-sm {
+	background: url("sprite-bg.svg") 0 5.157168746590426% no-repeat;
+	width: 9.018px;
+	height: 5.009px;
+}
+.svg-arrow2-r {
+	background: url("sprite-bg.svg") 0 5.766062602965404% no-repeat;
+	width: 32px;
+	height: 32px;
+}
+.svg-arrow2-r-w {
+	background: url("sprite-bg.svg") 0 8.401976935749587% no-repeat;
+	width: 32px;
+	height: 32px;
+}
+.svg-bubble-qm {
+	background: url("sprite-bg.svg") 0 11.037891268533773% no-repeat;
+	width: 32px;
+	height: 32px;
+}
+.svg-check {
+	background: url("sprite-bg.svg") 0 13.539967373572594% no-repeat;
+	width: 20px;
+	height: 20px;
+}
+.svg-check-full {
+	background: url("sprite-bg.svg") 0 15.171288743882545% no-repeat;
+	width: 20px;
+	height: 20px;
+}
+.svg-check-sm-gray {
+	background: url("sprite-bg.svg") 0 16.666666666666668% no-repeat;
+	width: 10px;
+	height: 10px;
+}
+.svg-cocoen {
+	background: url("sprite-bg.svg") 0 18.305084745762713% no-repeat;
+	width: 66px;
+	height: 66px;
+}
+.svg-compare {
+	background: url("sprite-bg.svg") 0 23.228995057660626% no-repeat;
+	width: 32px;
+	height: 32px;
+}
+.svg-completed {
+	background: url("sprite-bg.svg") 0 25.86490939044481% no-repeat;
+	width: 32px;
+	height: 32px;
+}
+.svg-delete {
+	background: url("sprite-bg.svg") 0 28.500823723228994% no-repeat;
+	width: 32px;
+	height: 32px;
+}
+.svg-download {
+	background: url("sprite-bg.svg") 0 31.13673805601318% no-repeat;
+	width: 32px;
+	height: 32px;
+}
+.svg-fav {
+	background: url("sprite-bg.svg") 0 33.77265238879736% no-repeat;
+	width: 32px;
+	height: 32px;
+}
+.svg-favh {
+	background: url("sprite-bg.svg") 0 36.40856672158155% no-repeat;
+	width: 32px;
+	height: 32px;
+}
+.svg-gift {
+	background: url("sprite-bg.svg") 0 39.04448105436573% no-repeat;
+	width: 32px;
+	height: 32px;
+}
+.svg-input-error {
+	background: url("sprite-bg.svg") 0 41.680395387149915% no-repeat;
+	width: 32px;
+	height: 32px;
+}
+.svg-minus {
+	background: url("sprite-bg.svg") 0 44.316309719934104% no-repeat;
+	width: 32px;
+	height: 32px;
+}
+.svg-more {
+	background: url("sprite-bg.svg") 0 46.952224052718286% no-repeat;
+	width: 32px;
+	height: 32px;
+}
+.svg-plus {
+	background: url("sprite-bg.svg") 0 49.58813838550247% no-repeat;
+	width: 32px;
+	height: 32px;
+}
+.svg-plus-c {
+	background: url("sprite-bg.svg") 0 52.22405271828666% no-repeat;
+	width: 32px;
+	height: 32px;
+}
+.svg-radio {
+	background: url("sprite-bg.svg") 0 54.85996705107084% no-repeat;
+	width: 32px;
+	height: 32px;
+}
+.svg-radio-full {
+	background: url("sprite-bg.svg") 0 57.49588138385502% no-repeat;
+	width: 32px;
+	height: 32px;
+}
+.svg-remove {
+	background: url("sprite-bg.svg") 0 60.13179571663921% no-repeat;
+	width: 36px;
+	height: 32px;
+}
+.svg-remove-w {
+	background: url("sprite-bg.svg") 0 62.76771004942339% no-repeat;
+	width: 32px;
+	height: 32px;
+}
+.svg-star {
+	background: url("sprite-bg.svg") 0 64.97545008183306% no-repeat;
+	width: 24px;
+	height: 24px;
+}
+.svg-star-full {
+	background: url("sprite-bg.svg") 0 66.93944353518822% no-repeat;
+	width: 24px;
+	height: 24px;
+}
+.svg-stars-alt-empty {
+	background: url("sprite-bg.svg") 0 69.35749588138385% no-repeat;
+	width: 68px;
+	height: 32px;
+}
+.svg-stars-alt-full {
+	background: url("sprite-bg.svg") 0 71.99341021416804% no-repeat;
+	width: 68px;
+	height: 32px;
+}
+.svg-stars-empty {
+	background: url("sprite-bg.svg") 0 74.62932454695222% no-repeat;
+	width: 68px;
+	height: 32px;
+}
+.svg-stars-full {
+	background: url("sprite-bg.svg") 0 77.26523887973642% no-repeat;
+	width: 68px;
+	height: 32px;
+}
+.svg-success {
+	background: url("sprite-bg.svg") 0 79.9011532125206% no-repeat;
+	width: 32px;
+	height: 32px;
+}
+.svg-swipe {
+	background: url("sprite-bg.svg") 0 82.53706754530478% no-repeat;
+	width: 32px;
+	height: 32px;
+}
+.svg-swiper-next {
+	background: url("sprite-bg.svg") 0 85.17298187808896% no-repeat;
+	width: 32px;
+	height: 32px;
+}
+.svg-swiper-next-dark {
+	background: url("sprite-bg.svg") 0 87.80889621087314% no-repeat;
+	width: 32px;
+	height: 32px;
+}
+.svg-switch-success {
+	background: url("sprite-bg.svg") 0 89.55954323001632% no-repeat;
+	width: 21px;
+	height: 20px;
+}
+.svg-video {
+	background: url("sprite-bg.svg") 0 94.585448392555% no-repeat;
+	width: 64px;
+	height: 64px;
+}
+.svg-video-type {
+	background: url("sprite-bg.svg") 0 97.36408566721582% no-repeat;
+	width: 32px;
+	height: 32px;
+}
+.svg-video-type-dark {
+	background: url("sprite-bg.svg") 0 100% no-repeat;
+	width: 32px;
+	height: 32px;
+}
+</style>
+
+<!--
+====================================================================================================
+-->
+
+	</head>
+	<body>
+		<header>
+			<h1>SVG CSS sprite preview</h1>
+			<p>This preview features the generated SVG file as a conventional CSS sprite. The shapes are displayed as background images of several <code>&lt;i&gt;</code> elements.</p>
+		</header>
+		<section>
+
+<!--
+
+Conventional CSS sprite
+====================================================================================================
+This technique uses CSS classes to display portions of the sprite as background image of
+appropriately sized elements.
+
+-->
+
+			<ul>
+				<li title="arrow-b">
+					<div class="icon-box">
+
+						<!-- arrow-b -->
+						<i class="svg-arrow-b">arrow-b</i>
+
+					</div>
+					<h2>arrow-b</h2>
+				</li>
+				<li title="arrow-b-w">
+					<div class="icon-box">
+
+						<!-- arrow-b-w -->
+						<i class="svg-arrow-b-w">arrow-b-w</i>
+
+					</div>
+					<h2>arrow-b-w</h2>
+				</li>
+				<li title="arrow-d-sm">
+					<div class="icon-box">
+
+						<!-- arrow-d-sm -->
+						<i class="svg-arrow-d-sm">arrow-d-sm</i>
+
+					</div>
+					<h2>arrow-d-sm</h2>
+				</li>
+				<li title="arrow2-r">
+					<div class="icon-box">
+
+						<!-- arrow2-r -->
+						<i class="svg-arrow2-r">arrow2-r</i>
+
+					</div>
+					<h2>arrow2-r</h2>
+				</li>
+				<li title="arrow2-r-w">
+					<div class="icon-box">
+
+						<!-- arrow2-r-w -->
+						<i class="svg-arrow2-r-w">arrow2-r-w</i>
+
+					</div>
+					<h2>arrow2-r-w</h2>
+				</li>
+				<li title="bubble-qm">
+					<div class="icon-box">
+
+						<!-- bubble-qm -->
+						<i class="svg-bubble-qm">bubble-qm</i>
+
+					</div>
+					<h2>bubble-qm</h2>
+				</li>
+				<li title="check">
+					<div class="icon-box">
+
+						<!-- check -->
+						<i class="svg-check">check</i>
+
+					</div>
+					<h2>check</h2>
+				</li>
+				<li title="check-full">
+					<div class="icon-box">
+
+						<!-- check-full -->
+						<i class="svg-check-full">check-full</i>
+
+					</div>
+					<h2>check-full</h2>
+				</li>
+				<li title="check-sm-gray">
+					<div class="icon-box">
+
+						<!-- check-sm-gray -->
+						<i class="svg-check-sm-gray">check-sm-gray</i>
+
+					</div>
+					<h2>check-sm-gray</h2>
+				</li>
+				<li title="cocoen">
+					<div class="icon-box">
+
+						<!-- cocoen -->
+						<i class="svg-cocoen">cocoen</i>
+
+					</div>
+					<h2>cocoen</h2>
+				</li>
+				<li title="compare">
+					<div class="icon-box">
+
+						<!-- compare -->
+						<i class="svg-compare">compare</i>
+
+					</div>
+					<h2>compare</h2>
+				</li>
+				<li title="completed">
+					<div class="icon-box">
+
+						<!-- completed -->
+						<i class="svg-completed">completed</i>
+
+					</div>
+					<h2>completed</h2>
+				</li>
+				<li title="delete">
+					<div class="icon-box">
+
+						<!-- delete -->
+						<i class="svg-delete">delete</i>
+
+					</div>
+					<h2>delete</h2>
+				</li>
+				<li title="download">
+					<div class="icon-box">
+
+						<!-- download -->
+						<i class="svg-download">download</i>
+
+					</div>
+					<h2>download</h2>
+				</li>
+				<li title="fav">
+					<div class="icon-box">
+
+						<!-- fav -->
+						<i class="svg-fav">fav</i>
+
+					</div>
+					<h2>fav</h2>
+				</li>
+				<li title="favh">
+					<div class="icon-box">
+
+						<!-- favh -->
+						<i class="svg-favh">favh</i>
+
+					</div>
+					<h2>favh</h2>
+				</li>
+				<li title="gift">
+					<div class="icon-box">
+
+						<!-- gift -->
+						<i class="svg-gift">gift</i>
+
+					</div>
+					<h2>gift</h2>
+				</li>
+				<li title="input-error">
+					<div class="icon-box">
+
+						<!-- input-error -->
+						<i class="svg-input-error">input-error</i>
+
+					</div>
+					<h2>input-error</h2>
+				</li>
+				<li title="minus">
+					<div class="icon-box">
+
+						<!-- minus -->
+						<i class="svg-minus">minus</i>
+
+					</div>
+					<h2>minus</h2>
+				</li>
+				<li title="more">
+					<div class="icon-box">
+
+						<!-- more -->
+						<i class="svg-more">more</i>
+
+					</div>
+					<h2>more</h2>
+				</li>
+				<li title="plus">
+					<div class="icon-box">
+
+						<!-- plus -->
+						<i class="svg-plus">plus</i>
+
+					</div>
+					<h2>plus</h2>
+				</li>
+				<li title="plus-c">
+					<div class="icon-box">
+
+						<!-- plus-c -->
+						<i class="svg-plus-c">plus-c</i>
+
+					</div>
+					<h2>plus-c</h2>
+				</li>
+				<li title="radio">
+					<div class="icon-box">
+
+						<!-- radio -->
+						<i class="svg-radio">radio</i>
+
+					</div>
+					<h2>radio</h2>
+				</li>
+				<li title="radio-full">
+					<div class="icon-box">
+
+						<!-- radio-full -->
+						<i class="svg-radio-full">radio-full</i>
+
+					</div>
+					<h2>radio-full</h2>
+				</li>
+				<li title="remove">
+					<div class="icon-box">
+
+						<!-- remove -->
+						<i class="svg-remove">remove</i>
+
+					</div>
+					<h2>remove</h2>
+				</li>
+				<li title="remove-w">
+					<div class="icon-box">
+
+						<!-- remove-w -->
+						<i class="svg-remove-w">remove-w</i>
+
+					</div>
+					<h2>remove-w</h2>
+				</li>
+				<li title="star">
+					<div class="icon-box">
+
+						<!-- star -->
+						<i class="svg-star">star</i>
+
+					</div>
+					<h2>star</h2>
+				</li>
+				<li title="star-full">
+					<div class="icon-box">
+
+						<!-- star-full -->
+						<i class="svg-star-full">star-full</i>
+
+					</div>
+					<h2>star-full</h2>
+				</li>
+				<li title="stars-alt-empty">
+					<div class="icon-box">
+
+						<!-- stars-alt-empty -->
+						<i class="svg-stars-alt-empty">stars-alt-empty</i>
+
+					</div>
+					<h2>stars-alt-empty</h2>
+				</li>
+				<li title="stars-alt-full">
+					<div class="icon-box">
+
+						<!-- stars-alt-full -->
+						<i class="svg-stars-alt-full">stars-alt-full</i>
+
+					</div>
+					<h2>stars-alt-full</h2>
+				</li>
+				<li title="stars-empty">
+					<div class="icon-box">
+
+						<!-- stars-empty -->
+						<i class="svg-stars-empty">stars-empty</i>
+
+					</div>
+					<h2>stars-empty</h2>
+				</li>
+				<li title="stars-full">
+					<div class="icon-box">
+
+						<!-- stars-full -->
+						<i class="svg-stars-full">stars-full</i>
+
+					</div>
+					<h2>stars-full</h2>
+				</li>
+				<li title="success">
+					<div class="icon-box">
+
+						<!-- success -->
+						<i class="svg-success">success</i>
+
+					</div>
+					<h2>success</h2>
+				</li>
+				<li title="swipe">
+					<div class="icon-box">
+
+						<!-- swipe -->
+						<i class="svg-swipe">swipe</i>
+
+					</div>
+					<h2>swipe</h2>
+				</li>
+				<li title="swiper-next">
+					<div class="icon-box">
+
+						<!-- swiper-next -->
+						<i class="svg-swiper-next">swiper-next</i>
+
+					</div>
+					<h2>swiper-next</h2>
+				</li>
+				<li title="swiper-next-dark">
+					<div class="icon-box">
+
+						<!-- swiper-next-dark -->
+						<i class="svg-swiper-next-dark">swiper-next-dark</i>
+
+					</div>
+					<h2>swiper-next-dark</h2>
+				</li>
+				<li title="switch-success">
+					<div class="icon-box">
+
+						<!-- switch-success -->
+						<i class="svg-switch-success">switch-success</i>
+
+					</div>
+					<h2>switch-success</h2>
+				</li>
+				<li title="video">
+					<div class="icon-box">
+
+						<!-- video -->
+						<i class="svg-video">video</i>
+
+					</div>
+					<h2>video</h2>
+				</li>
+				<li title="video-type">
+					<div class="icon-box">
+
+						<!-- video-type -->
+						<i class="svg-video-type">video-type</i>
+
+					</div>
+					<h2>video-type</h2>
+				</li>
+				<li title="video-type-dark">
+					<div class="icon-box">
+
+						<!-- video-type-dark -->
+						<i class="svg-video-type-dark">video-type-dark</i>
+
+					</div>
+					<h2>video-type-dark</h2>
+				</li>
+			</ul>
+
+<!--
+====================================================================================================
+-->
+
+		</section>
+		<footer>
+			<p>Generated at Mon, 29 Jul 2024 12:44:38 GMT by <a href="https://github.com/svg-sprite/svg-sprite" target="_blank" rel="noopener noreferrer">svg-sprite</a>.</p>
+		</footer>
+	</body>
+</html>
