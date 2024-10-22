@@ -1,0 +1,1 @@
+var PDPftrTab={el:{main:".ftc-tab-item",tab:".ftc-tabs button",item:".ftc-item"},init:function(){var t,e,a=this;$(a.el.main+" "+a.el.tab).on("click",function(){e=$(this).index(),t=$(this).parents(a.el.main),$(a.el.item+".active",t).removeClass("active"),$(a.el.item+":eq("+e+")",t).addClass("active"),$(a.el.tab+".active",t).removeClass("active"),$(this).addClass("active")})}};

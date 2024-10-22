@@ -1,0 +1,1 @@
+var PLPassistantFN={el:{main:"#assistant",banner:"#category-banners",page:".page-product-list"},check:function(){var a=$(this.el.page+" "+this.el.main),t=isMobile?parseFloat(a.attr("data-mobile-order"))-1:parseFloat(a.attr("data-desktop-order"))-1;a.insertBefore(".products .prd:eq("+t+")").addClass("assistant-in-list")},init:function(){this.check()}};
