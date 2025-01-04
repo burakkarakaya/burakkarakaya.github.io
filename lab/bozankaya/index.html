@@ -36,6 +36,19 @@
         }
 
 
+        .mobile-warning{
+            display: none;
+        }
+        @media (max-width: 1024px) {
+            .page-wrapper {
+                display: none;
+            }
+            .mobile-warning{
+                display: block;
+            }
+        }
+
+
     </style>
     <meta charset="utf-8">
     <title>Bozankaya A.Ş. – Meet the Future</title>
@@ -139,6 +152,12 @@
 </head>
 
 <body cz-shortcut-listen="true">
+
+
+    <div class="mobile-warning heading-style-h2">
+        Bu site yalnızca masaüstü cihazlarda görüntülenebilir. Lütfen masaüstü cihazınızı kullanın.
+    </div>
+
     <div class="page-wrapper">
         <div class="global-styles w-embed">
             <style>
@@ -2172,6 +2191,10 @@ a,
             });
         });
 
+
+        document.addEventListener('contextmenu', function(e) {
+  e.preventDefault();  // Sağ tıklamayı engeller
+});
 
     </script>
 
