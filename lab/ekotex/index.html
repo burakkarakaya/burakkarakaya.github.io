@@ -154,9 +154,31 @@
             });
         });
     </script>
+
+    <style type="text/css">
+
+        .mobile-warning {
+            display: none;
+        }
+
+        @media (max-width: 1024px) {
+            .page-wrapper {
+                display: none;
+            }
+
+            .mobile-warning {
+                display: block;
+            }
+        }
+
+    </style>
 </head>
 <body class="bg-white">
 
+    <div class="mobile-warning heading-style-h2">Bu site yalnızca masaüstü cihazlarda görüntülenebilir. Lütfen masaüstü cihazınızı kullanın.
+    </div>
+
+    <div class="page-wrapper">
     <!-- Header -->
 
     <header class="sticky top-0 z-10">
@@ -617,6 +639,9 @@
             <p><a href="#" class="text-gray-800">Gizlilik Politikası</a> | <a href="#" class="text-gray-800">Kullanım Şartları</a> | <a href="#" class="text-gray-800">Çerez Politikası</a></p>
         </div>
     </div>
+
+
+</div>
 </body>
 
 <script>
@@ -682,6 +707,29 @@
 
         // Kapama butonu tıklama olayı
         closeBtn.addEventListener('click', closeMenu);
+    });
+</script>
+
+<script type="text/javascript">
+    document.querySelectorAll('form').forEach(function(form) {
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            // Submit işlemini engeller
+            return false;
+            // Bu da submit olayını durdurur
+        });
+    });
+
+    document.querySelectorAll('a').forEach(function(anchor) {
+        anchor.addEventListener('click', function(event) {
+            event.preventDefault();
+            // Linkin tıklanmasını engeller
+        });
+    });
+
+    document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+        // Sağ tıklamayı engeller
     });
 </script>
 
