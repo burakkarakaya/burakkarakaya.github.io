@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Window Scroll Cards</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: #f0f0f0;
+            overflow-x: hidden;
+        }
+
+        .cards-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+        }
+
+        .card {
+            position: fixed;
+            width: 200px;
+            height: 300px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            will-change: transform;
+            visibility: hidden;
+        }
+
+        #scrollLength {
+            height: 500vh; /* Scroll uzunluğu */
+        }
+
+        .gsap-marker-end,
+        .gsap-marker-start,
+        .gsap-marker-scroller-start,
+        .gsap-marker-scroller-end{
+            pointer-events: none;
+            opacity: 0;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body>
+    <div id="scrollLength"></div>
+    <div class="cards-container">
+        <div class="card">Card 1</div>
+        <div class="card">Card 2</div>
+        <div class="card">Card 3</div>
+        <div class="card">Card 4</div>
+        <div class="card">Card 5</div>
+        <div class="card">Card 6</div>
+        <div class="card">Card 7</div>
+        <div class="card">Card 8</div>
+    </div>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        const cards = document.querySelectorAll('.card');
+        const totalCards = cards.length;
+
+        // Viewport ölçüleri
+        const vw = window.innerWidth;
+        const vh = window.innerHeight;
+
+        // Kartların başlangıç ve bitiş pozisyonları
+        const startPosition = { x: vw + 200, y: vh - 100 }; // Sağ alt (ekran dışı)
+        const centerPosition = { x: vw/2 - 100, y: vh/2 - 150 }; // Merkez
+        const endPosition = { x: -200, y: -300 }; // Sol üst (ekran dışı)
+
+        // Her kart için animasyon oluştur
+        cards.forEach((card, i) => {
+            gsap.set(card, {
+                x: startPosition.x,
+                y: startPosition.y,
+                visibility: 'visible'
+            });
+
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: "#scrollLength",
+                    start: `${i * 15}% top`,
+                    end: `${(i * 15) + 30}% top`,
+                    scrub: 1,
+                    markers: true,
+                }
+            });
+
+            // Giriş animasyonu (sağ alttan merkeze)
+            tl.to(card, {
+                x: centerPosition.x,
+                y: centerPosition.y,
+                duration: 1
+            })
+            // Merkez bekleme
+            .to(card, {
+                x: centerPosition.x,
+                y: centerPosition.y,
+                duration: 0.5
+            })
+            // Çıkış animasyonu (merkezden sol üste)
+            .to(card, {
+                x: endPosition.x,
+                y: endPosition.y,
+                duration: 1
+            });
+        });
+    </script>
+</body>
+</html>
