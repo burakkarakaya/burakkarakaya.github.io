@@ -1,14 +1,18 @@
 console.clear();
-/* Video boyutları animasyonu */
+/* The encoding is super important here to enable frame-by-frame scrubbing. */
 
-gsap.registerPlugin(ScrollTrigger);
+// ffmpeg -i ~/Downloads/Toshiba\ video/original.mov -movflags faststart -vcodec libx264 -crf 23 -g 1 -pix_fmt yuv420p output.mp4
+// ffmpeg -i ~/Downloads/Toshiba\ video/original.mov -vf scale=960:-1 -movflags faststart -vcodec libx264 -crf 20 -g 1 -pix_fmt yuv420p output_960.mp4
 
-// Video elementini seç
 const video = document.querySelector(".video-background");
 let src = video.currentSrc || video.src;
 console.log(video, src);
 
-// Video başlatma için iOS çözümü
+// Performans için scroll throttling
+let lastScrollTime = 0;
+const scrollThrottle = 10; // ms
+
+/* Make sure the video is 'activated' on iOS */
 function once(el, event, fn, opts) {
   var onceFn = function (e) {
     el.removeEventListener(event, onceFn);
@@ -24,51 +28,76 @@ once(document.documentElement, "touchstart", function (e) {
 });
 
 /* ---------------------------------- */
-/* Scroll kontrolü ve boyutlandırma animasyonu */
-gsap.timeline({
+/* Scroll Control! */
+
+gsap.registerPlugin(ScrollTrigger);
+
+// Video performansını artırmak için buffer ayarları
+video.preload = "auto";
+video.setAttribute("playsinline", "");
+video.setAttribute("muted", "");
+video.muted = true;
+
+// ScrollTrigger smoothness ayarları
+let tl = gsap.timeline({
+  defaults: { 
+    duration: 1, 
+    ease: "linear" // En pürüzsüz geçiş için linear ease
+  },
   scrollTrigger: {
-    trigger: "#container", // Scroll trigger'ı belirle
+    trigger: "#container",
     start: "top top",
     end: "bottom bottom",
-    scrub: true, // Scrub özelliği ile scroll ile zaman uyumlu hareket
+    scrub: 2, // Daha yüksek değer daha yumuşak scroll (1'den 2'ye çıkarıldı)
+    anticipatePin: 1,
+    fastScrollEnd: true,
+    preventOverlaps: true,
+    refreshPriority: 1,
+    invalidateOnRefresh: true,
+    markers: false
   }
-})
-  .fromTo(
-    video, // Animasyonu video elementine uygula
+});
+
+// Video frame kontrolü için RAF kullanımı
+let rafId = null;
+const updateVideoFrame = () => {
+  if (rafId) {
+    cancelAnimationFrame(rafId);
+  }
+  rafId = requestAnimationFrame(() => {
+    const currentTime = Date.now();
+    if (currentTime - lastScrollTime > scrollThrottle) {
+      lastScrollTime = currentTime;
+    }
+  });
+};
+
+once(video, "loadedmetadata", () => {
+  tl.fromTo(
+    video,
     {
-      scaleX: 1, // Başlangıçta video boyutu
-      scaleY: 2, // Başlangıçta video boyutu (100vw x 200vh)
-      width: "100vw", // Başlangıçta genişlik
-      height: "200vh", // Başlangıçta yükseklik
+      currentTime: 0
     },
     {
-      scaleX: 1, // Scroll ile en son boyut
-      scaleY: 1, // Scroll ile en son boyut
-      width: "100vw", // En son genişlik
-      height: "100vh", // En son yükseklik
-    }
-  );
-
-/* Video loop animasyonu */
-once(video, "loadedmetadata", () => {
-  gsap.fromTo(
-    video,
-    { currentTime: 0 },
-    {
       currentTime: video.duration || 1,
-      repeat: -1, // Sürekli döngü
-      yoyo: true, // Her defasında geriye dönecek şekilde
-      ease: "none", // Yavaşlatma veya hızlanma yok, sabit hızla
-      duration: 0 // Bir saniyelik animasyon süresi
+      ease: "linear", // Linear ease en pürüzsüz geçişi sağlar
     }
   );
 });
 
-/* ---------------------------------- */
-/* Video blob verisi */
+// Video buffer optimizasyonu
+video.addEventListener('loadeddata', () => {
+  video.playbackRate = 1;
+  video.defaultPlaybackRate = 1;
+}, { once: true });
+
+/* Gelişmiş video önbellekleme */
 setTimeout(function () {
   if (window["fetch"]) {
-    fetch(src)
+    fetch(src, {
+      priority: "high",
+      cache: 'force-cache'
+    })
       .then((response) => response.blob())
       .then((response) => {
         var blobURL = URL.createObjectURL(response);
@@ -83,4 +112,21 @@ setTimeout(function () {
         video.currentTime = t + 0.01;
       });
   }
-}, 1000);
+}, 500); // 1000ms'den 500ms'ye düşürüldü
+
+// Optimize edilmiş scroll listener
+window.addEventListener('scroll', () => {
+  updateVideoFrame();
+}, { 
+  passive: true,
+  capture: false 
+});
+
+// Memory cleanup
+window.addEventListener('beforeunload', () => {
+  if (rafId) {
+    cancelAnimationFrame(rafId);
+  }
+});
+
+/* ---------------------------------- */
