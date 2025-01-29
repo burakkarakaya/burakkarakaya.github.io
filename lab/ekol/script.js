@@ -1,14 +1,14 @@
 console.clear();
-/* The encoding is super important here to enable frame-by-frame scrubbing. */
+/* Video boyutları animasyonu */
 
-// ffmpeg -i ~/Downloads/Toshiba\ video/original.mov -movflags faststart -vcodec libx264 -crf 23 -g 1 -pix_fmt yuv420p output.mp4
-// ffmpeg -i ~/Downloads/Toshiba\ video/original.mov -vf scale=960:-1 -movflags faststart -vcodec libx264 -crf 20 -g 1 -pix_fmt yuv420p output_960.mp4
+gsap.registerPlugin(ScrollTrigger);
 
+// Video elementini seç
 const video = document.querySelector(".video-background");
 let src = video.currentSrc || video.src;
 console.log(video, src);
 
-/* Make sure the video is 'activated' on iOS */
+// Video başlatma için iOS çözümü
 function once(el, event, fn, opts) {
   var onceFn = function (e) {
     el.removeEventListener(event, onceFn);
@@ -24,33 +24,48 @@ once(document.documentElement, "touchstart", function (e) {
 });
 
 /* ---------------------------------- */
-/* Scroll Control! */
-
-gsap.registerPlugin(ScrollTrigger);
-
-let tl = gsap.timeline({
-  defaults: { duration: 1 },
+/* Scroll kontrolü ve boyutlandırma animasyonu */
+gsap.timeline({
   scrollTrigger: {
-    trigger: "#container",
+    trigger: "#container", // Scroll trigger'ı belirle
     start: "top top",
     end: "bottom bottom",
-    scrub: true
+    scrub: true, // Scrub özelliği ile scroll ile zaman uyumlu hareket
   }
-});
-
-once(video, "loadedmetadata", () => {
-  tl.fromTo(
-    video,
+})
+  .fromTo(
+    video, // Animasyonu video elementine uygula
     {
-      currentTime: 0
+      scaleX: 1, // Başlangıçta video boyutu
+      scaleY: 2, // Başlangıçta video boyutu (100vw x 200vh)
+      width: "100vw", // Başlangıçta genişlik
+      height: "200vh", // Başlangıçta yükseklik
     },
     {
-      currentTime: video.duration || 1
+      scaleX: 1, // Scroll ile en son boyut
+      scaleY: 1, // Scroll ile en son boyut
+      width: "100vw", // En son genişlik
+      height: "100vh", // En son yükseklik
+    }
+  );
+
+/* Video loop animasyonu */
+once(video, "loadedmetadata", () => {
+  gsap.fromTo(
+    video,
+    { currentTime: 0 },
+    {
+      currentTime: video.duration || 1,
+      repeat: -1, // Sürekli döngü
+      yoyo: true, // Her defasında geriye dönecek şekilde
+      ease: "none", // Yavaşlatma veya hızlanma yok, sabit hızla
+      duration: 0 // Bir saniyelik animasyon süresi
     }
   );
 });
 
-/* When first coded, the Blobbing was important to ensure the browser wasn't dropping previously played segments, but it doesn't seem to be a problem now. Possibly based on memory availability? */
+/* ---------------------------------- */
+/* Video blob verisi */
 setTimeout(function () {
   if (window["fetch"]) {
     fetch(src)
@@ -69,5 +84,3 @@ setTimeout(function () {
       });
   }
 }, 1000);
-
-/* ---------------------------------- */
