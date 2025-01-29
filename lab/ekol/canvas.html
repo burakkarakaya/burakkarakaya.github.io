@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MP4 Videoyu Canvas'a Çiz</title>
+    <style>
+        body { text-align: center; }
+        canvas { border: 1px solid black; }
+    </style>
+</head>
+<body>
+    <video id="video" src="video.mp4" muted playsinline></video>
+    <canvas id="canvas"></canvas>
+
+    <script>
+        const video = document.getElementById("video");
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+
+        // Video yüklendiğinde işlemleri başlat
+        video.addEventListener("loadeddata", () => {
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            video.play();
+            drawFrame();
+        });
+
+        function drawFrame() {
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            requestAnimationFrame(drawFrame);
+        }
+    </script>
+</body>
+</html>
