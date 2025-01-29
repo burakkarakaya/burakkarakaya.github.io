@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scroll ile Video Oynatma</title>
+    <title>GSAP ScrollTrigger - Akıcı Canvas Video</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <style>
         body {
-            height: 200vh; /* Scroll efekti için uzun bir sayfa */
+            height: 300vh; /* Uzun sayfa */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -38,10 +38,16 @@
         video.addEventListener("loadeddata", () => {
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
+            drawFrame(); // İlk kareyi çiz
         });
 
+        let targetTime = 0;
+        let playing = false;
+
         function drawFrame() {
+            if (!playing) return;
             ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            requestAnimationFrame(drawFrame); // Akıcı render
         }
 
         gsap.to(video, {
@@ -49,13 +55,24 @@
                 trigger: canvas,
                 start: "top center",
                 end: "bottom center",
-                scrub: true, // Scroll hareketine göre ilerler
+                scrub: true, // Scroll hızına göre çalışır
                 onUpdate: (self) => {
-                    video.currentTime = video.duration * self.progress; // Scroll yüzdesine göre video süresi ayarlanır
-                    drawFrame();
+                    targetTime = video.duration * self.progress; 
+                    if (!playing) {
+                        playing = true;
+                        drawFrame();
+                    }
                 },
+                onLeave: () => playing = false,
+                onEnterBack: () => playing = true
             }
         });
+
+        setInterval(() => {
+            if (playing) {
+                video.currentTime += (targetTime - video.currentTime) * 0.1; // Smooth geçiş
+            }
+        }, 33); // 30 FPS
 
     </script>
 
