@@ -3,33 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MP4 Videoyu Canvas'a Çiz</title>
+    <title>Scroll ile Video Oynatma</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <style>
-        body { text-align: center; }
-        canvas { border: 1px solid black; }
+        body {
+            height: 200vh; /* Scroll efekti için uzun bir sayfa */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: black;
+        }
+        canvas {
+            width: 80vw;
+            height: auto;
+            display: block;
+        }
     </style>
 </head>
 <body>
-    <video id="video" src="video.mp4" muted playsinline></video>
-    <canvas id="canvas"></canvas>
+
+    <canvas id="videoCanvas"></canvas>
 
     <script>
-        const video = document.getElementById("video");
-        const canvas = document.getElementById("canvas");
+        const canvas = document.getElementById("videoCanvas");
         const ctx = canvas.getContext("2d");
+        const video = document.createElement("video");
 
-        // Video yüklendiğinde işlemleri başlat
+        video.src = "video.mp4"; // Video dosyanı buraya koy
+        video.muted = true;
+        video.playsInline = true;
+        video.preload = "auto";
+
         video.addEventListener("loadeddata", () => {
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
-            video.play();
-            drawFrame();
         });
 
         function drawFrame() {
             ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-            requestAnimationFrame(drawFrame);
         }
+
+        gsap.to(video, {
+            scrollTrigger: {
+                trigger: canvas,
+                start: "top center",
+                end: "bottom center",
+                scrub: true, // Scroll hareketine göre ilerler
+                onUpdate: (self) => {
+                    video.currentTime = video.duration * self.progress; // Scroll yüzdesine göre video süresi ayarlanır
+                    drawFrame();
+                },
+            }
+        });
+
     </script>
+
 </body>
 </html>
