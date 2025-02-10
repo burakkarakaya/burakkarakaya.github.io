@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RS 80 Galvaniz Çelik Kepenk Profili</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: auto;
+        }
+        .grid {
+            display: grid;
+            gap: 20px;
+        }
+        .grid-2 {
+            grid-template-columns: 1fr 1fr;
+        }
+        .card {
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .tabs button {
+            padding: 10px;
+            cursor: pointer;
+            border: none;
+            background: #f0f0f0;
+            margin-right: 5px;
+        }
+        .tab-content {
+            display: none;
+        }
+        .active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="grid grid-2">
+            <div>
+                <img src="/api/placeholder/600/400" alt="RS 80 Kepenk Sistemi" style="max-width: 100%; border-radius: 8px;">
+            </div>
+            <div>
+                <h1>RS 80 Galvaniz Çelik Kepenk Profili</h1>
+                <p>Galvaniz Çelik Profil Modelleri</p>
+                <h2>Temel Özellikler</h2>
+                <ul>
+                    <li>Maksimum 14 metre genişlikte uygulama</li>
+                    <li>RAL kataloğundan istenilen renge boyanabilir</li>
+                    <li>Endüstriyel ve ticari alanlarda kullanım</li>
+                </ul>
+                <button onclick="alert('Teklif alındı!')">Teklif Al</button>
+                <button onclick="alert('Teknik dosyalar indiriliyor!')">Teknik Dosyalar</button>
+            </div>
+        </div>
+        <div class="tabs">
+            <button onclick="openTab('technical')">Teknik Özellikler</button>
+            <button onclick="openTab('application')">Uygulama Alanları</button>
+            <button onclick="openTab('certificates')">Belgeler</button>
+        </div>
+        <div id="technical" class="tab-content active">
+            <div class="card">
+                <h3>Boyutsal Özellikler</h3>
+                <p>Maksimum Genişlik: 14 metre</p>
+                <p>Profil Kalınlığı: 0.6 mm - 1.2 mm</p>
+                <p>Malzeme: Galvaniz Çelik</p>
+            </div>
+        </div>
+        <div id="application" class="tab-content">
+            <div class="card">
+                <h3>Kullanım Alanları</h3>
+                <p>Endüstriyel Tesisler, Ticari Alanlar, Depolar, Fabrikalar</p>
+            </div>
+        </div>
+        <div id="certificates" class="tab-content">
+            <div class="card">
+                <h3>Sertifikalar</h3>
+                <p>CE, ISO 9001, ISO 14001</p>
+            </div>
+        </div>
+    </div>
+    <script>
+        function openTab(tabId) {
+            var tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+        }
+    </script>
+</body>
+</html>
