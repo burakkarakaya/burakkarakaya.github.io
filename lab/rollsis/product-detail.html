@@ -1,97 +1,276 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RS 80 Galvaniz Çelik Kepenk Profili</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-        }
-        .container {
-            max-width: 1200px;
-            margin: auto;
-        }
-        .grid {
-            display: grid;
-            gap: 20px;
-        }
-        .grid-2 {
-            grid-template-columns: 1fr 1fr;
-        }
-        .card {
-            border: 1px solid #ddd;
-            padding: 20px;
-            border-radius: 8px;
-        }
-        .tabs button {
-            padding: 10px;
-            cursor: pointer;
-            border: none;
-            background: #f0f0f0;
-            margin-right: 5px;
-        }
-        .tab-content {
-            display: none;
-        }
-        .active {
-            display: block;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ürün Detayı - RS 80 Galvaniz Çelik Kepenk Profili</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.10.0/lucide.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <div class="grid grid-2">
-            <div>
-                <img src="/api/placeholder/600/400" alt="RS 80 Kepenk Sistemi" style="max-width: 100%; border-radius: 8px;">
-            </div>
-            <div>
-                <h1>RS 80 Galvaniz Çelik Kepenk Profili</h1>
-                <p>Galvaniz Çelik Profil Modelleri</p>
-                <h2>Temel Özellikler</h2>
-                <ul>
-                    <li>Maksimum 14 metre genişlikte uygulama</li>
-                    <li>RAL kataloğundan istenilen renge boyanabilir</li>
-                    <li>Endüstriyel ve ticari alanlarda kullanım</li>
-                </ul>
-                <button onclick="alert('Teklif alındı!')">Teklif Al</button>
-                <button onclick="alert('Teknik dosyalar indiriliyor!')">Teknik Dosyalar</button>
-            </div>
+
+  <div class="container mx-auto p-6 max-w-7xl">
+    <!-- Üst Bölüm -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+      <div class="bg-gray-100 rounded-lg p-4 min-h-[400px] flex items-center justify-center">
+        <img src="/api/placeholder/600/400" alt="RS 80 Kepenk Sistemi" class="max-w-full h-auto">
+      </div>
+      <div class="space-y-6">
+        <div>
+          <h1 class="text-3xl font-bold">RS 80 Galvaniz Çelik Kepenk Profili</h1>
+          <p class="text-gray-500 mt-2">Galvaniz Çelik Profil Modelleri</p>
         </div>
-        <div class="tabs">
-            <button onclick="openTab('technical')">Teknik Özellikler</button>
-            <button onclick="openTab('application')">Uygulama Alanları</button>
-            <button onclick="openTab('certificates')">Belgeler</button>
+        <div>
+          <h2 class="text-xl font-semibold mb-3">Temel Özellikler</h2>
+          <ul class="space-y-2">
+            <li class="flex items-center gap-2">
+              <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+              Maksimum 14 metre genişlikte uygulama
+            </li>
+            <li class="flex items-center gap-2">
+              <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+              RAL kataloğundan istenilen renge boyanabilir
+            </li>
+            <li class="flex items-center gap-2">
+              <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+              Endüstriyel ve ticari alanlarda kullanım
+            </li>
+          </ul>
         </div>
-        <div id="technical" class="tab-content active">
-            <div class="card">
-                <h3>Boyutsal Özellikler</h3>
-                <p>Maksimum Genişlik: 14 metre</p>
-                <p>Profil Kalınlığı: 0.6 mm - 1.2 mm</p>
-                <p>Malzeme: Galvaniz Çelik</p>
-            </div>
+        <div class="flex gap-4">
+          <button class="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-lg">
+            <i class="lucide lucide-file-text" style="font-size: 20px;"></i>
+            Teklif Al
+          </button>
+          <button class="flex items-center gap-2 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg">
+            <i class="lucide lucide-download" style="font-size: 20px;"></i>
+            Teknik Dosyalar
+          </button>
         </div>
-        <div id="application" class="tab-content">
-            <div class="card">
-                <h3>Kullanım Alanları</h3>
-                <p>Endüstriyel Tesisler, Ticari Alanlar, Depolar, Fabrikalar</p>
-            </div>
-        </div>
-        <div id="certificates" class="tab-content">
-            <div class="card">
-                <h3>Sertifikalar</h3>
-                <p>CE, ISO 9001, ISO 14001</p>
-            </div>
-        </div>
+      </div>
     </div>
-    <script>
-        function openTab(tabId) {
-            var tabs = document.querySelectorAll('.tab-content');
-            tabs.forEach(tab => tab.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-        }
-    </script>
+
+    <!-- Detay Tabları -->
+    <div class="mt-8">
+      <div class="grid w-full grid-cols-4">
+        <button onclick="openTab(event, 'tab1')" class="tab-button flex items-center gap-2 text-blue-500 p-2">
+          <i class="lucide lucide-ruler" style="font-size: 18px;"></i>
+          Teknik Özellikler
+        </button>
+        <button onclick="openTab(event, 'tab2')" class="tab-button flex items-center gap-2 text-blue-500 p-2">
+          <i class="lucide lucide-building" style="font-size: 18px;"></i>
+          Uygulama Alanları
+        </button>
+        <button onclick="openTab(event, 'tab3')" class="tab-button flex items-center gap-2 text-blue-500 p-2">
+          <i class="lucide lucide-settings" style="font-size: 18px;"></i>
+          Otomasyon
+        </button>
+        <button onclick="openTab(event, 'tab4')" class="tab-button flex items-center gap-2 text-blue-500 p-2">
+          <i class="lucide lucide-shield" style="font-size: 18px;"></i>
+          Belgeler
+        </button>
+      </div>
+
+      <!-- Teknik Özellikler Tab -->
+      <div id="tab1" class="tab-content mt-4 hidden">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-white shadow-lg rounded-lg p-6">
+            <h3 class="text-xl font-semibold mb-4">Boyutsal Özellikler</h3>
+            <ul class="space-y-3">
+              <li class="flex justify-between">
+                <span class="text-gray-600">Maksimum Genişlik</span>
+                <span class="font-medium">14 metre</span>
+              </li>
+              <li class="flex justify-between">
+                <span class="text-gray-600">Yükseklik Seçenekleri</span>
+                <span class="font-medium">3000mm - 5000mm</span>
+              </li>
+              <li class="flex justify-between">
+                <span class="text-gray-600">Profil Kalınlığı</span>
+                <span class="font-medium">0.6 mm - 1.2 mm</span>
+              </li>
+            </ul>
+          </div>
+          <div class="bg-white shadow-lg rounded-lg p-6">
+            <h3 class="text-xl font-semibold mb-4">Malzeme Özellikleri</h3>
+            <ul class="space-y-3">
+              <li class="flex justify-between">
+                <span class="text-gray-600">Malzeme</span>
+                <span class="font-medium">Galvaniz Çelik</span>
+              </li>
+              <li class="flex justify-between">
+                <span class="text-gray-600">m² Ağırlık</span>
+                <span class="font-medium">7.5 kg/m²</span>
+              </li>
+              <li class="flex justify-between">
+                <span class="text-gray-600">Yüzey İşlemi</span>
+                <span class="font-medium">RAL Boyalı</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Uygulama Alanları Tab -->
+      <div id="tab2" class="tab-content mt-4 hidden">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-white shadow-lg rounded-lg p-6">
+            <h3 class="text-xl font-semibold mb-4">Kullanım Alanları</h3>
+            <ul class="space-y-2">
+              <li class="flex items-center gap-2">
+                <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+                Endüstriyel Tesisler
+              </li>
+              <li class="flex items-center gap-2">
+                <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+                Ticari Alanlar
+              </li>
+              <li class="flex items-center gap-2">
+                <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+                Depolar
+              </li>
+              <li class="flex items-center gap-2">
+                <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+                Fabrikalar
+              </li>
+            </ul>
+          </div>
+          <div class="bg-white shadow-lg rounded-lg p-6">
+            <h3 class="text-xl font-semibold mb-4">Montaj Tipleri</h3>
+            <ul class="space-y-3">
+              <li>
+                <div class="font-medium">A Model</div>
+                <p class="text-gray-600">İç mekana montaj</p>
+              </li>
+              <li>
+                <div class="font-medium">B Model</div>
+                <p class="text-gray-600">Dış mekana montaj</p>
+              </li>
+              <li>
+                <div class="font-medium">C Model</div>
+                <p class="text-gray-600">Duvar önü montaj</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Otomasyon Tab -->
+      <div id="tab3" class="tab-content mt-4 hidden">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-white shadow-lg rounded-lg p-6">
+            <h3 class="text-xl font-semibold mb-4">Motor Seçenekleri</h3>
+            <ul class="space-y-4">
+              <li>
+                <div class="font-medium">Merkezi Motor</div>
+                <div class="text-sm text-gray-600 mt-1">
+                  <p>Maksimum Alan: 60 m²</p>
+                  <p>Kullanım: 15-20 kez/gün</p>
+                </div>
+              </li>
+              <li>
+                <div class="font-medium">Tüp Motor</div>
+                <div class="text-sm text-gray-600 mt-1">
+                  <p>Maksimum Alan: 35 m²</p>
+                  <p>Kullanım: 15-20 kez/gün</p>
+                </div>
+              </li>
+              <li>
+                <div class="font-medium">Zincir Aktarmalı Motor</div>
+                <div class="text-sm text-gray-600 mt-1">
+                  <p>Maksimum Alan: 15 m²</p>
+                  <p>Kullanım: 8-10 kez/gün</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="bg-white shadow-lg rounded-lg p-6">
+            <h3 class="text-xl font-semibold mb-4">Kontrol Sistemleri</h3>
+            <ul class="space-y-2">
+              <li class="flex items-center gap-2">
+                <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+                Uzaktan Kumanda
+              </li>
+              <li class="flex items-center gap-2">
+                <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+                Buton
+              </li>
+              <li class="flex items-center gap-2">
+                <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+                Şifre Paneli
+              </li>
+              <li class="flex items-center gap-2">
+                <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+                Kart Okuyucu
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Belgeler Tab -->
+      <div id="tab4" class="tab-content mt-4 hidden">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="bg-white text-center p-6 hover:bg-gray-50 cursor-pointer">
+            <div class="flex flex-col items-center gap-4">
+              <i class="lucide lucide-file-text" style="font-size: 48px; color: #3b82f6;"></i>
+              <div>
+                <h3 class="font-medium">Teknik Çizimler</h3>
+                <p class="text-sm text-gray-500 mt-1">PDF, 2.5MB</p>
+              </div>
+            </div>
+          </div>
+          <div class="bg-white text-center p-6 hover:bg-gray-50 cursor-pointer">
+            <div class="flex flex-col items-center gap-4">
+              <i class="lucide lucide-file-text" style="font-size: 48px; color: #3b82f6;"></i>
+              <div>
+                <h3 class="font-medium">Teknik Şartname</h3>
+                <p class="text-sm text-gray-500 mt-1">PDF, 1.8MB</p>
+              </div>
+            </div>
+          </div>
+          <div class="bg-white text-center p-6 hover:bg-gray-50 cursor-pointer">
+            <div class="flex flex-col items-center gap-4">
+              <i class="lucide lucide-file-text" style="font-size: 48px; color: #3b82f6;"></i>
+              <div>
+                <h3 class="font-medium">Sertifikalar</h3>
+                <p class="text-sm text-gray-500 mt-1">PDF, 3.2MB</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Sekmeler için JavaScript
+    function openTab(evt, tabName) {
+      var i, tabContent, tabButtons;
+
+      // Tüm sekme içeriklerini gizle
+      tabContent = document.getElementsByClassName("tab-content");
+      for (i = 0; i < tabContent.length; i++) {
+        tabContent[i].classList.add("hidden");
+      }
+
+      // Tüm sekme butonlarını stilize et
+      tabButtons = document.getElementsByClassName("tab-button");
+      for (i = 0; i < tabButtons.length; i++) {
+        tabButtons[i].classList.remove("text-blue-500");
+        tabButtons[i].classList.add("text-gray-500");
+      }
+
+      // Seçilen sekmeyi göster
+      document.getElementById(tabName).classList.remove("hidden");
+
+      // Aktif sekme butonunu stilize et
+      evt.currentTarget.classList.remove("text-gray-500");
+      evt.currentTarget.classList.add("text-blue-500");
+    }
+
+    document.querySelector('.tab-button').click();
+
+  </script>
 </body>
 </html>
