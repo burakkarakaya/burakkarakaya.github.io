@@ -1,276 +1,522 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ürün Detayı - RS 80 Galvaniz Çelik Kepenk Profili</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.10.0/lucide.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>RS 80 Endüstriyel Sarmal Kapı | Rollsis</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .gallery {
+            
+        }
+
+        .gallery img {
+            width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+            position: sticky;
+            top: 20px;
+        }
+
+        .product-info h1 {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .product-info p {
+            margin-bottom: 15px;
+        }
+
+        .sku {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .category {
+            color: #0066cc;
+            text-decoration: none;
+        }
+
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: #0066cc;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #f5f5f5;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        .accordion {
+            margin: 40px 0;
+        }
+
+        .accordion-item {
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+        }
+
+        .accordion-header {
+            padding: 15px;
+            background: #f5f5f5;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .accordion-content {
+            padding: 15px;
+            display: none;
+        }
+
+        .accordion-content.active {
+            display: block;
+        }
+
+        .specs-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .specs-table td {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .specs-table td:first-child {
+            width: 30%;
+            font-weight: bold;
+        }
+
+        .slider {
+            margin: 40px 0;
+        }
+
+        .slider-container {
+            overflow: hidden;
+        }
+
+        .slider-track {
+            display: flex;
+            gap: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .slider-item {
+            flex: 0 0 300px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .variants {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .variant-item {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .variant-item.active {
+            border-color: #0066cc;
+            background: #f0f7ff;
+        }
+
+        .alternative-products {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .slider-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .slider-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .slider-controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .slider-button {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .slider-button:hover {
+            background: #f5f5f5;
+            border-color: #999;
+        }
+
+        .slider-wrapper {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slider-track {
+            display: flex;
+            gap: 20px;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card {
+            flex: 0 0 calc(25% - 15px);
+            border: 1px solid #eee;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transform: translateY(-5px);
+        }
+
+        .product-image {
+            position: relative;
+            padding-top: 75%;
+            background: #f5f5f5;
+        }
+
+        .product-image img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 15px;
+        }
+
+        .product-category {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .product-name {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .product-specs {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .product-link {
+            display: inline-block;
+            padding: 8px 15px;
+            background: #0066cc;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 14px;
+            transition: background 0.3s ease;
+        }
+
+        .product-link:hover {
+            background: #0052a3;
+        }
+
+    </style>
 </head>
 <body>
+    <div class="container">
+        <div class="product-grid">
+            <div class="gallery">
+                <img src="https://placehold.co/600x400" alt="RS 80 Endüstriyel Sarmal Kapı">
+            </div>
+            
+            <div class="product-info">
+                <h1>RS 80 Endüstriyel Sarmal Kapı</h1>
+                <p class="sku">SKU: RS80-001</p>
+                <a href="#" class="category">Endüstriyel Sarmal Kapılar</a>
+                
+                <p>Tek cidarlı galvaniz çelik profil yapısıyla maksimum 14 metre genişliğe kadar uygulanabilen endüstriyel sarmal kapı sistemi.</p>
+                
+                <div class="variants">
+                    <div class="variant-item active">RS 80</div>
+                    <div class="variant-item">RS 80-D</div>
+                    <div class="variant-item">RST 100</div>
+                </div>
+                
+                <div class="buttons">
+                    <a href="#" class="btn btn-primary">Teklif Al</a>
+                    <a href="#" class="btn btn-secondary">Teknik Dosya İndir</a>
+                    <a href="#" class="btn btn-secondary">Yetkili Servis Randevusu</a>
+                    <p>Keşif, montaj ve arıza durumları için randevu alın.</p>
+                </div>
+            </div>
+        </div>
 
-  <div class="container mx-auto p-6 max-w-7xl">
-    <!-- Üst Bölüm -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-      <div class="bg-gray-100 rounded-lg p-4 min-h-[400px] flex items-center justify-center">
-        <img src="/api/placeholder/600/400" alt="RS 80 Kepenk Sistemi" class="max-w-full h-auto">
+        <div class="accordion">
+            <div class="accordion-item">
+                <div class="accordion-header">Teknik Özellikler</div>
+                <div class="accordion-content active">
+                    <table class="specs-table">
+                        <tr>
+                            <td>Sac Kalınlığı</td>
+                            <td>0,8 mm - 1,2 mm</td>
+                        </tr>
+                        <tr>
+                            <td>Maksimum Genişlik</td>
+                            <td>14 metre</td>
+                        </tr>
+                        <tr>
+                            <td>Malzeme</td>
+                            <td>Galvaniz çelik</td>
+                        </tr>
+                        <tr>
+                            <td>Kullanım Alanları</td>
+                            <td>Endüstriyel tesisler, Depolar, Fabrikalar</td>
+                        </tr>
+                        <tr>
+                            <td>Montaj Tipleri</td>
+                            <td>A Model, B Model, C Model</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">İndirilebilir Dosyalar</div>
+                <div class="accordion-content">
+                    <ul>
+                        <li><a href="#">2D Autocad Çizim (dwg)</a></li>
+                        <li><a href="#">2D Teknik Çizim (jpg)</a></li>
+                        <li><a href="#">3D Çizim (IGS)</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">Aksesuarlar</div>
+                <div class="accordion-content">
+                    <ul>
+                        <li>Uzaktan Kumanda (2 Kanal, 4 Kanal)</li>
+                        <li>Şifre Paneli</li>
+                        <li>Kart Okuyucu</li>
+                        <li>Parmak İzi Sensörü</li>
+                        <li>Fotosel Sistemleri</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="alternative-products">
+          <div class="slider-header">
+              <h2 class="slider-title">Alternatif Ürünler</h2>
+              <div class="slider-controls">
+                  <button class="slider-button prev">←</button>
+                  <button class="slider-button next">→</button>
+              </div>
+          </div>
+          
+          <div class="slider-wrapper">
+              <div class="slider-track">
+                  <div class="product-card">
+                      <div class="product-image">
+                          <img src="/api/placeholder/300/225" alt="RST 100">
+                      </div>
+                      <div class="product-info">
+                          <div class="product-category">Endüstriyel Sarmal Kapılar</div>
+                          <h3 class="product-name">RST 100</h3>
+                          <div class="product-specs">
+                              Çift cidarlı, içi poliüretan dolgulu
+                              <br>Maks. genişlik: 8m
+                          </div>
+                          <a href="#" class="product-link">İncele</a>
+                      </div>
+                  </div>
+  
+                  <div class="product-card">
+                      <div class="product-image">
+                          <img src="/api/placeholder/300/225" alt="RS 80-D">
+                      </div>
+                      <div class="product-info">
+                          <div class="product-category">Endüstriyel Sarmal Kapılar</div>
+                          <h3 class="product-name">RS 80-D</h3>
+                          <div class="product-specs">
+                              Mikro delikli galvaniz çelik
+                              <br>Maks. genişlik: 10m
+                          </div>
+                          <a href="#" class="product-link">İncele</a>
+                      </div>
+                  </div>
+  
+                  <div class="product-card">
+                      <div class="product-image">
+                          <img src="/api/placeholder/300/225" alt="RS 100-RW">
+                      </div>
+                      <div class="product-info">
+                          <div class="product-category">Endüstriyel Sarmal Kapılar</div>
+                          <h3 class="product-name">RS 100-RW</h3>
+                          <div class="product-specs">
+                              İçi taş yünü dolgulu
+                              <br>Maks. genişlik: 10m
+                          </div>
+                          <a href="#" class="product-link">İncele</a>
+                      </div>
+                  </div>
+  
+                  <div class="product-card">
+                      <div class="product-image">
+                          <img src="/api/placeholder/300/225" alt="RSE 100">
+                      </div>
+                      <div class="product-info">
+                          <div class="product-category">Endüstriyel Sarmal Kapılar</div>
+                          <h3 class="product-name">RSE 100</h3>
+                          <div class="product-specs">
+                              Çift cidar içi boş alüminyum
+                              <br>Maks: 8.5m x 4m
+                          </div>
+                          <a href="#" class="product-link">İncele</a>
+                      </div>
+                  </div>
+              </div>
+          </div>
       </div>
-      <div class="space-y-6">
-        <div>
-          <h1 class="text-3xl font-bold">RS 80 Galvaniz Çelik Kepenk Profili</h1>
-          <p class="text-gray-500 mt-2">Galvaniz Çelik Profil Modelleri</p>
+
+        <div class="slider">
+            <h2>İlham Veren Fikirler</h2>
+            <div class="slider-container">
+                <div class="slider-track">
+                    <div class="slider-item">
+                        <h3>Endüstriyel Estetik</h3>
+                        <p>Modern fabrika tasarımlarında kapı sistemlerinin rolü</p>
+                    </div>
+                    <div class="slider-item">
+                        <h3>Güvenlik ve Fonksiyonellik</h3>
+                        <p>Depo güvenliğini maksimize eden akıllı kapı çözümleri</p>
+                    </div>
+                    <div class="slider-item">
+                        <h3>Enerji Verimliliği</h3>
+                        <p>Endüstriyel kapılarda ısı yalıtımı ve enerji tasarrufu</p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div>
-          <h2 class="text-xl font-semibold mb-3">Temel Özellikler</h2>
-          <ul class="space-y-2">
-            <li class="flex items-center gap-2">
-              <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
-              Maksimum 14 metre genişlikte uygulama
-            </li>
-            <li class="flex items-center gap-2">
-              <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
-              RAL kataloğundan istenilen renge boyanabilir
-            </li>
-            <li class="flex items-center gap-2">
-              <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
-              Endüstriyel ve ticari alanlarda kullanım
-            </li>
-          </ul>
+
+        <div class="slider">
+            <h2>Projeler</h2>
+            <div class="slider-container">
+                <div class="slider-track">
+                    <div class="slider-item">
+                        <h3>Galataport İstanbul Modern Sanat Müzesi</h3>
+                        <p>Özel tasarım endüstriyel kapı uygulaması</p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="flex gap-4">
-          <button class="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-lg">
-            <i class="lucide lucide-file-text" style="font-size: 20px;"></i>
-            Teklif Al
-          </button>
-          <button class="flex items-center gap-2 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg">
-            <i class="lucide lucide-download" style="font-size: 20px;"></i>
-            Teknik Dosyalar
-          </button>
-        </div>
-      </div>
     </div>
 
-    <!-- Detay Tabları -->
-    <div class="mt-8">
-      <div class="grid w-full grid-cols-4">
-        <button onclick="openTab(event, 'tab1')" class="tab-button flex items-center gap-2 text-blue-500 p-2">
-          <i class="lucide lucide-ruler" style="font-size: 18px;"></i>
-          Teknik Özellikler
-        </button>
-        <button onclick="openTab(event, 'tab2')" class="tab-button flex items-center gap-2 text-blue-500 p-2">
-          <i class="lucide lucide-building" style="font-size: 18px;"></i>
-          Uygulama Alanları
-        </button>
-        <button onclick="openTab(event, 'tab3')" class="tab-button flex items-center gap-2 text-blue-500 p-2">
-          <i class="lucide lucide-settings" style="font-size: 18px;"></i>
-          Otomasyon
-        </button>
-        <button onclick="openTab(event, 'tab4')" class="tab-button flex items-center gap-2 text-blue-500 p-2">
-          <i class="lucide lucide-shield" style="font-size: 18px;"></i>
-          Belgeler
-        </button>
-      </div>
+    <script>
+        // Accordion functionality
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const content = header.nextElementSibling;
+                content.classList.toggle('active');
+            });
+        });
 
-      <!-- Teknik Özellikler Tab -->
-      <div id="tab1" class="tab-content mt-4 hidden">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="bg-white shadow-lg rounded-lg p-6">
-            <h3 class="text-xl font-semibold mb-4">Boyutsal Özellikler</h3>
-            <ul class="space-y-3">
-              <li class="flex justify-between">
-                <span class="text-gray-600">Maksimum Genişlik</span>
-                <span class="font-medium">14 metre</span>
-              </li>
-              <li class="flex justify-between">
-                <span class="text-gray-600">Yükseklik Seçenekleri</span>
-                <span class="font-medium">3000mm - 5000mm</span>
-              </li>
-              <li class="flex justify-between">
-                <span class="text-gray-600">Profil Kalınlığı</span>
-                <span class="font-medium">0.6 mm - 1.2 mm</span>
-              </li>
-            </ul>
-          </div>
-          <div class="bg-white shadow-lg rounded-lg p-6">
-            <h3 class="text-xl font-semibold mb-4">Malzeme Özellikleri</h3>
-            <ul class="space-y-3">
-              <li class="flex justify-between">
-                <span class="text-gray-600">Malzeme</span>
-                <span class="font-medium">Galvaniz Çelik</span>
-              </li>
-              <li class="flex justify-between">
-                <span class="text-gray-600">m² Ağırlık</span>
-                <span class="font-medium">7.5 kg/m²</span>
-              </li>
-              <li class="flex justify-between">
-                <span class="text-gray-600">Yüzey İşlemi</span>
-                <span class="font-medium">RAL Boyalı</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
+        // Variant selection
+        document.querySelectorAll('.variant-item').forEach(variant => {
+            variant.addEventListener('click', () => {
+                document.querySelector('.variant-item.active').classList.remove('active');
+                variant.classList.add('active');
+            });
+        });
 
-      <!-- Uygulama Alanları Tab -->
-      <div id="tab2" class="tab-content mt-4 hidden">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="bg-white shadow-lg rounded-lg p-6">
-            <h3 class="text-xl font-semibold mb-4">Kullanım Alanları</h3>
-            <ul class="space-y-2">
-              <li class="flex items-center gap-2">
-                <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
-                Endüstriyel Tesisler
-              </li>
-              <li class="flex items-center gap-2">
-                <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
-                Ticari Alanlar
-              </li>
-              <li class="flex items-center gap-2">
-                <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
-                Depolar
-              </li>
-              <li class="flex items-center gap-2">
-                <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
-                Fabrikalar
-              </li>
-            </ul>
-          </div>
-          <div class="bg-white shadow-lg rounded-lg p-6">
-            <h3 class="text-xl font-semibold mb-4">Montaj Tipleri</h3>
-            <ul class="space-y-3">
-              <li>
-                <div class="font-medium">A Model</div>
-                <p class="text-gray-600">İç mekana montaj</p>
-              </li>
-              <li>
-                <div class="font-medium">B Model</div>
-                <p class="text-gray-600">Dış mekana montaj</p>
-              </li>
-              <li>
-                <div class="font-medium">C Model</div>
-                <p class="text-gray-600">Duvar önü montaj</p>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
+        const track = document.querySelector('.slider-track');
+        const cards = document.querySelectorAll('.product-card');
+        const cardWidth = cards[0].offsetWidth + 20; // Include gap
+        let currentIndex = 0;
 
-      <!-- Otomasyon Tab -->
-      <div id="tab3" class="tab-content mt-4 hidden">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="bg-white shadow-lg rounded-lg p-6">
-            <h3 class="text-xl font-semibold mb-4">Motor Seçenekleri</h3>
-            <ul class="space-y-4">
-              <li>
-                <div class="font-medium">Merkezi Motor</div>
-                <div class="text-sm text-gray-600 mt-1">
-                  <p>Maksimum Alan: 60 m²</p>
-                  <p>Kullanım: 15-20 kez/gün</p>
-                </div>
-              </li>
-              <li>
-                <div class="font-medium">Tüp Motor</div>
-                <div class="text-sm text-gray-600 mt-1">
-                  <p>Maksimum Alan: 35 m²</p>
-                  <p>Kullanım: 15-20 kez/gün</p>
-                </div>
-              </li>
-              <li>
-                <div class="font-medium">Zincir Aktarmalı Motor</div>
-                <div class="text-sm text-gray-600 mt-1">
-                  <p>Maksimum Alan: 15 m²</p>
-                  <p>Kullanım: 8-10 kez/gün</p>
-                </div>
-              </li>
-            </ul>
-          </div>
-          <div class="bg-white shadow-lg rounded-lg p-6">
-            <h3 class="text-xl font-semibold mb-4">Kontrol Sistemleri</h3>
-            <ul class="space-y-2">
-              <li class="flex items-center gap-2">
-                <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
-                Uzaktan Kumanda
-              </li>
-              <li class="flex items-center gap-2">
-                <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
-                Buton
-              </li>
-              <li class="flex items-center gap-2">
-                <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
-                Şifre Paneli
-              </li>
-              <li class="flex items-center gap-2">
-                <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
-                Kart Okuyucu
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
+        document.querySelector('.prev').addEventListener('click', () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateSliderPosition();
+            }
+        });
 
-      <!-- Belgeler Tab -->
-      <div id="tab4" class="tab-content mt-4 hidden">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div class="bg-white text-center p-6 hover:bg-gray-50 cursor-pointer">
-            <div class="flex flex-col items-center gap-4">
-              <i class="lucide lucide-file-text" style="font-size: 48px; color: #3b82f6;"></i>
-              <div>
-                <h3 class="font-medium">Teknik Çizimler</h3>
-                <p class="text-sm text-gray-500 mt-1">PDF, 2.5MB</p>
-              </div>
-            </div>
-          </div>
-          <div class="bg-white text-center p-6 hover:bg-gray-50 cursor-pointer">
-            <div class="flex flex-col items-center gap-4">
-              <i class="lucide lucide-file-text" style="font-size: 48px; color: #3b82f6;"></i>
-              <div>
-                <h3 class="font-medium">Teknik Şartname</h3>
-                <p class="text-sm text-gray-500 mt-1">PDF, 1.8MB</p>
-              </div>
-            </div>
-          </div>
-          <div class="bg-white text-center p-6 hover:bg-gray-50 cursor-pointer">
-            <div class="flex flex-col items-center gap-4">
-              <i class="lucide lucide-file-text" style="font-size: 48px; color: #3b82f6;"></i>
-              <div>
-                <h3 class="font-medium">Sertifikalar</h3>
-                <p class="text-sm text-gray-500 mt-1">PDF, 3.2MB</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+        document.querySelector('.next').addEventListener('click', () => {
+            if (currentIndex < cards.length - 4) {
+                currentIndex++;
+                updateSliderPosition();
+            }
+        });
 
-  <script>
-    // Sekmeler için JavaScript
-    function openTab(evt, tabName) {
-      var i, tabContent, tabButtons;
-
-      // Tüm sekme içeriklerini gizle
-      tabContent = document.getElementsByClassName("tab-content");
-      for (i = 0; i < tabContent.length; i++) {
-        tabContent[i].classList.add("hidden");
-      }
-
-      // Tüm sekme butonlarını stilize et
-      tabButtons = document.getElementsByClassName("tab-button");
-      for (i = 0; i < tabButtons.length; i++) {
-        tabButtons[i].classList.remove("text-blue-500");
-        tabButtons[i].classList.add("text-gray-500");
-      }
-
-      // Seçilen sekmeyi göster
-      document.getElementById(tabName).classList.remove("hidden");
-
-      // Aktif sekme butonunu stilize et
-      evt.currentTarget.classList.remove("text-gray-500");
-      evt.currentTarget.classList.add("text-blue-500");
-    }
-
-    document.querySelector('.tab-button').click();
-
-  </script>
+        function updateSliderPosition() {
+            track.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+        }
+    </script>
 </body>
 </html>
