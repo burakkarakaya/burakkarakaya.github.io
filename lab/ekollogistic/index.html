@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ekol Lojistik Yeni Web Sitesi</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <style>
+        /* Mevcut stiller korunacak */
+        .swiper-container {
+            width: 100%;
+            height: auto;
+        }
+        .swiper-slide img {
+            display: block;
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+        .hamburger-menu {
+            display: none;
+            cursor: pointer;
+        }
+        .menu-line {
+            width: 30px;
+            height: 3px;
+            background-color: #333;
+            margin: 5px 0;
+            transition: 0.4s;
+        }
+        .open .menu-line:nth-child(1) {
+            transform: rotate(-45deg) translate(-8px, 7px);
+        }
+        .open .menu-line:nth-child(2) {
+            opacity: 0;
+        }
+        .open .menu-line:nth-child(3) {
+            transform: rotate(45deg) translate(-8px, -7px);
+        }
+        .mobile-menu {
+            display: none;
+            position: absolute;
+            top: 60px; /* Adjust based on header height */
+            left: 0;
+            width: 100%;
+            background-color: #f9f9f9;
+            z-index: 10;
+            padding: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+        .mobile-menu.open {
+            display: block;
+        }
+        .mobile-menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .mobile-menu ul li {
+            margin-bottom: 15px;
+        }
+        .mobile-menu ul li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+        .mobile-menu ul li ul {
+            padding-left: 20px;
+        }
+        .mobile-menu ul li ul li {
+            margin-bottom: 10px;
+        }
+        .mobile-menu ul li ul li a {
+            font-weight: normal;
+        }
+        @media (max-width: 768px) {
+            .hamburger-menu {
+                display: block;
+            }
+            .desktop-menu {
+                display: none;
+            }
+        }
+        @media (min-width: 769px) {
+            .mobile-menu {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans">
+    <header class="bg-white shadow-md py-4 px-6 md:px-12 lg:px-20 flex items-center justify-between">
+        <a href="/" class="text-xl font-bold text-blue-500">
+            <img src="https://placehold.co/150x40?text=Ekol+Lojistik&font=bold" alt="Ekol Lojistik Logo">
+        </a>
+        <div class="hamburger-menu" id="hamburger-menu">
+            <div class="menu-line"></div>
+            <div class="menu-line"></div>
+            <div class="menu-line"></div>
+        </div>
+        
+
+        <nav class="desktop-menu hidden md:flex space-x-6">
+            <div class="relative group">
+                <a href="#" class="hover:text-blue-500">Kurumsal</a>
+                <div class="absolute hidden group-hover:block bg-white shadow-md p-4 rounded-md z-10">
+                    <a href="#" class="block py-2 hover:text-blue-500">Rakamlarla Ekol</a>
+                    <div class="relative group">
+                        <a href="#" class="block py-2 hover:text-blue-500">Yönetim</a>
+                        <div class="absolute hidden group-hover:block left-full top-0 bg-white shadow-md p-4 rounded-md z-20">
+                            <a href="#" class="block py-2 hover:text-blue-500">Yönetim Kurulu</a>
+                        </div>
+                    </div>
+                    <div class="relative group">
+                        <a href="#" class="block py-2 hover:text-blue-500">Sürdürülebilirlik</a>
+                        <div class="absolute hidden group-hover:block left-full top-0 bg-white shadow-md p-4 rounded-md z-20">
+                            <a href="#" class="block py-2 hover:text-blue-500">Yönetim Sistemleri Politikalarımız</a>
+                            <a href="#" class="block py-2 hover:text-blue-500">Yönetim Sistemleri Belgelerimiz</a>
+                            <a href="#" class="block py-2 hover:text-blue-500">Küresel İlkeler Sözleşmesi</a>
+                            <a href="#" class="block py-2 hover:text-blue-500">Raporlar</a>
+                        </div>
+                    </div>
+                    <div class="relative group">
+                        <a href="#" class="block py-2 hover:text-blue-500">İnsan Kaynakları</a>
+                        <div class="absolute hidden group-hover:block left-full top-0 bg-white shadow-md p-4 rounded-md z-20">
+                            <a href="#" class="block py-2 hover:text-blue-500">Ekol’de Kariyer</a>
+                            <a href="#" class="block py-2 hover:text-blue-500">Başvuru</a>
+                            <a href="#" class="block py-2 hover:text-blue-500">Ekol’de Yaşam</a>
+                            <a href="#" class="block py-2 hover:text-blue-500">Etik</a>
+                        </div>
+                    </div>
+                    <div class="relative group">
+                        <a href="#" class="block py-2 hover:text-blue-500">Medya</a>
+                        <div class="absolute hidden group-hover:block left-full top-0 bg-white shadow-md p-4 rounded-md z-20">
+                            <a href="#" class="block py-2 hover:text-blue-500">Marka Kimliğimiz</a>
+                            <a href="#" class="block py-2 hover:text-blue-500">Basın Bültenleri</a>
+                            <a href="#" class="block py-2 hover:text-blue-500">Fotoğraf & Video Galerisi</a>
+                        </div>
+                    </div>
+                    <div class="relative group">
+                        <a href="#" class="block py-2 hover:text-blue-500">Kurumsal Sosyal Sorumluluk</a>
+                        <div class="absolute hidden group-hover:block left-full top-0 bg-white shadow-md p-4 rounded-md z-20">
+                            <a href="#" class="block py-2 hover:text-blue-500">Çevre</a>
+                            <a href="#" class="block py-2 hover:text-blue-500">Eğitim</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="relative group">
+                <a href="#" class="hover:text-blue-500">Lojistik</a>
+                <div class="absolute hidden group-hover:block bg-white shadow-md p-4 rounded-md z-10">
+                    <div class="relative group">
+                        <a href="#" class="block py-2 hover:text-blue-500">Sektörler</a>
+                        <div class="absolute hidden group-hover:block left-full top-0 bg-white shadow-md p-4 rounded-md z-20">
+                            <div class="relative group">
+                                <a href="#" class="block py-2 hover:text-blue-500">Otomotiv</a>
+                                <div class="absolute hidden group-hover:block left-full top-0 bg-white shadow-md p-4 rounded-md z-20">
+                                    <a href="#" class="block py-2 hover:text-blue-500">Depolama</a>
+                                    <a href="#" class="block py-2 hover:text-blue-500">Özel Çözümler</a>
+                                </div>
+                            </div>
+                            <a href="#" class="block py-2 hover:text-blue-500">İmalat</a>
+                            <a href="#" class="block py-2 hover:text-blue-500">Perakende / Tekstil</a>
+                            <a href="#" class="block py-2 hover:text-blue-500">FMCG</a>
+                            <div class="relative group">
+                                <a href="#" class="block py-2 hover:text-blue-500">Sağlık</a>
+                                <div class="absolute hidden group-hover:block left-full top-0 bg-white shadow-md p-4 rounded-md z-20">
+                                    <a href="#" class="block py-2 hover:text-blue-500">Depolama</a>
+                                    <a href="#" class="block py-2 hover:text-blue-500">Dağıtım</a>
+                                </div>
+                            </div>
+                            <a href="#" class="block py-2 hover:text-blue-500">Elektronik</a>
+                            <a href="#" class="block py-2 hover:text-blue-500">E-Ticaret</a>
+                        </div>
+                    </div>
+                    <div class="relative group">
+                        <a href="#" class="block py-2 hover:text-blue-500">Taşımacılık</a>
+                        <div class="absolute hidden group-hover:block left-full top-0 bg-white shadow-md p-4 rounded-md z-20">
+                            <div class="relative group">
+                                <a href="#" class="block py-2 hover:text-blue-500">Ulusal Dağıtım</a>
+                                <div class="absolute hidden group-hover:block left-full top-0 bg-white shadow-md p-4 rounded-md z-20">
+                                    <a href="#" class="block py-2 hover:text-blue-500">Taşımacılık</a>
+                                    <a href="#" class="block py-2 hover:text-blue-500">Teknoloji</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative group">
+                        <a href="#" class="block py-2 hover:text-blue-500">Depo Yönetimi</a>
+                        <div class="absolute hidden group-hover:block left-full top-0 bg-white shadow-md p-4 rounded-md z-20">
+                            <a href="#" class="block py-2 hover:text-blue-500">Hizmet</a>
+                            <a href="#" class="block py-2 hover:text-blue-500">Proje Yönetimi</a>
+                            <a href="#" class="block py-2 hover:text-blue-500">Teknoloji</a>
+                            <a href="#" class="block py-2 hover:text-blue-500">Örnek Çözüm</a>
+                        </div>
+                    </div>
+                    <div class="relative group">
+                        <a href="#" class="block py-2 hover:text-blue-500">AR-GE</a>
+                        <div class="absolute hidden group-hover:block left-full top-0 bg-white shadow-md p-4 rounded-md z-20">
+                            <a href="#" class="block py-2 hover:text-blue-500">AR-GE Ekibi</a>
+                            <a href="#" class="block py-2 hover:text-blue-500">Buluşlar</a>
+                            <a href="#" class="block py-2 hover:text-blue-500">Projeler</a>
+                            <a href="#" class="block py-2 hover:text-blue-500">İşbirlikleri</a>
+                            <a href="#" class="block py-2 hover:text-blue-500">Yayınlar</a>
+                            <a href="#" class="block py-2 hover:text-blue-500">Etkinlik Katılımları</a>
+                        </div>
+                    </div>
+                    <div class="relative group">
+                        <a href="#" class="block py-2 hover:text-blue-500">Yeşil Lojistik</a>
+                        <div class="absolute hidden group-hover:block left-full top-0 bg-white shadow-md p-4 rounded-md z-20">
+                            <a href="#" class="block py-2 hover:text-blue-500">Yeşil Ofis</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="relative group">
+                <a href="#" class="hover:text-blue-500">Ülkeler</a>
+                <div class="absolute hidden group-hover:block bg-white shadow-md p-4 rounded-md z-10">
+                    <a href="#" class="block py-2 hover:text-blue-500">Türkiye</a>
+                    <a href="#" class="block py-2 hover:text-blue-500">Ukrayna</a>
+                </div>
+            </div>
+            <a href="#" class="hover:text-blue-500">e-Ekol</a>
+            <div class="relative group">
+                <a href="#" class="hover:text-blue-500">İletişim</a>
+            </div>
+            <div class="relative group">
+                <a href="#" class="hover:text-blue-500">Dil Seçenekleri</a>
+                <div class="absolute hidden group-hover:block bg-white shadow-md p-4 rounded-md z-10">
+                    <a href="#" class="block py-2 hover:text-blue-500">Türkçe</a>
+                    <a href="#" class="block py-2 hover:text-blue-500">English</a>
+                </div>
+            </div>
+        </nav>
+        <div class="mobile-menu" id="mobile-menu">
+            <ul>
+                <li><a href="#">Kurumsal</a>
+                    <ul>
+                        <li><a href="#">Rakamlarla Ekol</a></li>
+                        <li><a href="#">Yönetim</a>
+                            <ul>
+                                <li><a href="#">Yönetim Kurulu</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">Sürdürülebilirlik</a>
+                            <ul>
+                                <li><a href="#">Yönetim Sistemleri Politikalarımız</a></li>
+                                <li><a href="#">Yönetim Sistemleri Belgelerimiz</a></li>
+                                <li><a href="#">Küresel İlkeler Sözleşmesi</a></li>
+                                <li><a href="#">Raporlar</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">İnsan Kaynakları</a>
+                            <ul>
+                                <li><a href="#">Ekol’de Kariyer</a></li>
+                                <li><a href="#">Başvuru</a></li>
+                                <li><a href="#">Ekol’de Yaşam</a></li>
+                                <li><a href="#">Etik</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">Medya</a>
+                            <ul>
+                                <li><a href="#">Marka Kimliğimiz</a></li>
+                                <li><a href="#">Basın Bültenleri</a></li>
+                                <li><a href="#">Fotoğraf & Video Galerisi</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">Kurumsal Sosyal Sorumluluk</a>
+                            <ul>
+                                <li><a href="#">Çevre</a></li>
+                                <li><a href="#">Eğitim</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><a href="#">Lojistik</a>
+                    <ul>
+                        <li><a href="#">Sektörler</a>
+                            <ul>
+                                <li><a href="#">Otomotiv</a>
+                                    <ul>
+                                        <li><a href="#">Depolama</a></li>
+                                        <li><a href="#">Özel Çözümler</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#">İmalat</a></li>
+                                <li><a href="#">Perakende / Tekstil</a></li>
+                                <li><a href="#">FMCG</a></li>
+                                <li><a href="#">Sağlık</a>
+                                    <ul>
+                                        <li><a href="#">Depolama</a></li>
+                                        <li><a href="#">Dağıtım</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#">Elektronik</a></li>
+                                <li><a href="#">E-Ticaret</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">Taşımacılık</a>
+                            <ul>
+                                <li><a href="#">Ulusal Dağıtım</a>
+                                    <ul>
+                                        <li><a href="#">Taşımacılık</a></li>
+                                        <li><a href="#">Teknoloji</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li><a href="#">Depo Yönetimi</a>
+                            <ul>
+                                <li><a href="#">Hizmet</a></li>
+                                <li><a href="#">Proje Yönetimi</a></li>
+                                <li><a href="#">Teknoloji</a></li>
+                                <li><a href="#">Örnek Çözüm</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">AR-GE</a>
+                            <ul>
+                                <li><a href="#">AR-GE Ekibi</a></li>
+                                <li><a href="#">Buluşlar</a></li>
+                                <li><a href="#">Projeler</a></li>
+                                <li><a href="#">İşbirlikleri</a></li>
+                                <li><a href="#">Yayınlar</a></li>
+                                <li><a href="#">Etkinlik Katılımları</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">Yeşil Lojistik</a>
+                            <ul>
+                                <li><a href="#">Yeşil Ofis</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><a href="#">Ülkeler</a>
+                    <ul>
+                        <li><a href="#">Türkiye</a></li>
+                        <li><a href="#">Ukrayna</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">e-Ekol</a>
+                    <ul>
+                        <li><a href="#">Quadro.net</a></li>
+                        <li><a href="#">Tedarikçi Portalı</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">İletişim</a></li>
+                <li><a href="#">Dil Seçenekleri</a>
+                    <ul>
+                        <li><a href="#">Türkçe</a></li>
+                        <li><a href="#">English</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        
+    </header>
+
+    <main>
+        <section class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <div class="relative">
+                        <img src="https://placehold.co/1600x600?text=Banner+1&font=bold&background=ddd&color=555" alt="Banner 1">
+                        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white">
+                            <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">Geleceğinizi Taşıyoruz: Uçtan Uca Akıllı Lojistik Çözümleri.</h2>
+                            <p class="text-lg md:text-xl">Entegre hizmetler, teknolojik yenilikler ve tedarik zinciri yönetimi.</p>
+                            <a href="#" class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full mt-6">Teklif Alın</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="relative">
+                        <img src="https://placehold.co/1600x600?text=Banner+2&font=bold&background=eee&color=666" alt="Banner 2">
+                        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white">
+                            <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">Avrupa'ya Açılan Kapınız: Güçlü Ağ, Yerel Çözümler.</h2>
+                            <p class="text-lg md:text-xl">Geniş Avrupa ağı ve intermodal taşımacılıkta liderlik.</p>
+                            <a href="#" class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full mt-6">Ağımızı Keşfedin</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="relative">
+                        <img src="https://placehold.co/1600x600?text=Banner+3&font=bold&background=f9f9f9&color=777" alt="Banner 3">
+                        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-gray-800">
+                            <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">Sürdürülebilir Lojistik, Yarınlara Yatırım.</h2>
+                            <p class="text-lg md:text-xl">Çevre dostu uygulamalarla geleceğe değer katıyoruz.</p>
+                            <a href="#" class="inline-block bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-full mt-6">Sürdürülebilirlik Çalışmalarımız</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="swiper-slide">
+                    <div class="relative">
+                        <img src="https://placehold.co/1600x600?text=Banner+3&font=bold&background=f9f9f9&color=777" alt="Banner 3">
+                        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-gray-800">
+                            <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">AR-GE Yatırımlarıyla Yenilikçi Hizmetler</h2>
+                            <p class="text-lg md:text-xl">Ekol, yıllık 5 milyon Euro'luk AR-GE yatırımı ve 130'dan fazla proje ile lojistik sektöründe yenilikçi çözümler sunuyor.</p>
+                            <a href="#" class="inline-block bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-full mt-6">AR-GE Projelerimizi İnceleyin</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-pagination"></div>
+
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+        </section>
+
+        <section class="py-12 bg-white">
+            <div class="container mx-auto px-6 md:px-12 lg:px-20">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-6">Daha İyi Bir Dünya İçin Lojistik</h2>
+                <p class="text-gray-700 leading-relaxed mb-6">
+                    1990 yılında kurulan Ekol Lojistik, taşımacılık, kontrat lojistiği, dış ticaret, gümrük ve tedarik zinciri yönetimi alanlarında 12 ülkede entegre ve yenilikçi hizmetler sunan lider bir lojistik şirketidir. Teknolojiden ilham alarak geliştirdiğimiz iş modellerimizle müşterilerimize esnek ve etkin çözümler sağlıyoruz. Sürdürülebilirlik odaklı yaklaşımımızla çevresel, ekonomik ve sosyal faydalar yaratmayı hedefliyoruz.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
+                    <div class="bg-gray-100 p-6 rounded-md shadow-md text-center">
+                        <span class="text-4xl font-bold text-blue-500">1M+</span>
+                        <p class="text-gray-600 mt-2">Toplam Depolama Alanı (m²)</p>
+                    </div>
+                    <div class="bg-gray-100 p-6 rounded-md shadow-md text-center">
+                        <span class="text-4xl font-bold text-blue-500">5.000+</span>
+                        <p class="text-gray-600 mt-2">Lojistik Uzmanı</p>
+                    </div>
+                    <div class="bg-gray-100 p-6 rounded-md shadow-md text-center">
+                        <span class="text-4xl font-bold text-blue-500">5.500+</span>
+                        <p class="text-gray-600 mt-2">Modern Araç Filosu</p>
+                    </div>
+                    <div class="bg-gray-100 p-6 rounded-md shadow-md text-center">
+                        <span class="text-4xl font-bold text-blue-500">5</span>
+                        <p class="text-gray-600 mt-2">Ro-Ro Gemisi ile Avrupa'ya Bağlantı</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-12 bg-gray-100">
+            <div class="container mx-auto px-6 md:px-12 lg:px-20">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-6">Sektörünüze Özel Lojistik Uzmanlığı</h2>
+                <p class="text-gray-700 leading-relaxed mb-4">Farklı sektörlerin kendine özgü lojistik gereksinimlerinin farkındayız. Otomotivden sağlığa, perakendeden e-ticarete kadar geniş bir yelpazede, sektörünüzün ihtiyaçlarına özel olarak tasarlanmış çözümler sunuyoruz.</p>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+                    <div class="bg-white p-6 rounded-md shadow-md text-center">
+                        <img src="https://placehold.co/100x80?text=Otomotiv&font=bold&background=eee&color=666" alt="Otomotiv" class="mx-auto mb-4">
+                        <h3 class="text-lg font-semibold text-gray-700">Otomotiv</h3>
+                        <p class="text-gray-600 text-sm">Tedarik zincirinde verimlilik ve hız için özel çözümler.</p>
+                        <a href="#" class="text-blue-500 hover:underline text-sm">Detaylı Bilgi</a>
+                    </div>
+                    <div class="bg-white p-6 rounded-md shadow-md text-center">
+                        <img src="https://placehold.co/100x80?text=İmalat&font=bold&background=eee&color=666" alt="İmalat" class="mx-auto mb-4">
+                        <h3 class="text-lg font-semibold text-gray-700">İmalat</h3>
+                        <p class="text-gray-600 text-sm">Üretim süreçlerinize entegre lojistik çözümleri.</p>
+                        <a href="#" class="text-blue-500 hover:underline text-sm">Detaylı Bilgi</a>
+                    </div>
+                    <div class="bg-white p-6 rounded-md shadow-md text-center">
+                        <img src="https://placehold.co/100x80?text=Perakende&font=bold&background=eee&color=666" alt="Perakende / Tekstil" class="mx-auto mb-4">
+                        <h3 class="text-lg font-semibold text-gray-700">Perakende / Tekstil</h3>
+                        <p class="text-gray-600 text-sm">Hızlı ve esnek dağıtım ağlarıyla rekabet avantajı.</p>
+                        <a href="#" class="text-blue-500 hover:underline text-sm">Detaylı Bilgi</a>
+                    </div>
+                    <div class="bg-white p-6 rounded-md shadow-md text-center">
+                        <img src="https://placehold.co/100x80?text=FMCG&font=bold&background=eee&color=666" alt="FMCG" class="mx-auto mb-4">
+                        <h3 class="text-lg font-semibold text-gray-700">FMCG</h3>
+                        <p class="text-gray-600 text-sm">Soğuk zincir ve hızlı teslimat çözümleri.</p>
+                        <a href="#" class="text-blue-500 hover:underline text-sm">Detaylı Bilgi</a>
+                    </div>
+                    <div class="bg-white p-6 rounded-md shadow-md text-center">
+                        <img src="https://placehold.co/100x80?text=Sağlık&font=bold&background=eee&color=666" alt="Sağlık" class="mx-auto mb-4">
+                        <h3 class="text-lg font-semibold text-gray-700">Sağlık</h3>
+                        <p class="text-gray-600 text-sm">Güvenilir ve düzenlemelere uygun taşıma ve depolama.</p>
+                        <a href="#" class="text-blue-500 hover:underline text-sm">Detaylı Bilgi</a>
+                    </div>
+                    <div class="bg-white p-6 rounded-md shadow-md text-center">
+                        <img src="https://placehold.co/100x80?text=E-Ticaret&font=bold&background=eee&color=666" alt="E-Ticaret" class="mx-auto mb-4">
+                        <h3 class="text-lg font-semibold text-gray-700">E-Ticaret</h3>
+                        <p class="text-gray-600 text-sm">Hızlı teslimat ve esnek iade çözümleriyle müşteri memnuniyeti.</p>
+                        <a href="#" class="text-blue-500 hover:underline text-sm">Detaylı Bilgi</a>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-md shadow-md text-center">
+                        <img src="https://placehold.co/100x80?text=Kimya&font=bold&background=eee&color=666" alt="E-Ticaret" class="mx-auto mb-4">
+                        <h3 class="text-lg font-semibold text-gray-700">Kimya</h3>
+                        <p class="text-gray-600 text-sm">Kimya sektöründe, tehlikeli ve hassas ürünlerin taşınması ve depolanması konusunda uzmanlaşmıştır.</p>
+                        <a href="#" class="text-blue-500 hover:underline text-sm">Detaylı Bilgi</a>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-md shadow-md text-center">
+                        <img src="https://placehold.co/100x80?text=Gıda&font=bold&background=eee&color=666" alt="E-Ticaret" class="mx-auto mb-4">
+                        <h3 class="text-lg font-semibold text-gray-700">Gıda</h3>
+                        <p class="text-gray-600 text-sm">Gıda sektörüne özel lojistik çözümlerimizle, tazelik ve hijyen standartlarını koruyoruz.</p>
+                        <a href="#" class="text-blue-500 hover:underline text-sm">Detaylı Bilgi</a>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-md shadow-md text-center">
+                        <img src="https://placehold.co/100x80?text=Gıda&font=bold&background=eee&color=666" alt="E-Ticaret" class="mx-auto mb-4">
+                        <h3 class="text-lg font-semibold text-gray-700">Elektronik</h3>
+                        <p class="text-gray-600 text-sm">Elektronik sektöründe, hassas ürünlerin taşınması ve dağıtımı konusunda uzmanlaşmıştır.</p>
+                        <a href="#" class="text-blue-500 hover:underline text-sm">Detaylı Bilgi</a>
+                    </div>
+
+                    </div>
+            </div>
+        </section>
+
+        <section class="py-12 bg-white">
+            <div class="container mx-auto px-6 md:px-12 lg:px-20">
+                <div class="flex flex-col md:flex-row items-center justify-between">
+                    <div class="md:w-1/2 mb-6 md:mb-0">
+                        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Lojistik 4.0'ın Öncüsü: İnovasyon ve Teknoloji</h2>
+                        <p class="text-gray-700 leading-relaxed mb-4">
+                            Ekol olarak, lojistik süreçlerini daha verimli, hızlı ve çevreci hale getirmek için Ar-Ge'ye sürekli yatırım yapıyoruz. Kendi geliştirdiğimiz Quadro ve Rainbow gibi yazılımlarımız ve en son teknolojilerle lojistikte yeni standartlar belirliyoruz. Müşterilerimize daha akıllı, bağlantılı ve yenilikçi çözümler sunuyoruz.
+                        </p>
+                        <a href="#" class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Teknolojilerimizi Keşfedin</a>
+                    </div>
+                    <div class="md:w-1/2 grid grid-cols-2 gap-4">
+                        <div class="bg-gray-100 p-4 rounded-md shadow-md text-center">
+                            <span class="text-xl font-bold text-green-500">15+</span>
+                            <p class="text-gray-600 text-sm mt-1">Aktif Ar-Ge Projesi</p>
+                        </div>
+                        <div class="bg-gray-100 p-4 rounded-md shadow-md text-center">
+                            <span class="text-xl font-bold text-green-500">7+</span>
+                            <p class="text-gray-600 text-sm mt-1">Patentli İnovasyon</p>
+                        </div>
+                        <div class="bg-gray-100 p-4 rounded-md shadow-md text-center">
+                            <span class="text-xl font-bold text-green-500">30+</span>
+                            <p class="text-gray-600 text-sm mt-1">Uzman Ar-Ge Ekibi</p>
+                        </div>
+                        <div class="bg-gray-100 p-4 rounded-md shadow-md text-center">
+                            <span class="text-xl font-bold text-green-500">2</span>
+                            <p class="text-gray-600 text-sm mt-1">Tescilli Yazılım Çözümü</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-12 bg-gray-100">
+            <div class="container mx-auto px-6 md:px-12 lg:px-20">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-6">Gündemdeki Ekol: Son Gelişmeler ve Duyurular</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-white rounded-md shadow-md overflow-hidden">
+                        <img src="https://placehold.co/400x225?text=Yeni+Depo&font=bold&background=ddd&color=555" alt="Yeni Depo Açılışımız" class="w-full">
+                        <div class="p-6">
+                            <h3 class="text-lg font-semibold text-gray-700 mb-2">Yeni Nesil Depo Açılışımızla Kapasitemizi Artırıyoruz</h3>
+                            <p class="text-gray-600 text-sm mb-4">Ekol Lojistik olarak, müşterilerimize daha iyi hizmet sunmak için son teknolojiyle donatılmış yeni depomuzu hizmete açtık.</p>
+                            <a href="#" class="text-blue-500 hover:underline">Devamını Oku</a>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-md shadow-md overflow-hidden">
+                        <img src="https://placehold.co/400x225?text=Yesil+Lojistik&font=bold&background=eee&color=666" alt="Sürdürülebilirlik Çalışmalarımız" class="w-full">
+                        <div class="p-6">
+                            <h3 class="text-lg font-semibold text-gray-700 mb-2">Sürdürülebilirlik Alanındaki Yeni Projemizle Geleceğe Yatırım Yapıyoruz</h3>
+                            <p class="text-gray-600 text-sm mb-4">Çevreye olan sorumluluğumuzun bilinciyle, karbon ayak izimizi azaltmaya yönelik yeni bir projeyi hayata geçiriyoruz.</p>
+                            <a href="#" class="text-blue-500 hover:underline">Devamını Oku</a>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-md shadow-md overflow-hidden">
+                        <img src="https://placehold.co/400x225?text=Teknoloji&font=bold&background=f9f9f9&color=777" alt="Teknoloji Yatırımlarımız" class="w-full">
+                        <div class="p-6">
+                            <h3 class="text-lg font-semibold text-gray-700 mb-2">Lojistik Operasyonlarımızı Yapay Zeka ile Güçlendiriyoruz</h3>
+                            <p class="text-gray-600 text-sm mb-4">Müşterilerimize daha hızlı ve verimli hizmet sunmak için yapay zeka teknolojilerini operasyonlarımıza entegre etmeye başladık.</p>
+                            <a href="#" class="text-blue-500 hover:underline">Devamını Oku</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-6">
+                    <a href="#" class="inline-block bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded">Tüm Haberler</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-12 bg-white">
+            <div class="container mx-auto px-6 md:px-12 lg:px-20">
+                <div class="flex flex-col md:flex-row items-center justify-between">
+                    <div class="md:w-1/2 mb-6 md:mb-0">
+                        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Geleceğe Yeşil Bir İmza: Sürdürülebilir Lojistik</h2>
+                        <p class="text-gray-700 leading-relaxed mb-4">
+                            Çevreye duyarlı bir lojistik anlayışıyla hareket ediyor, intermodal taşımacılığı teşvik ediyor ve karbon ayak izimizi azaltmaya yönelik projeler geliştiriyoruz. Sürdürülebilirlik, sadece bir hedef değil, iş yapış şeklimizin temel bir parçasıdır. Gelecek nesillere daha yaşanabilir bir dünya bırakmak için çalışıyoruz.
+                        </p>
+                        <a href="#" class="inline-block bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Sürdürülebilirlik Raporumuzu İnceleyin</a>
+                    </div>
+                    <div class="md:w-1/2 grid grid-cols-2 gap-4">
+                        <div class="bg-gray-100 p-4 rounded-md shadow-md text-center">
+                            <span class="text-xl font-bold text-lime-500">45%+</span>
+                            <p class="text-gray-600 text-sm mt-1">Intermodal Taşımacılık Kullanım Oranı</p>
+                        </div>
+                        <div class="bg-gray-100 p-4 rounded-md shadow-md text-center">
+                            <span class="text-xl font-bold text-lime-500">18%+</span>
+                            <p class="text-gray-600 text-sm mt-1">Son 5 Yılda Karbon Emisyonu Azaltımı</p>
+                        </div>
+                        <div class="bg-gray-100 p-4 rounded-md shadow-md text-center">
+                            <span class="text-xl font-bold text-lime-500">100%</span>
+                            <p class="text-gray-600 text-sm mt-1">Yeşil Ofis Standartlarına Uyum</p>
+                        </div>
+                        <div class="bg-gray-100 p-4 rounded-md shadow-md text-center">
+                            <span class="text-xl font-bold text-lime-500">Yeni Nesil</span>
+                            <p class="text-gray-600 text-sm mt-1">Düşük Emisyonlu Araç Filosu</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-12 bg-gray-100">
+            <div class="container mx-auto px-6 md:px-12 lg:px-20 text-center">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-6">İşinizi Kolaylaştıran Çözüm: Müşteri Portalımız</h2>
+                <p class="text-gray-700 leading-relaxed mb-6">
+                    Ekol Lojistik'in QuadroNet sistemiyle gönderilerinizi gerçek zamanlı takip edin, raporlamalarınızı kolayca yapın ve tüm dokümanlarınıza online erişim sağlayın.
+                </p>
+                <a href="#" class="inline-block bg-blue-600 hover:bg-blue-800 text-white font-bold py-3 px-6 rounded-full">QuadroNet Oturum Aç</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-6 md:px-12 lg:px-20 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div>
+                <h4 class="text-lg font-semibold mb-4">Ekol Lojistik</h4>
+                <p class="text-gray-300 text-sm">
+                    Merkez Adres: [Adres Bilgisi Buraya Gelecek] <br>
+                    Telefon: [Telefon Numarası Buraya Gelecek] <br>
+                    E-posta: [E-posta Adresi Buraya Gelecek]
+                </p>
+            </div>
+            <div>
+                <h4 class="text-lg font-semibold mb-4">Hızlı Bağlantılar</h4>
+                <ul class="list-none">
+                    <li><a href="#" class="text-gray-300 hover:text-white text-sm">Hizmetlerimiz</a></li>
+                    <li><a href="#" class="text-gray-300 hover:text-white text-sm">Sektörler</a></li>
+                    <li><a href="#" class="text-gray-300 hover:text-white text-sm">Hakkımızda</a></li>
+                    <li><a href="#" class="text-gray-300 hover:text-white text-sm">İletişim</a></li>
+                    <li><a href="#" class="text-gray-300 hover:text-white text-sm">Sürdürülebilirlik</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-lg font-semibold mb-4">Takip Edin</h4>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-300 hover:text-white text-lg"><img src="https://placehold.co/30x30?text=f&font=bold&background=4267B2&color=fff" alt="Facebook"></a>
+                    <a href="#" class="text-gray-300 hover:text-white text-lg"><img src="https://placehold.co/30x30?text=t&font=bold&background=1DA1F2&color=fff" alt="Twitter"></a>
+                    <a href="#" class="text-gray-300 hover:text-white text-lg"><img src="https://placehold.co/30x30?text=in&font=bold&background=0077B5&color=fff" alt="LinkedIn"></a>
+                </div>
+            </div>
+        </div>
+        <div class="container mx-auto px-6 md:px-12 lg:px-20 mt-6 text-center">
+            <p class="text-gray-400 text-sm">© 2025 Ekol Lojistik. Tüm Hakları Saklıdır.</p>
+            <ul class="list-none flex justify-center space-x-4 mt-2">
+                <li><a href="#" class="text-gray-400 hover:text-white text-sm">Gizlilik Politikası</a></li>
+                <li><a href="#" class="text-gray-400 hover:text-white text-sm">Kullanım Koşulları</a></li>
+                <li><a href="#" class="text-gray-400 hover:text-white text-sm">Site Haritası</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <script>
+        const hamburgerMenu = document.getElementById('hamburger-menu');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        hamburgerMenu.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+            hamburgerMenu.classList.toggle('open');
+        });
+
+        var swiper = new Swiper('.swiper-container', {
+            loop: true,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            autoplay: {
+                delay: 5000,
+            },
+        });
+    </script>
+</body>
+</html>
