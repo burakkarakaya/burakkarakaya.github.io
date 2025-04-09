@@ -1,0 +1,1080 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+    
+    <!-- Sayfa başlığı -->
+    <title>Ekol Lojistik</title>
+    
+    <!-- Viewport ayarı (mobil uyumluluk için) -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Sayfa açıklaması -->
+    <meta name="description" content="Ekol 2010 yılında WWF Yeşil Ofis Programına başvuruda bulunmuş, 2013 yılında Green Office Diploması’nı alarak sektöründe yine bir ilki gerçekleştirmiştir.">
+    
+    <!-- Arama motorları için anahtar kelimeler -->
+    <meta name="keywords" content="Ekol Lojistik, taşımacılık">
+    
+    <!-- Yazar bilgisi -->
+    <meta name="author" content="Ekol Lojistik">
+    
+    <!-- Canonical URL (SEO için) -->
+    <link rel="canonical" href="https://www.ekol.com/">
+    
+    <!-- Sosyal medya paylaşımı için Open Graph meta etiketleri -->
+    <meta property="og:title" content="Ekol Lojistik | İç Giyim, Ev Giyimi ve Örme Dış Giyim Üreticisi">
+    <meta property="og:description" content="Ekol 2010 yılında WWF Yeşil Ofis Programına başvuruda bulunmuş, 2013 yılında Green Office Diploması’nı alarak sektöründe yine bir ilki gerçekleştirmiştir.">
+    <meta property="og:image" content="https://www.ekol.com//images/og-image.jpg">
+    <meta property="og:url" content="https://www.ekol.com/">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter Card meta etiketleri -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Ekol Lojistik | İç Giyim, Ev Giyimi ve Örme Dış Giyim Üreticisi">
+    <meta name="twitter:description" content="Ekol 2010 yılında WWF Yeşil Ofis Programına başvuruda bulunmuş, 2013 yılında Green Office Diploması’nı alarak sektöründe yine bir ilki gerçekleştirmiştir.">
+    <meta name="twitter:image" content="https://www.ekol.com//images/twitter-card.jpg">
+
+
+    <style>
+        body {
+        font-family: 'Josefin Sans', sans-serif;
+        }
+
+        h1 {
+            font-family: 'Josefin Sans', sans-serif;
+            font-weight: 700; /* Bold */
+        }
+
+        p {
+            font-family: 'Josefin Sans', sans-serif;
+            font-weight: 300; /* Light */
+        }
+    </style>
+
+    <!-- Add Swiper CSS and JS in the head section -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/10.0.4/swiper-bundle.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/10.0.4/swiper-bundle.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            
+            
+            // GSAP ve ScrollTrigger'ı başlat
+            gsap.registerPlugin(ScrollTrigger);
+            
+            // Elementleri seç
+            /*
+            const fadeBgElement = document.querySelector(".animate-fade-bg > div");
+            const menuAnimText = document.querySelectorAll(".menu-anim-text button, .menu-anim i");
+            const logoElement = document.querySelector(".animate-logo");
+
+            // Tüm animasyonları tek bir ScrollTrigger'da birleştirme
+            gsap.timeline({
+            scrollTrigger: {
+                trigger: "body",
+                start: "top -100", // Scroll 40px aşağı kaydığında başla
+                end: "+=400", // Animasyonun ne kadar süreceği (isteğe bağlı)
+                toggleActions: "play none reverse none",
+                markers: false // Debug için (isteğe bağlı)
+            }
+            })
+            .to(fadeBgElement, {
+            backgroundColor: "rgba(255, 255, 255, 1)",
+            duration: 0.5
+            })
+            .to(menuAnimText, {
+            color: "#000",
+            duration: 0.5
+            }, 0) // Aynı anda başlaması için
+            .to(logoElement, {
+            filter: "invert(1)",
+            duration: 0.5
+            }, 0);
+            */
+            
+            // Başlık için animasyon
+            gsap.fromTo(
+                ".main-slider img",
+                {
+                    y: 0, // İlk pozisyon
+                },
+                {
+                    y: -60, // Yukarı kayma
+                    scrollTrigger: {
+                        trigger: ".main-slider img", // Etkiyi hangi alan tetikleyecek
+                        start: "top top", // Başlama noktası (sayfa üstü)
+                        end: "bottom top", // Bitiş noktası (main-slider alanı kaybolduğunda)
+                        scrub: true, // Kaydırmaya bağlı olarak akıcı animasyon
+                    },
+                }
+            );
+
+            // Başlık için animasyon
+            gsap.fromTo(
+                ".main-slider video",
+                {
+                    y: 0, // İlk pozisyon
+                },
+                {
+                    y: -60, // Yukarı kayma
+                    scrollTrigger: {
+                        trigger: ".main-slider video", // Etkiyi hangi alan tetikleyecek
+                        start: "top top", // Başlama noktası (sayfa üstü)
+                        end: "bottom top", // Bitiş noktası (main-slider alanı kaybolduğunda)
+                        scrub: true, // Kaydırmaya bağlı olarak akıcı animasyon
+                    },
+                }
+            );
+
+            // Başlık için animasyon
+            gsap.fromTo(
+                ".main-slider h1",
+                {
+                    y: 0, // İlk pozisyon
+                    opacity: 1, // Görünürlük
+                },
+                {
+                    y: -100, // Yukarı kayma
+                    opacity: 0, // Şeffaflık
+                    scrollTrigger: {
+                        trigger: ".main-slider", // Etkiyi hangi alan tetikleyecek
+                        start: "top top", // Başlama noktası (sayfa üstü)
+                        end: "bottom top", // Bitiş noktası (main-slider alanı kaybolduğunda)
+                        scrub: true, // Kaydırmaya bağlı olarak akıcı animasyon
+                    },
+                }
+            );
+
+            // Paragraf için animasyon
+            gsap.fromTo(
+                ".main-slider p",
+                {
+                    y: 0,
+                    opacity: 1,
+                },
+                {
+                    y: -90,
+                    opacity: 0,
+                    scrollTrigger: {
+                        trigger: ".main-slider",
+                        start: "top top",
+                        end: "bottom top",
+                        scrub: true,
+                    },
+                }
+            );
+
+            // Sayaç
+            function animateValue(element, start, end, duration) {
+                let startTimestamp = null;
+                const step = (timestamp) => {
+                    if (!startTimestamp) startTimestamp = timestamp;
+                    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                    const current = Math.floor(progress * (end - start) + start);
+                    element.textContent = current + " +";
+                    if (progress < 1) {
+                        window.requestAnimationFrame(step);
+                    }
+                };
+                window.requestAnimationFrame(step);
+            }
+
+            // Create ScrollTrigger for the counter section
+            ScrollTrigger.create({
+                trigger: ".counter-section",
+                start: "top 80%",
+                onEnter: () => {
+                    // Animate experience counter
+                    const experienceCounter = document.querySelector('.experience-counter');
+                    animateValue(experienceCounter, 0, 30, 2000);
+                    
+                    // Animate team counter
+                    const teamCounter = document.querySelector('.team-counter');
+                    animateValue(teamCounter, 0, 2000, 2000);
+                },
+                once: true // Animation will only play once
+            });
+
+            // Yazılar için animasyon
+            gsap.from(".main-slider h1", { 
+                y: 100, 
+                opacity: 0,  // Başlangıçta opacity 0
+                duration: 1, 
+                ease: "power3.out" 
+            });
+
+            gsap.from(".main-slider p", { 
+                y: 80, 
+                opacity: 0,  // Başlangıçta opacity 0
+                duration: 1, 
+                delay: 0.5, 
+                ease: "power3.out" 
+            });
+        });
+    </script>
+
+    <script>
+        // Sayfa yüklendiğinde çalışacak kodlar
+        document.addEventListener("DOMContentLoaded", () => {
+            // Header sticky kontrolü için optimizasyon
+            let lastScrollPosition = 0;
+            let ticking = false;
+            
+            // Scroll event listener ekleme
+            window.addEventListener('scroll', function() {
+                lastScrollPosition = window.scrollY;
+                
+                // RAF kullanarak performans optimizasyonu
+                if (!ticking) {
+                    window.requestAnimationFrame(function() {
+                        handleScroll(lastScrollPosition);
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            });
+            
+            // Scroll işlemini yöneten fonksiyon
+            function handleScroll(scrollPos) {
+                if (scrollPos > 50) {
+                    document.body.classList.add('header-sticky');
+                } else {
+                    document.body.classList.remove('header-sticky');
+                }
+            }
+
+            // GSAP ve ScrollTrigger'ı başlat
+            gsap.registerPlugin(ScrollTrigger);
+        });
+    </script>
+
+    <style type="text/css">
+
+        header:before {
+            content:'';
+            -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(8px);
+            background-color: hsla(35, 20%, 62%, .2);
+            height: 100px;
+            left: 0;
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            transition: opacity .5s cubic-bezier(.77,0,.18,1);
+            width: 100%;
+            border-bottom: 1px solid rgba(255, 255, 255, .3);
+            transition: all 1s ease;
+        }
+
+        .animate-logo {transition: all .5s cubic-bezier(.77,0,.18,1);}
+        .menu-anim-text {transition: all .5s ease;}
+        .menu-anim {transition: all .5s cubic-bezier(.77,0,.18,1);}
+
+        body.header-sticky header:before {opacity: 1; height: 80px;}
+        body.header-sticky .animate-logo {margin-top: -25px !important;}
+        body.header-sticky .animate-logo img {filter: invert(1);}
+        body.header-sticky .menu-anim-text {margin-top: -20px !important;}
+        body.header-sticky .menu-anim-text button {color:#000 !important;}
+        body.header-sticky .menu-anim {margin-top: -25px !important;}
+        body.header-sticky .menu-anim button {color:#000 !important;}
+
+        .mobile-warning {
+            display: none;
+        }
+
+        @media (max-width: 1024px) {
+            .page-wrapper {
+                display: none;
+            }
+
+            .mobile-warning {
+                display: block;
+            }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+
+        @keyframes scaleOut {
+            from {
+                transform: scale(1);
+                opacity: 1;
+            }
+            to {
+                transform: scale(100);
+                opacity: 0;
+            }
+        }
+
+        @keyframes slideUpAndHide {
+            from {
+                height: 100%;
+                top: 0;
+            }
+            to {
+                height: 57px;
+                top: 35px;
+            }
+        }
+
+        @keyframes menuAnim {
+            from {
+                opacity: 0;
+                top: -30px;
+            }
+            to {
+                opacity: 1;
+                top: 40px;
+            }
+        }
+
+        @keyframes menuAnimText {
+            from {
+                opacity: 0;
+                top: -30px;
+            }
+            to {
+                opacity: 1;
+                top: 45px;
+            }
+        }
+
+        @keyframes menuAnimTextActive {
+            from {
+                top: 45px;
+            }
+            to {
+                top: 22px;
+            }
+        }
+
+        .menu-anim-text {
+            animation: menuAnimText 1s ease 1.5s forwards;
+            opacity: 0;
+        }
+
+        .menu-anim {
+            animation: menuAnim 1s ease 1.5s forwards;
+            opacity: 0;
+        }
+
+        .animate-fade-out {
+            animation: fadeOut 2.2s cubic-bezier(.77, 0, .175, 1) .6s forwards;
+        }
+
+        .animate-scale-out {
+            animation: scaleOut 2.2s cubic-bezier(.77, 0, .175, 1) .6s forwards;
+            transform-origin: center;
+        }
+
+        /* Yeni animasyon */
+        .animate-logo {
+            animation: slideUpAndHide 1s ease 1s forwards;
+        }
+
+        .navigation {backdrop-filter: blur(8px); background-color: hsla(35, 20%, 62%, .2); border-top: 1px solid rgba(255, 255, 255, .3); border-right: 1px solid rgba(255, 255, 255, .3);}
+
+    </style>
+
+</head>
+<body class="bg-white">
+
+    <div class="mobile-warning heading-style-h2">Bu site yalnızca masaüstü cihazlarda görüntülenebilir. Lütfen masaüstü cihazınızı kullanın.
+    </div>
+
+    <div class="page-wrapper">
+    <!-- Header -->
+
+    <header class="sticky top-0 z-40">
+        <div class="absolute top-10 left-[50px] flex items-center menu-anim-text">
+            <button class="text-white px-2 py-2 rounded-full text-xs mr-4">EN</button>
+            <button class="text-white px-4 py-2 rounded-lg text-xs">İLETİŞİM</button>
+        </div>
+        <div class="absolute top-10 right-[50px] flex items-center menu-anim">
+            <button class="menu-btn ml-4 text-2xl w-[50px] h-[50px] text-white rounded-full p-2 flex items-center justify-center"><i class="ti ti-menu-3"></i></button>
+        </div>
+    </header>
+
+    <!-- Logo anim -->
+
+    <div class="fixed top-0 left-0 w-full h-full flex justify-center items-center z-[60] animate-logo pointer-events-none">
+        <div class="relative z-10 sticky top-0 pointer-events-auto">
+            <a href="/">
+                <img src="ekol-logistic.svg" class="max-w-[80px]" alt="Logo">
+            </a>
+        </div>
+    </div>
+    
+    <div class="fixed top-0 left-0 w-full h-full flex justify-center items-center z-40 bg-white animate-fade-out pointer-events-none">
+        <div class="relative w-[180px] h-[80px] flex items-center justify-center">
+            <div class="absolute inset-0 bg-[#4cabe8] w-[180px] h-[80px] flex items-center justify-center animate-scale-out"></div>
+        </div>
+    </div>
+
+    <div class="fixed top-0 left-0 flex w-full h-[80px] top-6 z-20 justify-center items-center animate-fade-bg p-6 pointer-events-none">
+        <div class="relative w-full h-[80px] rounded-lg"></div>
+    </div>
+ 
+    <!-- Header menu -->
+
+    <div id="slideMenu" class="fixed top-0 -right-full w-full h-full bg-black z-[60] transition-all duration-500 ease-in-out">
+        <!-- Kapama Butonu -->
+        <button class="close-menu-btn absolute top-10 right-10 w-12 h-12 bg-white/60 hover:bg-white/80 rounded-full flex items-center justify-center transition-all duration-300">
+            <i class="ti ti-x text-xl"></i>
+        </button>
+
+        <div class="h-full p-20 flex flex-col justify-between">
+            <!-- Menü Öğeleri -->
+            <div class="space-y-8 mt-8">
+                <!-- Her bir menü öğesi -->
+                <div class="flex items-center group cursor-pointer">
+                    <span class="text-gray-600 text-sm mr-4">01</span>
+                    <span class="text-gray-400 hover:text-white transition-colors text-5xl font-light">Hakkımızda</span>
+                    <hr class="mx-4 w-12 border-gray-700 opacity-0 group-hover:opacity-100 transition-opacity">
+                </div>
+
+                <div class="flex items-center group cursor-pointer">
+                    <span class="text-gray-600 text-sm mr-4">02</span>
+                    <span class="text-gray-400 hover:text-white text-5xl font-light">Kurumsal</span>
+                    <hr class="mx-4 w-12 border-gray-700 opacity-0 group-hover:opacity-100 transition-opacity">
+                </div>
+                
+                <div class="flex items-center group cursor-pointer">
+                    <span class="text-gray-600 text-sm mr-4">03</span>
+                    <span class="text-gray-400 hover:text-white text-5xl font-light">Lojistik</span>
+                    <hr class="mx-4 w-12 border-gray-700 opacity-0 group-hover:opacity-100 transition-opacity">
+                </div>
+
+                <div class="flex items-center group cursor-pointer">
+                    <span class="text-gray-600 text-sm mr-4">04</span>
+                    <span class="text-gray-400 hover:text-white text-5xl font-light">Kariyer</span>
+                    <hr class="mx-4 w-12 border-gray-700 opacity-0 group-hover:opacity-100 transition-opacity">
+                </div>
+
+                <div class="flex items-center group cursor-pointer">
+                    <span class="text-gray-600 text-sm mr-4">05</span>
+                    <span class="text-gray-400 hover:text-white text-5xl font-light">İletişim</span>
+                    <hr class="mx-4 w-12 border-gray-700 opacity-0 group-hover:opacity-100 transition-opacity">
+                </div>
+
+            </div>
+
+            <!-- İletişim Bilgileri -->
+            <div class="flex gap-40 text-gray-400 text-sm border-t pt-20 border-gray-600">
+                <!-- İletişim Bloğu 1 -->
+                <div>
+                    <h3 class="text-white mb-4">İletişime Geç</h3>
+                    <p class="mb-2">Eyüp Sultan, Mehmet Akif Cd. No:3/A 34885 <br>Sancaktepe/İstanbul</p>
+                    <p>Tel: 444 3565 (EKOL)</p>
+                </div>
+                
+                <!-- İletişim Bloğu 2 -->
+                <div>
+                    <h3 class="text-white mb-4">İş Başvuruları</h3>
+                    <p class="mb-2">kariyer@ekol.com</p>
+                </div>
+                
+                <!-- Sosyal Medya Linkleri -->
+                <div class="flex gap-4">
+                    <a href="#" class="text-white hover:text-gray-300 transition-colors">
+                        <i class="ti ti-brand-instagram text-xl"></i>
+                    </a>
+                    <a href="#" class="text-white hover:text-gray-300 transition-colors">
+                        <i class="ti ti-brand-x text-xl"></i>
+                    </a>
+                    <a href="#" class="text-white hover:text-gray-300 transition-colors">
+                        <i class="ti ti-brand-youtube text-xl"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dark White -->
+
+    <div class="fixed  -translate-y-1/2 top-[40%] left-10 items-center gap-2 mix-blend-difference z-20">
+        <div class="flex items-center gap-2 bg-white/50 p-1 rounded-full flex-col-reverse hidden">
+            <!-- Light Mode Button -->
+            <button class="px-2 py-1 rounded-full bg-white text-yellow-500 shadow-sm hover:bg-gray-50">
+                <i class="fas fa-sun text-base"></i>
+            </button>
+            
+            <!-- Dark Mode Button -->
+            <button class="px-[10px] py-1 rounded-full text-black hover:bg-gray-200">
+                <i class="fas fa-moon text-base"></i>
+            </button>
+        </div>
+        <div class="absolute transform rotate-[270deg] left-0 right-0 top-[200px] flex items-center gap-2 flex-col-reverse">
+            <i class="absolute -right-[70px] -bottom-[5px] transform rotate-[90deg] text-xl text-white ti ti-arrow-narrow-up-dashed"></i>
+            <p class="text-white whitespace-nowrap text-xs"> YUKARIYA KAYDIR</p>
+        </div>
+    </div>
+
+    <!-- Social -->
+
+    <div class="fixed  -translate-y-1/2 top-1/2 right-0 items-center mix-blend-difference z-20">
+        <p class="text-white transform rotate-[270deg] absolute right-0 whitespace-nowrap">Takip Edin – Fb. / Insta. / X.</p>
+    </div>
+
+    <!-- Slider -->
+    <div class="main-slider h-screen sticky top-0" id="mainSlider">
+        <div class="swiper mainSwiper h-full">
+            <div class="swiper-wrapper">
+                <!-- Slide 1 -->
+                <div class="swiper-slide">
+                    <div class="flex container mx-auto absolute -translate-y-1/2 bottom-40 right-0 left-0">
+                        <div class="w-1/2 p-10"></div>
+                        <div class="w-1/2 flex flex-col items-end justify-center pr-10">
+                            <h1 class="text-white text-5xl font-bold leading-[1.2] text-right">
+                                Güçlü Üretim,<br>Kaliteli Tasarım
+                            </h1>
+                            <p class="mt-10 text-white text-right">
+                                Ekol Lojistik, Avrupa'nın en büyük üreticisi olarak kaliteyi ve hızla değişen<br>pazar ihtiyaçlarını karşılamak için inovatif tasarımlar sunuyor.
+                            </p>
+                        </div>
+                    </div>
+                    <img src="img1.png" class="w-full h-full object-cover absolute top-0 left-0 -z-10 brightness-75" alt="Slider 1">
+                </div>
+
+                <!-- Slide 2 -->
+                <div class="swiper-slide">
+                    <div class="flex container mx-auto absolute bottom-40 right-0 left-0">
+                        <div class="w-1/2 flex flex-col items-start justify-center pl-10">
+                            <h1 class="text-white text-5xl font-bold leading-[1.2] text-left">
+                                Yüksek Verimlilik,<br>Düşük Çevresel Etki
+                            </h1>
+                            <p class="mt-10 text-white text-left">
+                                Çevre dostu üretim yöntemlerimizle, dünya çapındaki müşterilerimize<br>sürdürülebilir ve kaliteli tekstil ürünleri sunuyoruz.
+                            </p>
+                        </div>
+                        <div class="w-1/2 p-10"></div>
+                    </div>
+                    <img src="img4.png" class="w-full h-full object-cover absolute top-0 left-0 -z-10 brightness-75" alt="Slider 2">
+                </div>
+
+                <!-- Slide 3 -->
+                <div class="swiper-slide">
+                    <!--
+                    <div class="flex container mx-auto absolute -translate-y-1/2 top-1/2 right-0 left-0">
+                        <div class="w-1/2 p-10"></div>
+                        <div class="w-1/2 flex flex-col items-end justify-center pr-10">
+                            <h1 class="text-white text-5xl font-bold leading-snug text-right">
+                                Tekstil Alanında <br>Global Bir Güç
+                            </h1>
+                            <p class="mt-10 text-white text-right">
+                                1994'ten beri sektördeki lider konumumuzu, güçlü üretim tesislerimiz ve <br>deneyimli ekibimizle koruyoruz.
+                            </p>
+                        </div>
+                    </div>
+                    -->
+                    <video class="w-full h-full object-cover absolute top-0 left-0 -z-10 brightness-75 object-top" autoplay muted loop>
+                        <source src="tanitim.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+
+            <!-- Custom Navigation -->
+            <div class="navigation absolute w-1/4 bottom-0 gap-20 left-0 rounded-tr-lg px-8 py-4 pe-4 flex justify-around text-left text-xl text-black z-20">
+                <div class="flex items-center text-lg w-full">
+                    <span class="current-slide">1</span>
+                    <hr class="mx-4 w-12 border-gray-700">
+                    <span class="total-slides">3</span>
+                    <div class="ml-auto flex">
+                        <i class="fas fa-chevron-left mx-4 cursor-pointer swiper-button-prev-custom"></i>
+                        <i class="fas fa-chevron-right mx-4 cursor-pointer swiper-button-next-custom"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Corporate -->
+
+    <div class="flex justify-between px-40 pb-20 relative bg-white">
+        <div class="w-1/2 py-20 h-fit sticky top-6">
+            <h1 class="text-6xl font-bold leading-tight">
+                Ekol Lojistik: Gücünü Yılların Deneyiminden Alıyor
+            </h1>
+            <p class="mt-8 text-lg">1994 yılında Almanya’da kurulan Ekol Lojistik, 2000’i aşkın personeli ile Avrupa'nın en büyük üreticisi olup, hızla büyüyen ve gelişen üretim tesislerinde, kaliteyi ve inovasyonu ön planda tutmaktadır.</p>
+        </div>
+        <div class="text-white w-1/3 flex flex-wrap mb-auto items-center justify-center rounded-b mt-20">
+            <div class="relative bg-gray-900 text-center h-full flex flex-wrap rounded-b">
+                <p class="absolute bottom-10 p-4 text-sm text-gray-400 z-10">
+                    Felsefemiz, öğrenme ve büyümeyi bir araya getirerek <span class="font-bold text-gray-300">tekstil sektöründe ürünler yaratmaktır.</span>
+                </p>
+                <video class="brightness-75 object-cover object-[47%] min-h-[600px] w-full rounded-b" autoplay muted loop>
+                    <source src="mini.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="text-center h-full flex flex-wrap mt-5">
+                <button class="flex items-center gap-4">
+                    <span class="text-black font-semibold">Tanıtım Video İzle</span> <i class="bg-black rounded-full w-12 h-12 fas fa-play flex items-center justify-center"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Group -->
+
+    <div class="mx-auto py-20 px-40 bg-gray-100 text-black relative">
+        <div class="flex justify-between items-center mb-8">
+            <div>
+                <h1 class="text-3xl header-text">Çeşitli Ürün Gruplarımız</h1>
+                <p class="mt-2">İç giyim, pijama, ev giyimi ve örme dış giyim gibi geniş bir ürün yelpazesi ile kaliteyi her adımda hissedebilirsiniz.</p>
+            </div>
+            <a href="#" class="text-sm link">
+                Tüm ürün grupları
+                <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="card cursor-pointer bg-gray-200 transition-colors text-black hover:text-white rounded-lg relative group transition-all min-h-[400px] overflow-hidden">
+                <div class="w-full h-full absolute top-0 left-0 p-6 z-10 flex flex flex-col">
+                  
+                    <h2 class="text-2xl header-text mb-auto">İç Giyim</h2>
+                    <p class="description-text">Yüksek kaliteli pamuk ve mikrofiber ürünler.</p>
+                </div>
+                <img src="widget-ic-giyim.jpeg" class="rounded-lg object-cover brightness-75 transition-transform transition-opacity duration-1000 opacity-10 group-hover:opacity-100 w-full h-full transform scale-100 group-hover:scale-110" alt="Slider 2" />
+            </div>
+            <div class="card cursor-pointer bg-gray-200 transition-colors text-black hover:text-white rounded-lg relative group transition-all min-h-[400px] overflow-hidden">
+                <div class="w-full h-full absolute top-0 left-0 p-6 z-10 flex flex flex-col">
+                 
+                    <h2 class="text-2xl header-text mb-auto">Pijama</h2>
+                    <p class="description-text">Konforlu ve şık tasarımlar</p>
+                </div>
+                <img src="widget-pijama.jpeg" class="rounded-lg object-cover brightness-75 transition-transform transition-opacity duration-1000 opacity-10 group-hover:opacity-100 w-full h-full transform scale-100 group-hover:scale-110" alt="Slider 2" />
+            </div>
+            <div class="card cursor-pointer bg-gray-200 transition-colors text-black hover:text-white rounded-lg relative group transition-all min-h-[400px] overflow-hidden">
+                <div class="w-full h-full absolute top-0 left-0 p-6 z-10 flex flex flex-col">
+                  
+                    <h2 class="text-2xl header-text mb-auto">Ev Giyimi</h2>
+                    <p class="description-text">Lüks ev giyimi seçenekleri.</p>
+                </div>
+                <img src="widget-dis-giyim.jpeg" class="rounded-lg object-cover brightness-75 transition-transform transition-opacity duration-1000 opacity-10 group-hover:opacity-100 w-full h-full transform scale-100 group-hover:scale-110" alt="Slider 2" />
+            </div>
+            <div class="card cursor-pointer bg-gray-200 transition-colors text-black hover:text-white rounded-lg relative group transition-all min-h-[400px] overflow-hidden">
+                <div class="w-full h-full absolute top-0 left-0 p-6 z-10 flex flex flex-col">
+                  
+                    <h2 class="text-2xl header-text mb-auto">Örme Dış Giyim</h2>
+                    <p class="description-text">Modern ve dayanıklı dış giyim koleksiyonları.</p>
+                </div>
+                <img src="widget-orme.jpeg" class="rounded-lg object-cover brightness-75 transition-transform transition-opacity duration-1000 opacity-10 group-hover:opacity-100 w-full h-full transform scale-100 group-hover:scale-110" alt="Slider 2" />
+            </div>
+        </div>
+    </div>
+
+    <!-- Corporate -->
+
+    <div class="flex justify-between px-40 relative text-center bg-gray-200">
+        <div class="w-full py-20 h-fit sticky top-0">
+            <div class="mb-16">
+                <h2 class="text-6xl font-bold leading-tight">Ekol Lojistik Uluslararası Fuarlarda</h2>
+                <p class="mt-3 text-lg">2025 yılında, Avrupa'nın en büyük tekstil fuarlarına katılacak olan Ekol Lojistik, yeni koleksiyonları ve çevre dostu üretim süreçlerini sergileyecek.</p>
+            </div>
+            <div class="w-full bg-gray-200 rounded-lg">
+                <img src="fuar2.jpeg" alt="istanbul" class="rounded-lg w-full brightness-75">
+            </div>
+        </div>
+    </div>
+
+    <!-- News -->
+
+    <div class="mx-auto p-8 px-40 relative bg-white">
+        <div class="flex justify-between items-center border-b pb-5 mb-8">
+            <h1 class="text-2xl font-medium">Bizden Haberler</h1>
+            <div class="text-sm  w-1/3 text-gray-500 flex items-center justify-between space-x-3">
+                <span></span>
+                <a href="#" class="text-gray-700 hover:text-black">
+                    Tüm Haberleri Gör <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+        <div class="flex gap-8">
+            <div class="w-full bg-gray-200 rounded-lg">
+                <img src="fuar.jpeg" alt="istanbul" class="rounded-lg w-full brightness-75">
+            </div>
+            <div class="w-1/2 p-6 bg-gray-50 rounded-lg shadow-md">
+                <div class="sticky top-10">
+                    <h2 class="text-xl font-bold mb-2">Ekol Lojistik Yılın Üreticisi Ödülünü Aldı!</h2>
+                    <a href="#" class="text-sm font-medium text-gray-600 inline-block  mb-10">
+                        Habere git <span class="border-t border-black inline-block w-8"></span>
+                    </a>
+                    <p class="text-sm text-gray-600">
+                        Ekol Lojistik, endüstriyel tasarımlarda üstün başarılarıyla 'Yılın Üreticisi' ödülüne layık görüldü.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Works -->
+
+    <div class="mx-auto p-8 px-40 relative bg-white">
+        <div class="flex gap-8">
+            
+            <div class="w-1/2 p-6 bg-gray-50 rounded-lg shadow-md">
+                <div class="sticky top-10">
+                    <h2 class="text-xl font-bold mb-2">Yeni Üretim Tesisi Zonguldak'ta Açıldı</h2>
+                    <a href="#" class="text-sm font-medium text-gray-600 inline-block  mb-10">
+                        Habere git <span class="border-t border-black inline-block w-8"></span>
+                    </a>
+                    <p class="text-sm text-gray-600">
+                        Ekol Lojistik, yeni Zonguldak tesisinde üretim kapasitesini artırarak Avrupa ve Amerika'daki pazar payını genişletiyor.
+                    </p>
+                </div>
+            </div>
+            <div class="w-full bg-gray-200 rounded-lg">
+                <img src="slider4.jpeg" alt="istanbul" class="rounded-lg">
+            </div>
+        </div>
+    </div>
+
+    <!-- Works -->
+
+    <div class="mx-auto p-8 px-40 relative bg-white">
+        <div class="flex gap-8">
+            <div class="w-1/2 bg-gray-200 rounded-lg">
+                <img src="slider5.jpeg" alt="istanbul" class="rounded-lg">
+            </div>
+            <div class="w-1/2 p-6 bg-gray-50 rounded-lg shadow-md">
+                <div class="sticky top-10">
+                    <h2 class="text-xl font-bold mb-2">Ekol Lojistik Sürdürülebilirlikte Öncü Olmaya Devam Ediyor</h2>
+                    <a href="#" class="text-sm font-medium text-gray-600 inline-block  mb-10">
+                        Habere git <span class="border-t border-black inline-block w-8"></span>
+                    </a>
+                    <p class="text-sm text-gray-600">
+                        Yeşil üretim yöntemleri ve enerji verimliliği politikaları ile çevre dostu üretim süreçlerine katkı sağlıyoruz.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Top -->
+
+    <div class="relative bg-white z-10">
+        <img src="contact2.jpg" alt="Group of people in a meeting room for a presentation" class="w-full h-auto brightness-75">
+        <div class="counter-section absolute bottom-0 gap-20 left-40 bg-black bg-opacity-75 p-8 flex justify-around text-left text-xl text-[#EFE8DC]">
+            <div>
+                <span class="block text-4xl font-bold experience-counter">0 +</span>
+                Yılı aşkın köklü deneyim
+            </div>
+            <div>
+                <span class="block text-4xl font-bold team-counter">0 +</span>
+                Kişilik uzman ve kaliteli ekib
+            </div>
+        </div>
+    </div>
+
+    <div class="px-40 py-20 flex gap-20 bg-black text-[#EFE8DC] relative z-10 hidden">
+        <div class="mt-12 flex flex-wrap justify-between items-center">
+            <h1 class="text-6xl font-bold mb-6 leading-[75px]">Düşünceleriniz bizim için önemli.</h1>
+            <p class="text-lg w-full">Sizlerden gelen geri dönüşler</p>
+        </div>
+        <div class="mt-12 flex flex-wrap justify-between items-center">
+            <div>
+                <p class="mt-4 text-lg leading-relaxed">“Uzun süredir bu tekstil firmasıyla çalışıyorum ve her seferinde kalite, güven ve profesyonellikten ödün vermediklerini görüyorum. Ürünleri sadece estetik olarak değil, dayanıklılık ve konfor açısından da üst düzeyde. Ekipleri son derece ilgili ve her aşamada çözüm odaklı yaklaşıyorlar. İş birliğimizden son derece memnunum ve uzun yıllar devam etmeyi umuyorum. Teşekkürler!”</p>
+                <p class="mt-6 font-bold">Mehmet Yılmaz</p>
+                <p class="text-sm text-gray-500">Zonguldak Tekstil</p>
+            </div>
+
+            <div class="flex items-center text-lg w-full mt-10">
+                <span>1</span>
+                <hr class="mx-4 w-16 border-gray-700">
+                <span>3</span>
+                <div class="ml-auto">
+                    <i class="fas fa-chevron-left mx-4 cursor-pointer"></i>
+                    <i class="fas fa-chevron-right mx-4 cursor-pointer"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+
+    <div class="mx-auto p-0 bg-gray-100 relative z-10">
+        <!-- Header -->
+        <div class="flex justify-between items-center py-16 px-40">
+            <div>
+                <h1 class="text-4xl font-bold">Ekol Lojistik'de Kariyer Fırsatları</h1>
+                <p class="text-lg mt-2">Genç ve dinamik ekibimize katılarak, sektördeki en iyi üretim ve tasarım projelerinde yer alabilirsiniz.</p>
+            </div>
+            <button class="bg-black text-white py-2 px-4 rounded-lg flex items-center space-x-2">
+                <span>Açık Pozisyonları İnceleyin</span>
+                <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+
+        <hr class="border-gray-300 mb-16">
+
+        <!-- Content Section -->
+        <footer class="grid grid-cols-5 gap-12 mb-16 px-40">
+            <div class="col-span-1">
+                <p><b class="block">Kurumsal Bilgiler</b></p>
+                <div class="mt-4 space-y-2">
+                    <p><a href="#" class="text-gray-800">Hakkımızda</a></p>
+                    <p><a href="#" class="text-gray-800">Vizyon & Misyon</a></p>
+                    <p><a href="#" class="text-gray-800">Sosyal Sorumluluk</a></p>
+                    <p><a href="#" class="text-gray-800">Çevre Politikası</a></p>
+                </div>
+            </div>
+            <div class="col-span-1">
+                <p><b class="block">Ürünler ve Hizmetler</b></p>
+                <div class="mt-4 space-y-2">
+                    <p><a href="#" class="text-gray-800">İç Giyim</a></p>
+                    <p><a href="#" class="text-gray-800">Pijama & Ev Giyimi</a></p>
+                    <p><a href="#" class="text-gray-800">Örme Dış Giyim</a></p>
+                    <p><a href="#" class="text-gray-800">Tasarım & Ar-Ge</a></p>
+                    <p><a href="#" class="text-gray-800">Üretim Süreçleri</a></p>
+                    <p><a href="#" class="text-gray-800">Kalite Yönetim Sistemi</a></p>
+                </div>
+            </div>
+            <div class="col-span-1">
+                <p class="font-bold">Sertifikalar ve İletişim</p>
+                <div class="mt-4 space-y-2">
+                    <p><a href="#" class="text-gray-800">Oekotex 100</a></p>
+                    <p><a href="#" class="text-gray-800">Organic Content Standard (OCS)</a></p>
+                    <p><a href="#" class="text-gray-800">Diğer Sertifikalar</a></p>
+                    <p><a href="#" class="text-gray-800">İletişim Bilgileri</a></p>
+                    <p><a href="#" class="text-gray-800">Sosyal Medya</a></p>
+                    <p><a href="#" class="text-gray-800">İletişim Formu</a></p>
+                </div>
+            </div>
+             <!-- Newsletter Section -->
+            <div class="p-6 rounded-lg col-span-2 h-fit ml-10 bg-gradient-to-bl from-gray-100 via-gray-200 to-gray-100">
+                <h2 class="text-lg font-bold">Bizden haberdar olmak için bültenimize abone olun</h2>
+                <div class="flex mt-4">
+                    <input type="email" placeholder="Email address" class="w-full p-2 rounded-l-lg">
+                    <button class="bg-black text-white px-8 py-2 rounded-r-lg text-sm whitespace-nowrap">Kayıt Ol</button>
+                </div>
+                <div class="mt-4">
+                    <input type="checkbox" id="agree" class="mr-2">
+                    <label for="agree" class="text-sm">Yeniliklerimizden haberdar olabilmen için onay ver.</label>
+                </div>
+            </div>
+
+        </footer>
+
+        <!-- Footer -->
+        <div class="flex justify-between items-center text-sm mt-8 py-10 px-40 border-t">
+            <p>© 2025 Ekol Lojistik San. ve Tic. A.Ş Tüm Hakları Saklıdır.</p>
+            <p><a href="#" class="text-gray-800">Gizlilik Politikası</a> | <a href="#" class="text-gray-800">Kullanım Şartları</a> | <a href="#" class="text-gray-800">Çerez Politikası</a></p>
+        </div>
+    </div>
+
+
+</div>
+</body>
+
+<script>
+
+    // Swiper başlatma
+const swiper = new Swiper('.mainSwiper', {
+    slidesPerView: 1,
+    spaceBetween: 0,
+    autoplay: true,
+    loop: true,
+    speed: 1000,
+    effect: 'slide',
+    fadeEffect: { crossFade: true },
+    navigation: {
+        nextEl: '.swiper-button-next-custom',
+        prevEl: '.swiper-button-prev-custom',
+    },
+    on: {
+        init: function() {
+            updateSlideNumbers(this);
+            initTextAnimation(this.slides[this.activeIndex]);
+        },
+        slideChangeTransitionStart: function() {
+            // Slide değişimi başladığında hemen animasyonu başlat
+            const nextSlide = this.slides[this.activeIndex];
+            prepareTextAnimation(nextSlide); // Ön hazırlık yap
+            initTextAnimation(nextSlide);
+        },
+        slideChange: function() {
+            updateSlideNumbers(this);
+        }
+    }
+});
+
+// Slide numaralarını güncelleme
+function updateSlideNumbers(swiper) {
+    const currentSlide = document.querySelector('.current-slide');
+    const totalSlides = document.querySelector('.total-slides');
+    currentSlide.textContent = (swiper.realIndex + 1).toString().padStart(2, '0');
+    totalSlides.textContent = (swiper.slides.length - 2).toString().padStart(2, '0');
+}
+
+// Metin animasyonu için ön hazırlık
+function prepareTextAnimation(slide) {
+    const text = slide.querySelector('h1');
+    const paragraph = slide.querySelector('p');
+    
+    if (text) {
+        text.style.whiteSpace = 'normal'; // Alt satıra düşmesini sağla
+        text.style.wordSpacing = 'normal'; // Kelime aralıklarını normale ayarla
+        text.style.letterSpacing = 'normal'; // Harf aralıklarını normale ayarla
+    }
+    
+    if (paragraph) {
+        paragraph.style.whiteSpace = 'normal';
+    }
+}
+
+// Performanslı yazı animasyon fonksiyonu
+function initTextAnimation(slide) {
+    const text = slide.querySelector('h1');
+    const paragraph = slide.querySelector('p');
+
+    if (text && text._animation) text._animation.kill();
+    if (paragraph && paragraph._animation) paragraph._animation.kill();
+
+    // H1 animasyonu
+    if (text) {
+        const originalHTML = text.dataset.original || text.innerHTML.trim(); // innerHTML'i al
+        if (!text.dataset.original) text.dataset.original = originalHTML; // sadece ilk seferde sakla
+
+        text.innerHTML = ''; // sıfırla
+        const tempContainer = document.createElement('div');
+        tempContainer.innerHTML = originalHTML;
+
+        const fragment = document.createDocumentFragment();
+
+        // Her node'u sırayla işle (metin ya da <br>)
+        tempContainer.childNodes.forEach((node) => {
+            if (node.nodeName === 'BR') {
+                fragment.appendChild(document.createElement('br'));
+                return;
+            }
+
+            const lineWrapper = document.createElement('span');
+            lineWrapper.style.display = 'inline-block';
+            lineWrapper.style.width = '100%';
+
+            const words = node.textContent.trim().split(/\s+/);
+
+            words.forEach((word, wordIndex) => {
+                const wordSpan = document.createElement('span');
+                wordSpan.style.display = 'inline-block';
+                wordSpan.style.marginRight = '8px';
+                wordSpan.style.whiteSpace = 'nowrap';
+
+                for (let i = 0; i < word.length; i++) {
+                    const charSpan = document.createElement('span');
+                    charSpan.textContent = word[i];
+                    charSpan.style.display = 'inline-block';
+                    charSpan.style.opacity = '0';
+                    charSpan.style.transform = 'translateY(20px)';
+                    wordSpan.appendChild(charSpan);
+                }
+
+                lineWrapper.appendChild(wordSpan);
+
+                if (wordIndex < words.length - 1) {
+                    const space = document.createElement('span');
+                    space.innerHTML = '&nbsp;';
+                    lineWrapper.appendChild(space);
+                }
+            });
+
+            fragment.appendChild(lineWrapper);
+        });
+
+        text.appendChild(fragment);
+
+        text._animation = gsap.to(text.querySelectorAll('span span'), {
+            opacity: 1,
+            y: 0,
+            stagger: 0.05,
+            duration: 0.4,
+            ease: 'power2.out',
+            delay: 0.1
+        });
+    }
+
+    // P animasyonu
+    if (paragraph) {
+        gsap.set(paragraph, {
+            opacity: 0,
+            y: 20
+        });
+
+        paragraph._animation = gsap.to(paragraph, {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            delay: 0.4,
+            ease: 'power3.out'
+        });
+    }
+}
+
+</script>
+
+<!-- Add this JavaScript before the closing body tag -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const menuBtn = document.querySelector('.menu-btn');
+        const closeBtn = document.querySelector('.close-menu-btn');
+        const slideMenu = document.getElementById('slideMenu');
+        const menuIcon = menuBtn.querySelector('i');
+
+        // Menüyü açma fonksiyonu
+        function openMenu() {
+            slideMenu.classList.remove('-right-full');
+            slideMenu.classList.add('right-0');
+            menuIcon.classList.remove('ti-menu-2');
+            menuIcon.classList.add('ti-x');
+        }
+
+        // Menüyü kapatma fonksiyonu
+        function closeMenu() {
+            slideMenu.classList.remove('right-0');
+            slideMenu.classList.add('-right-full');
+            menuIcon.classList.remove('ti-x');
+            menuIcon.classList.add('ti-menu-2');
+        }
+
+        // Menü butonu tıklama olayı
+        menuBtn.addEventListener('click', openMenu);
+
+        // Kapama butonu tıklama olayı
+        closeBtn.addEventListener('click', closeMenu);
+    });
+</script>
+
+<script type="text/javascript">
+    document.querySelectorAll('form').forEach(function(form) {
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            // Submit işlemini engeller
+            return false;
+            // Bu da submit olayını durdurur
+        });
+    });
+
+    document.querySelectorAll('a').forEach(function(anchor) {
+        anchor.addEventListener('click', function(event) {
+            event.preventDefault();
+            // Linkin tıklanmasını engeller
+        });
+    });
+
+    document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+        // Sağ tıklamayı engeller
+    });
+</script>
+
+</html>
