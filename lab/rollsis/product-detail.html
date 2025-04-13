@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>RS 80 Endüstriyel Sarmal Kapı | Rollsis</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .gallery {
+            
+        }
+
+        .gallery img {
+            width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+            position: sticky;
+            top: 20px;
+        }
+
+        .product-info h1 {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .product-info p {
+            margin-bottom: 15px;
+        }
+
+        .sku {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .category {
+            color: #0066cc;
+            text-decoration: none;
+        }
+
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: #0066cc;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #f5f5f5;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        .accordion {
+            margin: 40px 0;
+        }
+
+        .accordion-item {
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+        }
+
+        .accordion-header {
+            padding: 15px;
+            background: #f5f5f5;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .accordion-content {
+            padding: 15px;
+            display: none;
+        }
+
+        .accordion-content.active {
+            display: block;
+        }
+
+        .specs-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .specs-table td {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .specs-table td:first-child {
+            width: 30%;
+            font-weight: bold;
+        }
+
+        .slider {
+            margin: 40px 0;
+        }
+
+        .slider-container {
+            overflow: hidden;
+        }
+
+        .slider-track {
+            display: flex;
+            gap: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .slider-item {
+            flex: 0 0 300px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .variants {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .variant-item {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .variant-item.active {
+            border-color: #0066cc;
+            background: #f0f7ff;
+        }
+
+        .alternative-products {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .slider-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .slider-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .slider-controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .slider-button {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .slider-button:hover {
+            background: #f5f5f5;
+            border-color: #999;
+        }
+
+        .slider-wrapper {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slider-track {
+            display: flex;
+            gap: 20px;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card {
+            flex: 0 0 calc(25% - 15px);
+            border: 1px solid #eee;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transform: translateY(-5px);
+        }
+
+        .product-image {
+            position: relative;
+            padding-top: 75%;
+            background: #f5f5f5;
+        }
+
+        .product-image img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 15px;
+        }
+
+        .product-category {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .product-name {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .product-specs {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .product-link {
+            display: inline-block;
+            padding: 8px 15px;
+            background: #0066cc;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 14px;
+            transition: background 0.3s ease;
+        }
+
+        .product-link:hover {
+            background: #0052a3;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="product-grid">
+            <div class="gallery">
+                <img src="https://placehold.co/600x400" alt="RS 80 Endüstriyel Sarmal Kapı">
+            </div>
+            
+            <div class="product-info">
+                <h1>RS 80 Endüstriyel Sarmal Kapı</h1>
+                <p class="sku">SKU: RS80-001</p>
+                <a href="#" class="category">Endüstriyel Sarmal Kapılar</a>
+                
+                <p>Tek cidarlı galvaniz çelik profil yapısıyla maksimum 14 metre genişliğe kadar uygulanabilen endüstriyel sarmal kapı sistemi.</p>
+                
+                <div class="variants">
+                    <div class="variant-item active">RS 80</div>
+                    <div class="variant-item">RS 80-D</div>
+                    <div class="variant-item">RST 100</div>
+                </div>
+                
+                <div class="buttons">
+                    <a href="#" class="btn btn-primary">Teklif Al</a>
+                    <a href="#" class="btn btn-secondary">Teknik Dosya İndir</a>
+                    <a href="#" class="btn btn-secondary">Yetkili Servis Randevusu</a>
+                    <p>Keşif, montaj ve arıza durumları için randevu alın.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion">
+            <div class="accordion-item">
+                <div class="accordion-header">Teknik Özellikler</div>
+                <div class="accordion-content active">
+                    <table class="specs-table">
+                        <tr>
+                            <td>Sac Kalınlığı</td>
+                            <td>0,8 mm - 1,2 mm</td>
+                        </tr>
+                        <tr>
+                            <td>Maksimum Genişlik</td>
+                            <td>14 metre</td>
+                        </tr>
+                        <tr>
+                            <td>Malzeme</td>
+                            <td>Galvaniz çelik</td>
+                        </tr>
+                        <tr>
+                            <td>Kullanım Alanları</td>
+                            <td>Endüstriyel tesisler, Depolar, Fabrikalar</td>
+                        </tr>
+                        <tr>
+                            <td>Montaj Tipleri</td>
+                            <td>A Model, B Model, C Model</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">İndirilebilir Dosyalar</div>
+                <div class="accordion-content">
+                    <ul>
+                        <li><a href="#">2D Autocad Çizim (dwg)</a></li>
+                        <li><a href="#">2D Teknik Çizim (jpg)</a></li>
+                        <li><a href="#">3D Çizim (IGS)</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">Aksesuarlar</div>
+                <div class="accordion-content">
+                    <ul>
+                        <li>Uzaktan Kumanda (2 Kanal, 4 Kanal)</li>
+                        <li>Şifre Paneli</li>
+                        <li>Kart Okuyucu</li>
+                        <li>Parmak İzi Sensörü</li>
+                        <li>Fotosel Sistemleri</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="alternative-products">
+          <div class="slider-header">
+              <h2 class="slider-title">Alternatif Ürünler</h2>
+              <div class="slider-controls">
+                  <button class="slider-button prev">←</button>
+                  <button class="slider-button next">→</button>
+              </div>
+          </div>
+          
+          <div class="slider-wrapper">
+              <div class="slider-track">
+                  <div class="product-card">
+                      <div class="product-image">
+                          <img src="/api/placeholder/300/225" alt="RST 100">
+                      </div>
+                      <div class="product-info">
+                          <div class="product-category">Endüstriyel Sarmal Kapılar</div>
+                          <h3 class="product-name">RST 100</h3>
+                          <div class="product-specs">
+                              Çift cidarlı, içi poliüretan dolgulu
+                              <br>Maks. genişlik: 8m
+                          </div>
+                          <a href="#" class="product-link">İncele</a>
+                      </div>
+                  </div>
+  
+                  <div class="product-card">
+                      <div class="product-image">
+                          <img src="/api/placeholder/300/225" alt="RS 80-D">
+                      </div>
+                      <div class="product-info">
+                          <div class="product-category">Endüstriyel Sarmal Kapılar</div>
+                          <h3 class="product-name">RS 80-D</h3>
+                          <div class="product-specs">
+                              Mikro delikli galvaniz çelik
+                              <br>Maks. genişlik: 10m
+                          </div>
+                          <a href="#" class="product-link">İncele</a>
+                      </div>
+                  </div>
+  
+                  <div class="product-card">
+                      <div class="product-image">
+                          <img src="/api/placeholder/300/225" alt="RS 100-RW">
+                      </div>
+                      <div class="product-info">
+                          <div class="product-category">Endüstriyel Sarmal Kapılar</div>
+                          <h3 class="product-name">RS 100-RW</h3>
+                          <div class="product-specs">
+                              İçi taş yünü dolgulu
+                              <br>Maks. genişlik: 10m
+                          </div>
+                          <a href="#" class="product-link">İncele</a>
+                      </div>
+                  </div>
+  
+                  <div class="product-card">
+                      <div class="product-image">
+                          <img src="/api/placeholder/300/225" alt="RSE 100">
+                      </div>
+                      <div class="product-info">
+                          <div class="product-category">Endüstriyel Sarmal Kapılar</div>
+                          <h3 class="product-name">RSE 100</h3>
+                          <div class="product-specs">
+                              Çift cidar içi boş alüminyum
+                              <br>Maks: 8.5m x 4m
+                          </div>
+                          <a href="#" class="product-link">İncele</a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+        <div class="slider">
+            <h2>İlham Veren Fikirler</h2>
+            <div class="slider-container">
+                <div class="slider-track">
+                    <div class="slider-item">
+                        <h3>Endüstriyel Estetik</h3>
+                        <p>Modern fabrika tasarımlarında kapı sistemlerinin rolü</p>
+                    </div>
+                    <div class="slider-item">
+                        <h3>Güvenlik ve Fonksiyonellik</h3>
+                        <p>Depo güvenliğini maksimize eden akıllı kapı çözümleri</p>
+                    </div>
+                    <div class="slider-item">
+                        <h3>Enerji Verimliliği</h3>
+                        <p>Endüstriyel kapılarda ısı yalıtımı ve enerji tasarrufu</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slider">
+            <h2>Projeler</h2>
+            <div class="slider-container">
+                <div class="slider-track">
+                    <div class="slider-item">
+                        <h3>Galataport İstanbul Modern Sanat Müzesi</h3>
+                        <p>Özel tasarım endüstriyel kapı uygulaması</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Accordion functionality
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const content = header.nextElementSibling;
+                content.classList.toggle('active');
+            });
+        });
+
+        // Variant selection
+        document.querySelectorAll('.variant-item').forEach(variant => {
+            variant.addEventListener('click', () => {
+                document.querySelector('.variant-item.active').classList.remove('active');
+                variant.classList.add('active');
+            });
+        });
+
+        const track = document.querySelector('.slider-track');
+        const cards = document.querySelectorAll('.product-card');
+        const cardWidth = cards[0].offsetWidth + 20; // Include gap
+        let currentIndex = 0;
+
+        document.querySelector('.prev').addEventListener('click', () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateSliderPosition();
+            }
+        });
+
+        document.querySelector('.next').addEventListener('click', () => {
+            if (currentIndex < cards.length - 4) {
+                currentIndex++;
+                updateSliderPosition();
+            }
+        });
+
+        function updateSliderPosition() {
+            track.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+        }
+    </script>
+</body>
+</html>
