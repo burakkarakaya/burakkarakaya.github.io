@@ -224,7 +224,7 @@ a:focus-visible {
 	margin-left: -0.065em;
 	font-size: clamp(2.5rem,12vw,7rem);
 	letter-spacing: -0.105em;
-	font-variation-settings: "slnt" 0, "wdth" 400, "wght" 900, "INKT" 400;
+	font-variation-settings: "slnt" 0, "wdth" 400, "wght" 700, "INKT" 400;
 }
 
 i {
@@ -264,7 +264,7 @@ i {
 	max-width: 900px;
 	margin: 0 0 0.85em 0;
 	line-height: 1.2;
-	font-variation-settings: "slnt" 0, "wdth" 100, "wght" 500, "INKT" 100;
+	font-variation-settings: "slnt" 0, "wdth" 100, "wght" 700, "INKT" 100;
 }
 
 .content--sticky {
@@ -361,7 +361,7 @@ i {
 	font-weight: normal;
 	font-size: clamp(3rem,3vw,6rem);
 	margin: 0;
-	font-variation-settings: "slnt" 0, "wdth" 400, "wght" 900, "INKT" 400;
+	font-variation-settings: "slnt" 0, "wdth" 400, "wght" 700, "INKT" 400;
 }
 
 .content__text {
