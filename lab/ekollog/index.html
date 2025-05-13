@@ -404,8 +404,8 @@
                 <i class="fas fa-moon text-base"></i>
             </button>
         </div>
-        <div class="absolute transform rotate-[270deg] left-0 right-0 top-[200px] flex items-center gap-2 flex-col-reverse">
-            <i class="absolute -right-[70px] -bottom-[5px] transform rotate-[90deg] text-xl text-white ti ti-arrow-narrow-up-dashed"></i>
+        <div class="cursor-pointer absolute transform rotate-[270deg] left-0 right-0 top-[200px] flex items-center gap-2 flex-col-reverse transition-opacity duration-300 opacity-0 pointer-events-none" id="scrollToTop">
+            <i class="absolute -right-[80px] -bottom-[7px] transform rotate-[90deg] text-xl text-white ti ti-arrow-narrow-up-dashed"></i>
             <p class="text-white whitespace-nowrap text-xs"> YUKARIYA KAYDIR</p>
         </div>
     </div>
@@ -1871,6 +1871,33 @@
         }
     });
     </script>
+
+    <script>
+        window.addEventListener("load", function () {
+            const scrollToTopBtn = document.getElementById('scrollToTop');
+            if (!scrollToTopBtn) return;
+
+            window.addEventListener('scroll', function () {
+                if (window.scrollY > 300) {
+                    scrollToTopBtn.style.opacity = '1';
+                    scrollToTopBtn.style.pointerEvents = 'auto';
+                } else {
+                    scrollToTopBtn.style.opacity = '0';
+                    scrollToTopBtn.style.pointerEvents = 'none';
+                }
+            });
+
+            scrollToTopBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+    </script>
+
     <!--
     <script>
         document.addEventListener("DOMContentLoaded", function () {
