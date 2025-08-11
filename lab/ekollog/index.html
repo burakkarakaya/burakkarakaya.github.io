@@ -5,7 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Preload critical resources -->
     <link href="https://cdn.tailwindcss.com" as="script">
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Sen:wght@400..800&display=swap" as="style">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;700&family=Noto+Serif+Display:ital,wght@0,100..900;1,100..900&family=Square+Peg&display=swap">
     
     <!-- Defer non-critical CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
@@ -14,7 +18,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Dosis:wght@200..800&family=Sen:wght@400..800&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="grid.css">
     
     <title>Ekol Lojistik</title>
@@ -38,23 +42,74 @@
 
     <style>
         body {
-            font-family: 'Sen', sans-serif;
+            font-family: 'Noto Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
             color: #3b3b3b;
         }
 
-        h1 {
-            font-family: 'Sen', sans-serif;
+        h1, h2, h3 {
+            font-family: 'Noto Serif Display', Georgia, 'Times New Roman', serif;
             font-weight: 700;
         }
 
         p {
-            font-family: 'Sen', sans-serif;
+            font-family: 'Noto Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
             font-weight: 300;
+        }
+        
+        /* Yardımcı sınıf: Noto Sans kullanımı için */
+        .font-Noto {
+            font-family: 'Noto Sans Display';
+        }
+
+        .font-Square {
+            font-family: 'Square Peg';
         }
         
         /* Consolidated animations */
         @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
-        @keyframes scaleOut { from { transform: scale(1); opacity: 1; } to { transform: scale(100); opacity: 0; } }
+
+        /* @property --r grid.css'e taşındı */
+        /* Intro overlay: mavi tam ekran, ortadan büyüyen şeffaf daire ile siteyi açar */
+        #introOverlay {
+            position: fixed;
+            inset: 0;
+            background: #4cabe8;
+            z-index: 80;
+            pointer-events: none;
+            /* delik yarıçapı */
+            --r: 0px;
+            -webkit-mask: radial-gradient(circle var(--r) at 50% 50%, transparent 0 var(--r), #fff calc(var(--r) + 1px));
+                    mask: radial-gradient(circle var(--r) at 50% 50%, transparent 0 var(--r), #fff calc(var(--r) + 1px));
+            will-change: --r;
+            contain: layout paint style;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            animation: intro-reveal 2s cubic-bezier(0.4, 0, 0.2, 1) 0.4s forwards;
+        }
+        @keyframes intro-reveal {
+            0%   { --r: 0px; }
+            15%  { --r: 120px; }
+            25%  { --r: 120px; } /* kısa tek duraklama */
+            100% { --r: 120vmax; }  /* duraksamasız tam açılış; opacity değişmez */
+        }
+        @keyframes scaleOut { 
+            0% { 
+                clip-path: circle(0px at center);
+                transform: scale(0.8);
+            } 
+            30% {
+                clip-path: circle(100px at center);
+                transform: scale(1);
+            }
+            70% {
+                clip-path: circle(300px at center);
+                transform: scale(1.2);
+            }
+            100% { 
+                clip-path: circle(800px at center);
+                transform: scale(1.5);
+            } 
+        }
         @keyframes slideUpAndHide { from { height: 100%; top: 0; } to { height: 57px; top: 30px; } }
         @keyframes menuAnim { from { opacity: 0; top: -30px; } to { opacity: 1; top: 45px; } }
         @keyframes menuAnimText { from { opacity: 0; top: -30px; } to { opacity: 1; top: 45px; } }
@@ -66,20 +121,68 @@
             transition: all .5s ease;
         }
 
+        /* Scroll ile marka yazısı fade/translate effect */
+        .brand-caption {
+            transition: opacity .3s ease, transform .3s ease;
+            will-change: opacity, transform;
+        }
+
         .menu-anim {
             animation: menuAnim 1s ease 1.5s forwards;
             opacity: 0;
             transition: all .5s cubic-bezier(.77,0,.18,1);
         }
 
-        .animate-fade-out { animation: fadeOut 2.2s cubic-bezier(.77, 0, .175, 1) .6s forwards; }
+
         .animate-scale-out { 
-            animation: scaleOut 2.2s cubic-bezier(.77, 0, .175, 1) .6s forwards;
+            animation: scaleOut 3s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.2s forwards, fadeOut 0.8s ease 4.2s forwards;
             transform-origin: center;
         }
         .animate-logo {
-            animation: slideUpAndHide 1s ease 1s forwards;
+            /* Intro bitimine yakın kaydır (tek duraksama algısı olmasın) */
+            will-change: transform, top, height;
+            animation: slideUpAndHide 0.7s cubic-bezier(0.4, 0, 0.2, 1) 1.6s forwards;
             transition: all .5s cubic-bezier(.77,0,.18,1);
+        }
+
+        .animate-logo .logo-container {
+            background: transparent;
+            border-radius: 50%;
+            width: 150px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            will-change: transform;
+            animation: logoScale 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+        }
+
+        .animate-logo img {
+            max-width: 100px;
+            will-change: max-width;
+            /* Yukarı kayma ile EŞ ZAMANLI 65px'e küçülsün */
+            animation: logoShrink 0.7s cubic-bezier(0.4, 0, 0.2, 1) 1.6s forwards;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            #introOverlay { animation: none; display: none; }
+            .animate-logo { animation: none; }
+            .animate-logo .logo-container { animation: none; }
+            .animate-logo img { animation: none; }
+        }
+
+        @keyframes logoScale {
+            from {
+                transform: scale(1.5);
+            }
+            to {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes logoShrink {
+            from { max-width: 100px; }
+            to   { max-width: 65px; margin-top: 6px; }
         }
 
         header:before {
@@ -236,8 +339,7 @@
       transition: opacity 0.2s ease;
     }
 
-    .followerchangetest {
-    }
+    /* .followerchangetest kaldırıldı: boş kurallar temizlendi */
 
     .follower.hide-bg {
       background: transparent !important;
@@ -286,17 +388,19 @@
 
     <div class="fixed top-0 left-0 w-full h-full flex justify-center items-center z-[60] animate-logo pointer-events-none">
         <div class="relative z-10 sticky top-0 pointer-events-auto">
-            <a href="/">
-                <img src="ekol-logistic.svg" class="max-w-[80px]" alt="Logo">
-            </a>
+            <div class="logo-container">
+                <a href="/" class="flex flex-col items-center justify-center">
+                    <img src="YBLogo.svg" alt="Logo">
+                </a>
+            </div>
+            <div class="brand-caption flex flex-col items-center justify-center absolute top-full right-0 left-0">
+                <span class="text-white text-4xl font-Noto whitespace-nowrap font-Square mb-1">Yapar Bilişim</span>
+                <small class="text-white text-xs">Proje ve Danışmanlık</small>
+            </div>
         </div>
     </div>
     
-    <div class="fixed top-0 left-0 w-full h-full flex justify-center items-center z-40 bg-white animate-fade-out pointer-events-none">
-        <div class="relative w-[180px] h-[80px] flex items-center justify-center">
-            <div class="absolute inset-0 bg-[#4cabe8] w-[180px] h-[80px] flex items-center justify-center animate-scale-out"></div>
-        </div>
-    </div>
+    <div id="introOverlay"></div>
 
     <div class="fixed top-0 left-0 flex w-full h-[80px] top-6 z-20 justify-center items-center animate-fade-bg p-6 pointer-events-none">
         <div class="relative w-full h-[80px] rounded-xl"></div>
@@ -424,39 +528,39 @@
             <div class="swiper-wrapper">
                 <!-- Slide 1 -->
                 <div class="swiper-slide">
-                    <div class="flex container mx-auto absolute -translate-y-1/2 bottom-0 right-0 left-0">
-                        <div class="w-1/2 p-10"></div>
-                        <div class="w-1/2 flex flex-col items-end justify-center pr-10">
-                            <h1 class="text-white text-5xl font-bold leading-[1.2] text-right">
-                                Geleceğinizi Taşıyoruz: <br>Uçtan Uca Akıllı <br>Lojistik Çözümleri.
+                    <div class="flex container mx-auto absolute bottom-40 right-0 left-0">
+                        <div class="w-1/2 flex flex-col items-start justify-center pl-10">
+                            <h1 class="text-white text-[100px] font-bold leading-[1.2] text-left">
+                                Ofisinizi Sıfırdan Kuruyoruz
                             </h1>
-                            <p class="mt-10 text-white text-right">
-                                Entegre hizmetler, teknolojik yenilikler ve tedarik zinciri yönetimi.
+                            <p class="mt-10 text-white text-left text-lg">
+                                Kablolama, ağ kurulumu, server ve yazılım entegrasyonu tek elden profesyonel hizmet.
                             </p>
                         </div>
+                        <div class="w-1/2 p-10"></div>
                     </div>
-                    <img src="img1.png" class="w-full h-full object-cover absolute top-0 left-0 -z-10 brightness-75" alt="Slider 1">
+                    <img src="bekir.jpeg" class="w-full h-full object-cover absolute top-0 left-0 -z-10 brightness-75" alt="Slider 1">
                 </div>
 
                 <!-- Slide 2 -->
                 <div class="swiper-slide">
-                    <div class="flex container mx-auto absolute bottom-40 right-0 left-0">
-                        <div class="w-1/2 flex flex-col items-start justify-center pl-10">
-                            <h1 class="text-white text-5xl font-bold leading-[1.2] text-left">
-                                AR-GE Yatırımlarıyla <br>Yenilikçi Hizmetler
+                    <div class="flex container mx-auto absolute bottom-40 right-0 left-0 flex-row-reverse">
+                        <div class="w-1/2 flex flex-col items-end justify-center pl-10">
+                            <h1 class="text-white text-[100px] font-bold leading-[1.2] text-right">
+                                Bilişimde Güvenilir Çözüm Ortağınız
                             </h1>
-                            <p class="mt-10 text-white text-left">
-                                Ekol, yıllık 5 milyon Euro'luk AR-GE yatırımı ve 130'dan fazla proje ile <br>lojistik sektöründe yenilikçi çözümler sunuyor.ß
+                            <p class="mt-10 text-white text-right text-lg">
+                                Server yönetiminden bilgisayar kurulumuna kadar tüm IT ihtiyaçlarınızda yanınızdayız.
                             </p>
                         </div>
                         <div class="w-1/2 p-10"></div>
                     </div>
-                    <img src="img4.png" class="w-full h-full object-cover absolute top-0 left-0 -z-10 brightness-75" alt="Slider 2">
+                    <img src="server.jpeg" class="w-full h-full object-cover absolute top-0 left-0 -z-10 brightness-75" alt="Slider 2">
                 </div>
 
-                <!-- Slide 3 -->
+                <!-- Slide 3 
                 <div class="swiper-slide">
-                    <!--
+                    
                     <div class="flex container mx-auto absolute -translate-y-1/2 top-1/2 right-0 left-0">
                         <div class="w-1/2 p-10"></div>
                         <div class="w-1/2 flex flex-col items-end justify-center pr-10">
@@ -468,11 +572,12 @@
                             </p>
                         </div>
                     </div>
-                    -->
+                    
                     <video class="w-full h-full object-cover absolute top-0 left-0 -z-10 brightness-75 object-top" autoplay muted loop>
                         <source src="tanitim2.mp4" type="video/mp4">
                     </video>
                 </div>
+                -->
             </div>
 
             <!-- Custom Navigation -->
@@ -504,8 +609,8 @@
     <div class="flex justify-between px-40 relative text-center bg-white">
         <div class="w-full py-40 h-fit sticky top-0">
             <div class="title-section mb-20">
-                <h2 class="title-animate text-6xl font-bold leading-tight"><span  class="block">Daha İyi Bir Dünya İçin Lojistik</span></h2>
-                <p class="desc-animate mt-8 text-lg font-light">1990 yılında kurulan Ekol Lojistik, taşımacılık, kontrat lojistiği, dış ticaret, gümrük ve tedarik zinciri yönetimi alanlarında 12 ülkede entegre ve yenilikçi hizmetler sunan lider bir lojistik şirketidir. Teknolojiden ilham alarak geliştirdiğimiz iş modellerimizle müşterilerimize esnek ve etkin çözümler sağlıyoruz. Sürdürülebilirlik odaklı yaklaşımımızla çevresel, ekonomik ve sosyal faydalar yaratmayı hedefliyoruz.</p>
+                <h2 class="title-animate text-6xl font-bold leading-tight"><span  class="block">Bilişimde Güçlü, Çözümde Hızlı</span></h2>
+                <p class="desc-animate mt-8 text-lg font-light">Yılların deneyimiyle, şirketinizin tüm bilişim ihtiyaçlarını tek elden karşılıyoruz. Server desteği, bilgisayar kurulumu, ağ altyapısı, güvenlik kamera sistemleri ve kablolama hizmetleri ile işletmenizin teknoloji altyapısını güvenle inşa ediyoruz. Yeni açılan şirketler için A’dan Z’ye IT kurulum paketlerimizle hızlı, güvenilir ve profesyonel çözümler sunuyoruz. İşletmenizin verimliliğini artırmak için buradayız.</p>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 counter-section">
                 <div class="card cursor-pointer bg-gray-200 text-white rounded-xl overflow-hidden relative group min-h-[200px]">
@@ -1311,6 +1416,7 @@
         // Performance optimized scroll handler
         let lastScrollPosition = 0;
         let ticking = false;
+        let brandWithGSAP = false; // GSAP sürümü aktifse vanilla güncellemeleri atla
         
         // Using passive true for better scroll performance
         window.addEventListener('scroll', function() {
@@ -1322,6 +1428,37 @@
                         document.body.classList.add('header-sticky');
                     } else {
                         document.body.classList.remove('header-sticky');
+                    }
+
+                    // Brand caption: small önce, sonra span fade/translate
+                    if (!brandWithGSAP) {
+                        const brandCaption = document.querySelector('.brand-caption');
+                        if (brandCaption) {
+                            const titleSpan = brandCaption.querySelector('span');
+                            const subSmall = brandCaption.querySelector('small');
+                            const clamp = (v, min, max) => Math.min(Math.max(v, min), max);
+
+                            const baseRange = 220; // toplam hareket mesafesi
+                            const spanOffset = 80;  // span daha geç başlasın
+
+                            // small
+                            const smallProg = clamp(lastScrollPosition / baseRange, 0, 1);
+                            const smallOpacity = 1 - smallProg;
+                            const smallY = smallProg * 22;
+                            if (subSmall) {
+                                subSmall.style.opacity = String(smallOpacity);
+                                subSmall.style.transform = `translateY(${smallY}px)`;
+                            }
+
+                            // span
+                            const spanProg = clamp((lastScrollPosition - spanOffset) / baseRange, 0, 1);
+                            const spanOpacity = 1 - spanProg;
+                            const spanY = spanProg * 22;
+                            if (titleSpan) {
+                                titleSpan.style.opacity = String(spanOpacity);
+                                titleSpan.style.transform = `translateY(${spanY}px)`;
+                            }
+                        }
                     }
                     ticking = false;
                 });
@@ -1341,6 +1478,7 @@
             if (typeof Lenis !== 'undefined' && typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
                 initSmoothScrolling();
                 scroll();
+                setupBrandCaptionScroll();
             } else {
                 // If libraries aren't loaded yet, wait and try again
                 setTimeout(checkDependencies, 100);
@@ -1439,6 +1577,33 @@
             // Start animation loop
             requestAnimationFrame(scrollFn);
         };
+
+        // Brand caption GSAP/ScrollTrigger alternative driven by Lenis
+        function setupBrandCaptionScroll() {
+            const brandCaption = document.querySelector('.brand-caption');
+            if (!brandCaption || typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+
+            const titleSpan = brandCaption.querySelector('span');
+            const subSmall = brandCaption.querySelector('small');
+            if (!titleSpan || !subSmall) return;
+
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: document.body,
+                    start: 'top top',
+                    end: '+=220',
+                    scrub: true
+                }
+            });
+
+            // small önce
+            tl.fromTo(subSmall, { opacity: 1, y: 0 }, { opacity: 0, y: 22, ease: 'none' }, 0);
+            // span biraz gecikmeli
+            tl.fromTo(titleSpan, { opacity: 1, y: 0 }, { opacity: 0, y: 22, ease: 'none' }, 0.35);
+
+            // GSAP aktifken vanilla güncellemeleri devre dışı
+            brandWithGSAP = true;
+        }
 
         // Function to handle scroll-triggered animations
         const scroll = () => {

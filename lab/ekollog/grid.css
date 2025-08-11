@@ -1,3 +1,10 @@
+/* Registered property moved from index.html to avoid editor HTML highlighting issues */
+@property --r {
+  syntax: '<length>';
+  initial-value: 0px;
+  inherits: false;
+}
+
 .demo-2, 
 .demo-4,
 .demo-6,
@@ -414,9 +421,7 @@ i {
 	.frame__heading p {
 		margin: 0 0 0 auto;
 	}
-	.content--grid .content__title {
-		/* align-self: end; */
-	}
+    /* .content--grid .content__title boş kural kaldırıldı */
 	.frame__demos {
 		position: fixed;
 		bottom: 2rem;
