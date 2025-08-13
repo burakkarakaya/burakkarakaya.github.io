@@ -388,7 +388,8 @@
             <button class="text-gray-600 hover:text-gray-600 hover:bg-white transition duration-300 px-[4px] py-[4px] rounded-[16px] border-2 border-white text-white text-xl flex" data-follower-text=""><i class="ti ti-message"></i></button>
         </div>
         <div class="absolute top-10 right-[50px] flex items-center menu-anim">
-            <button class="menu-btn ml-4 text-2xl text-white hover:text-gray-600 hover:bg-white transition duration-300 rounded-[16px] py-[2px] px-2 flex items-center justify-center border-2 border-white gap-2" data-follower-text=""><i class="ti ti-menu-3"></i> <span class="text-sm">MENU</span></button>
+            <button id="quote-open-btn" class="ml-4 text-2xl text-white hover:text-gray-600 hover:bg-white transition duration-300 rounded-[16px] py-[1px] px-3 flex items-center justify-center border-2 border-white gap-2" data-follower-text=""><i class="ti ti-bolt text-lg"></i> <span class="text-sm">TEKLİF</span></button>
+            <button class="menu-btn ml-4 text-2xl text-white hover:text-gray-600 hover:bg-white transition duration-300 rounded-[16px] py-[2px] px-3 flex items-center justify-center border-2 border-white gap-2" data-follower-text=""><i class="ti ti-menu-3"></i> <span class="text-sm">MENU</span></button>
         </div>
     </header>
 
@@ -405,6 +406,106 @@
                 <span class="text-white text-4xl font-Noto whitespace-nowrap font-Square mb-1">Yapar Bilişim</span>
                 <small class="text-white text-xs">Proje ve Danışmanlık</small>
             </div>
+        </div>
+    </div>
+
+    <!-- Teklif Talep Paneli (Soldan Açılan) -->
+    <div id="quoteOverlay" class="fixed inset-0 bg-black/50 z-[65] opacity-0 pointer-events-none transition-opacity duration-300"></div>
+    <div id="quoteDrawer" class="fixed top-0 -right-full w-full sm:w-[560px] h-full bg-white z-[70] transition-all duration-500 ease-in-out shadow-2xl flex flex-col overflow-hidden min-h-0">
+        <div class="sticky top-0 z-10 bg-gradient-to-r from-sky-500 to-cyan-400 text-white px-7 py-6 shadow-md flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-white/15 flex items-center justify-center"><i class="ti ti-bolt text-xl"></i></div>
+                <div>
+                    <span class="text-lg font-semibold leading-5">Teklif Talep Formu</span>
+                    <p class="text-xs opacity-90">İhtiyacınızı iletin, en kısa sürede dönüş yapalım.</p>
+                </div>
+            </div>
+            <button id="quoteDrawerClose" class="w-10 h-10 rounded-full bg-white/15 hover:bg-white/25 flex items-center justify-center"><i class="ti ti-x text-xl"></i></button>
+        </div>
+        <div class="flex-1 min-h-0 overflow-y-auto overscroll-contain p-8 space-y-6 web-scroll" data-lenis-prevent>
+            <div class="rounded-xl border border-gray-100 bg-gray-50 p-4 text-sm text-gray-600">
+                Talebinizi mümkün olduğunca detaylandırmanız, daha isabetli ve hızlı teklif oluşturmamıza yardımcı olur.
+            </div>
+            <form id="quoteForm" class="space-y-5">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div class="relative">
+                        <label class="block text-xs text-gray-500 mb-1">Ad Soyad*</label>
+                        <i class="ti ti-user absolute left-3 top-[38px] text-gray-400"></i>
+                        <input name="name" type="text" class="w-full border border-gray-300 rounded-xl pl-9 pr-3 py-3 focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-sky-400 placeholder:text-gray-400" placeholder="Adınız Soyadınız" required>
+                    </div>
+                    <div class="relative">
+                        <label class="block text-xs text-gray-500 mb-1">Şirket Adı</label>
+                        <i class="ti ti-building-skyscraper absolute left-3 top-[38px] text-gray-400"></i>
+                        <input name="company" type="text" class="w-full border border-gray-300 rounded-xl pl-9 pr-3 py-3 focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-sky-400 placeholder:text-gray-400" placeholder="Şirket / Marka">
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div class="relative">
+                        <label class="block text-xs text-gray-500 mb-1">E-posta*</label>
+                        <i class="ti ti-mail absolute left-3 top-[38px] text-gray-400"></i>
+                        <input name="email" type="email" class="w-full border border-gray-300 rounded-xl pl-9 pr-3 py-3 focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-sky-400 placeholder:text-gray-400" placeholder="ornek@mail.com" required>
+                    </div>
+                    <div class="relative">
+                        <label class="block text-xs text-gray-500 mb-1">Telefon*</label>
+                        <i class="ti ti-device-mobile absolute left-3 top-[38px] text-gray-400"></i>
+                        <input name="phone" type="tel" class="w-full border border-gray-300 rounded-xl pl-9 pr-3 py-3 focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-sky-400 placeholder:text-gray-400" placeholder="05xx xxx xx xx" required>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-xs text-gray-500 mb-1">Hizmet Kategorisi</label>
+                        <select name="service" class="w-full border border-gray-300 rounded-xl px-3 py-3 bg-white focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-sky-400">
+                            <option value="IT Proje ve Danışmanlık">IT Proje ve Danışmanlık</option>
+                            <option value="Ağ ve Kablolama">Ağ ve Kablolama</option>
+                            <option value="Sunucu ve Donanım">Sunucu ve Donanım</option>
+                            <option value="Güvenlik Kamerası ve Sistemleri">Güvenlik Kamerası ve Sistemleri</option>
+                            <option value="Diğer">Diğer</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-500 mb-1">Bütçe Aralığı</label>
+                        <select name="budget" class="w-full border border-gray-300 rounded-xl px-3 py-3 bg-white focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-sky-400">
+                            <option value="Belirsiz">Belirsiz</option>
+                            <option value="0-50.000 TL">0-50.000 TL</option>
+                            <option value="50.000-200.000 TL">50.000-200.000 TL</option>
+                            <option value="200.000-1.000.000 TL">200.000-1.000.000 TL</option>
+                            <option value="1.000.000+ TL">1.000.000+ TL</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-xs text-gray-500 mb-2">İletişim Tercihi</label>
+                        <div class="flex items-center gap-4 text-sm text-gray-700">
+                            <label class="inline-flex items-center gap-2"><input type="radio" name="contactPref" value="Telefon" class="accent-sky-500"> Telefon</label>
+                            <label class="inline-flex items-center gap-2"><input type="radio" name="contactPref" value="E-posta" class="accent-sky-500" checked> E-posta</label>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-500 mb-1">Dönüş Zamanı</label>
+                        <select name="callback" class="w-full border border-gray-300 rounded-xl px-3 py-3 bg-white focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-sky-400">
+                            <option>Farketmez</option>
+                            <option>09:00 - 12:00</option>
+                            <option>12:00 - 15:00</option>
+                            <option>15:00 - 18:00</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="relative">
+                    <label class="block text-xs text-gray-500 mb-1">Beklentiler / İstekler</label>
+                    <textarea name="notes" rows="5" class="w-full border border-gray-300 rounded-xl px-3 py-3 focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-sky-400 placeholder:text-gray-400" placeholder="Kısaca proje, kapsam ve zaman beklentinizi yazınız."></textarea>
+                </div>
+                <div>
+                    <label class="block text-xs text-gray-500 mb-1">Dosya (opsiyonel)</label>
+                    <input name="attachment" type="file" class="w-full text-sm">
+                </div>
+                <div class="flex items-start gap-2">
+                    <input id="consent" name="consent" type="checkbox" class="mt-1 accent-sky-500">
+                    <label for="consent" class="text-sm text-gray-600">KVKK aydınlatma metnini okudum, kişisel verilerimin işlenmesine onay veriyorum.</label>
+                </div>
+                <button type="submit" class="w-full bg-gradient-to-r from-[#3b3b3b] to-black text-white py-3 rounded-xl hover:from-black hover:to-[#3b3b3b] transition">Teklif İste</button>
+                <p id="quoteSuccess" class="text-green-600 text-sm mt-1 hidden">Talebiniz alınmıştır. En kısa sürede dönüş yapacağız.</p>
+            </form>
         </div>
     </div>
     
@@ -612,7 +713,7 @@
     <!-- Corporate -->
 
     <div class="flex justify-between px-40 relative text-center bg-white">
-        <div class="w-full py-40 h-fit sticky top-0">
+        <div class="w-full py-40 pb-80 h-fit sticky top-0">
             <div class="title-section mb-20">
                 <h2 class="title-animate text-6xl font-bold leading-tight"><span  class="block">Bilişimde Güçlü, Çözümde Hızlı</span></h2>
                 <p class="desc-animate mt-8 text-lg font-light">Yılların deneyimiyle, şirketinizin tüm bilişim ihtiyaçlarını tek elden karşılıyoruz. Server desteği, bilgisayar kurulumu, ağ altyapısı, güvenlik kamera sistemleri ve kablolama hizmetleri ile işletmenizin teknoloji altyapısını güvenle inşa ediyoruz. Yeni açılan şirketler için A’dan Z’ye IT kurulum paketlerimizle hızlı, güvenilir ve profesyonel çözümler sunuyoruz. İşletmenizin verimliliğini artırmak için buradayız.</p>
@@ -2011,6 +2112,10 @@
         const menuBtn = document.querySelector('.menu-btn');
         const closeBtn = document.querySelector('.close-menu-btn');
         const slideMenu = document.getElementById('slideMenu');
+        const quoteOpenBtn = document.getElementById('quote-open-btn');
+        const quoteDrawer = document.getElementById('quoteDrawer');
+        const quoteOverlay = document.getElementById('quoteOverlay');
+        const quoteDrawerClose = document.getElementById('quoteDrawerClose');
         
         if (!menuBtn || !slideMenu) return;
         
@@ -2040,16 +2145,64 @@
         menuBtn.addEventListener('click', openMenu);
         if (closeBtn) closeBtn.addEventListener('click', closeMenu);
         
-        // Prevent default form submissions
+        // Teklif paneli aç/kapa
+        function openQuote() {
+            if (!quoteDrawer || !quoteOverlay) return;
+            quoteDrawer.classList.remove('-right-full');
+            quoteDrawer.classList.add('right-0');
+            quoteOverlay.classList.remove('pointer-events-none');
+            quoteOverlay.classList.remove('opacity-0');
+            quoteOverlay.classList.add('opacity-100');
+        }
+        function closeQuote() {
+            if (!quoteDrawer || !quoteOverlay) return;
+            quoteDrawer.classList.remove('right-0');
+            quoteDrawer.classList.add('-right-full');
+            quoteOverlay.classList.add('pointer-events-none');
+            quoteOverlay.classList.add('opacity-0');
+            quoteOverlay.classList.remove('opacity-100');
+        }
+        if (quoteOpenBtn) quoteOpenBtn.addEventListener('click', openQuote);
+        if (quoteOverlay) quoteOverlay.addEventListener('click', closeQuote);
+        if (quoteDrawerClose) quoteDrawerClose.addEventListener('click', closeQuote);
+        
+        // Basit form doğrulama/gönderim simülasyonu
+        const quoteForm = document.getElementById('quoteForm');
+        const quoteSuccess = document.getElementById('quoteSuccess');
+        if (quoteForm) {
+            quoteForm.addEventListener('submit', function(e){
+                e.preventDefault();
+                const formData = new FormData(quoteForm);
+                const name = String(formData.get('name') || '').trim();
+                const email = String(formData.get('email') || '').trim();
+                const phone = String(formData.get('phone') || '').trim();
+                const consent = !!quoteForm.querySelector('input[name="consent"]').checked;
+                if (!name || !email || !phone) {
+                    alert('Lütfen zorunlu alanları doldurunuz.');
+                    return false;
+                }
+                if (!consent) {
+                    alert('Lütfen KVKK onayını işaretleyiniz.');
+                    return false;
+                }
+                if (quoteSuccess) quoteSuccess.classList.remove('hidden');
+                quoteForm.reset();
+                setTimeout(closeQuote, 1500);
+                return false;
+            });
+        }
+        
+        // Prevent default form submissions (global)
         document.querySelectorAll('form').forEach(form => {
+            if (form.id === 'quoteForm') return;
             form.addEventListener('submit', e => {
                 e.preventDefault();
                 return false;
             });
         });
         
-        // Prevent default link clicks
-        document.querySelectorAll('a').forEach(anchor => {
+        // Prevent default link clicks (sadece # olanlar)
+        document.querySelectorAll('a[href="#"]').forEach(anchor => {
             anchor.addEventListener('click', e => {
                 e.preventDefault();
             });
