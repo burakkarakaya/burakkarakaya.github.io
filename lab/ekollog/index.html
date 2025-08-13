@@ -123,8 +123,16 @@
 
         /* Scroll ile marka yazısı fade/translate effect */
         .brand-caption {
-            transition: opacity .3s ease, transform .3s ease;
+            transition: opacity .45s ease, transform .55s cubic-bezier(0.22, 1, 0.36, 1);
             will-change: opacity, transform;
+            opacity: 0; /* İlk yüklemede gizli */
+            transform: translateY(16px); /* Aşağıdan başla */
+        }
+
+        /* Logo animasyonu bittikten sonra görünür olma durumu */
+        .brand-caption.brand-caption--show {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .menu-anim {
@@ -386,7 +394,7 @@
 
     <!-- Logo anim -->
 
-    <div class="fixed top-0 left-0 w-full h-full flex justify-center items-center z-[60] animate-logo pointer-events-none">
+    <div class="fixed top-0 left-0 w-full h-full flex justify-center items-center z-[60] animate-logo pointer-events-none" id="logoIntro">
         <div class="relative z-10 sticky top-0 pointer-events-auto">
             <div class="logo-container">
                 <a href="/" class="flex flex-col items-center justify-center">
@@ -531,10 +539,10 @@
                     <div class="flex container mx-auto absolute bottom-40 right-0 left-0">
                         <div class="w-1/2 flex flex-col items-start justify-center pl-10">
                             <h1 class="text-white text-[100px] font-bold leading-[1.2] text-left">
-                                Ofisinizi Sıfırdan Kuruyoruz
+                                IT Proje ve Danışmanlık
                             </h1>
                             <p class="mt-10 text-white text-left text-lg">
-                                Kablolama, ağ kurulumu, server ve yazılım entegrasyonu tek elden profesyonel hizmet.
+                                İşletmenize özel bilişim projeleri ve teknik danışmanlık hizmetleri.
                             </p>
                         </div>
                         <div class="w-1/2 p-10"></div>
@@ -558,26 +566,23 @@
                     <img src="server.jpeg" class="w-full h-full object-cover absolute top-0 left-0 -z-10 brightness-75" alt="Slider 2">
                 </div>
 
-                <!-- Slide 3 
+                <!-- Slide 3 -->
                 <div class="swiper-slide">
-                    
-                    <div class="flex container mx-auto absolute -translate-y-1/2 top-1/2 right-0 left-0">
-                        <div class="w-1/2 p-10"></div>
-                        <div class="w-1/2 flex flex-col items-end justify-center pr-10">
-                            <h1 class="text-white text-5xl font-bold leading-snug text-right">
-                                Tekstil Alanında <br>Global Bir Güç
+                    <div class="flex container mx-auto absolute bottom-40 right-0 left-0 flex-row-reverse">
+                        <div class="w-1/2 flex flex-col items-end justify-center pl-10">
+                            <h1 class="text-white text-[100px] font-bold leading-[1.2] text-right">
+                                Ofisinizi Sıfırdan Kuruyoruz
                             </h1>
-                            <p class="mt-10 text-white text-right">
-                                1994'ten beri sektördeki lider konumumuzu, güçlü üretim tesislerimiz ve <br>deneyimli ekibimizle koruyoruz.
+                            <p class="mt-10 text-white text-right text-lg">
+                                Kablolama, ağ kurulumu, server ve yazılım entegrasyonu tek elden profesyonel hizmet.
                             </p>
                         </div>
+                        <div class="w-1/2 p-10"></div>
                     </div>
-                    
                     <video class="w-full h-full object-cover absolute top-0 left-0 -z-10 brightness-75 object-top" autoplay muted loop>
-                        <source src="tanitim2.mp4" type="video/mp4">
+                        <source src="YBvideo.mp4" type="video/mp4">
                     </video>
                 </div>
-                -->
             </div>
 
             <!-- Custom Navigation -->
@@ -616,50 +621,50 @@
                 <div class="card cursor-pointer bg-gray-200 text-white rounded-xl overflow-hidden relative group min-h-[200px]">
                     <div class="w-full h-full absolute top-0 left-0 p-6 z-10 flex flex flex-col">
                         <div class="mt-auto">
-                            <span class="block text-4xl font-bold experience-counter"></span>
-                            Toplam Depolama Alanı (m²)
+                            <span class="block text-3xl">Danışmanlık</span>
+                            Çözüm Ortağınız
                         </div>
                     </div>
                     <div class="parallax" data-speed="0" data-start="-20" data-end="10">
-                        <img src="counter-area.png" class="object-cover w-full h-full" />
+                        <img src="g1.jpg" class="object-cover w-full h-full" />
                     </div>
                     <div class="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#3b3b3b] to-transparent"></div>
                 </div>
                 <div class="card cursor-pointer bg-gray-200 text-white rounded-xl overflow-hidden relative top-24 group min-h-[200px]">
                     <div class="w-full h-full absolute top-0 left-0 p-6 z-10 flex flex flex-col">
                         <div class="mt-auto">
-                            <span class="block text-4xl font-bold team-counter"></span>
-                            Lojistik Uzmanı
+                            <span class="block text-3xl">Kamera Sistemi</span>
+                            Güvenlik Ekipmanları
                         </div>
                     </div>
                     <div class="parallax" data-speed="0.5" data-start="-20" data-end="10">
-                        <img src="counter-personel.png" class="object-cover w-full h-full" />
+                        <img src="g2.jpg" class="object-cover w-full h-full" />
                     </div>
                     <div class="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#3b3b3b] to-transparent"></div>
                 </div>
                 <div class="card cursor-pointer bg-gray-200 text-white rounded-xl overflow-hidden relative group min-h-[200px]">
                     <div class="w-full h-full absolute top-0 left-0 p-6 z-10 flex flex flex-col">
                         <div class="mt-auto">
-                            <span class="block text-4xl font-bold modern-counter"></span>
-                            Modern Araç Filosu
+                            <span class="block text-3xl">Kablolama</span>
+                            Ofis Kurulumu
                         </div>
                     </div>
                     <div class="parallax" data-speed="0.5" data-start="-20" data-end="10">
-                        <img src="counter-truck.png" class="object-cover w-full h-full" />
+                        <img src="g3.jpg" class="object-cover w-full h-full" />
                     </div>
                     <div class="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#3b3b3b] to-transparent"></div>
                 </div>
                 <div class="card cursor-pointer bg-gray-200 text-white rounded-xl overflow-hidden relative top-24 group min-h-[200px]">
                     <div class="w-full h-full absolute top-0 left-0 p-6 z-10 flex flex flex-col">
                         <div class="mt-auto">
-                            <span class="block text-4xl font-bold roro-counter"></span>
-                            Ro-Ro Gemisi ile Avrupa'ya Bağlantı
+                            <span class="block text-3xl">Planlama</span>
+                            Bilişim Projeleri
                         </div>
                     </div>
                     <div class="parallax" data-speed="0.5" data-start="-20" data-end="10">
-                        <img src="counter-ship.png" class="object-cover w-full h-full" />
+                        <img src=g4.jpg" class="object-cover w-full h-full" />
                     </div>
-                    <img src="counter-ship.png" class="rounded-xl object-cover duration-1000 w-full h-full" alt="Slider 2" />
+                    <img src="g4.jpg" class="rounded-xl object-cover duration-1000 w-full h-full" alt="Slider 2" />
                     <div class="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#3b3b3b] to-transparent"></div>
                 </div>
             </div>
@@ -796,7 +801,7 @@
             
             
             <div class="parallax parallax-ingredients mx-auto top-0 left-50 w-full h-full min-h-screen flex justify-center items-center z-10" data-speed="0.5" data-start="-10" data-end="10">
-                <img src="parallax.png" />
+                <img src="parallax.jpg" />
             </div>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 counter-section pt-20 px-40">
@@ -1528,17 +1533,34 @@
                 }
             });
 
-            // Slide numaralarını güncelleme fonksiyonu
+            // Slide numaralarını güncelleme ve tek slaytta navigasyonu gizleme
             function updateIdeasSlideNumbers(swiper) {
-                const currentSlide = swiper.el.querySelector('.current-slide');
-                const totalSlides = swiper.el.querySelector('.total-slides');
-                
-                if (currentSlide) {
-                    currentSlide.textContent = (swiper.realIndex + 1).toString().padStart(2, '0');
+                if (!swiper || !swiper.el) return;
+
+                // Navigation kökünü güvenli şekilde bul
+                var navRoot = swiper.el.querySelector('.navigation')
+                    || (swiper.el.closest('.swiper') ? swiper.el.closest('.swiper').querySelector('.navigation') : null)
+                    || (swiper.el.parentElement ? swiper.el.parentElement.querySelector('.navigation') : null)
+                    || document.querySelector('.ideasSwiper .navigation');
+
+                var currentSlideEl = navRoot ? navRoot.querySelector('.current-slide') : null;
+                var totalSlidesEl = navRoot ? navRoot.querySelector('.total-slides') : null;
+
+                // Gerçek slayt sayısı: klonlar hariç
+                var slidesAll = Array.from(swiper.slides || []);
+                var realSlides = slidesAll.filter(function(s){ return !s.classList.contains('swiper-slide-duplicate'); });
+                var realCount = realSlides.length || slidesAll.length || 0;
+
+                if (currentSlideEl) {
+                    currentSlideEl.textContent = (swiper.realIndex + 1).toString().padStart(2, '0');
                 }
-                
-                if (totalSlides) {
-                    totalSlides.textContent = swiper.slides.length.toString().padStart(2, '0');
+                if (totalSlidesEl) {
+                    totalSlidesEl.textContent = realCount.toString().padStart(2, '0');
+                }
+
+                // Tek slaytta navigasyonu gizle (navRoot bulunduysa uygula)
+                if (navRoot) {
+                    navRoot.style.display = realCount <= 1 ? 'none' : '';
                 }
             }
 
@@ -1832,17 +1854,34 @@
         });
     }
 
-    // Optimized slide number updates
+    // Optimized slide number updates + hide navigation if single slide
     function updateSlideNumbers(swiper) {
-        const currentSlide = document.querySelector('.current-slide');
-        const totalSlides = document.querySelector('.total-slides');
-        
-        if (currentSlide) {
-            currentSlide.textContent = (swiper.realIndex + 1).toString().padStart(2, '0');
+        if (!swiper || !swiper.el) return;
+
+        // Navigation kökünü güvenli şekilde bul
+        var navRoot = swiper.el.querySelector('.navigation')
+            || (swiper.el.closest('.swiper') ? swiper.el.closest('.swiper').querySelector('.navigation') : null)
+            || (swiper.el.parentElement ? swiper.el.parentElement.querySelector('.navigation') : null)
+            || document.querySelector('#mainSlider .navigation');
+
+        var currentSlideEl = navRoot ? navRoot.querySelector('.current-slide') : null;
+        var totalSlidesEl = navRoot ? navRoot.querySelector('.total-slides') : null;
+
+        // Gerçek slayt sayısı: klonlar hariç
+        var slidesAll = Array.from(swiper.slides || []);
+        var realSlides = slidesAll.filter(function(s){ return !s.classList.contains('swiper-slide-duplicate'); });
+        var realCount = realSlides.length || slidesAll.length || 0;
+
+        if (currentSlideEl) {
+            currentSlideEl.textContent = (swiper.realIndex + 1).toString().padStart(2, '0');
         }
-        
-        if (totalSlides) {
-            totalSlides.textContent = (swiper.slides.length - 2).toString().padStart(2, '0');
+        if (totalSlidesEl) {
+            totalSlidesEl.textContent = realCount.toString().padStart(2, '0');
+        }
+
+        // Tek slaytta navigasyonu gizle (navRoot bulunduysa uygula)
+        if (navRoot) {
+            navRoot.style.display = realCount <= 1 ? 'none' : '';
         }
     }
 
@@ -2034,6 +2073,38 @@
         if (typeof gsap !== 'undefined') {
             gsap.registerPlugin(ScrollTrigger);
         }
+
+            // Logo animasyonu bittikten sonra brand caption'ı göster
+            (function revealBrandCaptionAfterLogo(){
+                const logoIntro = document.getElementById('logoIntro');
+                const brandCaption = document.querySelector('.brand-caption');
+                if (!brandCaption) return;
+
+                // Güvenlik: çok erken görünmesin diye başlangıç durumunu uygula
+                brandCaption.classList.remove('brand-caption--show');
+
+                let revealed = false;
+                const reveal = () => {
+                    if (revealed) return;
+                    revealed = true;
+                    brandCaption.classList.add('brand-caption--show');
+                };
+
+                // prefers-reduced-motion: reduce ise beklemeden göster
+                const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                if (prefersReduced) {
+                    reveal();
+                    return;
+                }
+
+                // Logo intro kapsayıcısının animasyon sonunu yakala
+                if (logoIntro) {
+                    logoIntro.addEventListener('animationend', reveal, { once: true });
+                }
+
+                // Yedek: 2.2s sonra yine de göster (slideUpAndHide toplamı ~2.3s)
+                setTimeout(reveal, 2300);
+            })();
     });
     </script>
 
