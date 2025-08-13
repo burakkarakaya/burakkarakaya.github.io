@@ -224,11 +224,6 @@
             display: none;
         }
 
-        @media (max-width: 1024px) {
-            .page-wrapper { display: none; }
-            .mobile-warning { display: block; }
-        }
-
         .lenis.lenis-smooth {
             scroll-behavior: auto;
         }
@@ -355,6 +350,88 @@
 
 
     </style>
+        <style>
+        /* Mobil responsive iyileştirmeler - desktop değerleri korunur */
+        @media (max-width: 768px) {
+            html, body { overflow-x: hidden; }
+
+            /* Genel boşluklar (px-40, py-40 gibi büyük paddingleri küçült) */
+            .px-40 { padding-left: 1rem !important; padding-right: 1rem !important; }
+            .py-40 { padding-top: 2rem !important; padding-bottom: 2rem !important; }
+
+            /* Başlık ve açıklama boyutları */
+            .title-animate { font-size: clamp(24px, 6vw, 34px) !important; line-height: 1.2 !important; }
+            .desc-animate { font-size: 0.95rem !important; }
+
+            /* Header butonlarının konumu ve boyutu */
+            /* Masaüstü header overlay ve butonlarını gizle, mobil header göster */
+            header .menu-anim-text, header .menu-anim { display: none !important; }
+            header:before { width: 100%; left: 0; right: 0; top: 0; height: 56px; border-radius: 0; opacity: 1; background-color: rgba(0,0,0,.35); }
+            .mobile-header { display: flex !important; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
+            .mobile-header .mobile-logo img { height: 28px; }
+
+            /* Intro animasyon ve logo: mobilde görünmesin */
+            #introOverlay, #logoIntro { display: none !important; }
+            .brand-caption { display: none !important; }
+
+            /* Ana slider içerik düzeni */
+            .main-slider .swiper-slide > .flex { bottom: 4.5rem !important; padding-left: 1rem !important; padding-right: 1rem !important; flex-direction: column; }
+            .main-slider .swiper-slide > .flex > div { width: 100% !important; padding: 0 !important; }
+            .main-slider .swiper-slide > .flex > div:last-child { display: none !important; }
+            .main-slider h1 { font-size: clamp(28px, 8vw, 38px) !important; line-height: 1.2 !important; text-align: left !important; }
+            .main-slider p { font-size: 0.95rem !important; margin-top: 0.75rem !important; text-align: left !important; }
+
+            /* Ana slider yüksekliği: mobil ekrana tam sığacak şekilde (header hariç) */
+            .main-slider { position: relative !important; top: 0 !important; height: calc(100vh - 56px) !important; height: calc(100dvh - 56px) !important; height: calc(100svh - 56px) !important; overflow: hidden; }
+            .main-slider .swiper, .main-slider .swiper-wrapper, .main-slider .swiper-slide { height: 100% !important; }
+            .main-slider .swiper-slide > img,
+            .main-slider .swiper-slide > video { width: 100% !important; height: 100% !important; object-fit: cover !important; object-position: center !important; position: absolute !important; top: 0; left: 0; }
+
+            /* Ana slider alt navigasyon: tam alta ve tam genişlik */
+            .main-slider .navigation { left: 0 !important; right: 0 !important; transform: none !important; bottom: 0 !important; width: 100% !important; padding: 6px 10px !important; gap: 10px !important; justify-content: center; }
+            .main-slider .navigation > .flex { justify-content: center; width: 100%; }
+            .main-slider .navigation hr { width: 24px !important; }
+            .main-slider .navigation .py-3 { padding-top: 6px !important; padding-bottom: 6px !important; }
+
+            /* Parallax/Ingredients alanı */
+            .ingredients-section .ingredients-text { padding-left: 1rem !important; padding-right: 1rem !important; margin-bottom: 1rem !important; }
+            .ingredients-section .bg-white > .flex { position: static !important; padding-left: 1rem !important; padding-right: 1rem !important; gap: 1rem !important; }
+            .parallax-ingredients { height: 55vh !important; -webkit-mask-image: none; mask-image: none; }
+            .parallax img { transform: translateX(-50%) scale(1.0) !important; }
+
+            /* Kart/grid bölümleri tek kolona düşür */
+            .counter-section { grid-template-columns: 1fr !important; }
+
+            /* Haber/ideas slider alt navigasyon ortala */
+            .ideasSwiper .navigation { left: 50% !important; transform: translateX(-50%); }
+
+            /* Footer üst header bloğu dikey hizala */
+            .bg-gray-100 > .flex.justify-between.items-center { flex-direction: column; align-items: flex-start; gap: 1rem; }
+
+            /* Footer grid: 5 kolon -> 1 kolon */
+            .bg-gray-100 footer.grid { grid-template-columns: 1fr !important; }
+            .bg-gray-100 footer.grid .col-span-2 { grid-column: span 1 / span 1 !important; margin-left: 0 !important; }
+        }
+
+        /* Mobil header için arka plan sabitleme (light/dark uyumlu) */
+        header { position: sticky; top: 0; z-index: 60; }
+        @supports ((-webkit-backdrop-filter: blur(8px)) or (backdrop-filter: blur(8px))) {
+            header:before { backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+        }
+
+        /* Parallax-card içindeki kartlara soft, açık griye yakın linear gradient (hover yok) */
+        .parallax-card .card {
+            --g1: #fafafa; /* nötr açık gri */
+            --g2: #f7f7f8; /* çok hafif soğuk gri */
+            background-image: linear-gradient(135deg, var(--g1) 0%, var(--g2) 100%);
+            background-color: transparent;
+        }
+        /* Her kart farklı, fakat griye yakın soft tonlar */
+        .parallax-card .parallax-item:nth-child(1) .card { --g1: #f7f9fc; --g2: #f4f6fa; } /* mavi-gri */
+        .parallax-card .parallax-item:nth-child(2) .card { --g1: #f8fbf9; --g2: #f4f8f6; } /* yeşil-gri */
+        .parallax-card .parallax-item:nth-child(3) .card { --g1: #fcf7f8; --g2: #f9f4f2; } /* pembe/şeftali-gri */
+        .parallax-card .parallax-item:nth-child(4) .card { --g1: #faf7fc; --g2: #f6f4fb; } /* lila-gri */
+        </style>
 
     <!-- Load critical JS libraries -->
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/10.0.4/swiper-bundle.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -376,20 +453,33 @@
     </div>
     -->
 
-    <div class="mobile-warning heading-style-h2">Bu site yalnızca masaüstü cihazlarda görüntülenebilir. Lütfen masaüstü cihazınızı kullanın.
-    </div>
+    <div class="mobile-warning heading-style-h2" style="display:none;">Bu site yalnızca masaüstü cihazlarda görüntülenebilir. Lütfen masaüstü cihazınızı kullanın.</div>
 
     <div class="page-wrapper">
     <!-- Header -->
 
-    <header class="sticky top-0 z-40">
+    <header class="fixed lg:sticky w-full top-0 z-40">
         <div class="absolute top-10 left-[50px] flex items-center menu-anim-text">
-            <button class="text-gray-600 hover:text-gray-600 hover:bg-white transition duration-300 px-[4px] py-[4px] rounded-full border-2 border-white text-white text-sm mr-4" data-follower-text="">EN</button>
-            <button class="text-gray-600 hover:text-gray-600 hover:bg-white transition duration-300 px-[4px] py-[4px] rounded-[16px] border-2 border-white text-white text-xl flex" data-follower-text=""><i class="ti ti-message"></i></button>
+            <button class="text-gray-600 hover:text-gray-600 hover:bg-white transition duration-300 px-[4px] py-[4px] rounded-full border-2 border-white text-white text-sm mr-4" data-follower-text="" aria-label="Dil Değiştir">EN</button>
+            <button class="text-gray-600 hover:text-gray-600 hover:bg-white transition duration-300 px-[4px] py-[4px] rounded-[16px] border-2 border-white text-white text-xl flex" data-follower-text="" aria-label="Mesaj"><i class="ti ti-message"></i></button>
         </div>
         <div class="absolute top-10 right-[50px] flex items-center menu-anim">
-            <button id="quote-open-btn" class="ml-4 text-2xl text-white hover:text-gray-600 hover:bg-white transition duration-300 rounded-[16px] py-[1px] px-3 flex items-center justify-center border-2 border-white gap-2" data-follower-text=""><i class="ti ti-bolt text-lg"></i> <span class="text-sm">TEKLİF</span></button>
-            <button class="menu-btn ml-4 text-2xl text-white hover:text-gray-600 hover:bg-white transition duration-300 rounded-[16px] py-[2px] px-3 flex items-center justify-center border-2 border-white gap-2" data-follower-text=""><i class="ti ti-menu-3"></i> <span class="text-sm">MENU</span></button>
+            <button id="quote-open-btn" class="ml-4 text-2xl text-white hover:text-gray-600 hover:bg-white transition duration-300 rounded-[16px] py-[1px] px-3 flex items-center justify-center border-2 border-white gap-2" data-follower-text="" aria-label="Teklif Talep"><i class="ti ti-bolt text-lg"></i> <span class="text-sm">TEKLİF</span></button>
+            <button class="menu-btn ml-4 text-2xl text-white hover:text-gray-600 hover:bg-white transition duration-300 rounded-[16px] py-[2px] px-3 flex items-center justify-center border-2 border-white gap-2" data-follower-text="" aria-label="Menü Aç"><i class="ti ti-menu-3"></i> <span class="text-sm">MENU</span></button>
+        </div>
+        <!-- Mobil Header: Logo solda, ikonlar sağda -->
+        <div class="mobile-header px-4 py-2 hidden">
+            <a href="#" class="mobile-logo flex items-center" aria-label="Anasayfa">
+                <img src="YBLogo.svg" alt="Logo" class="h-8 w-auto" />
+            </a>
+            <div class="flex items-center gap-2">
+                <button id="quote-open-btn-mobile" class="w-10 h-10 flex items-center justify-center rounded-full border border-white/50 text-white bg-black/30" aria-label="Teklif Talep">
+                    <i class="ti ti-bolt text-lg"></i>
+                </button>
+                <button class="menu-btn-mobile w-10 h-10 flex items-center justify-center rounded-full border border-white/50 text-white bg-black/30" aria-label="Menü Aç">
+                    <i class="ti ti-menu-3 text-lg"></i>
+                </button>
+            </div>
         </div>
     </header>
 
@@ -687,7 +777,7 @@
             </div>
 
             <!-- Custom Navigation -->
-            <div class="navigation absolute w-1/6 bottom-8 gap-20 left-8 rounded-full px-8 pe-0 flex justify-around text-left text-sm text-white z-20">
+            <div class="navigation absolute w-1/6 bottom-8 gap-20 left-8 lg:rounded-full px-8 pe-0 flex justify-around text-left text-sm text-white z-20">
                 <div class="flex items-center text-sm w-full">
                     <span class="current-slide">1</span>
                     <hr class="mx-4 w-12 border-white">
@@ -763,7 +853,7 @@
                         </div>
                     </div>
                     <div class="parallax" data-speed="0.5" data-start="-20" data-end="10">
-                        <img src=g4.jpg" class="object-cover w-full h-full" />
+                        <img src="g4.jpg" class="object-cover w-full h-full" />
                     </div>
                     <img src="g4.jpg" class="rounded-xl object-cover duration-1000 w-full h-full" alt="Slider 2" />
                     <div class="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#3b3b3b] to-transparent"></div>
@@ -844,7 +934,7 @@
             </div>
         </div>
         <div class="bg-white relative flex flex-wrap justify-between">
-            <div class="flex w-full absolute px-40 justify-between gap-6">
+            <div class="parallax-card flex w-full absolute px-40 justify-between gap-6">
                 <div class="parallax-item max-w-[300px] flex justify-start z-20" data-speed="2" data-start="200" data-end="-10">
                     <div class="parallax-content max-w-[300px]">
                         <div class="card p-10 pt-16 cursor-pointer bg-[#f5f5f5] rounded-xl overflow-hidden relative group">
@@ -1869,6 +1959,20 @@
         if (document.querySelector('.menu-btn')) {
             initMenu();
         }
+
+        // Mobil header eventleri: masaüstü butonlarını tetikler
+        (function attachMobileHeaderEvents(){
+            const mobileMenuBtn = document.querySelector('.menu-btn-mobile');
+            const desktopMenuBtn = document.querySelector('.menu-btn');
+            if (mobileMenuBtn && desktopMenuBtn) {
+                mobileMenuBtn.addEventListener('click', function(){ desktopMenuBtn.click(); });
+            }
+            const mobileQuoteBtn = document.getElementById('quote-open-btn-mobile');
+            const desktopQuoteBtn = document.getElementById('quote-open-btn');
+            if (mobileQuoteBtn && desktopQuoteBtn) {
+                mobileQuoteBtn.addEventListener('click', function(){ desktopQuoteBtn.click(); });
+            }
+        })();
     }
 
     // Optimized counter animation function
