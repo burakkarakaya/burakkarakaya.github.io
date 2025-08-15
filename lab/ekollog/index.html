@@ -453,15 +453,13 @@
     </div>
     -->
 
-    <div class="mobile-warning heading-style-h2" style="display:none;">Bu site yalnızca masaüstü cihazlarda görüntülenebilir. Lütfen masaüstü cihazınızı kullanın.</div>
-
     <div class="page-wrapper">
     <!-- Header -->
 
     <header class="fixed lg:sticky w-full top-0 z-40">
         <div class="absolute top-10 left-[50px] flex items-center menu-anim-text">
             <button class="text-gray-600 hover:text-gray-600 hover:bg-white transition duration-300 px-[4px] py-[4px] rounded-full border-2 border-white text-white text-sm mr-4" data-follower-text="" aria-label="Dil Değiştir">EN</button>
-            <button class="text-gray-600 hover:text-gray-600 hover:bg-white transition duration-300 px-[4px] py-[4px] rounded-[16px] border-2 border-white text-white text-xl flex" data-follower-text="" aria-label="Mesaj"><i class="ti ti-message"></i></button>
+            <button id="whatsapp-btn" data-whatsapp-number="" data-whatsapp-text="Merhaba, bilgi almak istiyorum." class="text-gray-600 hover:text-gray-600 hover:bg-white transition duration-300 px-[4px] py-[4px] rounded-[16px] border-2 border-white text-white text-xl flex" data-follower-text="" aria-label="Mesaj"><i class="ti ti-message"></i></button>
         </div>
         <div class="absolute top-10 right-[50px] flex items-center menu-anim">
             <button id="quote-open-btn" class="ml-4 text-2xl text-white hover:text-gray-600 hover:bg-white transition duration-300 rounded-[16px] py-[1px] px-3 flex items-center justify-center border-2 border-white gap-2" data-follower-text="" aria-label="Teklif Talep"><i class="ti ti-bolt text-lg"></i> <span class="text-sm">TEKLİF</span></button>
@@ -2365,6 +2363,162 @@
     });
     </script>
 
+    <!-- WebChat Widget -->
+    <style id="webchat-styles">
+        @keyframes typing {
+            0% { transform: translateY(0); opacity: .4; }
+            50% { transform: translateY(-3px); opacity: 1; }
+            100% { transform: translateY(0); opacity: .4; }
+        }
+        .typing-dot { animation: typing 1s infinite; }
+        .typing-dot:nth-child(2) { animation-delay: .15s; }
+        .typing-dot:nth-child(3) { animation-delay: .3s; }
+    </style>
+    <div id="webchat" class="fixed bottom-5 right-5 z-50">
+        <div id="webchat-panel" class="w-80 sm:w-96 bg-white/80 backdrop-blur-xl rounded-2xl shadow-2xl overflow-hidden mb-3 border border-white/40 ring-1 ring-black/5 transform transition-all duration-200 ease-out opacity-0 pointer-events-none translate-y-2 scale-95 flex flex-col h-[28rem]">
+            <div class="px-4 py-3 border-b flex items-center justify-between bg-gradient-to-r from-fuchsia-50 to-indigo-50">
+                <div class="flex items-center gap-3">
+                    <div class="relative">
+                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-fuchsia-500 to-indigo-600 text-white flex items-center justify-center text-sm font-semibold">EK</div>
+                        <span class="absolute -right-0 -bottom-0 w-3 h-3 bg-emerald-500 rounded-full border-2 border-white"></span>
+                    </div>
+                    <div>
+                        <div class="font-semibold leading-5">Canlı Destek</div>
+                        <div class="text-xs text-gray-500">Genellikle birkaç dakika içinde yanıt</div>
+                    </div>
+                </div>
+                <button id="webchat-close" class="text-gray-500 hover:text-black" aria-label="Kapat"><i class="ti ti-x"></i></button>
+            </div>
+            <div id="webchat-quick" class="px-4 py-2 flex flex-wrap gap-2 bg-white/60">
+                <button class="px-3 py-1.5 text-xs rounded-full border border-gray-200 hover:border-gray-300 hover:bg-gray-50">Merhaba</button>
+                <button class="px-3 py-1.5 text-xs rounded-full border border-gray-200 hover:border-gray-300 hover:bg-gray-50">Teklif almak istiyorum</button>
+                <button class="px-3 py-1.5 text-xs rounded-full border border-gray-200 hover:border-gray-300 hover:bg-gray-50">Teslimat süresi nedir?</button>
+            </div>
+            <div id="webchat-messages" class="px-4 py-3 flex-1 overflow-y-auto space-y-3 bg-gradient-to-b from-white/60 to-white/30"></div>
+            <div class="p-3 border-t flex items-end gap-2 bg-white/70">
+                <div class="flex-1 flex items-end gap-2 rounded-2xl border border-gray-200 bg-white/80 px-3 py-2">
+                    <input id="webchat-input" class="flex-1 resize-none outline-none bg-transparent max-h-20 min-h-[1rem] leading-6" placeholder="Mesajınızı yazın..."></input>
+                </div>
+                <button id="webchat-send" class="w-10 h-10 rounded-full bg-gradient-to-br from-fuchsia-600 to-indigo-600 text-white flex items-center justify-center shadow-md hover:shadow-lg"><i class="ti ti-send"></i></button>
+            </div>
+        </div>
+        <button id="webchat-toggle" class="relative w-14 h-14 ml-auto rounded-full bg-gradient-to-br from-fuchsia-600 to-indigo-600 text-white flex items-center justify-center shadow-lg hover:shadow-xl transition-all">
+            <i class="ti ti-messages text-2xl"></i>
+            <span id="webchat-unread" class="absolute -top-1 -right-1 w-3.5 h-3.5 bg-red-500 rounded-full border-2 border-white hidden"></span>
+        </button>
+    </div>
+
+    <script>
+        (function(){
+            var toggle = document.getElementById('webchat-toggle');
+            var panel = document.getElementById('webchat-panel');
+            var closeBtn = document.getElementById('webchat-close');
+            var input = document.getElementById('webchat-input');
+            var send = document.getElementById('webchat-send');
+            var list = document.getElementById('webchat-messages');
+            var quick = document.getElementById('webchat-quick');
+            var unread = document.getElementById('webchat-unread');
+            var openFromHeaderBtn = document.getElementById('whatsapp-btn');
+
+            function isOpen(){ return panel && !panel.classList.contains('pointer-events-none'); }
+            function openChat(){
+                if (!panel) return;
+                panel.classList.remove('opacity-0','pointer-events-none','translate-y-2','scale-95');
+                setTimeout(function(){ if (input) input.focus(); }, 50);
+                if (unread) unread.classList.add('hidden');
+            }
+            function closeChat(){ if (panel) panel.classList.add('opacity-0','pointer-events-none','translate-y-2','scale-95'); }
+            function toggleChat(){ isOpen() ? closeChat() : openChat(); }
+
+            if (toggle) toggle.addEventListener('click', toggleChat);
+            if (closeBtn) closeBtn.addEventListener('click', closeChat);
+            if (openFromHeaderBtn) openFromHeaderBtn.addEventListener('click', function(e){ e.preventDefault(); openChat(); });
+
+            var STORAGE_KEY = 'WEBCHAT_LOG_V2';
+            function loadLog(){ try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch(_) { return []; } }
+            function saveLog(items){ try { localStorage.setItem(STORAGE_KEY, JSON.stringify(items)); } catch(_) {} }
+            function appendMessage(text, who){
+                var wrap = document.createElement('div');
+                var bubble = document.createElement('div');
+                bubble.textContent = text;
+                if (who === 'user') {
+                    wrap.className = 'flex justify-end';
+                    bubble.className = 'max-w-[80%] rounded-2xl px-3 py-2 bg-gradient-to-br from-fuchsia-600 to-indigo-600 text-white shadow';
+                } else if (who === 'agent') {
+                    wrap.className = 'flex justify-start';
+                    bubble.className = 'max-w-[80%] rounded-2xl px-3 py-2 bg-white border shadow-sm';
+                } else {
+                    wrap.className = 'flex justify-center';
+                    bubble.className = 'text-xs text-gray-500';
+                }
+                wrap.appendChild(bubble);
+                if (list) list.appendChild(wrap);
+                if (list) list.scrollTop = list.scrollHeight;
+            }
+            function appendStatus(text){ appendMessage(text, 'status'); }
+
+            function showTyping(show){
+                var id = 'webchat-typing';
+                var el = document.getElementById(id);
+                if (show) {
+                    if (el) return;
+                    var row = document.createElement('div');
+                    row.id = id;
+                    row.className = 'flex justify-start';
+                    var bubble = document.createElement('div');
+                    bubble.className = 'max-w-[80%] rounded-2xl px-3 py-2 bg-white border shadow-sm flex items-center gap-1 text-gray-500';
+                    for (var i=0;i<3;i++){ var d=document.createElement('span'); d.className='typing-dot inline-block w-1.5 h-1.5 bg-gray-400 rounded-full'; bubble.appendChild(d); }
+                    row.appendChild(bubble);
+                    if (list) list.appendChild(row);
+                    if (list) list.scrollTop = list.scrollHeight;
+                } else if (el) {
+                    el.parentNode && el.parentNode.removeChild(el);
+                }
+            }
+
+            // Geçmişi yükle
+            var history = loadLog();
+            history.forEach(function(it){ appendMessage(it.text, it.who); });
+
+            async function sendToEndpoint(text){
+                // İsteğe bağlı: body[data-chat-endpoint] ile JSON POST yap
+                var endpoint = document.body.getAttribute('data-chat-endpoint') || '';
+                if (!endpoint) return false;
+                try {
+                    var payload = { text: text, when: Date.now(), path: location.pathname, page: document.title };
+                    var r = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                    return r.ok;
+                } catch(_) { return false; }
+            }
+
+            async function handleSend(text){
+                appendMessage(text, 'user');
+                var newLog = loadLog();
+                newLog.push({ text: text, who: 'user', ts: Date.now() });
+                saveLog(newLog);
+                showTyping(true);
+                var ok = await sendToEndpoint(text);
+                setTimeout(function(){ showTyping(false); }, 600);
+                if (ok) appendStatus('Mesaj iletildi.'); else appendStatus('Mesaj kaydedildi. (İletim yapılandırılmadı)');
+            }
+
+            if (send) send.addEventListener('click', function(){
+                var text = (input && input.value || '').trim();
+                if (!text) return;
+                input.value = '';
+                handleSend(text);
+            });
+            if (input) input.addEventListener('keydown', function(e){ if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); if (send) send.click(); } });
+
+            // Hızlı mesajlar
+            if (quick) quick.querySelectorAll('button').forEach(function(b){ b.addEventListener('click', function(){ var t=b.textContent.trim(); if (!t) return; input.value = t; input.focus(); }); });
+
+            // Bildirim noktası
+            var origAppend = appendMessage;
+            appendMessage = function(text, who){ origAppend(text, who); if (!isOpen() && unread) unread.classList.remove('hidden'); };
+        })();
+    </script>
+    
     <!-- YouTube Modal and Hover Preview Handlers -->
     <script>
     // Load YouTube Iframe API once
