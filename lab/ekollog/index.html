@@ -19,419 +19,32 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     
-    <link rel="stylesheet" href="grid.css">
+    <link rel="stylesheet" href="assets/css/grid.css">
     
-    <title>Ekol Lojistik</title>
+    <title>Yapar Bilişim</title>
     
     <!-- Meta tags consolidated -->
-    <meta name="description" content="Ekol 2010 yılında WWF Yeşil Ofis Programına başvuruda bulunmuş, 2013 yılında Green Office Diploması'nı alarak sektöründe yine bir ilki gerçekleştirmiştir.">
-    <meta name="keywords" content="Ekol Lojistik, taşımacılık">
-    <meta name="author" content="Ekol Lojistik">
-    <link rel="canonical" href="https://www.ekol.com/">
+    <meta name="description" content="Yapar Bilişim 2010 yılından bu yana IT proje ve danışmanlık hizmetleri sunarak sektöründe güvenilir çözüm ortağı olmuştur.">
+    <meta name="keywords" content="Yapar Bilişim, IT proje, danışmanlık, ağ kurulumu, server yönetimi, yazılım geliştirme">
+    <meta name="author" content="Yapar Bilişim">
+    <link rel="canonical" href="https://www.yaparbilisim.com/">
     
     <!-- Social media meta tags -->
-    <meta property="og:title" content="Ekol Lojistik | İç Giyim, Ev Giyimi ve Örme Dış Giyim Üreticisi">
-    <meta property="og:description" content="Ekol 2010 yılında WWF Yeşil Ofis Programına başvuruda bulunmuş, 2013 yılında Green Office Diploması'nı alarak sektöründe yine bir ilki gerçekleştirmiştir.">
-    <meta property="og:image" content="https://www.ekol.com/images/og-image.jpg">
-    <meta property="og:url" content="https://www.ekol.com/">
+    <meta property="og:title" content="Yapar Bilişim | IT Proje ve Danışmanlık Hizmetleri">
+    <meta property="og:description" content="Yapar Bilişim 2010 yılından bu yana IT proje ve danışmanlık hizmetleri sunarak sektöründe güvenilir çözüm ortağı olmuştur.">
+    <meta property="og:image" content="https://www.yaparbilisim.com/assets/images/og-image.jpg">
+    <meta property="og:url" content="https://www.yaparbilisim.com/">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Ekol Lojistik | İç Giyim, Ev Giyimi ve Örme Dış Giyim Üreticisi">
-    <meta name="twitter:description" content="Ekol 2010 yılında WWF Yeşil Ofis Programına başvuruda bulunmuş, 2013 yılında Green Office Diploması'nı alarak sektöründe yine bir ilki gerçekleştirmiştir.">
-    <meta name="twitter:image" content="https://www.ekol.com/images/twitter-card.jpg">
+    <meta name="twitter:title" content="Yapar Bilişim | IT Proje ve Danışmanlık Hizmetleri">
+    <meta name="twitter:description" content="Yapar Bilişim 2010 yılından bu yana IT proje ve danışmanlık hizmetleri sunarak sektöründe güvenilir çözüm ortağı olmuştur.">
+    <meta name="twitter:image" content="https://www.yaparbilisim.com/assets/images/twitter-card.jpg">
 
-    <style>
-        body {
-            font-family: 'Noto Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-            color: #3b3b3b;
-        }
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="assets/css/webchat.css">
 
-        h1, h2, h3 {
-            font-family: 'Noto Serif Display', Georgia, 'Times New Roman', serif;
-            font-weight: 700;
-        }
-
-        p {
-            font-family: 'Noto Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-            font-weight: 300;
-        }
-        
-        /* Yardımcı sınıf: Noto Sans kullanımı için */
-        .font-Noto {
-            font-family: 'Noto Sans Display';
-        }
-
-        .font-Square {
-            font-family: 'Square Peg';
-        }
-        
-        /* Consolidated animations */
-        @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
-
-        /* @property --r grid.css'e taşındı */
-        /* Intro overlay: mavi tam ekran, ortadan büyüyen şeffaf daire ile siteyi açar */
-        #introOverlay {
-            position: fixed;
-            inset: 0;
-            background: #4cabe8;
-            z-index: 80;
-            pointer-events: none;
-            /* delik yarıçapı */
-            --r: 0px;
-            -webkit-mask: radial-gradient(circle var(--r) at 50% 50%, transparent 0 var(--r), #fff calc(var(--r) + 1px));
-                    mask: radial-gradient(circle var(--r) at 50% 50%, transparent 0 var(--r), #fff calc(var(--r) + 1px));
-            will-change: --r;
-            contain: layout paint style;
-            transform: translateZ(0);
-            backface-visibility: hidden;
-            animation: intro-reveal 2s cubic-bezier(0.4, 0, 0.2, 1) 0.4s forwards;
-        }
-        @keyframes intro-reveal {
-            0%   { --r: 0px; }
-            15%  { --r: 120px; }
-            25%  { --r: 120px; } /* kısa tek duraklama */
-            100% { --r: 120vmax; }  /* duraksamasız tam açılış; opacity değişmez */
-        }
-        @keyframes scaleOut { 
-            0% { 
-                clip-path: circle(0px at center);
-                transform: scale(0.8);
-            } 
-            30% {
-                clip-path: circle(100px at center);
-                transform: scale(1);
-            }
-            70% {
-                clip-path: circle(300px at center);
-                transform: scale(1.2);
-            }
-            100% { 
-                clip-path: circle(800px at center);
-                transform: scale(1.5);
-            } 
-        }
-        @keyframes slideUpAndHide { from { height: 100%; top: 0; } to { height: 57px; top: 30px; } }
-        @keyframes menuAnim { from { opacity: 0; top: -30px; } to { opacity: 1; top: 45px; } }
-        @keyframes menuAnimText { from { opacity: 0; top: -30px; } to { opacity: 1; top: 45px; } }
-        @keyframes menuAnimTextActive { from { top: 45px; } to { top: 22px; } }
-
-        .menu-anim-text {
-            animation: menuAnimText 1s ease 1.5s forwards;
-            opacity: 0;
-            transition: all .5s ease;
-        }
-
-        /* Scroll ile marka yazısı fade/translate effect */
-        .brand-caption {
-            transition: opacity .45s ease, transform .55s cubic-bezier(0.22, 1, 0.36, 1);
-            will-change: opacity, transform;
-            opacity: 0; /* İlk yüklemede gizli */
-            transform: translateY(16px); /* Aşağıdan başla */
-        }
-
-        /* Logo animasyonu bittikten sonra görünür olma durumu */
-        .brand-caption.brand-caption--show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .menu-anim {
-            animation: menuAnim 1s ease 1.5s forwards;
-            opacity: 0;
-            transition: all .5s cubic-bezier(.77,0,.18,1);
-        }
-
-
-        .animate-scale-out { 
-            animation: scaleOut 3s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.2s forwards, fadeOut 0.8s ease 4.2s forwards;
-            transform-origin: center;
-        }
-        .animate-logo {
-            /* Intro bitimine yakın kaydır (tek duraksama algısı olmasın) */
-            will-change: transform, top, height;
-            animation: slideUpAndHide 0.7s cubic-bezier(0.4, 0, 0.2, 1) 1.6s forwards;
-            transition: all .5s cubic-bezier(.77,0,.18,1);
-        }
-
-        .animate-logo .logo-container {
-            background: transparent;
-            border-radius: 50%;
-            width: 150px;
-            height: 100px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            will-change: transform;
-            animation: logoScale 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
-        }
-
-        .animate-logo img {
-            max-width: 100px;
-            will-change: max-width;
-            /* Yukarı kayma ile EŞ ZAMANLI 65px'e küçülsün */
-            animation: logoShrink 0.7s cubic-bezier(0.4, 0, 0.2, 1) 1.6s forwards;
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            #introOverlay { animation: none; display: none; }
-            .animate-logo { animation: none; }
-            .animate-logo .logo-container { animation: none; }
-            .animate-logo img { animation: none; }
-        }
-
-        @keyframes logoScale {
-            from {
-                transform: scale(1.5);
-            }
-            to {
-                transform: scale(1);
-            }
-        }
-
-        @keyframes logoShrink {
-            from { max-width: 100px; }
-            to   { max-width: 65px; margin-top: 6px; }
-        }
-
-        header:before {
-            content:'';
-            -webkit-backdrop-filter: blur(8px);
-            backdrop-filter: blur(8px);
-            background-color: rgba(0, 0, 0, .2);
-            height: 100px;
-            left: 0;
-            right: 0;
-            margin: 0 auto;
-            opacity: 0;
-            position: absolute;
-            top: 22px; 
-            border-radius: 40px;
-            transition: opacity .5s cubic-bezier(.77,0,.18,1);
-            width: calc(100% - 40px);
-            border-bottom: 1px solid rgba(255, 255, 255, .3);
-            transition: all 1s ease;
-        }
-
-        body.header-sticky header:before {opacity: 1; height: 80px;}
-
-        .navigation {
-            backdrop-filter: blur(8px); 
-            background-color: hsla(35, 20%, 62%, .2); 
-            /* border-bottom: 1px solid rgba(255, 255, 255, .2); */
-        }
-
-        .mobile-warning {
-            display: none;
-        }
-
-        .lenis.lenis-smooth {
-            scroll-behavior: auto;
-        }
-        .lenis.lenis-smooth [data-lenis-prevent] {
-            overscroll-behavior: contain;
-        }
-        .lenis.lenis-stopped {
-            overflow: hidden;
-        }
-        .lenis.lenis-scrolling iframe {
-            pointer-events: none;
-        }
-
-        .parallax-ingredients {
-            width: 100%;
-            position: relative;
-            overflow: hidden;
-            height: 80vh;
-            mask-image: url(icon-ellipse.svg);
-            mask-position: center;
-            mask-repeat: no-repeat;
-            mask-size: contain;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .parallax-ingredients img {
-            width: auto;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%) scale(1.4);
-            transform-origin: 50% 50%;
-        }
-
-        .parallax img {
-            width: auto;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%) scale(1.1);
-            transform-origin: 50% 50%;
-        }
-
-        /* scroll down css */
-
-        @keyframes elasticus {
-      0% {
-        transform-origin: 0% 0%;
-        transform: scale(1, 0);
-      }
-      50% {
-        transform-origin: 0% 0%;
-        transform: scale(1, 1);
-      }
-      50.1% {
-        transform-origin: 0% 100%;
-        transform: scale(1, 1);
-      }
-      100% {
-        transform-origin: 0% 100%;
-        transform: scale(1, 0);
-      }
-    }
-    
-    #scroll-down::before {
-      animation: elasticus 2.9s cubic-bezier(1, 0, 0, 1) infinite;
-      position: absolute;
-      top: 0px;
-      left: 50%;
-      margin-left: -1px;
-      width: 2px;
-      height: 90px;
-      background: #FFF;
-      content: ' ';
-    }
-
-    /* follower */
-
-    .follower {
-      position: fixed;
-      width: 10px;
-      height: 10px;
-      background: #38bdf8;
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9999;
-    }
-
-    .follower__inner__bottom,
-    .follower__inner__top {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 100%;
-      height: 100%;
-      transform: translate(-50%, -50%) scale(1);
-      border-radius: 50%;
-      border: 2px solid transparent;
-      transform-origin: center center;
-    }
-
-    .follower__content {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      white-space: nowrap;
-      font-size: 14px;
-      font-weight: bold;
-      color: black;
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 0.2s ease;
-    }
-
-    /* .followerchangetest kaldırıldı: boş kurallar temizlendi */
-
-    .follower.hide-bg {
-      background: transparent !important;
-    }
-
-
-    </style>
-        <style>
-        /* Mobil responsive iyileştirmeler - desktop değerleri korunur */
-        @media (max-width: 768px) {
-            html, body { overflow-x: hidden; }
-
-            /* Genel boşluklar (px-40, py-40 gibi büyük paddingleri küçült) */
-            .px-40 { padding-left: 1rem !important; padding-right: 1rem !important; }
-            .py-40 { padding-top: 2rem !important; padding-bottom: 2rem !important; }
-
-            /* Başlık ve açıklama boyutları */
-            .title-animate { font-size: clamp(24px, 6vw, 34px) !important; line-height: 1.2 !important; }
-            .desc-animate { font-size: 0.95rem !important; }
-
-            /* Header butonlarının konumu ve boyutu */
-            /* Masaüstü header overlay ve butonlarını gizle, mobil header göster */
-            header .menu-anim-text, header .menu-anim { display: none !important; }
-            header:before { width: 100%; left: 0; right: 0; top: 0; height: 56px; border-radius: 0; opacity: 1; background-color: rgba(0,0,0,.35); }
-            .mobile-header { display: flex !important; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
-            .mobile-header .mobile-logo img { height: 28px; }
-
-            /* Intro animasyon ve logo: mobilde görünmesin */
-            #introOverlay, #logoIntro { display: none !important; }
-            .brand-caption { display: none !important; }
-
-            /* Ana slider içerik düzeni */
-            .main-slider .swiper-slide > .flex { bottom: 4.5rem !important; padding-left: 1rem !important; padding-right: 1rem !important; flex-direction: column; }
-            .main-slider .swiper-slide > .flex > div { width: 100% !important; padding: 0 !important; }
-            .main-slider .swiper-slide > .flex > div:last-child { display: none !important; }
-            .main-slider h1 { font-size: clamp(28px, 8vw, 38px) !important; line-height: 1.2 !important; text-align: left !important; }
-            .main-slider p { font-size: 0.95rem !important; margin-top: 0.75rem !important; text-align: left !important; }
-
-            /* Ana slider yüksekliği: mobil ekrana tam sığacak şekilde (header hariç) */
-            .main-slider { position: relative !important; top: 0 !important; height: calc(100vh - 56px) !important; height: calc(100dvh - 56px) !important; height: calc(100svh - 56px) !important; overflow: hidden; }
-            .main-slider .swiper, .main-slider .swiper-wrapper, .main-slider .swiper-slide { height: 100% !important; }
-            .main-slider .swiper-slide > img,
-            .main-slider .swiper-slide > video { width: 100% !important; height: 100% !important; object-fit: cover !important; object-position: center !important; position: absolute !important; top: 0; left: 0; }
-
-            /* Ana slider alt navigasyon: tam alta ve tam genişlik */
-            .main-slider .navigation { left: 0 !important; right: 0 !important; transform: none !important; bottom: 0 !important; width: 100% !important; padding: 6px 10px !important; gap: 10px !important; justify-content: center; }
-            .main-slider .navigation > .flex { justify-content: center; width: 100%; }
-            .main-slider .navigation hr { width: 24px !important; }
-            .main-slider .navigation .py-3 { padding-top: 6px !important; padding-bottom: 6px !important; }
-
-            /* Parallax/Ingredients alanı */
-            .ingredients-section .ingredients-text { padding-left: 1rem !important; padding-right: 1rem !important; margin-bottom: 1rem !important; }
-            .ingredients-section .bg-white > .flex { position: static !important; padding-left: 1rem !important; padding-right: 1rem !important; gap: 1rem !important; }
-            .parallax-ingredients { height: 55vh !important; -webkit-mask-image: none; mask-image: none; }
-            .parallax img { transform: translateX(-50%) scale(1.0) !important; }
-
-            /* Kart/grid bölümleri tek kolona düşür */
-            .counter-section { grid-template-columns: 1fr !important; }
-
-            /* Haber/ideas slider alt navigasyon ortala */
-            .ideasSwiper .navigation { left: 50% !important; transform: translateX(-50%); }
-
-            /* Footer üst header bloğu dikey hizala */
-            .bg-gray-100 > .flex.justify-between.items-center { flex-direction: column; align-items: flex-start; gap: 1rem; }
-
-            /* Footer grid: 5 kolon -> 1 kolon */
-            .bg-gray-100 footer.grid { grid-template-columns: 1fr !important; }
-            .bg-gray-100 footer.grid .col-span-2 { grid-column: span 1 / span 1 !important; margin-left: 0 !important; }
-        }
-
-        /* Mobil header için arka plan sabitleme (light/dark uyumlu) */
-        header { position: sticky; top: 0; z-index: 60; }
-        @supports ((-webkit-backdrop-filter: blur(8px)) or (backdrop-filter: blur(8px))) {
-            header:before { backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
-        }
-
-        /* Parallax-card içindeki kartlara soft, açık griye yakın linear gradient (hover yok) */
-        .parallax-card .card {
-            --g1: #fafafa; /* nötr açık gri */
-            --g2: #f7f7f8; /* çok hafif soğuk gri */
-            background-image: linear-gradient(135deg, var(--g1) 0%, var(--g2) 100%);
-            background-color: transparent;
-        }
-        /* Her kart farklı, fakat griye yakın soft tonlar */
-        .parallax-card .parallax-item:nth-child(1) .card { --g1: #f7f9fc; --g2: #f4f6fa; } /* mavi-gri */
-        .parallax-card .parallax-item:nth-child(2) .card { --g1: #f8fbf9; --g2: #f4f8f6; } /* yeşil-gri */
-        .parallax-card .parallax-item:nth-child(3) .card { --g1: #fcf7f8; --g2: #f9f4f2; } /* pembe/şeftali-gri */
-        .parallax-card .parallax-item:nth-child(4) .card { --g1: #faf7fc; --g2: #f6f4fb; } /* lila-gri */
-        </style>
 
     <!-- Load critical JS libraries -->
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/10.0.4/swiper-bundle.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -456,30 +69,7 @@
     <div class="page-wrapper">
     <!-- Header -->
 
-    <header class="fixed lg:sticky w-full top-0 z-40">
-        <div class="absolute top-10 left-[50px] flex items-center menu-anim-text">
-            <button class="text-gray-600 hover:text-gray-600 hover:bg-white transition duration-300 px-[4px] py-[4px] rounded-full border-2 border-white text-white text-sm mr-4" data-follower-text="" aria-label="Dil Değiştir">EN</button>
-            <button id="whatsapp-btn" data-whatsapp-number="" data-whatsapp-text="Merhaba, bilgi almak istiyorum." class="text-gray-600 hover:text-gray-600 hover:bg-white transition duration-300 px-[4px] py-[4px] rounded-[16px] border-2 border-white text-white text-xl flex" data-follower-text="" aria-label="Mesaj"><i class="ti ti-message"></i></button>
-        </div>
-        <div class="absolute top-10 right-[50px] flex items-center menu-anim">
-            <button id="quote-open-btn" class="ml-4 text-2xl text-white hover:text-gray-600 hover:bg-white transition duration-300 rounded-[16px] py-[1px] px-3 flex items-center justify-center border-2 border-white gap-2" data-follower-text="" aria-label="Teklif Talep"><i class="ti ti-bolt text-lg"></i> <span class="text-sm">TEKLİF</span></button>
-            <button class="menu-btn ml-4 text-2xl text-white hover:text-gray-600 hover:bg-white transition duration-300 rounded-[16px] py-[2px] px-3 flex items-center justify-center border-2 border-white gap-2" data-follower-text="" aria-label="Menü Aç"><i class="ti ti-menu-3"></i> <span class="text-sm">MENU</span></button>
-        </div>
-        <!-- Mobil Header: Logo solda, ikonlar sağda -->
-        <div class="mobile-header px-4 py-2 hidden">
-            <a href="#" class="mobile-logo flex items-center" aria-label="Anasayfa">
-                <img src="YBLogo.svg" alt="Logo" class="h-8 w-auto" />
-            </a>
-            <div class="flex items-center gap-2">
-                <button id="quote-open-btn-mobile" class="w-10 h-10 flex items-center justify-center rounded-full border border-white/50 text-white bg-black/30" aria-label="Teklif Talep">
-                    <i class="ti ti-bolt text-lg"></i>
-                </button>
-                <button class="menu-btn-mobile w-10 h-10 flex items-center justify-center rounded-full border border-white/50 text-white bg-black/30" aria-label="Menü Aç">
-                    <i class="ti ti-menu-3 text-lg"></i>
-                </button>
-            </div>
-        </div>
-    </header>
+    <div class="fixed lg:sticky w-full top-0 z-40" data-include="components/header.html"></div>
 
     <!-- Logo anim -->
 
@@ -487,7 +77,7 @@
         <div class="relative z-10 sticky top-0 pointer-events-auto">
             <div class="logo-container">
                 <a href="/" class="flex flex-col items-center justify-center">
-                    <img src="YBLogo.svg" alt="Logo">
+                    <img src="assets/images/YBLogo.svg" alt="Logo">
                 </a>
             </div>
             <div class="brand-caption flex flex-col items-center justify-center absolute top-full right-0 left-0">
@@ -617,31 +207,31 @@
                 <!-- Her bir menü öğesi -->
                 <div class="flex items-center group cursor-pointer">
                     <span class="text-gray-600 text-sm mr-4">01</span>
-                    <span class="text-gray-400 hover:text-white transition-colors text-5xl font-light">Kurumsal</span>
+                    <span class="text-gray-400 hover:text-white transition-colors text-5xl font-light">Hakkımızda</span>
                     <hr class="mx-4 w-12 border-gray-700 opacity-0 group-hover:opacity-100 transition-opacity">
                 </div>
 
                 <div class="flex items-center group cursor-pointer">
                     <span class="text-gray-600 text-sm mr-4">02</span>
-                    <span class="text-gray-400 hover:text-white text-5xl font-light">Lojistik</span>
+                    <span class="text-gray-400 hover:text-white text-5xl font-light">Bilişim</span>
                     <hr class="mx-4 w-12 border-gray-700 opacity-0 group-hover:opacity-100 transition-opacity">
                 </div>
                 
                 <div class="flex items-center group cursor-pointer">
                     <span class="text-gray-600 text-sm mr-4">03</span>
-                    <span class="text-gray-400 hover:text-white text-5xl font-light">Hakkımızda</span>
+                    <span class="text-gray-400 hover:text-white text-5xl font-light">Hizmetler</span>
                     <hr class="mx-4 w-12 border-gray-700 opacity-0 group-hover:opacity-100 transition-opacity">
                 </div>
 
                 <div class="flex items-center group cursor-pointer">
                     <span class="text-gray-600 text-sm mr-4">04</span>
-                    <span class="text-gray-400 hover:text-white text-5xl font-light">Kariyer</span>
+                    <span class="text-gray-400 hover:text-white text-5xl font-light">Referanslar</span>
                     <hr class="mx-4 w-12 border-gray-700 opacity-0 group-hover:opacity-100 transition-opacity">
                 </div>
 
                 <div class="flex items-center group cursor-pointer">
                     <span class="text-gray-600 text-sm mr-4">05</span>
-                    <span class="text-gray-400 hover:text-white text-5xl font-light">İletişim</span>
+                    <span class="text-gray-400 hover:text-white text-5xl font-light">Blog</span>
                     <hr class="mx-4 w-12 border-gray-700 opacity-0 group-hover:opacity-100 transition-opacity">
                 </div>
 
@@ -652,17 +242,17 @@
                 <!-- İletişim Bloğu 1 -->
                 <div>
                     <h3 class="text-white mb-4">İletişime Geç</h3>
-                    <p class="mb-2">Eyüp Sultan, Mehmet Akif Cd. No:3/A 34885 <br>Sancaktepe/İstanbul</p>
-                    <p>Tel: 444 3565 (EKOL)</p>
+                    <p class="mb-2">Merkez Mahallesi, Teknoloji Caddesi No:15 <br>Kadıköy/İstanbul</p>
+                    <p>Tel: 0216 555 0123</p>
                 </div>
 
                 <!-- Menü Linkleri -->
                 <div class="flex flex-col gap-4">
                     <a href="#" class="text-white hover:text-gray-300 transition-colors">
-                        Bilgi Toplumu Hizmetleri
+                        Siber Güvenlik
                     </a>
                     <a href="#" class="text-white hover:text-gray-300 transition-colors">
-                        Kişisel Verilerin İşlenmesi
+                        Veri Koruma
                     </a>
                     <a href="#" class="text-white hover:text-gray-300 transition-colors">
                         İletişim
@@ -671,17 +261,17 @@
                 
                 <!-- İletişim Bloğu 2 -->
                 <div>
-                    <h3 class="text-white mb-4">İş Başvuruları</h3>
-                    <p class="mb-2">kariyer@ekol.com</p>
+                    <h3 class="text-white mb-4">Teknik Destek</h3>
+                    <p class="mb-2">destek@yaparbilisim.com</p>
                 </div>
 
                 <!-- Sosyal Medya Linkleri -->
                 <div class="flex gap-4">
                     <a href="#" class="text-white hover:text-gray-300 transition-colors">
-                        <i class="ti ti-brand-instagram text-xl"></i>
+                        <i class="ti ti-brand-linkedin text-xl"></i>
                     </a>
                     <a href="#" class="text-white hover:text-gray-300 transition-colors">
-                        <i class="ti ti-brand-x text-xl"></i>
+                        <i class="ti ti-brand-github text-xl"></i>
                     </a>
                     <a href="#" class="text-white hover:text-gray-300 transition-colors">
                         <i class="ti ti-brand-youtube text-xl"></i>
@@ -736,7 +326,7 @@
                         </div>
                         <div class="w-1/2 p-10"></div>
                     </div>
-                    <img src="bekir.jpeg" class="w-full h-full object-cover absolute top-0 left-0 -z-10 brightness-75" alt="Slider 1">
+                    <img src="assets/images/bekir.jpeg" class="w-full h-full object-cover absolute top-0 left-0 -z-10 brightness-75" alt="Slider 1">
                 </div>
 
                 <!-- Slide 2 -->
@@ -752,7 +342,7 @@
                         </div>
                         <div class="w-1/2 p-10"></div>
                     </div>
-                    <img src="server.jpeg" class="w-full h-full object-cover absolute top-0 left-0 -z-10 brightness-75" alt="Slider 2">
+                    <img src="assets/images/server.jpeg" class="w-full h-full object-cover absolute top-0 left-0 -z-10 brightness-75" alt="Slider 2">
                 </div>
 
                 <!-- Slide 3 -->
@@ -769,7 +359,7 @@
                         <div class="w-1/2 p-10"></div>
                     </div>
                     <video class="w-full h-full object-cover absolute top-0 left-0 -z-10 brightness-75 object-top" autoplay muted loop>
-                        <source src="YBvideo.mp4" type="video/mp4">
+                        <source src="assets/images/YBvideo.mp4" type="video/mp4">
                     </video>
                 </div>
             </div>
@@ -788,7 +378,7 @@
             </div>
         </div>
         <!-- Scroll Efekti -->
-        <div id="scroll-wrapper" class="absolute z-10 pointer-events-none right-4 bottom-0">
+        <div id="scroll-wrapper" class="absolute z-10 pointer-events-none right-4 bottom-0 hidden lg:block">
             <div id="scroll-wrapper-inner" class="table-cell align-bottom">
             <div id="scroll-title" class="block uppercase text-white text-xs font-semibold text-center transform rotate-90 mb-6">
                 Kaydır
@@ -804,7 +394,7 @@
         <div class="w-full py-40 pb-80 h-fit sticky top-0">
             <div class="title-section mb-20">
                 <h2 class="title-animate text-6xl font-bold leading-tight"><span  class="block">Bilişimde Güçlü, Çözümde Hızlı</span></h2>
-                <p class="desc-animate mt-8 text-lg font-light">Yılların deneyimiyle, şirketinizin tüm bilişim ihtiyaçlarını tek elden karşılıyoruz. Server desteği, bilgisayar kurulumu, ağ altyapısı, güvenlik kamera sistemleri ve kablolama hizmetleri ile işletmenizin teknoloji altyapısını güvenle inşa ediyoruz. Yeni açılan şirketler için A’dan Z’ye IT kurulum paketlerimizle hızlı, güvenilir ve profesyonel çözümler sunuyoruz. İşletmenizin verimliliğini artırmak için buradayız.</p>
+                <p class="desc-animate mt-8 text-lg font-light">Yılların deneyimiyle, şirketinizin tüm bilişim ihtiyaçlarını tek elden karşılıyoruz. Server desteği, bilgisayar kurulumu, ağ altyapısı, güvenlik kamera sistemleri ve kablolama hizmetleri ile işletmenizin teknoloji altyapısını güvenle inşa ediyoruz. Yeni açılan şirketler için A'dan Z'ye IT kurulum paketlerimizle hızlı, güvenilir ve profesyonel çözümler sunuyoruz. İşletmenizin verimliliğini artırmak için buradayız.</p>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 counter-section">
                 <div class="card cursor-pointer bg-gray-200 text-white rounded-xl overflow-hidden relative group min-h-[200px]">
@@ -815,7 +405,7 @@
                         </div>
                     </div>
                     <div class="parallax" data-speed="0" data-start="-20" data-end="10">
-                        <img src="g1.jpg" class="object-cover w-full h-full" />
+                        <img src="assets/images/g1.jpg" class="object-cover w-full h-full" />
                     </div>
                     <div class="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#3b3b3b] to-transparent"></div>
                 </div>
@@ -827,7 +417,7 @@
                         </div>
                     </div>
                     <div class="parallax" data-speed="0.5" data-start="-20" data-end="10">
-                        <img src="g2.jpg" class="object-cover w-full h-full" />
+                        <img src="assets/images/g2.jpg" class="object-cover w-full h-full" />
                     </div>
                     <div class="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#3b3b3b] to-transparent"></div>
                 </div>
@@ -839,7 +429,7 @@
                         </div>
                     </div>
                     <div class="parallax" data-speed="0.5" data-start="-20" data-end="10">
-                        <img src="g3.jpg" class="object-cover w-full h-full" />
+                        <img src="assets/images/g3.jpg" class="object-cover w-full h-full" />
                     </div>
                     <div class="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#3b3b3b] to-transparent"></div>
                 </div>
@@ -851,9 +441,9 @@
                         </div>
                     </div>
                     <div class="parallax" data-speed="0.5" data-start="-20" data-end="10">
-                        <img src="g4.jpg" class="object-cover w-full h-full" />
+                        <img src="assets/images/g4.jpg" class="object-cover w-full h-full" />
                     </div>
-                    <img src="g4.jpg" class="rounded-xl object-cover duration-1000 w-full h-full" alt="Slider 2" />
+                    <img src="assets/images/g4.jpg" class="rounded-xl object-cover duration-1000 w-full h-full" alt="Slider 2" />
                     <div class="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#3b3b3b] to-transparent"></div>
                 </div>
             </div>
@@ -863,39 +453,39 @@
 
     <!-- Corporate -->
 
-    <div class="flex justify-between px-40 gap-20 relative bg-gray-100">
-        <div class="title-section w-1/2 py-40 h-fit sticky top-10">
+    <div class="flex flex-col lg:flex-row justify-between px-40 gap-20 relative bg-gray-100">
+        <div class="title-section w-full lg:w-1/2 py-40 h-fit sticky top-10">
             <h1 class="title-animate text-6xl font-bold leading-tight">
-                <span class="block">Lojistik 4.0'ın Öncüsü:</span>
-                <span class="block">İnovasyon ve Teknoloji</span>
+                <span class="block">Bilişim Teknolojilerinin Öncüsü:</span>
+                <span class="block">İnovasyon ve Çözüm</span>
             </h1>
-            <p class="desc-animate mt-8 text-lg">Ekol olarak, lojistik süreçlerini daha verimli, hızlı ve çevreci hale getirmek için Ar-Ge'ye sürekli yatırım yapıyoruz. Kendi geliştirdiğimiz Quadro ve Rainbow gibi yazılımlarımız ve en son teknolojilerle lojistikte yeni standartlar belirliyoruz. Müşterilerimize daha akıllı, bağlantılı ve yenilikçi çözümler sunuyoruz.</p>
+            <p class="desc-animate mt-8 text-lg">Yapar Bilişim olarak, IT süreçlerini daha verimli, hızlı ve güvenli hale getirmek için sürekli yatırım yapıyoruz. Kendi geliştirdiğimiz yazılım çözümlerimiz ve en son teknolojilerle bilişimde yeni standartlar belirliyoruz. Müşterilerimize daha akıllı, bağlantılı ve yenilikçi çözümler sunuyoruz.</p>
             <button class="bg-sky-400 text-white hover:bg-sky-600 transition duration-300 py-2 px-4 rounded-xl flex items-center space-x-2 mt-8">
                 <span>Teknolojilerimizi Keşfedin</span>
                 <i class="fas fa-arrow-right"></i>
             </button>
         </div>
-        <div class="text-white w-1/3 flex flex-wrap mb-auto items-center justify-center py-40 sticky top-[40px]">
+        <div class="text-white w-full lg:w-1/3 flex flex-wrap mb-auto items-center justify-center py-40 sticky top-[40px]">
             <div class="flex flex-col w-full">
                 <div class="p-4 flex items-center border-t border-gray-400">
-                    <img src="proje.svg" class="max-w-[50px] me-4">
+                    <img src="assets/images/proje.svg" class="max-w-[50px] me-4">
+                    <span class="text-xl font-bold text-sky-400 me-2">50+</span>
+                    <p class="text-gray-600 text-xl mt-1">Tamamlanan IT Projesi</p>
+                </div>
+                <div class="p-4 flex items-center border-t border-gray-400">
+                    <img src="assets/images/patent.svg" class="max-w-[50px] me-4">
                     <span class="text-xl font-bold text-sky-400 me-2">15+</span>
-                    <p class="text-gray-600 text-xl mt-1">Aktif Ar-Ge Projesi</p>
+                    <p class="text-gray-600 text-xl mt-1">Müşteri Referansı</p>
                 </div>
                 <div class="p-4 flex items-center border-t border-gray-400">
-                    <img src="patent.svg" class="max-w-[50px] me-4">
-                    <span class="text-xl font-bold text-sky-400 me-2">7+</span>
-                    <p class="text-gray-600 text-xl mt-1">Patentli İnovasyon</p>
-                </div>
-                <div class="p-4 flex items-center border-t border-gray-400">
-                    <img src="ekip.svg" class="max-w-[50px] me-4">
-                    <span class="text-xl font-bold text-sky-400 me-2">30+</span>
-                    <p class="text-gray-600 text-xl mt-1">Uzman Ar-Ge Ekibi</p>
+                    <img src="assets/images/ekip.svg" class="max-w-[50px] me-4">
+                    <span class="text-xl font-bold text-sky-400 me-2">10+</span>
+                    <p class="text-gray-600 text-xl mt-1">Uzman IT Ekibi</p>
                 </div>
                 <div class="p-4 flex items-center border-t border-b border-gray-400">
-                    <img src="code.svg" class="max-w-[50px] me-4">
-                    <span class="text-xl font-bold text-sky-400 me-2">2+</span>
-                    <p class="text-gray-600 text-xl mt-1">Tescilli Yazılım Çözümü</p>
+                    <img src="assets/images/code.svg" class="max-w-[50px] me-4">
+                    <span class="text-xl font-bold text-sky-400 me-2">5+</span>
+                    <p class="text-gray-600 text-xl mt-1">Yıl Deneyim</p>
                 </div>
             </div>
             <!-- <div class="relative text-center h-full flex flex-wrap rounded-xl">
@@ -903,7 +493,7 @@
                     15+ <span class="font-bold text-gray-300">Aktif Ar-Ge Projesi</span> 7+ <span class="font-bold text-gray-300">Patentli İnovasyon</span> <br/> 30+ <span class="font-bold text-gray-300">Uzman Ar-Ge Ekibi 2</span> <span class="font-bold text-gray-300">Tescilli Yazılım Çözümü</span>
                 </p>
                 <video class="object-cover object-[47%] min-h-[600px] w-full rounded-xl" autoplay muted loop>
-                    <source src="mini.mp4" type="video/mp4">
+                                            <source src="assets/images/mini.mp4" type="video/mp4">
                 </video>
                 <div class="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#3b3b3b] to-transparent"></div>
             </div>
@@ -916,19 +506,18 @@
         </div>
     </div>
 
-    <!-- Clean Conscious Performance Section -->
+    <!-- Clean Conscious Performance Section 
     <section class="ingredients-section title-section relative overflow-hidden py-40 bg-white">
         <div class="container max-w-none mx-auto">
-            <!-- Text Content - Left Side -->
             <div class="ingredients-text px-40 mb-20 w-full">
-                <h2 class="title-animate text-6xl font-bold leading-tight mb-8">
-                    <span class="block">Sektörünüze</span>
-                    <span class="block">Özel Lojistik</span>
-                    <span class="block">Uzmanlığı</span>
-                </h2>
-                <p class="desc-animate text-lg max-w-lg">
-                    Farklı sektörlerin kendine özgü lojistik gereksinimlerinin farkındayız. Otomotivden sağlığa, perakendeden e-ticarete kadar geniş bir yelpazede, sektörünüzün ihtiyaçlarına özel olarak tasarlanmış çözümler sunuyoruz.
-                </p>
+                            <h2 class="title-animate text-6xl font-bold leading-tight mb-8">
+                <span class="block">Kapsamlı IT</span>
+                <span class="block">Hizmetleri</span>
+                <span class="block">ve Çözümleri</span>
+            </h2>
+            <p class="desc-animate text-lg max-w-lg">
+                Modern işletmelerin tüm bilişim ihtiyaçlarını karşılayan kapsamlı hizmetler sunuyoruz. Ağ altyapısından siber güvenliğe, bulut çözümlerinden yazılım geliştirmeye kadar geniş bir yelpazede profesyonel IT çözümleri sağlıyoruz.
+            </p>
             </div>
         </div>
         <div class="bg-white relative flex flex-wrap justify-between">
@@ -938,9 +527,9 @@
                         <div class="card p-10 pt-16 cursor-pointer bg-[#f5f5f5] rounded-xl overflow-hidden relative group">
                             <div class="w-auto h-full top-0 left-0 z-10 flex flex flex-col jusify-start">
                                 <div class="mt-auto text-center">
-                                    <img src="araba.svg" class="max-w-[100px] mx-auto mb-6 rounded-full bg-white p-6" />
-                                    <span class="block text-lg font-bold text-[#3b3b3b] mb-2">Otomotiv</span>
-                                    <p class="text-sm text-[#3b3b3b]">Tedarik zincirinde verimlilik ve hız için özel çözümler.Tedarik zincirinde verimlilik ve hız için özel çözümler. </p>
+                                    <img src="assets/images/araba.svg" class="max-w-[100px] mx-auto mb-6 rounded-full bg-white p-6" />
+                                    <span class="block text-lg font-bold text-[#3b3b3b] mb-2">Ağ Altyapısı</span>
+                                    <p class="text-sm text-[#3b3b3b]">Kurumsal ağ kurulumu, VLAN yapılandırması ve güvenlik duvarı çözümleri.</p>
                                 </div>
                             </div>
                         </div>
@@ -951,9 +540,9 @@
                         <div class="card p-10 pt-16 cursor-pointer bg-[#f5f5f5] rounded-xl overflow-hidden relative group">
                             <div class="w-auto h-full top-0 left-0 z-10 flex flex flex-col jusify-start">
                                 <div class="mt-auto text-center">
-                                    <img src="kimya.svg" class="max-w-[100px] mx-auto mb-6 rounded-full bg-white p-6" />
-                                    <span class="block text-lg font-bold text-[#3b3b3b] mb-2">Kimya</span>
-                                    <p class="text-sm text-[#3b3b3b]">Kimya sektöründe, tehlikeli ve hassas ürünlerin taşınması ve depolanması konusunda uzmanlaşmıştır. </p>
+                                    <img src="assets/images/kimya.svg" class="max-w-[100px] mx-auto mb-6 rounded-full bg-white p-6" />
+                                    <span class="block text-lg font-bold text-[#3b3b3b] mb-2">Siber Güvenlik</span>
+                                    <p class="text-sm text-[#3b3b3b]">Penetrasyon testleri, güvenlik açığı analizi ve incident response çözümleri.</p>
                                 </div>
                             </div>
                         </div>
@@ -965,9 +554,9 @@
                         <div class="card p-10 pt-16 cursor-pointer bg-[#f5f5f5] rounded-xl overflow-hidden relative group">
                             <div class="w-auto h-full top-0 left-0 z-10 flex flex flex-col jusify-start">
                                 <div class="mt-auto text-center">
-                                    <img src="yemek.svg" class="max-w-[100px] mx-auto mb-6 rounded-full bg-white p-6" />
-                                    <span class="block text-lg font-bold text-[#3b3b3b] mb-2">Gıda</span>
-                                    <p class="text-sm text-[#3b3b3b]">Gıda sektörüne özel lojistik çözümlerimizle, tazelik ve hijyen standartlarını koruyoruz. </p>
+                                    <img src="assets/images/yemek.svg" class="max-w-[100px] mx-auto mb-6 rounded-full bg-white p-6" />
+                                    <span class="block text-lg font-bold text-[#3b3b3b] mb-2">Bulut Çözümleri</span>
+                                    <p class="text-sm text-[#3b3b3b]">AWS, Azure ve Google Cloud platformlarında altyapı ve uygulama yönetimi.</p>
                                 </div>
                             </div>
                         </div>
@@ -978,9 +567,9 @@
                         <div class="card p-10 pt-16 cursor-pointer bg-[#f5f5f5] rounded-xl overflow-hidden relative group">
                             <div class="w-auto h-full top-0 left-0 z-10 flex flex flex-col jusify-start">
                                 <div class="mt-auto text-center">
-                                    <img src="electronic.svg" class="max-w-[100px] mx-auto mb-6 rounded-full bg-white p-6" />
-                                    <span class="block text-lg font-bold text-[#3b3b3b] mb-2">Elektronik</span>
-                                    <p class="text-sm text-[#3b3b3b]">Elektronik sektöründe, hassas ürünlerin taşınması ve dağıtımı konusunda uzmanlaşmıştır.</p>
+                                    <img src="assets/images/electronic.svg" class="max-w-[100px] mx-auto mb-6 rounded-full bg-white p-6" />
+                                    <span class="block text-lg font-bold text-[#3b3b3b] mb-2">Yazılım Geliştirme</span>
+                                    <p class="text-sm text-[#3b3b3b]">Web uygulamaları, mobil uygulamalar ve özel yazılım çözümleri geliştirme.</p>
                                 </div>
                             </div>
                         </div>
@@ -990,57 +579,59 @@
             
             
             <div class="parallax parallax-ingredients mx-auto top-0 left-50 w-full h-full min-h-screen flex justify-center items-center z-10" data-speed="0.5" data-start="-10" data-end="10">
-                <img src="parallax.jpg" />
+                <img src="assets/images/parallax.jpg" />
             </div>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 counter-section pt-20 px-40">
             <div class="card cursor-pointer relative group min-h-[200px]">
                 <div class="w-full h-full absolute top-0 left-0 p-6 z-10 flex flex flex-col">
                     <div class="mt-auto text-center">
-                        <img src="imalat.svg" class="max-w-[100px] mx-auto mb-6 rounded-full p-6  mx-auto mb-4 bg-[#f5f5f5] " />
-                        <span class="block text-lg font-bold mb-2">İmalat</span>
-                        <p class="text-sm">Üretim süreçlerinize entegre lojistik çözümleri.</p>
+                        <img src="assets/images/imalat.svg" class="max-w-[100px] mx-auto mb-6 rounded-full p-6  mx-auto mb-4 bg-[#f5f5f5] " />
+                        <span class="block text-lg font-bold mb-2">Server Yönetimi</span>
+                        <p class="text-sm">Windows ve Linux sunucu kurulumu, yapılandırması ve bakım hizmetleri.</p>
                     </div>
                 </div>
             </div>
             <div class="card cursor-pointer relative group min-h-[200px]">
                 <div class="w-full h-full absolute top-0 left-0 p-6 z-10 flex flex flex-col">
                     <div class="mt-auto text-center">
-                        <img src="tekstil.svg" class="max-w-[100px] mx-auto mb-6 rounded-full p-6  mx-auto mb-4 bg-[#f5f5f5] " />
-                        <span class="block text-lg font-bold mb-2">Perakende / Tekstil</span>
-                        <p class="text-sm">Hızlı ve esnek dağıtım ağlarıyla rekabet avantajı.</p>
+                        <img src="assets/images/tekstil.svg" class="max-w-[100px] mx-auto mb-6 rounded-full p-6  mx-auto mb-4 bg-[#f5f5f5] " />
+                        <span class="block text-lg font-bold mb-2">Kamera Sistemleri</span>
+                        <p class="text-sm">IP kamera kurulumu, NVR sistemleri ve akıllı analiz çözümleri.</p>
                     </div>
                 </div>
             </div>
             <div class="card cursor-pointer relative group min-h-[200px]">
                 <div class="w-full h-full absolute top-0 left-0 p-6 z-10 flex flex flex-col">
                     <div class="mt-auto text-center">
-                        <img src="zincir.svg" class="max-w-[100px] mx-auto mb-6 rounded-full p-6  mx-auto mb-4 bg-[#f5f5f5] " />
-                        <span class="block text-lg font-bold mb-2">FMCG</span>
-                        <p class="text-sm">Soğuk zincir ve hızlı teslimat çözümleri.</p>
+                        <img src="assets/images/zincir.svg" class="max-w-[100px] mx-auto mb-6 rounded-full p-6  mx-auto mb-4 bg-[#f5f5f5] " />
+                        <span class="block text-lg font-bold mb-2">Kablolama</span>
+                        <p class="text-sm">Structured cabling, fiber optik ve ethernet kablolama çözümleri.</p>
                     </div>
                 </div>
             </div>
             <div class="card cursor-pointer relative group min-h-[200px]">
                 <div class="w-full h-full absolute top-0 left-0 p-6 z-10 flex flex flex-col">
                     <div class="mt-auto text-center">
-                        <img src="saglik.svg" class="max-w-[100px] mx-auto mb-6 rounded-full p-6  mx-auto mb-4 bg-[#f5f5f5] " />
-                        <span class="block text-lg font-bold mb-2">Sağlık</span>
-                        <p class="text-sm">Güvenilir ve düzenlemelere uygun taşıma ve depolama.</p>
+                        <img src="assets/images/saglik.svg" class="max-w-[100px] mx-auto mb-6 rounded-full p-6  mx-auto mb-4 bg-[#f5f5f5] " />
+                        <span class="block text-lg font-bold mb-2">Veri Yedekleme</span>
+                        <p class="text-sm">Otomatik yedekleme sistemleri, disaster recovery ve business continuity.</p>
                     </div>
                 </div>
             </div>
             <div class="card cursor-pointer relative group min-h-[200px]">
                 <div class="w-full h-full absolute top-0 left-0 p-6 z-10 flex flex flex-col">
                     <div class="mt-auto text-center">
-                        <img src="shop.svg" class="max-w-[100px] mx-auto mb-6 rounded-full p-6  mx-auto mb-4 bg-[#f5f5f5] " />
-                        <span class="block text-lg font-bold mb-2">E-Ticaret</span>
-                        <p class="text-sm">Hızlı teslimat ve esnek iade çözümleriyle müşteri memnuniyeti.</p>
+                        <img src="assets/images/shop.svg" class="max-w-[100px] mx-auto mb-6 rounded-full p-6  mx-auto mb-4 bg-[#f5f5f5] " />
+                        <span class="block text-lg font-bold mb-2">Teknik Destek</span>
+                        <p class="text-sm">7/24 uzaktan ve yerinde teknik destek, IT danışmanlık hizmetleri.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+    -->
 
     <!-- Corporate 
 
@@ -1063,7 +654,7 @@
                 <div class="card cursor-pointer bg-gray-400 text-white rounded-xl overflow-hidden relative group min-h-[200px]">
                     <div class="w-full h-full absolute top-0 left-0 p-6 z-10 flex flex flex-col">
                         <div class="mt-auto">
-                            <img src="imalat.svg" class="max-w-[70px] mx-auto mb-4 invert" />
+                            <img src="assets/images/imalat.svg" class="max-w-[70px] mx-auto mb-4 invert" />
                             <span class="block text-lg font-bold">İmalat</span>
                             <p class="text-sm">Üretim süreçlerinize entegre lojistik çözümleri.</p>
                         </div>
@@ -1072,7 +663,7 @@
                 <div class="card cursor-pointer bg-gray-400 text-white rounded-xl overflow-hidden relative group min-h-[200px]">
                     <div class="w-full h-full absolute top-0 left-0 p-6 z-10 flex flex flex-col">
                         <div class="mt-auto">
-                            <img src="tekstil.svg" class="max-w-[70px] mx-auto mb-4 invert" />
+                            <img src="assets/images/tekstil.svg" class="max-w-[70px] mx-auto mb-4 invert" />
                             <span class="block text-lg font-bold">Perakende / Tekstil</span>
                             <p class="text-sm">Hızlı ve esnek dağıtım ağlarıyla rekabet avantajı.</p>
                         </div>
@@ -1081,7 +672,7 @@
                 <div class="card cursor-pointer bg-gray-400 text-white rounded-xl overflow-hidden relative group min-h-[200px]">
                     <div class="w-full h-full absolute top-0 left-0 p-6 z-10 flex flex flex-col">
                         <div class="mt-auto">
-                            <img src="zincir.svg" class="max-w-[70px] mx-auto mb-4 invert" />
+                            <img src="assets/images/zincir.svg" class="max-w-[70px] mx-auto mb-4 invert" />
                             <span class="block text-lg font-bold">FMCG</span>
                             <p class="text-sm">Soğuk zincir ve hızlı teslimat çözümleri.</p>
                         </div>
@@ -1090,7 +681,7 @@
                 <div class="card cursor-pointer bg-gray-400 text-white rounded-xl overflow-hidden relative group min-h-[200px]">
                     <div class="w-full h-full absolute top-0 left-0 p-6 z-10 flex flex flex-col">
                         <div class="mt-auto">
-                            <img src="saglik.svg" class="max-w-[70px] mx-auto mb-4 invert" />
+                            <img src="assets/images/saglik.svg" class="max-w-[70px] mx-auto mb-4 invert" />
                             <span class="block text-lg font-bold">Sağlık</span>
                             <p class="text-sm">Güvenilir ve düzenlemelere uygun taşıma ve depolama.</p>
                         </div>
@@ -1099,7 +690,7 @@
                 <div class="card cursor-pointer bg-gray-400 text-white rounded-xl overflow-hidden relative group min-h-[200px]">
                     <div class="w-full h-full absolute top-0 left-0 p-6 z-10 flex flex flex-col">
                         <div class="mt-auto">
-                            <img src="shop.svg" class="max-w-[70px] mx-auto mb-4 invert" />
+                            <img src="assets/images/shop.svg" class="max-w-[70px] mx-auto mb-4 invert" />
                             <span class="block text-lg font-bold">E-Ticaret</span>
                             <p class="text-sm">Hızlı teslimat ve esnek iade çözümleriyle müşteri memnuniyeti.</p>
                         </div>
@@ -1108,7 +699,7 @@
                 <div class="card cursor-pointer bg-gray-400 text-white rounded-xl overflow-hidden relative group min-h-[200px]">
                     <div class="w-full h-full absolute top-0 left-0 p-6 z-10 flex flex flex-col">
                         <div class="mt-auto">
-                            <img src="kimya.svg" class="max-w-[70px] mx-auto mb-4 invert" />
+                            <img src="assets/images/kimya.svg" class="max-w-[70px] mx-auto mb-4 invert" />
                             <span class="block text-lg font-bold">Kimya</span>
                             <p class="text-sm">Kimya sektöründe, tehlikeli ve hassas ürünlerin taşınması ve depolanması konusunda uzmanlaşmıştır.</p>
                         </div>
@@ -1117,7 +708,7 @@
                 <div class="card cursor-pointer bg-gray-400 text-white rounded-xl overflow-hidden relative group min-h-[200px]">
                     <div class="w-full h-full absolute top-0 left-0 p-6 z-10 flex flex flex-col">
                         <div class="mt-auto">
-                            <img src="yemek.svg" class="max-w-[70px] mx-auto mb-4 invert" />
+                            <img src="assets/images/yemek.svg" class="max-w-[70px] mx-auto mb-4 invert" />
                             <span class="block text-lg font-bold">Gıda</span>
                             <p class="text-sm">Gıda sektörüne özel lojistik çözümlerimizle, tazelik ve hijyen standartlarını koruyoruz.</p>
                         </div>
@@ -1126,7 +717,7 @@
                 <div class="card cursor-pointer bg-gray-400 text-white rounded-xl overflow-hidden relative group min-h-[200px]">
                     <div class="w-full h-full absolute top-0 left-0 p-6 z-10 flex flex flex-col">
                         <div class="mt-auto">
-                            <img src="electronic.svg" class="max-w-[70px] mx-auto mb-4 invert" />
+                            <img src="assets/images/electronic.svg" class="max-w-[70px] mx-auto mb-4 invert" />
                             <span class="block text-lg font-bold">Elektronik</span>
                             <p class="text-sm">Elektronik sektöründe, hassas ürünlerin taşınması ve dağıtımı konusunda uzmanlaşmıştır.</p>
                         </div>
@@ -1140,39 +731,39 @@
 
     <!-- Sustainability Group -->
 
-    <div class="grid-content title-section bg-teal-600 relative flex pt-40 bg-[url('jungle.jpg')] bg-teal-600 no-repeat object-cover bg-fixed">
+    <div class="grid-content title-section relative flex pt-40 bg-teal-600 bg-cover bg-fixed bg-works">
         <div class="flex flex-col w-1/2 h-full px-40 py-40 relative sticky top-40 items-start">
             <h2 class="title-animate text-4xl font-bold leading-tight text-white">
-                <span class="block">Geleceğe Yeşil Bir İmza:</span>
-                <span class="block">Sürdürülebilir Lojistik</span>
+                <span class="block">Güncel Bilişim Teknolojileri:</span>
+                <span class="block">Yapay Zeka ve Bulut Çözümleri</span>
             </h2>
-            <p class="desc-animate mt-8 text-lg font-light text-white">Çevreye duyarlı bir lojistik anlayışıyla hareket ediyor, intermodal taşımacılığı teşvik ediyor ve karbon ayak izimizi azaltmaya yönelik projeler geliştiriyoruz. Sürdürülebilirlik, sadece bir hedef değil, iş yapış şeklimizin temel bir parçasıdır. Gelecek nesillere daha yaşanabilir bir dünya bırakmak için çalışıyoruz.</p>
+            <p class="desc-animate mt-8 text-lg font-light text-white">Modern işletmelerin dijital dönüşüm süreçlerinde yapay zeka, makine öğrenmesi ve bulut teknolojilerini entegre ediyoruz. Chatbot geliştirme, veri analizi, otomasyon sistemleri ve IoT çözümleri ile işletmenizin verimliliğini artırıyoruz. Güncel teknolojileri kullanarak rekabet avantajı sağlıyor ve geleceğe hazır altyapılar kuruyoruz.</p>
             <button class="bg-white text-teal-600 hover:bg-teal-200 transition duration-300 py-2 px-4 rounded-xl flex items-center space-x-2 mt-8">
-                <span>Keşfedin</span>
+                <span>Teknolojilerimizi İnceleyin</span>
                 <i class="fas fa-arrow-right"></i>
             </button>
         </div>
         
-        <div class="wrap w-1/2 pe-40">
+        <div class="wrap w-full lg:w-1/2 px-4 lg:pe-40">
             <div class="content content--sticky content--grid bg-1 rounded-xl">
-                <img class="content__img content__img--small rounded-xl" src="img1.png" />
-                <h2 class="content__title text-white pt-10"><i>45%+</i> Taşımacılık</h2>
-                <p class="content__text text-meta text-white">Intermodal Taşımacılık Kullanım Oranı</p>
+                <img class="content__img content__img--small rounded-xl" src="assets/images/server.jpeg" />
+                <h2 class="content__title text-white pt-10"><i>AI</i> DESTEKLİ</h2>
+                <p class="content__text text-meta text-white">Yapay Zeka ve Makine Öğrenmesi</p>
             </div>
             <div class="content content--sticky content--grid bg-2 rounded-xl">
-                <img class="content__img content__img--small rounded-xl" src="img2.png" />
-                <h2 class="content__title text-white pt-10"><i>18%+</i> Azaltım</h2>
-                <p class="content__text text-meta text-white">Son 5 Yılda Karbon Emisyonu Azaltımı</p>
+                <img class="content__img content__img--small rounded-xl" src="assets/images/bekir.jpeg" />
+                <h2 class="content__title text-white pt-10"><i>Cloud</i> Native</h2>
+                <p class="content__text text-meta text-white">Bulut Tabanlı Modern Uygulamalar</p>
             </div>
             <div class="content content--sticky content--grid bg-3 rounded-xl">
-                <img class="content__img content__img--small rounded-xl" src="img3.png" />
-                <h2 class="content__title text-white pt-10"><i>100%</i> Yeşil</h2>
-                <p class="content__text text-meta text-white">Yeşil Ofis Standartlarına Uyum</p>
+                <img class="content__img content__img--small rounded-xl" src="assets/images/server.jpeg" />
+                <h2 class="content__title text-white pt-10"><i>IoT</i> ÇÖZÜMLERİ</h2>
+                <p class="content__text text-meta text-white">Nesnelerin İnterneti Entegrasyonu</p>
             </div>
             <div class="content content--sticky content--grid bg-4 rounded-xl">
-                <img class="content__img content__img--small rounded-xl" src="img4.png" />
-                <h2 class="content__title text-white pt-10"><i>100%</i> Yeni Nesil</h2>
-                <p class="content__text text-meta text-white">Yeni Nesil Düşük Emisyonlu Araç Filosu</p>
+                <img class="content__img content__img--small rounded-xl" src="assets/images/bekir.jpeg" />
+                <h2 class="content__title text-white pt-10"><i>Data</i> Analytics</h2>
+                <p class="content__text text-meta text-white">Büyük Veri Analizi ve Raporlama</p>
             </div>
         </div>
     </div>
@@ -1259,13 +850,13 @@
         </div>
     </section>
 
-    <!-- İkiye bölünmüş görseller bölümü -->
+    <!-- İkiye bölünmüş görseller bölümü 
     <div class="mx-auto p-0 bg-gray-100 relative z-10">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-0 px-0">
-            <!-- Birinci görsel -->
+   
             <div class="title-section relative overflow-hidden group h-[400px] cursor-pointer">
                 <div class="absolute inset-0 bg-gray-200 flex items-center justify-center">
-                    <img src="tedarik.png" 
+                    <img src="assets/images/tedarik.png" 
                         alt="Quadro.net" 
                         class="w-full h-full object-cover transition-all duration-500 group-hover:scale-105 brightness-[0.75] group-hover:brightness-[1.15]">
                 </div>
@@ -1275,10 +866,10 @@
                 </div>
             </div>
             
-            <!-- İkinci görsel -->
+ 
             <div class="title-section relative overflow-hidden group h-[400px] cursor-pointer">
                 <div class="absolute inset-0 bg-gray-200 flex items-center justify-center">
-                    <img src="quadro.png" 
+                    <img src="assets/images/quadro.png" 
                         alt="Tedarikçi Portalı" 
                         class="w-full h-full object-cover transition-all duration-500 group-hover:scale-105 brightness-[0.75] group-hover:brightness-[1.15]">
                 </div>
@@ -1287,14 +878,16 @@
                     <p class="desc-animate text-center max-w-md">Tedarik zinciri yönetiminde kolaylık ve verimlilik</p>
                 </div>
 
-                <h2 class="title-animate text-4xl font-bold leading-tight text-white">
-                    <span class="block">Geleceğe Yeşil Bir İmza:</span>
-                    <span class="block">Sürdürülebilir Lojistik</span>
-                </h2>
+                            <h2 class="title-animate text-4xl font-bold leading-tight text-white">
+                <span class="block">Geleceğe Güvenli Bir İmza:</span>
+                <span class="block">Sürdürülebilir Bilişim</span>
+            </h2>
 
             </div>
         </div>
     </div>
+
+    -->
 
     <!-- 3'lü Banner 
     <div class="triple-banner px-40 py-40 bg-white relative">
@@ -1315,7 +908,7 @@
                     <div class="card cursor-pointer rounded-xl overflow-hidden relative group">
                         <div class="w-full h-full top-0 left-0 z-10 flex flex flex-col jusify-start">
                             <div class="mt-auto text-center">
-                                <img src="rs2.png" alt="Sağ Banner" class="w-full h-full !object-cover !object-center">
+                                <img src="assets/images/rs2.png" alt="Sağ Banner" class="w-full h-full !object-cover !object-center">
                             </div>
                         </div>
                     </div>
@@ -1325,7 +918,7 @@
 
             <div class="w-[50%] h-[700px]">
                 <div class="parallax rounded-xl relative overflow-hidden group w-full h-full flex justify-center items-center z-10" data-speed="0.5" data-start="-10" data-end="10">
-                    <img src="counter-personel.png" alt="Orta Banner" class="!w-full h-full !object-cover">
+                    <img src="assets/images/counter-personel.png" alt="Orta Banner" class="!w-full h-full !object-cover">
                 </div>
             </div>
             
@@ -1334,7 +927,7 @@
                     <div class="card cursor-pointer rounded-xl overflow-hidden relative group">
                         <div class="w-full h-full top-0 left-0 z-10 flex flex flex-col jusify-start">
                             <div class="mt-auto text-center">
-                                <img src="uzman.png" alt="Sağ Banner" class="w-full h-full !object-cover !object-center">
+                                <img src="assets/images/uzman.png" alt="Sağ Banner" class="w-full h-full !object-cover !object-center">
                             </div>
                         </div>
                     </div>
@@ -1352,1034 +945,30 @@
 
     <!-- Footer -->
 
-    <div class="mx-auto p-0 bg-gray-100 relative z-10">
-        <!-- Header -->
-        <div class="flex justify-between items-center py-40 px-40">
-            <div>
-                <h1 class="text-4xl font-bold">Ekol Lojistik'de Kariyer Fırsatları</h1>
-                <p class="text-lg mt-2">Genç ve dinamik ekibimize katılarak, sektördeki en iyi üretim ve tasarım projelerinde yer alabilirsiniz.</p>
-            </div>
-            <button class="bg-[#3b3b3b] text-white py-2 px-4 rounded-xl flex items-center space-x-2">
-                <span>Açık Pozisyonları İnceleyin</span>
-                <i class="fas fa-arrow-right"></i>
-            </button>
-        </div>
-
-        <hr class="border-gray-300 mb-16">
-
-        <!-- Content Section -->
-        <footer class="grid grid-cols-5 gap-12 mb-16 px-40">
-            <div class="col-span-1">
-                <p class="font-bold text-lg mb-8 block">Lojistik</p>
-                <div class="mt-4 space-y-4">
-                    <p><a href="#" class="text-gray-800">Taşımacılık</a></p>
-                    <p><a href="#" class="text-gray-800">Depo Yönetimi</a></p>
-                    <p><a href="#" class="text-gray-800">AR-GE</a></p>
-                    <p><a href="#" class="text-gray-800">Yeşil Lojistik</a></p>
-                </div>
-            </div>
-            <div class="col-span-1">
-                <p class="font-bold text-lg mb-8">Sektörler</p>
-                <div class="mt-4 space-y-4">
-                    <p><a href="#" class="text-gray-800">Otomotiv</a></p>
-                    <p><a href="#" class="text-gray-800">İmalat</a></p>
-                    <p><a href="#" class="text-gray-800">Tekstil</a></p>
-                    <p><a href="#" class="text-gray-800">FMCG</a></p>
-                    <p><a href="#" class="text-gray-800">Sağlık</a></p>
-                    <p><a href="#" class="text-gray-800">Elektronik</a></p>
-                    <p><a href="#" class="text-gray-800">E-Ticaret</a></p>
-                    <p><a href="#" class="text-gray-800">Kimya</a></p>
-                </div>
-            </div>
-            <div class="col-span-1">
-                <p class="font-bold text-lg mb-8">Kurumsal</p>
-                <div class="mt-4 space-y-4">
-                    <p><a href="#" class="text-gray-800">Rakamlarla Ekol</a></p>
-                    <p><a href="#" class="text-gray-800">Yönetim</a></p>
-                    <p><a href="#" class="text-gray-800">Sürdürebilirlik</a></p>
-                    <p><a href="#" class="text-gray-800">İnsan Kaynakları</a></p>
-                    <p><a href="#" class="text-gray-800">Sosyal Medya</a></p>
-                    <p><a href="#" class="text-gray-800">Kurumsal Sorumluluk</a></p>
-                </div>
-            </div>
-             <!-- Newsletter Section -->
-            <div class="p-10 rounded-xl col-span-2 h-fit ml-10 bg-[#3b3b3b] text-center">
-                <h2 class="text-4xl font-bold text-white text-center">Bizden haberdar olun</h2>
-                <span class="flex text-sm mt-4 mb-10 text-[#d8d8d8] justify-center">Hakkında en son haberleri için bültenimize kayıt olun</span>
-                <div class="flex relative border-b mt-4">
-                    <input type="email" placeholder="Email address" class="w-full p-3 rounded-full bg-transparent border border-[#d8d8d8] mb-10 text-white">
-                    <button class="bg-[#787878] text-white px-8 py-3 absolute right-[3px] top-[3px] mb-auto rounded-full text-sm whitespace-nowrap hover:bg-white hover:text-[#787878] transition">Kayıt Ol</button>
-                </div>
-                <div class="mt-4">
-                    <input type="checkbox" id="agree" class="mr-2">
-                    <label for="agree" class="text-sm text-[#d8d8d8]">Yeniliklerimizden haberdar olabilmen için onay ver.</label>
-                </div>
-
-                <div class="relative flex items-center justify-center gap-4 mt-8">
-                    <button class="text-gray-600 hover:text-gray-600 hover:bg-white transition duration-300 px-[4px] py-[4px] rounded-[16px] border-2 border-white text-white text-xl flex"><i class="ti ti-brand-facebook"></i></button>
-                    <button class="text-gray-600 hover:text-gray-600 hover:bg-white transition duration-300 px-[4px] py-[4px] rounded-[16px] border-2 border-white text-white text-xl flex"><i class="ti ti-brand-instagram"></i></button>
-                    <button class="text-gray-600 hover:text-gray-600 hover:bg-white transition duration-300 px-[4px] py-[4px] rounded-[16px] border-2 border-white text-white text-xl flex"><i class="ti ti-brand-x"></i></button>
-                    <button class="text-gray-600 hover:text-gray-600 hover:bg-white transition duration-300 px-[4px] py-[4px] rounded-[16px] border-2 border-white text-white text-xl flex"><i class="ti ti-brand-whatsapp  "></i></button>
-                </div>
-            </div>
-
-        </footer>
-
-        <!-- Footer -->
-        <div class="flex justify-between items-center text-sm mt-8 py-10 px-40 border-t">
-            <p>© 2025 Ekol Lojistik San. ve Tic. A.Ş Tüm Hakları Saklıdır.</p>
-            <p><a href="#" class="text-gray-800">Gizlilik Politikası</a> | <a href="#" class="text-gray-800">Kullanım Şartları</a> | <a href="#" class="text-gray-800">Çerez Politikası</a></p>
-        </div>
-    </div>
+    <div data-include="components/footer.html"></div>
 
 
 </div>
 
     <!-- Page content would go here -->
 
-    <!-- Consolidated and optimized JavaScript -->
-    <script>
-        // Utility function to preload images
-    const preloadImages = (selector) => {
-        return new Promise((resolve) => {
-            const images = document.querySelectorAll(selector);
-            
-            if (!images.length) {
-                resolve();
-                return;
-            }
-            
-            let loadedCount = 0;
-            const totalImages = images.length;
-            
-            const imageLoaded = () => {
-                loadedCount++;
-                if (loadedCount >= totalImages) {
-                    resolve();
-                }
-            };
-            
-            images.forEach(img => {
-                if (img.complete) {
-                    imageLoaded();
-                } else {
-                    img.addEventListener('load', imageLoaded);
-                    img.addEventListener('error', imageLoaded); // Also count errors as "loaded"
-                }
-            });
-        });
-    };
-
-    // Debounce function to limit function calls
-    function debounce(func, wait) {
-        let timeout;
-        return function() {
-            const context = this, args = arguments;
-            clearTimeout(timeout);
-            timeout = setTimeout(() => func.apply(context, args), wait);
-        };
-    }
-
-    // Global başlık ve açıklama animasyonu
-    function initTitleAnimations() {
-        // Tüm başlık ve açıklama elementlerini seç
-        const titleSections = document.querySelectorAll('.title-section');
-        
-        titleSections.forEach((section) => {
-            const title = section.querySelector('.title-animate');
-            const desc = section.querySelector('.desc-animate');
-            
-            if (title) {
-                // Başlık animasyonu
-                gsap.from(title.querySelectorAll('span'), {
-                    y: 100,
-                    opacity: 0,
-                    duration: 1,
-                    stagger: 0.1,
-                    ease: "power3.out",
-                    scrollTrigger: {
-                        trigger: section,
-                        start: "top 80%",
-                        toggleActions: "restart none none none",
-                        markers: false
-                    }
-                });
-            }
-            
-            if (desc) {
-                // Açıklama animasyonu
-                gsap.from(desc, {
-                    y: 50,
-                    opacity: 0,
-                    duration: 0.8,
-                    delay: 0.5,
-                    ease: "power2.out",
-                    scrollTrigger: {
-                        trigger: section,
-                        start: "top 80%",
-                        toggleActions: "restart none none none",
-                        markers: false
-                    }
-                });
-            }
-        });
-    }
-
-    // Parallax efektlerini başlatma fonksiyonu
-    function initParallaxEffects() {
-        // Tüm parallax elementlerini seç
-        gsap.utils.toArray('[class*="parallax"]').forEach(container => {
-            // Container içindeki tüm çocukları al (img, div, p, h1 vb.)
-            const content = container.children[0];
-            if (!content) return;
-
-            // Data attribute'lardan ayarları al (varsayılan değerlerle)
-            const speed = parseFloat(container.dataset.speed) || 1;
-            const startY = parseFloat(container.dataset.start) || -20;
-            const endY = parseFloat(container.dataset.end) || 20;
-            const direction = container.dataset.direction || 'vertical';
-            const trigger = container.dataset.trigger || container;
-            const scrub = container.dataset.scrub !== undefined ? parseFloat(container.dataset.scrub) : true;
-            const pin = container.dataset.pin === "true";
-            const scaleEffect = container.dataset.scale === "true";
-            
-            // Eğer parallax-item ise ve özel bir sınıfı varsa, onu kullan
-            const targetElement = container.classList.contains('parallax-item') ? 
-                                (container.querySelector('.parallax-content') || content) : 
-                                content;
-
-            // Timeline oluştur
-            const tl = gsap.timeline({
-                scrollTrigger: {
-                    trigger: trigger,
-                    scrub: scrub,
-                    pin: pin,
-                    // markers: true // Debug için açabilirsiniz
-                }
-            });
-
-            // Scale efekti ekle (isteğe bağlı)
-            if (scaleEffect) {
-                tl.fromTo(targetElement, {
-                    scale: 0.8,
-                    ease: 'none'
-                }, {
-                    scale: 1.2,
-                    ease: 'none'
-                }, 0);
-            }
-
-            // Yatay veya dikey hareket için farklı animasyonlar
-            if (direction === 'horizontal') {
-                tl.fromTo(targetElement, {
-                    xPercent: startY,
-                    ease: 'none'
-                }, {
-                    xPercent: endY,
-                    ease: 'none'
-                }, 0);
-            } else if (direction === 'both') {
-                // Hem yatay hem dikey hareket
-                tl.fromTo(targetElement, {
-                    xPercent: startY,
-                    yPercent: startY,
-                    ease: 'none'
-                }, {
-                    xPercent: endY,
-                    yPercent: endY,
-                    ease: 'none'
-                }, 0);
-            } else {
-                // Varsayılan dikey hareket
-                tl.fromTo(targetElement, {
-                    yPercent: startY,
-                    ease: 'none'
-                }, {
-                    yPercent: endY,
-                    ease: 'none'
-                }, 0);
-            }
-
-            // Hız ayarı
-            tl.timeScale(speed);
-        });
-    }
-
-    // Initialize animations
-    function initAnimations() {
-        // Performance optimized scroll handler
-        let lastScrollPosition = 0;
-        let ticking = false;
-        let brandWithGSAP = false; // GSAP sürümü aktifse vanilla güncellemeleri atla
-        
-        // Using passive true for better scroll performance
-        window.addEventListener('scroll', function() {
-            lastScrollPosition = window.scrollY;
-            
-            if (!ticking) {
-                window.requestAnimationFrame(function() {
-                    if (lastScrollPosition > 50) {
-                        document.body.classList.add('header-sticky');
-                    } else {
-                        document.body.classList.remove('header-sticky');
-                    }
-
-                    // Brand caption: small önce, sonra span fade/translate
-                    if (!brandWithGSAP) {
-                        const brandCaption = document.querySelector('.brand-caption');
-                        if (brandCaption) {
-                            const titleSpan = brandCaption.querySelector('span');
-                            const subSmall = brandCaption.querySelector('small');
-                            const clamp = (v, min, max) => Math.min(Math.max(v, min), max);
-
-                            const baseRange = 220; // toplam hareket mesafesi
-                            const spanOffset = 80;  // span daha geç başlasın
-
-                            // small
-                            const smallProg = clamp(lastScrollPosition / baseRange, 0, 1);
-                            const smallOpacity = 1 - smallProg;
-                            const smallY = smallProg * 22;
-                            if (subSmall) {
-                                subSmall.style.opacity = String(smallOpacity);
-                                subSmall.style.transform = `translateY(${smallY}px)`;
-                            }
-
-                            // span
-                            const spanProg = clamp((lastScrollPosition - spanOffset) / baseRange, 0, 1);
-                            const spanOpacity = 1 - spanProg;
-                            const spanY = spanProg * 22;
-                            if (titleSpan) {
-                                titleSpan.style.opacity = String(spanOpacity);
-                                titleSpan.style.transform = `translateY(${spanY}px)`;
-                            }
-                        }
-                    }
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        }, { passive: true });
-
-        // Variable to store the Lenis smooth scrolling object
-        let lenis;
-        
-        // Selecting DOM elements
-        const contentElements = [...document.querySelectorAll('.content--sticky')];
-        const totalContentElements = contentElements.length;
-
-        // Initialize Lenis smooth scrolling if libraries are available
-        const initLenisScroll = () => {
-            if (typeof Lenis !== 'undefined' && typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-                initSmoothScrolling();
-                scroll();
-                setupBrandCaptionScroll();
-            } else {
-                // If libraries aren't loaded yet, wait and try again
-                setTimeout(checkDependencies, 100);
-            }
-        };
-
-        // Check if all required libraries are loaded
-        const checkDependencies = () => {
-            if (typeof Lenis !== 'undefined' && typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-                initLenisScroll();
-            } else {
-                // Load missing libraries
-                if (typeof Lenis === 'undefined') {
-                    loadScript('https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.33/dist/lenis.min.js', checkDependencies);
-                }
-                if (typeof gsap === 'undefined') {
-                    loadScript('https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js', checkDependencies);
-                }
-                if (typeof ScrollTrigger === 'undefined' && typeof gsap !== 'undefined') {
-                    loadScript('https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js', checkDependencies);
-                }
-            }
-        };
-
-        // News
-        if (typeof Swiper !== 'undefined') {
-            const ideasSwiper = new Swiper('.ideasSwiper', {
-                slidesPerView: 1.5,
-                spaceBetween: 20,
-                centeredSlides: false,
-                navigation: {
-                    nextEl: '.ideas-swiper-button-next',
-                    prevEl: '.ideas-swiper-button-prev',
-                },
-                on: {
-                    init: function() {
-                        updateIdeasSlideNumbers(this);
-                    },
-                    slideChange: function() {
-                        updateIdeasSlideNumbers(this);
-                    }
-                },
-                breakpoints: {
-                    640: {
-                        spaceBetween: 30,
-                    }
-                }
-            });
-
-            // Slide numaralarını güncelleme ve tek slaytta navigasyonu gizleme
-            function updateIdeasSlideNumbers(swiper) {
-                if (!swiper || !swiper.el) return;
-
-                // Navigation kökünü güvenli şekilde bul
-                var navRoot = swiper.el.querySelector('.navigation')
-                    || (swiper.el.closest('.swiper') ? swiper.el.closest('.swiper').querySelector('.navigation') : null)
-                    || (swiper.el.parentElement ? swiper.el.parentElement.querySelector('.navigation') : null)
-                    || document.querySelector('.ideasSwiper .navigation');
-
-                var currentSlideEl = navRoot ? navRoot.querySelector('.current-slide') : null;
-                var totalSlidesEl = navRoot ? navRoot.querySelector('.total-slides') : null;
-
-                // Gerçek slayt sayısı: klonlar hariç
-                var slidesAll = Array.from(swiper.slides || []);
-                var realSlides = slidesAll.filter(function(s){ return !s.classList.contains('swiper-slide-duplicate'); });
-                var realCount = realSlides.length || slidesAll.length || 0;
-
-                if (currentSlideEl) {
-                    currentSlideEl.textContent = (swiper.realIndex + 1).toString().padStart(2, '0');
-                }
-                if (totalSlidesEl) {
-                    totalSlidesEl.textContent = realCount.toString().padStart(2, '0');
-                }
-
-                // Tek slaytta navigasyonu gizle (navRoot bulunduysa uygula)
-                if (navRoot) {
-                    navRoot.style.display = realCount <= 1 ? 'none' : '';
-                }
-            }
-
-            // Başlangıçta numaraları güncelle
-            updateIdeasSlideNumbers(ideasSwiper);
-        }
-
-        // Load libraries that don't exist
-        function loadScript(src, callback) {
-            const script = document.createElement('script');
-            script.src = src;
-            script.onload = callback;
-            document.head.appendChild(script);
-        }
-
-        // Initialize smooth scrolling with Lenis
-        const initSmoothScrolling = () => {
-            // Create Lenis instance with optimal settings
-            lenis = new Lenis({
-                lerp: 0.07,
-                smoothWheel: true,
-                wheelMultiplier: 1,
-                touchMultiplier: 2,
-                infinite: false
-            });
-
-            // Update ScrollTrigger on scroll
-            lenis.on('scroll', () => ScrollTrigger.update());
-
-            // Create RAF loop for smooth animations
-            const scrollFn = (time) => {
-                lenis.raf(time);
-                requestAnimationFrame(scrollFn);
-            };
-            
-            // Start animation loop
-            requestAnimationFrame(scrollFn);
-        };
-
-        // Brand caption GSAP/ScrollTrigger alternative driven by Lenis
-        function setupBrandCaptionScroll() {
-            const brandCaption = document.querySelector('.brand-caption');
-            if (!brandCaption || typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
-
-            const titleSpan = brandCaption.querySelector('span');
-            const subSmall = brandCaption.querySelector('small');
-            if (!titleSpan || !subSmall) return;
-
-            const tl = gsap.timeline({
-                scrollTrigger: {
-                    trigger: document.body,
-                    start: 'top top',
-                    end: '+=220',
-                    scrub: true
-                }
-            });
-
-            // small önce
-            tl.fromTo(subSmall, { opacity: 1, y: 0 }, { opacity: 0, y: 22, ease: 'none' }, 0);
-            // span biraz gecikmeli
-            tl.fromTo(titleSpan, { opacity: 1, y: 0 }, { opacity: 0, y: 22, ease: 'none' }, 0.35);
-
-            // GSAP aktifken vanilla güncellemeleri devre dışı
-            brandWithGSAP = true;
-        }
-
-        // Function to handle scroll-triggered animations
-        const scroll = () => {
-            contentElements.forEach((el, position) => {
-                const isLast = position === totalContentElements - 1;
-                
-                gsap.timeline({
-                    scrollTrigger: {
-                        trigger: el,
-                        start: 'top top',
-                        end: '+=60%',
-                        scrub: true
-                    }
-                })
-                .to(el, {
-                    ease: 'none',
-                    startAt: {filter: 'brightness(100%)', borderRadius: isLast ? 10 : 10, scale: isLast ? 1 : 1, opacity: 1 },
-                    filter: isLast ? 'none' : 'brightness(20%)',
-                    scale: isLast ? 1 : 0.6,
-                    borderRadius: isLast ? "inherit" : 20,
-                    opacity: 0 
-                }, 0);
-            });
-
-            // Parallax efektlerini başlat
-            initParallaxEffects();
-        };
-
-        // Preload images and initialize
-        const initWithPreload = () => {
-            if (document.querySelectorAll('.content__img').length > 0) {
-                preloadImages('.content__img').then(() => {
-                    document.body.classList.remove('loading');
-                    checkDependencies();
-                });
-            } else {
-                checkDependencies();
-            }
-        };
-
-        // Load GSAP only if needed
-        if (document.querySelector('.main-slider')) {
-            // Initialize GSAP
-            const gsapInit = () => {
-                gsap.registerPlugin(ScrollTrigger);
-                
-                // Main slider parallax effect
-                gsap.fromTo(
-                    ".main-slider img, .main-slider video",
-                    { y: 0 },
-                    {
-                        y: -60,
-                        scrollTrigger: {
-                            trigger: ".main-slider",
-                            start: "top top",
-                            end: "bottom top",
-                            scrub: true,
-                        },
-                    }
-                );
-
-                // Text animations
-                gsap.fromTo(
-                    ".main-slider h1",
-                    { y: 0, opacity: 1 },
-                    {
-                        y: -100, opacity: 0,
-                        scrollTrigger: {
-                            trigger: ".main-slider",
-                            start: "top top",
-                            end: "bottom top",
-                            scrub: true,
-                        },
-                    }
-                );
-
-                gsap.fromTo(
-                    ".main-slider p",
-                    { y: 0, opacity: 1 },
-                    {
-                        y: -90, opacity: 0,
-                        scrollTrigger: {
-                            trigger: ".main-slider",
-                            start: "top top",
-                            end: "bottom top",
-                            scrub: true,
-                        },
-                    }
-                );
-
-                // Initial animations
-                gsap.from(".main-slider h1", { 
-                    y: 100, 
-                    opacity: 0,
-                    duration: 1, 
-                    ease: "power3.out" 
-                });
-
-                gsap.from(".main-slider p", { 
-                    y: 80, 
-                    opacity: 0,
-                    duration: 1, 
-                    delay: 0.5, 
-                    ease: "power3.out" 
-                });
-
-                // Counter animations
-                if (document.querySelector('.counter-section')) {
-                    ScrollTrigger.create({
-                        trigger: ".counter-section",
-                        start: "top 80%",
-                        onEnter: initCounters,
-                        once: true
-                    });
-                }
-            };
-
-            // Load GSAP dynamically
-            if (typeof gsap === 'undefined') {
-                loadScript('https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js', () => {
-                    loadScript('https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js', () => {
-                        gsapInit();
-                        initWithPreload();
-                    });
-                });
-            } else {
-                gsapInit();
-                initWithPreload();
-            }
-        } else {
-            initWithPreload();
-        }
-
-        // Initialize Swiper only if needed
-        if (document.querySelector('.mainSwiper')) {
-            initSwiper();
-        }
-
-        // Initialize menu functionality if needed
-        if (document.querySelector('.menu-btn')) {
-            initMenu();
-        }
-
-        // Mobil header eventleri: masaüstü butonlarını tetikler
-        (function attachMobileHeaderEvents(){
-            const mobileMenuBtn = document.querySelector('.menu-btn-mobile');
-            const desktopMenuBtn = document.querySelector('.menu-btn');
-            if (mobileMenuBtn && desktopMenuBtn) {
-                mobileMenuBtn.addEventListener('click', function(){ desktopMenuBtn.click(); });
-            }
-            const mobileQuoteBtn = document.getElementById('quote-open-btn-mobile');
-            const desktopQuoteBtn = document.getElementById('quote-open-btn');
-            if (mobileQuoteBtn && desktopQuoteBtn) {
-                mobileQuoteBtn.addEventListener('click', function(){ desktopQuoteBtn.click(); });
-            }
-        })();
-    }
-
-    // Optimized counter animation function
-    function initCounters() {
-        animateCounter('.experience-counter', 0, 30, 2000, "MIL €/yıl Yatırım");
-        animateCounter('.team-counter', 0, 200, 2000, "+");
-        animateCounter('.modern-counter', 0, 150, 2000, "+ Proje");
-        animateCounter('.roro-counter', 0, 5, 2000, "");
-    }
-
-    // More efficient counter animation
-    function animateCounter(selector, start, end, duration, suffix = "") {
-        const element = document.querySelector(selector);
-        if (!element) return;
-        
-        const frameDuration = 1000/60;
-        const totalFrames = Math.round(duration / frameDuration);
-        const increment = (end - start) / totalFrames;
-        
-        let currentValue = start;
-        let frame = 0;
-        
-        const animate = () => {
-            frame++;
-            currentValue += increment;
-            
-            if (frame <= totalFrames) {
-                element.textContent = Math.floor(currentValue) + suffix;
-                requestAnimationFrame(animate);
-            } else {
-                element.textContent = end + suffix;
-            }
-        };
-        
-        requestAnimationFrame(animate);
-    }
-
-    // Swiper initialization with performance optimizations
-    function initSwiper() {
-        // Load Swiper dynamically if needed
-        if (typeof Swiper === 'undefined') {
-            const script = document.createElement('script');
-            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/Swiper/10.0.4/swiper-bundle.min.js';
-            script.onload = createSwiper;
-            document.head.appendChild(script);
-        } else {
-            createSwiper();
-        }
-    }
-
-    function createSwiper() {
-        const swiper = new Swiper('.mainSwiper', {
-            slidesPerView: 1,
-            spaceBetween: 0,
-            autoplay: {
-                delay: 5000,
-                disableOnInteraction: true // Kullanıcı etkileşiminden sonra autoplay'ı durdurur
-            },
-            loop: true,
-            speed: 1500,
-            effect: 'slide',
-            fadeEffect: { crossFade: true },
-            navigation: {
-                nextEl: '.swiper-button-next-custom',
-                prevEl: '.swiper-button-prev-custom',
-            },
-            on: {
-                init: function() {
-                    updateSlideNumbers(this);
-                    const activeSlide = this.slides[this.activeIndex];
-                    if (activeSlide) initTextAnimation(activeSlide);
-                },
-                slideChangeTransitionStart: function() {
-                    const nextSlide = this.slides[this.activeIndex];
-                    if (nextSlide) {
-                        prepareTextAnimation(nextSlide);
-                        initTextAnimation(nextSlide);
-                    }
-                },
-                slideChange: function() {
-                    updateSlideNumbers(this);
-                }
-            }
-        });
-    }
-
-    // Optimized slide number updates + hide navigation if single slide
-    function updateSlideNumbers(swiper) {
-        if (!swiper || !swiper.el) return;
-
-        // Navigation kökünü güvenli şekilde bul
-        var navRoot = swiper.el.querySelector('.navigation')
-            || (swiper.el.closest('.swiper') ? swiper.el.closest('.swiper').querySelector('.navigation') : null)
-            || (swiper.el.parentElement ? swiper.el.parentElement.querySelector('.navigation') : null)
-            || document.querySelector('#mainSlider .navigation');
-
-        var currentSlideEl = navRoot ? navRoot.querySelector('.current-slide') : null;
-        var totalSlidesEl = navRoot ? navRoot.querySelector('.total-slides') : null;
-
-        // Gerçek slayt sayısı: klonlar hariç
-        var slidesAll = Array.from(swiper.slides || []);
-        var realSlides = slidesAll.filter(function(s){ return !s.classList.contains('swiper-slide-duplicate'); });
-        var realCount = realSlides.length || slidesAll.length || 0;
-
-        if (currentSlideEl) {
-            currentSlideEl.textContent = (swiper.realIndex + 1).toString().padStart(2, '0');
-        }
-        if (totalSlidesEl) {
-            totalSlidesEl.textContent = realCount.toString().padStart(2, '0');
-        }
-
-        // Tek slaytta navigasyonu gizle (navRoot bulunduysa uygula)
-        if (navRoot) {
-            navRoot.style.display = realCount <= 1 ? 'none' : '';
-        }
-    }
-
-    // Text animation preparation
-    function prepareTextAnimation(slide) {
-        if (!slide) return;
-        
-        const text = slide.querySelector('h1');
-        const paragraph = slide.querySelector('p');
-        
-        if (text) {
-            text.style.whiteSpace = 'normal';
-            text.style.wordSpacing = 'normal';
-            text.style.letterSpacing = 'normal';
-        }
-        
-        if (paragraph) {
-            paragraph.style.whiteSpace = 'normal';
-        }
-    }
-
-    // Optimized text animation with fragment-based DOM updates
-    function initTextAnimation(slide) {
-        if (!slide) return;
-        
-        const text = slide.querySelector('h1');
-        const paragraph = slide.querySelector('p');
-
-        // Kill previous animations if they exist
-        if (text && text._animation) text._animation.kill();
-        if (paragraph && paragraph._animation) paragraph._animation.kill();
-
-        // Animate heading with efficient DOM manipulation
-        if (text) {
-            const originalHTML = text.dataset.original || text.innerHTML.trim();
-            if (!text.dataset.original) text.dataset.original = originalHTML;
-
-            // Use DocumentFragment for better performance
-            const fragment = document.createDocumentFragment();
-            const tempDiv = document.createElement('div');
-            tempDiv.innerHTML = originalHTML;
-            
-            // Process text and create animation spans
-            Array.from(tempDiv.childNodes).forEach(node => {
-                if (node.nodeName === 'BR') {
-                    fragment.appendChild(document.createElement('br'));
-                    return;
-                }
-                
-                // Process text nodes
-                if (node.nodeType === 3) {
-                    const words = node.textContent.trim().split(/\s+/);
-                    const lineWrapper = document.createElement('span');
-                    lineWrapper.style.display = 'inline-block';
-                    lineWrapper.style.width = '100%';
-                    
-                    words.forEach((word, index) => {
-                        if (word.length === 0) return;
-                        
-                        const wordSpan = document.createElement('span');
-                        wordSpan.style.display = 'inline-block';
-                        wordSpan.style.marginRight = '8px';
-                        wordSpan.style.whiteSpace = 'nowrap';
-                        
-                        // Create spans for each character
-                        for (let i = 0; i < word.length; i++) {
-                            const charSpan = document.createElement('span');
-                            charSpan.textContent = word[i];
-                            charSpan.style.display = 'inline-block';
-                            charSpan.style.opacity = '0';
-                            charSpan.style.transform = 'translateY(20px)';
-                            wordSpan.appendChild(charSpan);
-                        }
-                        
-                        lineWrapper.appendChild(wordSpan);
-                        
-                        if (index < words.length - 1) {
-                            const space = document.createElement('span');
-                            space.innerHTML = '&nbsp;';
-                            lineWrapper.appendChild(space);
-                        }
-                    });
-                    
-                    fragment.appendChild(lineWrapper);
-                } else {
-                    // Handle other node types
-                    fragment.appendChild(node.cloneNode(true));
-                }
-            });
-            
-            // Update DOM once with all changes
-            text.innerHTML = '';
-            text.appendChild(fragment);
-            
-            // Apply GSAP animation
-            if (typeof gsap !== 'undefined') {
-                text._animation = gsap.to(text.querySelectorAll('span span'), {
-                    opacity: 1,
-                    y: 0,
-                    stagger: 0.05,
-                    duration: 0.4,
-                    ease: 'power2.out',
-                    delay: 0.1
-                });
-            }
-        }
-
-        // Animate paragraph
-        if (paragraph && typeof gsap !== 'undefined') {
-            gsap.set(paragraph, {
-                opacity: 0,
-                y: 20
-            });
-
-            paragraph._animation = gsap.to(paragraph, {
-                opacity: 1,
-                y: 0,
-                duration: 0.8,
-                delay: 0.4,
-                ease: 'power3.out'
-            });
-        }
-    }
-
-    // Menu initialization
-    function initMenu() {
-        const menuBtn = document.querySelector('.menu-btn');
-        const closeBtn = document.querySelector('.close-menu-btn');
-        const slideMenu = document.getElementById('slideMenu');
-        const quoteOpenBtn = document.getElementById('quote-open-btn');
-        const quoteDrawer = document.getElementById('quoteDrawer');
-        const quoteOverlay = document.getElementById('quoteOverlay');
-        const quoteDrawerClose = document.getElementById('quoteDrawerClose');
-        
-        if (!menuBtn || !slideMenu) return;
-        
-        const menuIcon = menuBtn.querySelector('i');
-
-        // Menüyü açma fonksiyonu
-        function openMenu() {
-            slideMenu.classList.remove('-right-full');
-            slideMenu.classList.add('right-0');
-            if (menuIcon) {
-                menuIcon.classList.remove('ti-menu-2');
-                menuIcon.classList.add('ti-x');
-            }
-        }
-
-        // Menüyü kapatma fonksiyonu
-        function closeMenu() {
-            slideMenu.classList.remove('right-0');
-            slideMenu.classList.add('-right-full');
-            if (menuIcon) {
-                menuIcon.classList.remove('ti-x');
-                menuIcon.classList.add('ti-menu-2');
-            }
-        }
-
-        // Event listeners with passive option where appropriate
-        menuBtn.addEventListener('click', openMenu);
-        if (closeBtn) closeBtn.addEventListener('click', closeMenu);
-        
-        // Teklif paneli aç/kapa
-        function openQuote() {
-            if (!quoteDrawer || !quoteOverlay) return;
-            quoteDrawer.classList.remove('-right-full');
-            quoteDrawer.classList.add('right-0');
-            quoteOverlay.classList.remove('pointer-events-none');
-            quoteOverlay.classList.remove('opacity-0');
-            quoteOverlay.classList.add('opacity-100');
-        }
-        function closeQuote() {
-            if (!quoteDrawer || !quoteOverlay) return;
-            quoteDrawer.classList.remove('right-0');
-            quoteDrawer.classList.add('-right-full');
-            quoteOverlay.classList.add('pointer-events-none');
-            quoteOverlay.classList.add('opacity-0');
-            quoteOverlay.classList.remove('opacity-100');
-        }
-        if (quoteOpenBtn) quoteOpenBtn.addEventListener('click', openQuote);
-        if (quoteOverlay) quoteOverlay.addEventListener('click', closeQuote);
-        if (quoteDrawerClose) quoteDrawerClose.addEventListener('click', closeQuote);
-        
-        // Basit form doğrulama/gönderim simülasyonu
-        const quoteForm = document.getElementById('quoteForm');
-        const quoteSuccess = document.getElementById('quoteSuccess');
-        if (quoteForm) {
-            quoteForm.addEventListener('submit', function(e){
-                e.preventDefault();
-                const formData = new FormData(quoteForm);
-                const name = String(formData.get('name') || '').trim();
-                const email = String(formData.get('email') || '').trim();
-                const phone = String(formData.get('phone') || '').trim();
-                const consent = !!quoteForm.querySelector('input[name="consent"]').checked;
-                if (!name || !email || !phone) {
-                    alert('Lütfen zorunlu alanları doldurunuz.');
-                    return false;
-                }
-                if (!consent) {
-                    alert('Lütfen KVKK onayını işaretleyiniz.');
-                    return false;
-                }
-                if (quoteSuccess) quoteSuccess.classList.remove('hidden');
-                quoteForm.reset();
-                setTimeout(closeQuote, 1500);
-                return false;
-            });
-        }
-        
-        // Prevent default form submissions (global)
-        document.querySelectorAll('form').forEach(form => {
-            if (form.id === 'quoteForm') return;
-            form.addEventListener('submit', e => {
-                e.preventDefault();
-                return false;
-            });
-        });
-        
-        // Prevent default link clicks (sadece # olanlar)
-        document.querySelectorAll('a[href="#"]').forEach(anchor => {
-            anchor.addEventListener('click', e => {
-                e.preventDefault();
-            });
-        });
-        
-        // Prevent context menu
-        document.addEventListener('contextmenu', e => {
-            e.preventDefault();
-        });
-    }
-
-    // Document ready event listener
-    document.addEventListener("DOMContentLoaded", function() {
-        // Initialize title animations
-        initTitleAnimations();
-        
-        // Initialize all animations
-        initAnimations();
-        
-        // Register GSAP plugins if available
-        if (typeof gsap !== 'undefined') {
-            gsap.registerPlugin(ScrollTrigger);
-        }
-
-            // Logo animasyonu bittikten sonra brand caption'ı göster
-            (function revealBrandCaptionAfterLogo(){
-                const logoIntro = document.getElementById('logoIntro');
-                const brandCaption = document.querySelector('.brand-caption');
-                if (!brandCaption) return;
-
-                // Güvenlik: çok erken görünmesin diye başlangıç durumunu uygula
-                brandCaption.classList.remove('brand-caption--show');
-
-                let revealed = false;
-                const reveal = () => {
-                    if (revealed) return;
-                    revealed = true;
-                    brandCaption.classList.add('brand-caption--show');
-                };
-
-                // prefers-reduced-motion: reduce ise beklemeden göster
-                const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-                if (prefersReduced) {
-                    reveal();
-                    return;
-                }
-
-                // Logo intro kapsayıcısının animasyon sonunu yakala
-                if (logoIntro) {
-                    logoIntro.addEventListener('animationend', reveal, { once: true });
-                }
-
-                // Yedek: 2.2s sonra yine de göster (slideUpAndHide toplamı ~2.3s)
-                setTimeout(reveal, 2300);
-            })();
-    });
-    </script>
-
-    <!-- WebChat Widget -->
-    <style id="webchat-styles">
-        @keyframes typing {
-            0% { transform: translateY(0); opacity: .4; }
-            50% { transform: translateY(-3px); opacity: 1; }
-            100% { transform: translateY(0); opacity: .4; }
-        }
-        .typing-dot { animation: typing 1s infinite; }
-        .typing-dot:nth-child(2) { animation-delay: .15s; }
-        .typing-dot:nth-child(3) { animation-delay: .3s; }
-    </style>
-    <div id="webchat" class="fixed bottom-5 right-5 z-50">
+    <!-- JavaScript Files -->
+    <script src="assets/js/component-loader.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/swiper.js"></script>
+    <script src="assets/js/menu.js"></script>
+    <script src="assets/js/webchat.js"></script>
+    <script src="assets/js/video.js"></script>
+    <script src="assets/js/scroll-to-top.js"></script>
+    <script src="assets/js/custom.js"></script>
+
+
+    <div id="webchat" class="fixed bottom-5 right-5 z-50 hidden lg:block">
         <div id="webchat-panel" class="w-80 sm:w-96 bg-white/80 backdrop-blur-xl rounded-2xl shadow-2xl overflow-hidden mb-3 border border-white/40 ring-1 ring-black/5 transform transition-all duration-200 ease-out opacity-0 pointer-events-none translate-y-2 scale-95 flex flex-col h-[28rem]">
             <div class="px-4 py-3 border-b flex items-center justify-between bg-gradient-to-r from-fuchsia-50 to-indigo-50">
                 <div class="flex items-center gap-3">
                     <div class="relative">
-                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-fuchsia-500 to-indigo-600 text-white flex items-center justify-center text-sm font-semibold">EK</div>
+                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-fuchsia-500 to-indigo-600 text-white flex items-center justify-center text-sm font-semibold">YB</div>
                         <span class="absolute -right-0 -bottom-0 w-3 h-3 bg-emerald-500 rounded-full border-2 border-white"></span>
                     </div>
                     <div>
@@ -2408,359 +997,5 @@
         </button>
     </div>
 
-    <script>
-        (function(){
-            var toggle = document.getElementById('webchat-toggle');
-            var panel = document.getElementById('webchat-panel');
-            var closeBtn = document.getElementById('webchat-close');
-            var input = document.getElementById('webchat-input');
-            var send = document.getElementById('webchat-send');
-            var list = document.getElementById('webchat-messages');
-            var quick = document.getElementById('webchat-quick');
-            var unread = document.getElementById('webchat-unread');
-            var openFromHeaderBtn = document.getElementById('whatsapp-btn');
-
-            function isOpen(){ return panel && !panel.classList.contains('pointer-events-none'); }
-            function openChat(){
-                if (!panel) return;
-                panel.classList.remove('opacity-0','pointer-events-none','translate-y-2','scale-95');
-                setTimeout(function(){ if (input) input.focus(); }, 50);
-                if (unread) unread.classList.add('hidden');
-            }
-            function closeChat(){ if (panel) panel.classList.add('opacity-0','pointer-events-none','translate-y-2','scale-95'); }
-            function toggleChat(){ isOpen() ? closeChat() : openChat(); }
-
-            if (toggle) toggle.addEventListener('click', toggleChat);
-            if (closeBtn) closeBtn.addEventListener('click', closeChat);
-            if (openFromHeaderBtn) openFromHeaderBtn.addEventListener('click', function(e){ e.preventDefault(); openChat(); });
-
-            var STORAGE_KEY = 'WEBCHAT_LOG_V2';
-            function loadLog(){ try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch(_) { return []; } }
-            function saveLog(items){ try { localStorage.setItem(STORAGE_KEY, JSON.stringify(items)); } catch(_) {} }
-            function appendMessage(text, who){
-                var wrap = document.createElement('div');
-                var bubble = document.createElement('div');
-                bubble.textContent = text;
-                if (who === 'user') {
-                    wrap.className = 'flex justify-end';
-                    bubble.className = 'max-w-[80%] rounded-2xl px-3 py-2 bg-gradient-to-br from-fuchsia-600 to-indigo-600 text-white shadow';
-                } else if (who === 'agent') {
-                    wrap.className = 'flex justify-start';
-                    bubble.className = 'max-w-[80%] rounded-2xl px-3 py-2 bg-white border shadow-sm';
-                } else {
-                    wrap.className = 'flex justify-center';
-                    bubble.className = 'text-xs text-gray-500';
-                }
-                wrap.appendChild(bubble);
-                if (list) list.appendChild(wrap);
-                if (list) list.scrollTop = list.scrollHeight;
-            }
-            function appendStatus(text){ appendMessage(text, 'status'); }
-
-            function showTyping(show){
-                var id = 'webchat-typing';
-                var el = document.getElementById(id);
-                if (show) {
-                    if (el) return;
-                    var row = document.createElement('div');
-                    row.id = id;
-                    row.className = 'flex justify-start';
-                    var bubble = document.createElement('div');
-                    bubble.className = 'max-w-[80%] rounded-2xl px-3 py-2 bg-white border shadow-sm flex items-center gap-1 text-gray-500';
-                    for (var i=0;i<3;i++){ var d=document.createElement('span'); d.className='typing-dot inline-block w-1.5 h-1.5 bg-gray-400 rounded-full'; bubble.appendChild(d); }
-                    row.appendChild(bubble);
-                    if (list) list.appendChild(row);
-                    if (list) list.scrollTop = list.scrollHeight;
-                } else if (el) {
-                    el.parentNode && el.parentNode.removeChild(el);
-                }
-            }
-
-            // Geçmişi yükle
-            var history = loadLog();
-            history.forEach(function(it){ appendMessage(it.text, it.who); });
-
-            async function sendToEndpoint(text){
-                // İsteğe bağlı: body[data-chat-endpoint] ile JSON POST yap
-                var endpoint = document.body.getAttribute('data-chat-endpoint') || '';
-                if (!endpoint) return false;
-                try {
-                    var payload = { text: text, when: Date.now(), path: location.pathname, page: document.title };
-                    var r = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-                    return r.ok;
-                } catch(_) { return false; }
-            }
-
-            async function handleSend(text){
-                appendMessage(text, 'user');
-                var newLog = loadLog();
-                newLog.push({ text: text, who: 'user', ts: Date.now() });
-                saveLog(newLog);
-                showTyping(true);
-                var ok = await sendToEndpoint(text);
-                setTimeout(function(){ showTyping(false); }, 600);
-                if (ok) appendStatus('Mesaj iletildi.'); else appendStatus('Mesaj kaydedildi. (İletim yapılandırılmadı)');
-            }
-
-            if (send) send.addEventListener('click', function(){
-                var text = (input && input.value || '').trim();
-                if (!text) return;
-                input.value = '';
-                handleSend(text);
-            });
-            if (input) input.addEventListener('keydown', function(e){ if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); if (send) send.click(); } });
-
-            // Hızlı mesajlar
-            if (quick) quick.querySelectorAll('button').forEach(function(b){ b.addEventListener('click', function(){ var t=b.textContent.trim(); if (!t) return; input.value = t; input.focus(); }); });
-
-            // Bildirim noktası
-            var origAppend = appendMessage;
-            appendMessage = function(text, who){ origAppend(text, who); if (!isOpen() && unread) unread.classList.remove('hidden'); };
-        })();
-    </script>
-    
-    <!-- YouTube Modal and Hover Preview Handlers -->
-    <script>
-    // Load YouTube Iframe API once
-    (function ensureYouTubeAPI(){
-        if (window.YT && window.YT.Player) return;
-        const tag = document.createElement('script');
-        tag.src = 'https://www.youtube.com/iframe_api';
-        document.head.appendChild(tag);
-    })();
-
-    let ytPlayers = {};
-    let modalPlayer = null;
-
-    // Create modal markup lazily
-    function ensureVideoModal(){
-        if (document.getElementById('videoModalOverlay')) return;
-        const overlay = document.createElement('div');
-        overlay.id = 'videoModalOverlay';
-        overlay.className = 'fixed inset-0 bg-black bg-opacity-70 z-50 hidden flex items-center justify-center p-4';
-        overlay.innerHTML = `
-            <div id="videoModal" class="bg-black rounded-xl overflow-hidden relative max-w-4xl w-full aspect-video">
-                <button id="videoModalClose" aria-label="Kapat" class="absolute top-3 right-3 z-10 bg-white/80 hover:bg-white rounded-full w-9 h-9 flex items-center justify-center text-gray-800"><i class="ti ti-x"></i></button>
-                <div id="videoModalPlayer" class="w-full h-full"></div>
-            </div>`;
-        document.body.appendChild(overlay);
-        const close = () => {
-            overlay.classList.add('hidden');
-            if (modalPlayer && modalPlayer.pauseVideo) modalPlayer.pauseVideo();
-        };
-        overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
-        overlay.querySelector('#videoModalClose').addEventListener('click', close);
-    }
-
-    function playInModal(videoId){
-        ensureVideoModal();
-        const overlay = document.getElementById('videoModalOverlay');
-        overlay.classList.remove('hidden');
-        function createOrLoad(){
-            if (modalPlayer) {
-                modalPlayer.loadVideoById(videoId);
-                modalPlayer.playVideo();
-                return;
-            }
-            if (!window.YT || !window.YT.Player) {
-                setTimeout(createOrLoad, 120);
-                return;
-            }
-            modalPlayer = new YT.Player('videoModalPlayer', {
-                videoId,
-                playerVars: { autoplay: 1, controls: 1, rel: 0, modestbranding: 1 },
-                events: {
-                    onReady: (ev) => ev.target.playVideo()
-                }
-            });
-        }
-        createOrLoad();
-    }
-
-    function attachHoverPreviews(){
-        const cards = document.querySelectorAll('.news-card[data-video-id]');
-        cards.forEach((card, idx) => {
-            const videoId = card.getAttribute('data-video-id');
-            const previewHost = card.querySelector('.video-preview');
-            if (!previewHost) return;
-
-            // create iframe once per card (muted & playsinline)
-            function ensurePreview(){
-                if (previewHost.dataset.ready === '1') return;
-                if (!window.YT || !window.YT.Player) { setTimeout(ensurePreview, 120); return; }
-                const containerId = 'yt_prev_' + idx + '_' + Math.random().toString(36).slice(2);
-                previewHost.id = containerId;
-                // absolute cover
-                previewHost.style.pointerEvents = 'none';
-
-                const player = new YT.Player(containerId, {
-                    videoId: videoId,
-                    playerVars: {
-                        autoplay: 0,
-                        controls: 0,
-                        mute: 1,
-                        playsinline: 1,
-                        rel: 0,
-                        modestbranding: 1,
-                        loop: 1,
-                        fs: 0
-                    },
-                    events: {
-                        onReady: (ev) => {
-                            ytPlayers[containerId] = ev.target;
-                            try {
-                                const iframe = ev.target.getIframe();
-                                iframe.style.width = '100%';
-                                iframe.style.height = '100%';
-                                iframe.style.objectFit = 'cover';
-                                iframe.style.borderRadius = '0.75rem';
-                            } catch(_) {}
-                            previewHost.dataset.ready = '1';
-                        }
-                    }
-                });
-            }
-
-            // initialize preview immediately so video area görünür olsun
-            ensurePreview();
-
-            card.addEventListener('mouseenter', () => {
-                // play shortly
-                const id = previewHost.id;
-                const player = ytPlayers[id];
-                if (player && player.playVideo) {
-                    player.mute && player.mute();
-                    player.seekTo(0, true);
-                    player.playVideo();
-                }
-            });
-            card.addEventListener('mouseleave', () => {
-                const id = previewHost.id;
-                const player = ytPlayers[id];
-                if (player && player.pauseVideo) {
-                    player.pauseVideo();
-                    try { player.seekTo(0, true); } catch(_){}
-                }
-            });
-
-            // click to open modal full playback
-            card.addEventListener('click', (e) => {
-                // Avoid interfering with internal links/buttons
-                const isButton = e.target.closest('button,a');
-                if (isButton) return;
-                playInModal(videoId);
-            });
-
-            // also open modal when the internal action button is clicked
-            const detailBtn = card.querySelector('.news-content button');
-            if (detailBtn) {
-                detailBtn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    playInModal(videoId);
-                });
-            }
-        });
-    }
-
-    // Pause previews when slide changes
-    function stopAllPreviews(){
-        Object.values(ytPlayers).forEach(p => { try { p.pauseVideo && p.pauseVideo(); } catch(_){} });
-    }
-
-    // Hook into existing ideasSwiper if created
-    (function hookIdeasSwiper(){
-        const tryHook = () => {
-            const swiperEl = document.querySelector('.ideasSwiper');
-            if (!swiperEl || !swiperEl.swiper) { setTimeout(tryHook, 200); return; }
-            swiperEl.swiper.on('slideChangeTransitionStart', stopAllPreviews);
-        };
-        tryHook();
-    })();
-
-    document.addEventListener('DOMContentLoaded', attachHoverPreviews);
-
-    // Expose for debugging if needed
-    window._ekolVideo = { playInModal, stopAllPreviews };
-    </script>
-    <script>
-        window.addEventListener("load", function () {
-            const scrollToTopBtn = document.getElementById('scrollToTop');
-            if (!scrollToTopBtn) return;
-
-            window.addEventListener('scroll', function () {
-                if (window.scrollY > 300) {
-                    scrollToTopBtn.style.opacity = '1';
-                    scrollToTopBtn.style.pointerEvents = 'auto';
-                } else {
-                    scrollToTopBtn.style.opacity = '0';
-                    scrollToTopBtn.style.pointerEvents = 'none';
-                }
-            });
-
-            scrollToTopBtn.addEventListener('click', function (e) {
-                e.preventDefault();
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
-            });
-        });
-
-    </script>
-
-    <!--
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-          // Follower'ı mouse'a bağla
-          gsap.set(".follower", { xPercent: -50, yPercent: -50 });
-          let xTo = gsap.quickTo(".follower", "x", { duration: 0.6, ease: "power3" });
-          let yTo = gsap.quickTo(".follower", "y", { duration: 0.6, ease: "power3" });
-    
-          window.addEventListener("mousemove", (e) => {
-            xTo(e.clientX);
-            yTo(e.clientY);
-          });
-    
-          const follower = document.querySelector('.follower');
-          const followerText = document.querySelector('.follower__content');
-    
-          const followerAnim = gsap.timeline({ paused: true });
-          followerAnim
-            .to(".follower__inner__bottom", {
-              width: 40,
-              height: 40,
-              borderColor: "#ffffff",
-              duration: 0.3,
-              ease: "power2.out"
-            })
-            .to(".follower__inner__top", {
-              width: 40,
-              height: 40,
-              borderColor: "#38bdf8",
-              opacity: .7,
-              duration: 0.3,
-              ease: "power2.out"
-            }, 0);
-    
-          // Tüm data-follower-text içeren öğelere uygula
-          document.querySelectorAll('[data-follower-text]').forEach(item => {
-            item.addEventListener('mouseenter', () => {
-              follower.classList.add('hide-bg');
-              followerText.textContent = item.dataset.followerText || "";
-              followerText.style.opacity = 1;
-              followerAnim.play();
-            });
-    
-            item.addEventListener('mouseleave', () => {
-              follower.classList.remove('hide-bg');
-              followerText.style.opacity = 0;
-              followerAnim.reverse();
-            });
-          });
-        });
-    </script>
-    -->
-    
 </body>
 </html>

@@ -1,0 +1,375 @@
+/* Main CSS for Ekol Lojistik */
+
+/* Base Styles */
+body {
+    font-family: 'Noto Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    color: #3b3b3b;
+}
+
+h1, h2, h3 {
+    font-family: 'Noto Serif Display', Georgia, 'Times New Roman', serif;
+    font-weight: 700;
+}
+
+p {
+    font-family: 'Noto Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    font-weight: 300;
+}
+
+/* Utility Classes */
+.font-Noto {
+    font-family: 'Noto Sans Display';
+}
+
+.font-Square {
+    font-family: 'Square Peg';
+}
+
+/* Consolidated Animations */
+@keyframes fadeOut { 
+    from { opacity: 1; } 
+    to { opacity: 0; } 
+}
+
+/* Intro Overlay: mavi tam ekran, ortadan büyüyen şeffaf daire ile siteyi açar */
+#introOverlay {
+    position: fixed;
+    inset: 0;
+    background: #4cabe8;
+    z-index: 80;
+    pointer-events: none;
+    /* delik yarıçapı */
+    --r: 0px;
+    -webkit-mask: radial-gradient(circle var(--r) at 50% 50%, transparent 0 var(--r), #fff calc(var(--r) + 1px));
+            mask: radial-gradient(circle var(--r) at 50% 50%, transparent 0 var(--r), #fff calc(var(--r) + 1px));
+    will-change: --r;
+    contain: layout paint style;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    animation: intro-reveal 2s cubic-bezier(0.4, 0, 0.2, 1) 0.4s forwards;
+}
+
+@keyframes intro-reveal {
+    0%   { --r: 0px; }
+    15%  { --r: 120px; }
+    25%  { --r: 120px; } /* kısa tek duraklama */
+    100% { --r: 120vmax; }  /* duraksamasız tam açılış; opacity değişmez */
+}
+
+@keyframes scaleOut { 
+    0% { 
+        clip-path: circle(0px at center);
+        transform: scale(0.8);
+    } 
+    30% {
+        clip-path: circle(100px at center);
+        transform: scale(1);
+    }
+    70% {
+        clip-path: circle(300px at center);
+        transform: scale(1.2);
+    }
+    100% { 
+        clip-path: circle(800px at center);
+        transform: scale(1.5);
+    } 
+}
+
+@keyframes slideUpAndHide { 
+    from { height: 100%; top: 0; } 
+    to { height: 57px; top: 30px; } 
+}
+
+@keyframes menuAnim { 
+    from { opacity: 0; top: -30px; } 
+    to { opacity: 1; top: 45px; } 
+}
+
+@keyframes menuAnimText { 
+    from { opacity: 0; top: -30px; } 
+    to { opacity: 1; top: 45px; } 
+}
+
+@keyframes menuAnimTextActive { 
+    from { top: 45px; } 
+    to { top: 22px; } 
+}
+
+/* Menu Animations */
+.menu-anim-text {
+    animation: menuAnimText 1s ease 1.5s forwards;
+    opacity: 0;
+    transition: all .5s ease;
+}
+
+/* Brand Caption Scroll Effects */
+.brand-caption {
+    transition: opacity .45s ease, transform .55s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
+    opacity: 0; /* İlk yüklemede gizli */
+    transform: translateY(16px); /* Aşağıdan başla */
+}
+
+.brand-caption.brand-caption--show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.menu-anim {
+    animation: menuAnim 1s ease 1.5s forwards;
+    opacity: 0;
+    transition: all .5s cubic-bezier(.77,0,.18,1);
+}
+
+/* Logo Animations */
+.animate-scale-out { 
+    animation: scaleOut 3s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.2s forwards, fadeOut 0.8s ease 4.2s forwards;
+    transform-origin: center;
+}
+
+.animate-logo {
+    /* Intro bitimine yakın kaydır (tek duraksama algısı olmasın) */
+    will-change: transform, top, height;
+    animation: slideUpAndHide 0.7s cubic-bezier(0.4, 0, 0.2, 1) 1.6s forwards;
+    transition: all .5s cubic-bezier(.77,0,.18,1);
+}
+
+.animate-logo .logo-container {
+    background: transparent;
+    border-radius: 50%;
+    width: 150px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    will-change: transform;
+    animation: logoScale 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+}
+
+.animate-logo img {
+    max-width: 100px;
+    will-change: max-width;
+    /* Yukarı kayma ile EŞ ZAMANLI 65px'e küçülsün */
+    animation: logoShrink 0.7s cubic-bezier(0.4, 0, 0.2, 1) 1.6s forwards;
+}
+
+@keyframes logoScale {
+    from {
+        transform: scale(1.5);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+
+@keyframes logoShrink {
+    from { max-width: 100px; }
+    to   { max-width: 65px; margin-top: 6px; }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+    #introOverlay { animation: none; display: none; }
+    .animate-logo { animation: none; }
+    .animate-logo .logo-container { animation: none; }
+    .animate-logo img { animation: none; }
+}
+
+/* Header Styles */
+header:before {
+    content:'';
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    background-color: rgba(0, 0, 0, .2);
+    height: 100px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    opacity: 0;
+    position: absolute;
+    top: 22px; 
+    border-radius: 40px;
+    transition: opacity .5s cubic-bezier(.77,0,.18,1);
+    width: calc(100% - 40px);
+    border-bottom: 1px solid rgba(255, 255, 255, .3);
+    transition: all 1s ease;
+}
+
+body.header-sticky header:before {
+    opacity: 1; 
+    height: 80px;
+}
+
+.navigation {
+    backdrop-filter: blur(8px); 
+    background-color: hsla(35, 20%, 62%, .2); 
+}
+
+.mobile-warning {
+    display: none;
+}
+
+/* Lenis Smooth Scrolling */
+.lenis.lenis-smooth {
+    scroll-behavior: auto;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+    overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+    pointer-events: none;
+}
+
+/* Parallax Effects */
+.parallax-ingredients {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    height: 80vh;
+    mask-image: url(../images/icon-ellipse.svg);
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-size: contain;
+    position: relative;
+    z-index: 1;
+}
+
+.parallax-ingredients img {
+    width: auto;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%) scale(1.4);
+    transform-origin: 50% 50%;
+}
+
+.parallax img {
+    width: auto;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%) scale(1.1);
+    transform-origin: 50% 50%;
+}
+
+/* Scroll Down Animation */
+@keyframes elasticus {
+    0% {
+        transform-origin: 0% 0%;
+        transform: scale(1, 0);
+    }
+    50% {
+        transform-origin: 0% 0%;
+        transform: scale(1, 1);
+    }
+    50.1% {
+        transform-origin: 0% 100%;
+        transform: scale(1, 1);
+    }
+    100% {
+        transform-origin: 0% 100%;
+        transform: scale(1, 0);
+    }
+}
+
+#scroll-down::before {
+    animation: elasticus 2.9s cubic-bezier(1, 0, 0, 1) infinite;
+    position: absolute;
+    top: 0px;
+    left: 50%;
+    margin-left: -1px;
+    width: 2px;
+    height: 90px;
+    background: #FFF;
+    content: ' ';
+}
+
+/* Follower Cursor */
+.follower {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    background: #38bdf8;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+.follower__inner__bottom,
+.follower__inner__top {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    transform: translate(-50%, -50%) scale(1);
+    border-radius: 50%;
+    border: 2px solid transparent;
+    transform-origin: center center;
+}
+
+.follower__content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    font-size: 14px;
+    font-weight: bold;
+    color: black;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.follower.hide-bg {
+    background: transparent !important;
+}
+
+/* Background Image Utilities */
+.bg-cover {
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+}
+
+.bg-contain {
+    background-size: contain !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+}
+
+.bg-fixed {
+    background-attachment: fixed !important;
+}
+
+.bg-scroll {
+    background-attachment: scroll !important;
+}
+
+/* Specific Background Images */
+.bg-works {
+    background-image: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url('../images/works.jpg') !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+} 
+
+@media screen and (max-width: 63em) {
+
+    header:before {
+        height: 0px !important;
+    }
+
+    body.header-sticky header:before {
+        height: 56px !important;
+    }
+}

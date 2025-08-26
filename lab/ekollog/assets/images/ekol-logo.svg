@@ -1,0 +1,11 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 197" width="280" height="197">
+	<title>Yeni Proje</title>
+	<style>
+		.s0 { fill: #55565a } 
+	</style>
+	<path class="s0" d="m279.2 0.5l-21.8 9.8v177.1l21.8 9.2zm0 0l-21.8 9.8v177.1l21.8 9.2z"/>
+	<path class="s0" d="m193.6 65.9l-21.9 9.7v111.3l21.9 9.7h21.8l21.9-9.7v-111.3l-21.9-9.7zm0 2.2h21.8v126.3h-21.8z"/>
+	<path fill-rule="evenodd" class="s0" d="m129.8 196.6l21.8-9.7v-52.2l-21.8-9.6z"/>
+	<path fill-rule="evenodd" class="s0" d="m107.9 0.5l-21.8 9.8v176.8l21.8 9.5v-70.8l43.7-19.4v-30.8l-21.8-9.7v47.8l-21.9 9.7z"/>
+	<path class="s0" d="m44.6 64.9h-21.8l-21.9 9.7v111.3l21.9 9.7h21.8l21.8-9.7v-43.6l-21.8 9.7v41.4h-21.8v-53.4l43.7-19.4v-0.1-1.7-44.2zm-21.8 2.2h21.8v60.8l-21.8 9.6z"/>
+</svg>
