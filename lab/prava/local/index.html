@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<!--
+  Yerel önizleme — Shopify / Liquid çalışmaz; aynı CSS/JS/assets kullanır.
+  Çalıştır: proje kökünde npm run local → http://localhost:4321/local/
+  Tema metinleri theme/locales/tr.json ile uyumlu (manuel kopya).
+-->
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PRAVA — yerel önizleme</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+  <link rel="stylesheet" href="/theme/assets/style.css">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Sen', 'system-ui', 'sans-serif'] },
+        },
+      },
+    };
+  </script>
+</head>
+<body class="bg-black font-sans antialiased text-[14px] text-white">
+
+  <div class="pointer-events-none fixed inset-x-0 top-0 z-[60] h-[120px] bg-gradient-to-b from-black/45 to-transparent" aria-hidden="true"></div>
+
+  <header id="site-header" class="fixed top-0 left-0 right-0 z-[100] flex h-[88px] items-center justify-between px-10" style="--header-pad-x: 40px;">
+    <button type="button" id="btn-menu" class="flex items-center gap-3 text-base font-semibold tracking-wide text-white hover:opacity-80 transition-opacity" aria-expanded="false" aria-controls="mega-menu" aria-label="Menüyü aç">
+      <img src="/theme/assets/menu.svg" width="32" height="32" alt="" class="shrink-0" aria-hidden="true">
+      Menü
+    </button>
+    <a href="#" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" aria-label="PRAVA — Anasayfa">
+      <img src="/theme/assets/prava_logo.svg" width="120" height="22" alt="PRAVA" class="h-[22px] w-auto">
+    </a>
+    <nav class="flex items-center gap-8 lg:gap-10 text-[15px] font-semibold tracking-wide text-white" aria-label="Üst bağlantılar">
+      <button type="button" class="hidden sm:flex items-center gap-2 hover:opacity-80 transition-opacity font-light border-b border-white/40 py-1" aria-label="Ara">
+        <img src="/theme/assets/search.svg" width="18" height="17" alt="" aria-hidden="true">
+        Arama
+      </button>
+      <a href="#" class="hidden md:inline hover:opacity-80 transition-opacity font-light">Hesabım</a>
+      <a href="#" class="flex items-center gap-2 hover:opacity-80 transition-opacity font-light" aria-label="Sepet">
+        Sepet
+        <img src="/theme/assets/basket.svg" width="32" height="32" alt="" aria-hidden="true">
+      </a>
+    </nav>
+  </header>
+
+  <div id="mega-menu" class="mega-menu" role="dialog" aria-modal="true" aria-label="Site menüsü" hidden>
+    <div class="mega-menu__inner" style="--mega-pad-x: 40px;">
+      <div class="mega-menu__bar">
+        <button type="button" class="mega-menu__close pl-2" id="mega-menu-close" aria-label="Menüyü kapat">
+          <svg class="mega-menu__close-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+          <span class="text-base font-semibold">Kapat</span>
+        </button>
+        <p class="mega-menu__logo" id="mega-menu-logo">
+          <img src="/theme/assets/prava_logo.svg" width="120" height="22" alt="PRAVA" class="h-[22px] w-auto invert">
+        </p>
+      </div>
+      <div class="mega-menu__tabs-wrap">
+        <div class="mega-menu__tabs" role="tablist" aria-label="Kategoriler">
+          <button type="button" class="mega-menu__tab is-active" role="tab" aria-selected="true" aria-controls="mega-panel-0" data-mega-tab="0" id="mega-tab-0">Bebek Arabaları</button>
+          <button type="button" class="mega-menu__tab" role="tab" aria-selected="false" aria-controls="mega-panel-1" data-mega-tab="1" id="mega-tab-1">Pusetler</button>
+          <button type="button" class="mega-menu__tab" role="tab" aria-selected="false" aria-controls="mega-panel-2" data-mega-tab="2" id="mega-tab-2">Kapsüller</button>
+          <button type="button" class="mega-menu__tab" role="tab" aria-selected="false" aria-controls="mega-panel-3" data-mega-tab="3" id="mega-tab-3">Aksesuarlar</button>
+          <button type="button" class="mega-menu__tab" role="tab" aria-selected="false" aria-controls="mega-panel-4" data-mega-tab="4" id="mega-tab-4">Yedek Parça</button>
+        </div>
+      </div>
+      <div class="mega-menu__panels">
+        <div class="mega-menu__panel" role="tabpanel" id="mega-panel-0" aria-labelledby="mega-tab-0" data-mega-panel="0" data-footer-discover="Bebek Arabalarını Keşfet" data-footer-discover-href="#" data-footer-cta="Tüm Ürünler" data-footer-cta-href="#">
+          <div class="mega-menu__panel-grid">
+            <div class="mega-menu__col mega-menu__col--list">
+              <ul class="mega-menu__sublist">
+                <li><a href="#" class="mega-menu__subitem is-active"><span class="mega-menu__subicon" aria-hidden="true"><img src="/theme/assets/menu1.svg" alt=""></span><span class="mega-menu__subtext"><span class="mega-menu__subtitle">Travel Sistem Bebek Arabaları</span><span class="mega-menu__subdesc">Puset ve ana kucağını bir arada sunan pratik çözümlerdir.</span></span></a></li>
+                <li><a href="#" class="mega-menu__subitem"><span class="mega-menu__subicon" aria-hidden="true"><img src="/theme/assets/menu2.svg" alt=""></span><span class="mega-menu__subtext"><span class="mega-menu__subtitle">Çift Yönlü Bebek Arabaları</span><span class="mega-menu__subdesc">Çift yönlü kullanım sayesinde esnek ve konforlu sürüş sağlar.</span></span></a></li>
+                <li><a href="#" class="mega-menu__subitem"><span class="mega-menu__subicon" aria-hidden="true"><img src="/theme/assets/menu3.svg" alt=""></span><span class="mega-menu__subtext"><span class="mega-menu__subtitle">Baston Bebek Arabası</span><span class="mega-menu__subdesc">Hafif ve kolay katlanabilir yapısıyla günlük kullanım için ideal.</span></span></a></li>
+              </ul>
+            </div>
+            <div class="mega-menu__col mega-menu__col--visual"><div class="mega-menu__visual"><img src="/theme/assets/urun-menu.png" width="520" height="640" alt="" class="mega-menu__visual-img" loading="lazy"></div></div>
+          </div>
+        </div>
+        <div class="mega-menu__panel" role="tabpanel" id="mega-panel-1" hidden aria-labelledby="mega-tab-1" data-mega-panel="1" data-footer-discover="Pusetleri Keşfet" data-footer-discover-href="#" data-footer-cta="Tüm Ürünler" data-footer-cta-href="#">
+          <div class="mega-menu__panel-grid">
+            <div class="mega-menu__col mega-menu__col--list">
+              <ul class="mega-menu__sublist">
+                <li><a href="#" class="mega-menu__subitem is-active"><span class="mega-menu__subicon" aria-hidden="true"><svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 34V20h20v14M12 38h24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M18 20V14h12v6" stroke="currentColor" stroke-width="1.5"/></svg></span><span class="mega-menu__subtext"><span class="mega-menu__subtitle">Travel Puset</span><span class="mega-menu__subdesc">Ana kucağı ile uyumlu, hafif taşıma çözümleri.</span></span></a></li>
+                <li><a href="#" class="mega-menu__subitem"><span class="mega-menu__subicon" aria-hidden="true"><svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="14" y="16" width="20" height="18" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M12 38h24M20 16v-4h8v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span><span class="mega-menu__subtext"><span class="mega-menu__subtitle">Baston Puset</span><span class="mega-menu__subdesc">Tek elle katlanır, kompakt şehir kullanımı.</span></span></a></li>
+              </ul>
+            </div>
+            <div class="mega-menu__col mega-menu__col--visual"><div class="mega-menu__visual"><img src="/theme/assets/urun-menu.png" width="520" height="640" alt="" class="mega-menu__visual-img" loading="lazy"></div></div>
+          </div>
+        </div>
+        <div class="mega-menu__panel" role="tabpanel" id="mega-panel-2" hidden aria-labelledby="mega-tab-2" data-mega-panel="2" data-footer-discover="Kapsülleri Keşfet" data-footer-discover-href="#" data-footer-cta="Tüm Ürünler" data-footer-cta-href="#">
+          <div class="mega-menu__panel-grid">
+            <div class="mega-menu__col mega-menu__col--list">
+              <ul class="mega-menu__sublist">
+                <li><a href="#" class="mega-menu__subitem is-active"><span class="mega-menu__subicon" aria-hidden="true"><svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="24" cy="26" rx="14" ry="10" stroke="currentColor" stroke-width="1.5"/><path d="M16 18h16M20 14h8v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span><span class="mega-menu__subtext"><span class="mega-menu__subtitle">Grup 0+ Kapsül</span><span class="mega-menu__subdesc">Yenidoğan güvenliği için ergonomik taşıma.</span></span></a></li>
+                <li><a href="#" class="mega-menu__subitem"><span class="mega-menu__subicon" aria-hidden="true"><svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="12" y="18" width="24" height="16" rx="3" stroke="currentColor" stroke-width="1.5"/><path d="M18 38h12M24 18v-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span><span class="mega-menu__subtext"><span class="mega-menu__subtitle">İsofix Baza</span><span class="mega-menu__subdesc">Araç içi güvenli ve hızlı montaj.</span></span></a></li>
+              </ul>
+            </div>
+            <div class="mega-menu__col mega-menu__col--visual"><div class="mega-menu__visual"><img src="/theme/assets/urun-menu.png" width="520" height="640" alt="" class="mega-menu__visual-img" loading="lazy"></div></div>
+          </div>
+        </div>
+        <div class="mega-menu__panel" role="tabpanel" id="mega-panel-3" hidden aria-labelledby="mega-tab-3" data-mega-panel="3" data-footer-discover="Aksesuarları Keşfet" data-footer-discover-href="#" data-footer-cta="Tüm Ürünler" data-footer-cta-href="#">
+          <div class="mega-menu__panel-grid">
+            <div class="mega-menu__col mega-menu__col--list">
+              <ul class="mega-menu__sublist">
+                <li><a href="#" class="mega-menu__subitem is-active"><span class="mega-menu__subicon" aria-hidden="true"><svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="22" r="8" stroke="currentColor" stroke-width="1.5"/><path d="M16 38h16M24 30v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span><span class="mega-menu__subtext"><span class="mega-menu__subtitle">Tekerlek ve Gövde</span><span class="mega-menu__subdesc">Bakım ve kişiselleştirme parçaları.</span></span></a></li>
+                <li><a href="#" class="mega-menu__subitem"><span class="mega-menu__subicon" aria-hidden="true"><svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 20h20v14H14V20z" stroke="currentColor" stroke-width="1.5"/><path d="M18 20V16h12v4" stroke="currentColor" stroke-width="1.5"/></svg></span><span class="mega-menu__subtext"><span class="mega-menu__subtitle">Mosquito ve Yağmurluk</span><span class="mega-menu__subdesc">Hava koşullarına karşı koruma.</span></span></a></li>
+              </ul>
+            </div>
+            <div class="mega-menu__col mega-menu__col--visual"><div class="mega-menu__visual"><img src="/theme/assets/urun-menu.png" width="520" height="640" alt="" class="mega-menu__visual-img" loading="lazy"></div></div>
+          </div>
+        </div>
+        <div class="mega-menu__panel" role="tabpanel" id="mega-panel-4" hidden aria-labelledby="mega-tab-4" data-mega-panel="4" data-footer-discover="Yedek Parça Keşfet" data-footer-discover-href="#" data-footer-cta="Tüm Ürünler" data-footer-cta-href="#">
+          <div class="mega-menu__panel-grid">
+            <div class="mega-menu__col mega-menu__col--list">
+              <ul class="mega-menu__sublist">
+                <li><a href="#" class="mega-menu__subitem is-active"><span class="mega-menu__subicon" aria-hidden="true"><svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 12v8M20 16h8M18 28h12v8H18v-8z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="mega-menu__subtext"><span class="mega-menu__subtitle">Orijinal Yedek Parça</span><span class="mega-menu__subdesc">Üretici onaylı parçalar ve aksamlar.</span></span></a></li>
+              </ul>
+            </div>
+            <div class="mega-menu__col mega-menu__col--visual"><div class="mega-menu__visual"><img src="/theme/assets/urun-menu.png" width="520" height="640" alt="" class="mega-menu__visual-img" loading="lazy"></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="mega-menu__footer">
+        <a href="#" class="mega-menu__footer-link" id="mega-footer-discover">Bebek Arabalarını Keşfet</a>
+        <a href="#" class="mega-menu__footer-cta" id="mega-footer-cta">Tüm Ürünler</a>
+      </div>
+    </div>
+  </div>
+
+  <main id="MainContent" role="main" tabindex="-1">
+    <section id="hero" class="parallax-item fixed inset-x-0 top-0 z-[5] h-[100svh] min-h-0 w-full overflow-hidden" 
+      data-start="12"
+      data-end="-12"
+      data-scrub="0.8" 
+      aria-label="Ana vitrin">
+      <div class="swiper hero-main h-full w-full parallax-content">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide relative h-full w-full overflow-hidden" data-thumb="/theme/assets/slider2.png" data-hero-video="true">
+            <div class="hero-parallax-layer absolute inset-0 overflow-hidden">
+              <video
+                class="hero-parallax-img hero-slide-video absolute left-1/2 top-1/2 h-[100%] w-[100%] max-w-none -translate-x-1/2 -translate-y-1/2 object-cover"
+                poster="/theme/assets/poster.jpg"
+                preload="none"
+                muted
+                playsinline
+                webkit-playsinline
+                data-src="/theme/assets/video.mp4"
+                aria-label="Tanıtım videosu"
+              ></video>
+            </div>
+            <div class="absolute inset-0 bg-black/15 z-[1] pointer-events-none"></div>
+            <div class="hero-slide-content absolute inset-0 z-[2] flex items-center justify-start text-left">
+              <div class="hero-slide-copy w-full max-w-[min(100%,560px)] px-10 pt-[88px] text-left ml-0 mr-auto will-change-transform">
+                <h1 class="max-w-[16ch] text-left text-[clamp(2rem,4.2vw,3.5rem)] font-extrabold leading-[1.12] tracking-tight text-white">Rahatlıkla Büyüyen<br>Mutlu Adımlar.</h1>
+                <p class="mt-10 max-w-[36ch] text-left text-lg font-normal leading-relaxed text-white/95">Her yolculukta, hem sizin hem bebeğinizin mutluluğu için tasarlandı.</p>
+                <a href="#" class="mt-10 inline-block text-left text-lg font-bold uppercase text-white hover:opacity-80 transition-opacity">Keşfet</a>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide relative h-full w-full overflow-hidden" data-thumb="/theme/assets/slider3.jpg">
+            <div class="hero-parallax-layer absolute inset-0 overflow-hidden">
+              <img src="/theme/assets/slider3.jpg" alt="" class="hero-parallax-img absolute left-1/2 top-1/2 h-[100%] w-[100%] max-w-none -translate-x-1/2 -translate-y-1/2 object-cover" width="1920" height="1080" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=1920&q=85';">
+            </div>
+            <div class="absolute inset-0 bg-black/15 z-[1] pointer-events-none"></div>
+            <div class="hero-slide-content absolute inset-0 z-[2] flex items-center justify-start text-right">
+              <div class="hero-slide-copy w-full max-w-[min(100%,560px)] px-10 pt-[88px] text-right ml-0 ml-auto will-change-transform">
+                <h1 class="max-w-[16ch] text-right text-[clamp(2rem,4.2vw,3.5rem)] font-extrabold leading-[1.12] tracking-tight text-white">Yeni Sezon Geldi<br>%30’a Varan İndirimle</h1>
+                <p class="mt-10 max-w-[36ch] text-right text-lg font-normal leading-relaxed text-white/95 ml-auto">En yeni bebek arabası modelleri şimdi avantajlı fiyatlarla. Konfor ve şıklığı birlikte keşfedin.</p>
+                <a href="#" class="mt-10 inline-block text-right text-lg font-bold uppercase text-white hover:opacity-80 transition-opacity">Fırsatları Gör</a>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide relative h-full w-full overflow-hidden" data-thumb="/theme/assets/slider4.png">
+            <div class="hero-parallax-layer absolute inset-0 overflow-hidden">
+              <img src="/theme/assets/slider4.png" alt="" class="hero-parallax-img absolute left-1/2 top-1/2 h-[100%] w-[100%] max-w-none -translate-x-1/2 -translate-y-1/2 object-cover" width="1920" height="1080" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?w=1920&q=85';">
+            </div>
+            <div class="absolute inset-0 bg-black/15 z-[1] pointer-events-none"></div>
+            <div class="hero-slide-content absolute inset-0 z-[2] flex items-center justify-start text-left">
+              <div class="hero-slide-copy w-full max-w-[min(100%,560px)] px-10 pt-[88px] text-left ml-0 mr-auto will-change-transform">
+                <h1 class="max-w-[16ch] text-left text-[clamp(2rem,4.2vw,3.5rem)] font-extrabold leading-[1.12] tracking-tight text-white">Güvenle Taşınan<br>Her An.</h1>
+                <p class="mt-10 max-w-[36ch] text-left text-lg font-normal leading-relaxed text-white/95">Avrupa standartlarında test edilen travel sistem koleksiyonu.</p>
+                <a href="#" class="mt-10 inline-block text-left text-lg font-bold uppercase text-white hover:opacity-80 transition-opacity">Keşfet</a>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      <div class="pointer-events-auto absolute bottom-[6vh] z-[90] flex items-center gap-3 md:gap-4" style="left: 40px;" id="hero-thumb-bar" role="tablist" aria-label="Slayt seçimi">
+        <div class="swiper hero-thumbs sr-only" aria-hidden="true">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide !w-auto"><button type="button" tabindex="-1" data-index="0">1</button></div>
+            <div class="swiper-slide !w-auto"><button type="button" tabindex="-1" data-index="1">2</button></div>
+            <div class="swiper-slide !w-auto"><button type="button" tabindex="-1" data-index="2">3</button></div>
+          </div>
+        </div>
+        <div id="hero-pagination-custom" class="flex items-center gap-3 md:gap-4"></div>
+        <button type="button" id="hero-next" class="ml-1 flex h-10 w-10 items-center justify-center rounded-full border border-white/50 text-white hover:bg-white/10 transition-colors" aria-label="Sonraki slayt">
+          <span class="text-lg font-normal leading-none" aria-hidden="true"><img src="/theme/assets/right-arrow.svg" width="24" height="24" alt="" loading="lazy"></span>
+        </button>
+      </div>
+    </section>
+    <div class="hero-scroll-spacer" aria-hidden="true"></div>
+
+    <section class="prava-category-rail bg-white text-neutral-900 overflow-hidden" aria-label="Ürün kategorileri" style="--pcr-pad-x: 40px;">
+      <div class="mx-auto max-w-[1680px] px-[var(--pcr-pad-x)] pb-16 pt-44">
+        <h2 class="text-center text-2xl font-semibold tracking-tight text-neutral-900 lg:text-[80px]">Minik Gezintiler</h2>
+        <p class="mx-auto mt-10 max-w-2xl text-center font-normal text-neutral-600 text-xl">Bebeğinizin rahatlığı ve sizin konforunuz düşünülerek tasarlanan bebek arabalarını keşfedin.</p>
+        <div class="prava-category-rail__viewport mt-20">
+          <div class="swiper prava-category-rail__swiper w-full overflow-visible">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide !h-auto">
+                <article class="prava-category-card flex h-full flex-col">
+                  <div class="prava-category-card__media aspect-square w-full overflow-hidden rounded-sm bg-[#F0F1EC] flex items-center justify-center">
+                    <img src="/theme/assets/urun-menu.png" width="520" height="640" alt="" class="mega-menu__visual-img" loading="lazy">
+                  </div>
+                  <h3 class="mt-10 text-left text-[30px] font-normal leading-snug tracking-tight text-neutral-900 lg:text-3xl">Bebek Arabaları</h3>
+                  <a href="#" class="mt-3 inline-block w-max text-left text-base font-light text-neutral-900 underline decoration-neutral-900 underline-offset-[5px] transition-opacity hover:opacity-70">Keşfet</a>
+                </article>
+              </div>
+              <div class="swiper-slide !h-auto">
+                <article class="prava-category-card flex h-full flex-col">
+                  <div class="prava-category-card__media aspect-square w-full overflow-hidden rounded-sm bg-[#F0F1EC] flex items-center justify-center">
+                    <img src="/theme/assets/urun3.png" width="520" height="640" alt="" class="mega-menu__visual-img" loading="lazy">
+                  </div>
+                  <h3 class="mt-10 text-left text-[30px] font-normal leading-snug tracking-tight text-neutral-900 lg:text-3xl">Pusetler</h3>
+                  <a href="#" class="mt-3 inline-block w-max text-left text-base font-light text-neutral-900 underline decoration-neutral-900 underline-offset-[5px] transition-opacity hover:opacity-70">Keşfet</a>
+                </article>
+              </div>
+              <div class="swiper-slide !h-auto">
+                <article class="prava-category-card flex h-full flex-col">
+                  <div class="prava-category-card__media aspect-square w-full overflow-hidden rounded-sm bg-[#F0F1EC] flex items-center justify-center">
+                    <img src="/theme/assets/urun4.png" width="520" height="640" alt="" class="mega-menu__visual-img" loading="lazy">
+                  </div>
+                  <h3 class="mt-10 text-left text-[30px] font-normal leading-snug tracking-tight text-neutral-900 lg:text-3xl">Baston Arabalar</h3>
+                  <a href="#" class="mt-3 inline-block w-max text-left text-base font-light text-neutral-900 underline decoration-neutral-900 underline-offset-[5px] transition-opacity hover:opacity-70">Keşfet</a>
+                </article>
+              </div>
+              <div class="swiper-slide !h-auto">
+                <article class="prava-category-card flex h-full flex-col">
+                  <div class="prava-category-card__media aspect-square w-full overflow-hidden rounded-sm bg-[#F0F1EC] flex items-center justify-center">
+                    <img src="/theme/assets/urun2.png" width="520" height="640" alt="" class="mega-menu__visual-img" loading="lazy">
+                  </div>
+                  <h3 class="mt-10 text-left text-[30px] font-normal leading-snug tracking-tight text-neutral-900 lg:text-3xl">Çift Yönlü Bebek Arabaları</h3>
+                  <a href="#" class="mt-3 inline-block w-max text-left text-base font-light text-neutral-900 underline decoration-neutral-900 underline-offset-[5px] transition-opacity hover:opacity-70">Keşfet</a>
+                </article>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="intro-karaoke-section" class="prava-intro-split bg-white text-neutral-900" aria-label="Marka tanıtımı" style="--pis-pad-x: 40px;">
+      <div class="mx-auto max-w-[1680px] px-[var(--pis-pad-x)] py-24">
+        <div class="flex flex-col items-stretch gap-12 md:flex-row md:items-center md:justify-between md:gap-14 lg:gap-20">
+          <div class="prava-intro-split__copy md:min-w-0 flex-[1_1_80%]">
+            <div id="intro-karaoke-root" class="prava-intro-split__text intro-karaoke max-w-[800px] text-left text-[clamp(3rem,4.05vw+0.85rem,2.25rem)] font-normal leading-[1.25] tracking-tight text-neutral-800">
+              Yenilikçi yaklaşım ve modern şık tasarımlar geliştirilen PRAVA, ailelerin günlük hayatını kolaylaştıran pratik çözümler ve üstün konfor sunar.
+            </div>
+          </div>
+          <div class="prava-intro-split__figure-wrap prava-intro-split__figure-wrap--reveal md:flex-[1_1_45%] md:max-w-xl lg:max-w-2xl">
+            <figure class="prava-intro-split__figure m-0 flex w-full justify-center md:justify-end">
+              <img
+                src="/theme/assets/ara-gorsel.png"
+                alt="Aile ve bebek arabası illüstrasyonu"
+                class="prava-intro-split__img h-auto w-full max-w-[min(100%,520px)] object-contain md:max-w-none"
+                width="800"
+                height="600"
+                loading="lazy"
+                decoding="async"
+              >
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-white text-neutral-900 relative z-10" aria-label="Popüler kampanya ürünleri" style="--pcp-pad-x: 40px;">
+      <div class="mx-auto max-w-[1600px] p-0">
+        <div class="grid grid-cols-1 lg:grid-cols-[1.6fr_1fr] lg:items-start">
+          <article class="overflow-hidden bg-[#e7e4df]">
+            <div
+              class="parallax-item relative overflow-hidden aspect-[1/1]"
+              data-start="-12"
+              data-end="12"
+              data-scrub="0.8"
+            >
+              <div class="parallax-content absolute inset-0">
+                <img
+                  src="/theme/assets/populer.jpeg"
+                  alt="Aile ve bebek arabası"
+                  class="h-full w-full object-cover object-center"
+                  width="1200"
+                  height="700"
+                  loading="lazy"
+                  decoding="async"
+                >
+              </div>
+              <div class="absolute left-0 top-0 z-10 bg-white px-8 py-6 md:px-12 md:py-8">
+                <h2 class="font-medium leading-tight tracking-tight text-neutral-800 text-[40px]">
+                  Popüler Seçimler
+                </h2>
+              </div>
+            </div>
+          </article>
+
+          <article class="left-[-40px] mt-10 relative z-10">
+            <div class="aspect-[1/1] w-full bg-[#e7e4df]">
+              <img
+                src="/theme/assets/urun-menu.png"
+                alt="Gold Chrome Bebek Arabası"
+                class="h-full w-full object-contain"
+                width="520"
+                height="640"
+                loading="lazy"
+                decoding="async"
+              >
+            </div>
+            <div class="px-8 pb-8 pt-10 md:px-10 md:pb-10 ml-10">
+              <h3 class="text-2xl font-normal leading-tight tracking-tight text-neutral-800">
+                Gold Chrome Bebek Arabası
+              </h3>
+              <p class="mt-2 text-base font-light uppercase text-neutral-700">Puset</p>
+              <div class="mt-8 flex items-center justify-between gap-6">
+                <div class="flex items-center gap-3" aria-label="Renk seçenekleri">
+                  <span class="h-5 w-5 rounded-full bg-[#bf7f83]"></span>
+                  <span class="h-5 w-5 rounded-full bg-[#d4c176]"></span>
+                  <span class="h-5 w-5 rounded-full bg-[#9ea78a]"></span>
+                  <span class="h-5 w-5 rounded-full bg-[#88acc8]"></span>
+                </div>
+                <p class="text-right text-lg leading-none">
+                  <span class="mr-4 font-light text-neutral-500 line-through">16.000 TL</span>
+                  <span class="font-medium text-neutral-900">12.000 TL</span>
+                </p>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="prava-bestsellers bg-white text-neutral-900" aria-label="En çok satılan ürünler" style="--pbs-pad-x: 40px;">
+      <div class="mx-auto max-w-[1680px] px-[var(--pbs-pad-x)] pt-44 pb-24">
+        <div class="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+          <h2 class="font-medium tracking-tight text-neutral-900 text-[40px]">
+            En Çok Satılanlar
+          </h2>
+          <a href="#" class="shrink-0 text-left text-lg font-light text-neutral-800 underline decoration-neutral-800 underline-offset-[5px] transition-opacity hover:opacity-70 sm:text-right">
+            Tüm Ürünleri Gör
+          </a>
+        </div>
+        <div class="prava-bestsellers__viewport mt-10 md:mt-14">
+          <div class="swiper prava-bestsellers__swiper w-full">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide !h-auto">
+                <article class="prava-bestsellers-card group flex h-full flex-col bg-[#f2f2f0]">
+                  <div class="relative flex aspect-[1/1] w-full items-center justify-center overflow-hidden">
+                    <img
+                      src="/theme/assets/urun-menu.png"
+                      alt=""
+                      class="h-full w-full object-contain transition-opacity duration-500 ease-out group-hover:opacity-0"
+                      width="520"
+                      height="640"
+                      loading="lazy"
+                      decoding="async"
+                    >
+                    <img
+                      src="/theme/assets/product-hover.png"
+                      alt=""
+                      class="absolute inset-0 h-full w-full object-cover object-bottom opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100"
+                      width="520"
+                      height="640"
+                      loading="lazy"
+                      decoding="async"
+                    >
+                  </div>
+                  <div class="flex flex-1 flex-col px-[30px] py-[30px]">
+                    <h3 class="text-lg font-medium leading-snug tracking-tight text-neutral-900 md:text-xl">
+                      Gold Chrome Travel Bebek Arabası
+                    </h3>
+                    <p class="mt-2 text-xs font-light uppercase tracking-wide text-neutral-500 md:text-sm">Travel Sistem</p>
+                    <div class="mt-6 flex items-center justify-between gap-4">
+                      <div class="flex flex-wrap items-center gap-2" aria-label="Renk seçenekleri">
+                        <span class="h-5 w-5 shrink-0 rounded-full bg-[#bf7f83] ring-1 ring-black/5"></span>
+                        <span class="h-5 w-5 shrink-0 rounded-full bg-[#d4c176] ring-1 ring-black/5"></span>
+                        <span class="h-5 w-5 shrink-0 rounded-full bg-[#9ea78a] ring-1 ring-black/5"></span>
+                        <span class="h-5 w-5 shrink-0 rounded-full bg-[#88acc8] ring-1 ring-black/5"></span>
+                      </div>
+                      <p class="shrink-0 text-right text-base leading-none md:text-lg">
+                        <span class="mr-2 font-light text-neutral-500 line-through">16.000 TL</span>
+                        <span class="font-medium text-neutral-900">12.000 TL</span>
+                      </p>
+                    </div>
+                  </div>
+                </article>
+              </div>
+              <div class="swiper-slide !h-auto">
+                <article class="prava-bestsellers-card group flex h-full flex-col bg-[#f2f2f0]">
+                  <div class="relative flex aspect-[1/1] w-full items-center justify-center overflow-hidden">
+                    <img
+                      src="/theme/assets/urun4.png"
+                      alt=""
+                      class="h-full w-full object-contain transition-opacity duration-500 ease-out group-hover:opacity-0"
+                      width="520"
+                      height="640"
+                      loading="lazy"
+                      decoding="async"
+                    >
+                    <video
+                      class="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100"
+                      playsinline
+                      muted
+                      loop
+                      preload="none"
+                      data-bestseller-hover-video
+                    >
+                      <source src="/theme/assets/product.mp4" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="flex flex-1 flex-col px-[30px] py-[30px]">
+                    <h3 class="text-lg font-medium leading-snug tracking-tight text-neutral-900 md:text-xl">
+                      Gold Chrome Bebek Arabası
+                    </h3>
+                    <p class="mt-2 text-xs font-light uppercase tracking-wide text-neutral-500 md:text-sm">Puset</p>
+                    <div class="mt-6 flex items-center justify-between gap-4">
+                      <div class="flex flex-wrap items-center gap-2" aria-label="Renk seçenekleri">
+                        <span class="h-5 w-5 shrink-0 rounded-full bg-[#bf7f83] ring-1 ring-black/5"></span>
+                        <span class="h-5 w-5 shrink-0 rounded-full bg-[#d4c176] ring-1 ring-black/5"></span>
+                        <span class="h-5 w-5 shrink-0 rounded-full bg-[#9ea78a] ring-1 ring-black/5"></span>
+                      </div>
+                      <p class="shrink-0 text-right text-base leading-none md:text-lg">
+                        <span class="mr-2 font-light text-neutral-500 line-through">16.000 TL</span>
+                        <span class="font-medium text-neutral-900">12.000 TL</span>
+                      </p>
+                    </div>
+                  </div>
+                </article>
+              </div>
+              <div class="swiper-slide !h-auto">
+                <article class="prava-bestsellers-card flex h-full flex-col bg-[#f2f2f0]">
+                  <div class="flex aspect-[1/1] w-full items-center justify-center">
+                    <img
+                      src="/theme/assets/urun2.png"
+                      alt=""
+                      class="h-full w-full object-contain"
+                      width="520"
+                      height="640"
+                      loading="lazy"
+                      decoding="async"
+                    >
+                  </div>
+                  <div class="flex flex-1 flex-col px-[30px] py-[30px]">
+                    <h3 class="text-lg font-medium leading-snug tracking-tight text-neutral-900 md:text-xl">
+                      Gold Chrome Bebek Arabası
+                    </h3>
+                    <p class="mt-2 text-xs font-light uppercase tracking-wide text-neutral-500 md:text-sm">Puset</p>
+                    <div class="mt-6 flex items-center justify-between gap-4">
+                      <div class="flex flex-wrap items-center gap-2" aria-label="Renk seçenekleri">
+                        <span class="h-5 w-5 shrink-0 rounded-full bg-[#bf7f83] ring-1 ring-black/5"></span>
+                        <span class="h-5 w-5 shrink-0 rounded-full bg-[#d4c176] ring-1 ring-black/5"></span>
+                      </div>
+                      <p class="shrink-0 text-right text-base leading-none md:text-lg">
+                        <span class="mr-2 font-light text-neutral-500 line-through">16.000 TL</span>
+                        <span class="font-medium text-neutral-900">12.000 TL</span>
+                      </p>
+                    </div>
+                  </div>
+                </article>
+              </div>
+              <div class="swiper-slide !h-auto">
+                <article class="prava-bestsellers-card flex h-full flex-col bg-[#f2f2f0]">
+                  <div class="flex aspect-[1/1] w-full items-center justify-center">
+                    <img
+                      src="/theme/assets/urun3.png"
+                      alt=""
+                      class="h-full w-full object-contain"
+                      width="520"
+                      height="640"
+                      loading="lazy"
+                      decoding="async"
+                    >
+                  </div>
+                  <div class="flex flex-1 flex-col px-[30px] py-[30px]">
+                    <h3 class="text-lg font-medium leading-snug tracking-tight text-neutral-900 md:text-xl">
+                      Gold Chrome Travel Bebek Arabası
+                    </h3>
+                    <p class="mt-2 text-xs font-light uppercase tracking-wide text-neutral-500 md:text-sm">Travel Sistem</p>
+                    <div class="mt-6 flex items-center justify-between gap-4">
+                      <div class="flex flex-wrap items-center gap-2" aria-label="Renk seçenekleri">
+                        <span class="h-5 w-5 shrink-0 rounded-full bg-[#bf7f83] ring-1 ring-black/5"></span>
+                        <span class="h-5 w-5 shrink-0 rounded-full bg-[#d4c176] ring-1 ring-black/5"></span>
+                        <span class="h-5 w-5 shrink-0 rounded-full bg-[#9ea78a] ring-1 ring-black/5"></span>
+                        <span class="h-5 w-5 shrink-0 rounded-full bg-[#88acc8] ring-1 ring-black/5"></span>
+                      </div>
+                      <p class="shrink-0 text-right text-base leading-none md:text-lg">
+                        <span class="mr-2 font-light text-neutral-500 line-through">16.000 TL</span>
+                        <span class="font-medium text-neutral-900">12.000 TL</span>
+                      </p>
+                    </div>
+                  </div>
+                </article>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="prava-blog-rail bg-[#F2F2F0] text-neutral-900 overflow-hidden" aria-label="Blog" style="--pbr-pad-x: 40px;">
+      <div class="mx-auto px-[var(--pbr-pad-x)] py-28 pr-0">
+        <div class="pointer-events-none absolute inset-0 bg-[url('/theme/assets/blog.png')] bg-no-repeat bg-[position:100px_bottom] bg-[length:800px_auto] opacity-10" aria-hidden="true"></div>
+        <div class="flex flex-col gap-12 lg:flex-row lg:items-center lg:gap-14 xl:gap-20">
+          <div class="prava-blog-rail__intro relative z-[1] w-full max-w-xl shrink-0 lg:max-w-[min(100%,400px)] xl:max-w-[640px] pl-[40px]">
+            <div class="pointer-events-none absolute -left-4 -right-4 bottom-0 top-8 overflow-hidden opacity-[0.08] lg:left-0 lg:right-auto lg:w-[120%]" aria-hidden="true">
+              <img
+                src="/theme/assets/ara-gorsel.png"
+                alt=""
+                class="h-auto w-full max-w-[320px] object-contain object-left-bottom"
+                width="400"
+                height="300"
+                loading="lazy"
+              >
+            </div>
+            <h2 class="relative font-semibold leading-none text-neutral-900 lg:text-[80px]">
+              Mutlu Yolculuklar Blogu
+            </h2>
+            <p class="relative mt-5 text-base font-normal leading-relaxed text-neutral-600 md:text-lg">
+              Bebek arabaları, güvenlik ve konfor hakkında güncel yazılar; yolculuklarınızı daha keyifli hale getirecek ipuçları burada.
+            </p>
+            <a href="#" class="relative mt-8 inline-flex items-center gap-2 text-base font-light text-neutral-900 underline decoration-neutral-900 underline-offset-[5px] transition-opacity hover:opacity-70">
+              Tüm Blog Yazıları
+              <span aria-hidden="true" class="text-lg leading-none">→</span>
+            </a>
+          </div>
+          <div class="prava-blog-rail__viewport min-w-0 flex-1 lg:min-h-[min(420px,50vh)] overflow-hidden">
+            <div class="swiper prava-blog-rail__swiper w-full overflow-visible">
+              <div class="swiper-wrapper">
+                <div class="swiper-slide !h-auto">
+                  <a href="#" class="prava-blog-card group flex h-full flex-col overflow-hidden rounded-sm bg-white shadow-sm ring-1 ring-black/[0.04] transition-shadow hover:shadow-md">
+                    <div class="aspect-[1/1] w-full overflow-hidden bg-neutral-100">
+                      <img
+                        src="/theme/assets/populer.jpeg"
+                        alt=""
+                        class="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.02]"
+                        width="640"
+                        height="400"
+                        loading="lazy"
+                        decoding="async"
+                      >
+                    </div>
+                    <div class="flex flex-1 flex-col p-6 md:p-8">
+                      <h3 class="text-lg font-medium leading-snug tracking-tight text-neutral-900 md:text-xl">
+                        Bebek arabası seçerken nelere dikkat etmeliyim?
+                      </h3>
+                      <p class="mt-3 line-clamp-3 text-sm leading-relaxed text-neutral-600 md:text-[15px]">
+                        Güvenlik kemeri, fren sistemi ve katlanma mekanizması gibi kritik noktaları özetleyen pratik bir rehber. Aileniz için doğru modeli seçmenize yardımcı olacak ipuçları…
+                      </p>
+                    </div>
+                  </a>
+                </div>
+                <div class="swiper-slide !h-auto">
+                  <a href="#" class="prava-blog-card group flex h-full flex-col overflow-hidden rounded-sm bg-white shadow-sm ring-1 ring-black/[0.04] transition-shadow hover:shadow-md">
+                    <div class="aspect-[1/1] w-full overflow-hidden bg-neutral-100">
+                      <img
+                        src="/theme/assets/slider.jpg"
+                        alt=""
+                        class="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.02]"
+                        width="640"
+                        height="400"
+                        loading="lazy"
+                        decoding="async"
+                      >
+                    </div>
+                    <div class="flex flex-1 flex-col p-6 md:p-8">
+                      <h3 class="text-lg font-medium leading-snug tracking-tight text-neutral-900 md:text-xl">
+                        Travel sistem ile şehir içi kullanım
+                      </h3>
+                      <p class="mt-3 line-clamp-3 text-sm leading-relaxed text-neutral-600 md:text-[15px]">
+                        Ana kucağı ve puset uyumunu bir arada düşünerek günlük rutininizi nasıl kolaylaştırabileceğinizi anlatıyoruz. Kompakt katlanma ve taşıma önerileri…
+                      </p>
+                    </div>
+                  </a>
+                </div>
+                <div class="swiper-slide !h-auto">
+                  <a href="#" class="prava-blog-card group flex h-full flex-col overflow-hidden rounded-sm bg-white shadow-sm ring-1 ring-black/[0.04] transition-shadow hover:shadow-md">
+                    <div class="aspect-[1/1] w-full overflow-hidden bg-neutral-100">
+                      <img
+                        src="/theme/assets/slider3.jpg"
+                        alt=""
+                        class="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.02]"
+                        width="640"
+                        height="400"
+                        loading="lazy"
+                        decoding="async"
+                      >
+                    </div>
+                    <div class="flex flex-1 flex-col p-6 md:p-8">
+                      <h3 class="text-lg font-medium leading-snug tracking-tight text-neutral-900 md:text-xl">
+                        Yenidoğan için kapsül ve adaptör seçimi
+                      </h3>
+                      <p class="mt-3 line-clamp-3 text-sm leading-relaxed text-neutral-600 md:text-[15px]">
+                        İlk aylarda taşıma konforu ve araç güvenliği için dikkat edilmesi gerekenler. Isofix, emniyet kemeri yönlendirmesi ve uyumlu aksesuarlar…
+                      </p>
+                    </div>
+                  </a>
+                </div>
+                <div class="swiper-slide !h-auto">
+                  <a href="#" class="prava-blog-card group flex h-full flex-col overflow-hidden rounded-sm bg-white shadow-sm ring-1 ring-black/[0.04] transition-shadow hover:shadow-md">
+                    <div class="aspect-[1/1] w-full overflow-hidden bg-neutral-100">
+                      <img
+                        src="/theme/assets/populer.jpeg"
+                        alt=""
+                        class="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.02]"
+                        width="640"
+                        height="400"
+                        loading="lazy"
+                        decoding="async"
+                      >
+                    </div>
+                    <div class="flex flex-1 flex-col p-6 md:p-8">
+                      <h3 class="text-lg font-medium leading-snug tracking-tight text-neutral-900 md:text-xl">
+                        Mevsim geçişlerinde bebek arabası bakımı
+                      </h3>
+                      <p class="mt-3 line-clamp-3 text-sm leading-relaxed text-neutral-600 md:text-[15px]">
+                        Tekerlek temizliği, yağmurluk kullanımı ve depolama önerileriyle ürününüzün ömrünü uzatın. Basit adımlarla hijyen ve performans…
+                      </p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="prava-support-faq bg-white text-neutral-900 px-10 pt-44 pb-10" aria-label="Prava destek ve sıkça sorulan sorular">
+      <div class="relative mx-auto overflow-hidden bg-[#F7F5F5] px-10 py-5">
+        <div class="pointer-events-none absolute inset-0 bg-[url('/theme/assets/destek.png')] bg-no-repeat bg-[position:200px_center] bg-[length:230px_auto] opacity-20" aria-hidden="true"></div>
+        <div class="relative z-10 flex flex-col gap-12 lg:flex-row lg:items-center gap-24">
+          <div class="prava-support-faq__intro relative z-[1] w-full shrink-0 lg:max-w-[min(100%,420px)] xl:max-w-[480px]">
+            <div class="pointer-events-none absolute -right-8 bottom-0 left-0 top-0 overflow-visible opacity-[0.12] lg:-right-4" aria-hidden="true">
+              <!-- <img
+                src="/theme/assets/ara-gorsel.png"
+                alt=""
+                class="absolute bottom-0 left-0 h-auto w-full max-w-[280px] object-contain object-left-bottom md:max-w-[320px]"
+                width="400"
+                height="300"
+                loading="lazy"
+              > -->
+            </div>
+            <h2 class="relative font-semibold text-neutral-800 text-[50px] leading-none">
+              <span class="block">Prava</span>
+              <span class="mt-1 block md:mt-2">Destek</span>
+            </h2>
+          </div>
+          <div class="prava-support-faq__list min-w-0 flex-1 [&>details:last-child]:border-b-0">
+            <details class="prava-support-faq__item border-b border-neutral-200/90">
+              <summary class="flex cursor-pointer list-none items-start gap-3 py-5 pr-2 text-left text-base font-normal text-neutral-800 outline-none transition-colors hover:text-neutral-900 md:gap-4 md:text-lg md:leading-snug">
+                <span class="prava-support-faq__icon mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center text-lg font-light leading-none text-neutral-700 transition-transform duration-200 md:text-xl" aria-hidden="true">+</span>
+                <span>Prava’yı neden tercih etmelisiniz?</span>
+              </summary>
+              <div class="prava-support-faq__panel prava-support-faq__panel--inner">
+                <p class="pb-5 pl-8 text-sm leading-relaxed text-neutral-600 md:pl-11 md:text-[15px]">
+                  PRAVA, Avrupa standartlarında test edilen ürünler; ergonomik tasarım, güvenli malzemeler ve günlük kullanımda pratik detaylarla öne çıkar. Uzun ömürlü bileşenler ve şeffaf yedek parça desteği ile ailelerin yanında olmayı hedefler.
+                </p>
+              </div>
+            </details>
+            <details class="prava-support-faq__item border-b border-neutral-200/90">
+              <summary class="flex cursor-pointer list-none items-start gap-3 py-5 pr-2 text-left text-base font-normal text-neutral-800 outline-none transition-colors hover:text-neutral-900 md:gap-4 md:text-lg md:leading-snug">
+                <span class="prava-support-faq__icon mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center text-lg font-light leading-none text-neutral-700 transition-transform duration-200 md:text-xl" aria-hidden="true">+</span>
+                <span>Bebeğim için en güvenli seçimi nasıl yapabilirim?</span>
+              </summary>
+              <div class="prava-support-faq__panel prava-support-faq__panel--inner">
+                <p class="pb-5 pl-8 text-sm leading-relaxed text-neutral-600 md:pl-11 md:text-[15px]">
+                  Ürün yaşı ve kilo aralığına uygunluk, emniyet kemeri / Isofix kullanımı ve üretici talimatlarına uyum önemlidir. Satın almadan önce mağazada deneme, kapsül–puset uyumluluğu ve fren / katlanma mekanizmasını kontrol etmenizi öneririz.
+                </p>
+              </div>
+            </details>
+            <details class="prava-support-faq__item border-b border-neutral-200/90">
+              <summary class="flex cursor-pointer list-none items-start gap-3 py-5 pr-2 text-left text-base font-normal text-neutral-800 outline-none transition-colors hover:text-neutral-900 md:gap-4 md:text-lg md:leading-snug">
+                <span class="prava-support-faq__icon mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center text-lg font-light leading-none text-neutral-700 transition-transform duration-200 md:text-xl" aria-hidden="true">+</span>
+                <span>Hangi bebek arabası kullanımım için en pratik olanıdır?</span>
+              </summary>
+              <div class="prava-support-faq__panel prava-support-faq__panel--inner">
+                <p class="pb-5 pl-8 text-sm leading-relaxed text-neutral-600 md:pl-11 md:text-[15px]">
+                  Şehir içi ve toplu taşıma için hafif baston veya kompakt modeller; uzun yürüyüşler ve farklı arazi için süspansiyonlu ve daha geniş tekerlekli modeller uygundur. Travel sistem ihtiyacınız varsa ana kucağı + puset uyumunu birlikte değerlendirin.
+                </p>
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer mt-auto bg-[#F5F5F0] bg-[url('/theme/assets/footer-logo.png')] bg-no-repeat bg-bottom bg-[length:100%_auto] text-[#333333] z-[50]" aria-label="Site alt bilgisi" style="--footer-pad-x: 40px;">
+    <div class="mx-auto px-20 pb-6 pt-20">
+      <div class="grid grid-cols-4 gap-14">
+        <div class="site-footer__col site-footer__col--news max-w-[300px]">
+          <h3 class="text-lg font-bold uppercase text-[#333333]">BİZDEN HABERDAR OLUN!</h3>
+          <form class="mt-6" action="#" method="post">
+            <label class="sr-only" for="footer-newsletter-email">E-posta adresiniz</label>
+            <div class="site-footer__field flex overflow-hidden rounded-lg bg-[#E6E6E1]">
+              <input
+                id="footer-newsletter-email"
+                name="email"
+                type="email"
+                autocomplete="email"
+                placeholder="E-mail adresiniz"
+                class="site-footer__input min-w-0 flex-1 border-0 bg-transparent px-4 py-3.5 text-sm text-[#333333] placeholder:text-neutral-500 outline-none"
+              >
+              <button type="submit" class="site-footer__submit flex shrink-0 items-center justify-center px-4 text-[#333333] transition-opacity hover:opacity-70" aria-label="Bültene abone ol">
+                <img src="/theme/assets/right-arrow.svg" width="20" height="20" alt="" class="h-5 w-5 invert">
+              </button>
+            </div>
+          </form>
+          <p class="mt-3 max-w-sm text-base leading-relaxed text-neutral-600">
+            Yeniliklerden haberdar olmak için bültenimize abone olun
+          </p>
+          <ul class="mt-10 flex flex-wrap items-center gap-6" aria-label="Sosyal medya">
+            <li>
+              <a href="#" class="text-[#333333] transition-opacity hover:opacity-70" aria-label="Facebook">
+                <img src="/theme/assets/facebook.svg" width="20" height="20" alt="" class="h-5 w-5">
+              </a>
+            </li>
+            <li>
+              <a href="#" class="text-[#333333] transition-opacity hover:opacity-70" aria-label="Instagram">
+                <img src="/theme/assets/instagram.svg" width="20" height="20" alt="" class="h-5 w-5">
+              </a>
+            </li>
+            <li>
+              <a href="#" class="text-[#333333] transition-opacity hover:opacity-70" aria-label="X">
+                <img src="/theme/assets/x.svg" width="20" height="20" alt="" class="h-5 w-5">
+              </a>
+            </li>
+            <li>
+              <a href="#" class="text-[#333333] transition-opacity hover:opacity-70" aria-label="YouTube">
+                <img src="/theme/assets/youtube.svg" width="20" height="20" alt="" class="h-5 w-6">
+              </a>
+            </li>
+          </ul>
+          <p class="mt-3 text-[10px] font-normal uppercase tracking-wide text-neutral-500">Sosyal medya hesaplarımız</p>
+        </div>
+
+        <nav class="site-footer__col px-10" aria-label="Kurumsal">
+          <h3 class="text-lg font-bold uppercase text-[#333333]">Kurumsal</h3>
+          <ul class="mt-6 space-y-3 text-base font-normal text-[#333333]">
+            <li><a href="#" class="transition-opacity hover:opacity-70">Hakkımızda</a></li>
+            <li><a href="#" class="transition-opacity hover:opacity-70">Tarihçe</a></li>
+            <li><a href="#" class="transition-opacity hover:opacity-70">Misyon Vizyon</a></li>
+            <li><a href="#" class="transition-opacity hover:opacity-70">Kişisel Verilerin Korunması</a></li>
+            <li><a href="#" class="transition-opacity hover:opacity-70">Bilgi Güvenliği</a></li>
+            <li><a href="#" class="transition-opacity hover:opacity-70">İnsan Kaynakları</a></li>
+            <li><a href="#" class="transition-opacity hover:opacity-70">İletişim</a></li>
+          </ul>
+        </nav>
+
+        <nav class="site-footer__col px-10" aria-label="Ürünler">
+          <h3 class="text-lg font-bold uppercase text-[#333333]">Ürünler</h3>
+          <ul class="mt-6 space-y-3 text-base font-normal text-[#333333]">
+            <li><a href="#" class="transition-opacity hover:opacity-70">Travel Sistem Bebek Arabaları</a></li>
+            <li><a href="#" class="transition-opacity hover:opacity-70">Çift Yönlü Bebek Arabaları</a></li>
+            <li><a href="#" class="transition-opacity hover:opacity-70">Baston Bebek Arabası</a></li>
+          </ul>
+        </nav>
+
+        <nav class="site-footer__col px-10" aria-label="Danışma">
+          <h3 class="text-lg font-bold uppercase text-[#333333]">Danışma</h3>
+          <ul class="mt-6 space-y-3 text-base font-normal text-[#333333]">
+            <li><a href="#" class="transition-opacity hover:opacity-70">Satış Noktaları</a></li>
+            <li><a href="#" class="transition-opacity hover:opacity-70">Üretim Tesislerimiz</a></li>
+            <li><a href="#" class="transition-opacity hover:opacity-70">Sürdürülebilirlik</a></li>
+            <li><a href="#" class="transition-opacity hover:opacity-70">Kurumsal Sorumluluk</a></li>
+            <li><a href="#" class="transition-opacity hover:opacity-70">Sık Sorulan Sorular</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="relative overflow-hidden text-center mt-24">
+        <div class="relative z-[1] flex flex-col items-center mb-5">
+          <img
+            src="/theme/assets/logo-prava.svg"
+            width="200"
+            height="48"
+            alt="PRAVA"
+            class="h-auto w-[min(100%,300px)] brightness-0"
+          >
+          <p class="mt-5 text-base font-medium">1983&apos;den beri</p>
+        </div>
+      </div>
+
+      <div class="site-footer__legal mt-4 flex flex-col gap-6 border-t border-[#333333]/18 pt-8 md:mt-6 md:flex-row md:items-center md:justify-between md:gap-8">
+        <p class="text-xs text-[#333333]/85 md:text-sm"><b>© 2026 Prava</b> — Tüm Hakları Saklıdır.</p>
+        <ul class="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs md:justify-end md:text-sm">
+          <li><a href="#" class="text-[#333333] decoration-[#333333]/35 underline-offset-4 transition-opacity hover:opacity-70">Bilgi Toplumu Hizmetleri</a></li>
+          <li><a href="#" class="text-[#333333] decoration-[#333333]/35 underline-offset-4 transition-opacity hover:opacity-70">Çerezler Politikası</a></li>
+          <li><a href="#" class="text-[#333333] decoration-[#333333]/35 underline-offset-4 transition-opacity hover:opacity-70">KVKK Aydınlatma Metni</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/SplitText.min.js"></script>
+  <script>window.PRAVA_I18N = { slide_aria: 'Slayt' };</script>
+  <script src="/theme/assets/main.js"></script>
+  <script src="/theme/assets/intro-karaoke.js"></script>
+</body>
+</html>

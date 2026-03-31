@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="tr" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PRAVA — Bebek Ürünleri</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..800;1,14..32,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/10.0.4/swiper-bundle.min.css">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+          colors: {
+            ink: '#141414',
+            muted: '#767676',
+            border: '#E5E5E5',
+            bg: '#FAFAFA',
+            panel: '#F0EEEB',
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    * { -webkit-font-smoothing: antialiased; }
+
+    body.menu-open { overflow: hidden; }
+
+    /* ─── MEGA MENU ─── */
+    #megaMenu {
+      transition: opacity 0.22s ease, visibility 0.22s ease;
+    }
+    #megaMenu[aria-hidden="false"] {
+      opacity: 1 !important;
+      visibility: visible !important;
+      pointer-events: auto !important;
+    }
+
+    .mega-tab {
+      position: relative;
+      padding: 14px 0;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #767676;
+      white-space: nowrap;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: color 0.15s;
+    }
+    .mega-tab:hover { color: #141414; }
+    .mega-tab.is-active {
+      color: #141414;
+      font-weight: 600;
+      border-bottom-color: #141414;
+    }
+
+    .mega-item-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 18px;
+      padding: 18px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: background 0.15s;
+    }
+    .mega-item-row:hover { background: #F7F7F7; }
+    .mega-item-row.is-active { background: #F2F2F2; border-color: #E5E5E5; }
+
+    /* ─── HEADER ─── */
+    #siteHeader.scrolled { background: rgba(255,255,255,0.97); backdrop-filter: blur(10px); border-bottom: 1px solid #E5E5E5; }
+    #siteHeader.scrolled #hLogo,
+    #siteHeader.scrolled .h-nav-link { color: #141414 !important; }
+    #siteHeader.scrolled .h-icon { color: #141414 !important; }
+
+    /* ─── HERO ─── */
+    .main-slider img, .main-slider video { will-change: transform; }
+    .hero-text-inner { will-change: transform, opacity; }
+
+    /* ─── PARALLAX ─── */
+    .parallax { overflow: hidden; }
+    .parallax > * { will-change: transform; }
+
+    /* ─── PRODUCT TILE ─── */
+    .ptile { transition: box-shadow 0.25s ease, transform 0.25s ease; }
+    .ptile:hover { box-shadow: 0 14px 48px rgba(0,0,0,0.08); transform: translateY(-4px); }
+
+    /* ─── BLOG CARD ─── */
+    .blog-card { transition: box-shadow 0.2s; }
+    .blog-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.07); }
+
+    /* ─── TIMELINE ─── */
+    .tl-img {
+      position: absolute;
+      overflow: hidden;
+      border-radius: 4px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.07);
+      border: 1px solid #E8E6E2;
+    }
+  </style>
+
+  <!-- index.html ile aynı kütüphaneler -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.23/bundled/lenis.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/10.0.4/swiper-bundle.min.js" defer></script>
+</head>
+
+<body class="bg-white text-ink font-sans">
+
+<!-- ══════════════════════════════════════════
+     MEGA MENÜ — tasarımdan birebir
+══════════════════════════════════════════ -->
+<div
+  id="megaMenu"
+  class="fixed inset-0 z-[400] bg-white flex flex-col opacity-0 invisible pointer-events-none"
+  aria-hidden="true"
+  role="dialog"
+  aria-modal="true"
+>
+  <!-- Üst çubuk: × Kapat | PRAVA | boş -->
+  <div class="shrink-0 flex items-center h-[52px] border-b border-border px-6 md:px-10 relative">
+    <button id="menuClose" type="button" class="flex items-center gap-1.5 text-[0.8125rem] font-medium text-ink hover:opacity-50 transition-opacity z-10" aria-label="Menüyü kapat">
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1 1l13 13M14 1L1 14"/></svg>
+      Kapat
+    </button>
+    <span class="absolute inset-x-0 text-center font-bold text-[1.05rem] tracking-[0.32em] pointer-events-none">PRAVA</span>
+  </div>
+
+  <!-- Sekmeler: merkez hizalı, aktif = kalın alt çizgi -->
+  <div class="shrink-0 border-b border-border overflow-x-auto" role="tablist" aria-label="Ürün kategorileri">
+    <ul id="menuTabs" class="flex justify-center gap-8 md:gap-12 min-w-max px-6 list-none"></ul>
+  </div>
+
+  <!-- İçerik: sol liste + sağ bej görsel alanı -->
+  <div class="flex-1 min-h-0 flex overflow-hidden">
+    <!-- Sol panel -->
+    <div
+      id="menuPanels"
+      class="w-[60%] lg:w-[58%] overflow-y-auto overscroll-contain px-10 md:px-16 py-8 md:py-10 space-y-2"
+      data-lenis-prevent
+    ></div>
+
+    <!-- Sağ panel — bej arka plan + ürün görseli -->
+    <div class="flex-1 bg-panel flex items-center justify-center p-8 md:p-12">
+      <img
+        id="menuImg"
+        src="https://images.unsplash.com/photo-1524985063346-fc2c706a81d5?w=1000&q=85"
+        alt=""
+        class="max-h-[min(60vh,500px)] max-w-full w-full object-contain"
+        width="800" height="800"
+      >
+    </div>
+  </div>
+
+  <!-- Alt bar: Keşfet linki + Tüm Ürünler butonu -->
+  <div class="shrink-0 flex items-center justify-between px-6 md:px-10 h-[68px] border-t border-border">
+    <a href="#sec-categories" id="menuDiscoverLink" class="text-[0.8125rem] font-medium underline underline-offset-4 text-ink hover:opacity-60 transition-opacity">Bebek Arabalarını Keşfet</a>
+    <button id="menuAllBtn" type="button" class="bg-ink text-white text-[0.8125rem] font-semibold tracking-wide px-8 py-3 hover:bg-black transition-colors">Tüm Ürünler</button>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     HEADER — şeffaf / scroll'da beyaz
+══════════════════════════════════════════ -->
+<header
+  id="siteHeader"
+  class="fixed top-0 left-0 right-0 z-[200] h-[52px] transition-all duration-300"
+>
+  <div class="max-w-[1280px] mx-auto px-6 md:px-10 h-full flex items-center justify-between relative">
+    <!-- Sol nav -->
+    <nav class="hidden md:flex items-center gap-8" aria-label="Sol menü">
+      <button type="button" class="open-menu-trigger h-nav-link text-white text-[0.8rem] font-semibold tracking-[0.1em] uppercase hover:opacity-70 transition-opacity">Ürünler</button>
+      <a href="#sec-categories" class="h-nav-link text-white text-[0.8rem] font-semibold tracking-[0.1em] uppercase hover:opacity-70 transition-opacity">Koleksiyonlar</a>
+    </nav>
+
+    <!-- Logo merkez -->
+    <a href="#top" id="hLogo" class="absolute left-1/2 -translate-x-1/2 text-white font-bold text-[1.05rem] tracking-[0.32em] uppercase hover:opacity-80 transition-opacity">PRAVA</a>
+
+    <!-- Sağ aksiyonlar -->
+    <div class="flex items-center gap-2 ml-auto md:ml-0">
+      <button type="button" class="open-menu-trigger md:hidden p-2 text-white h-icon" aria-label="Menü aç">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 7h14M3 12h14M3 17h14"/></svg>
+      </button>
+      <button type="button" class="h-icon text-white p-2 hover:opacity-70 transition-opacity hidden md:inline-flex" aria-label="Ara">
+        <i class="fas fa-magnifying-glass text-[0.85rem]"></i>
+      </button>
+      <button type="button" class="h-icon text-white p-2 hover:opacity-70 transition-opacity hidden md:inline-flex" aria-label="Hesap">
+        <i class="far fa-user text-[0.85rem]"></i>
+      </button>
+      <button type="button" class="h-icon text-white p-2 hover:opacity-70 transition-opacity relative" aria-label="Sepet">
+        <i class="fas fa-bag-shopping text-[0.85rem]"></i>
+        <span class="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-ink text-white text-[0.55rem] font-bold flex items-center justify-center border border-white/30">0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+
+<main id="top">
+
+  <!-- ══════════════════════════════════════════
+       1. HERO SLİDER — sticky, tam ekran
+  ══════════════════════════════════════════ -->
+  <div class="main-slider h-screen min-h-[560px] sticky top-0 z-0" id="mainSlider">
+    <div class="swiper mainSwiper h-full relative">
+      <div class="swiper-wrapper">
+
+        <!-- Slide 1 -->
+        <div class="swiper-slide relative overflow-hidden">
+          <img
+            src="https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?w=1920&q=90"
+            alt="Sonbahar yolunda bebek arabası"
+            class="absolute inset-0 w-full h-full object-cover"
+            width="1920" height="1080"
+          >
+          <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/55"></div>
+          <div class="absolute inset-0 flex items-center">
+            <div class="max-w-[1280px] mx-auto w-full px-6 md:px-10 hero-text-inner">
+              <p class="text-white/70 text-xs font-semibold tracking-[0.25em] uppercase mb-3">Yeni Koleksiyon</p>
+              <h1 class="text-white text-[clamp(1.75rem,4.5vw,3.5rem)] font-bold leading-[1.1] max-w-[18ch]">
+                Bebekleriniz Büyürken<br>Mutlu Adımlar.
+              </h1>
+              <p class="text-white/80 text-[0.9375rem] mt-4 max-w-[40ch] font-light leading-relaxed">
+                Konforlu, güvenli ve şık bebek arabaları ile her gezintide yanınızdayız.
+              </p>
+              <a href="#sec-categories" class="hero-cta inline-flex items-center gap-2 mt-7 text-white text-[0.8125rem] font-semibold tracking-wide border-b border-white/60 pb-0.5 hover:opacity-70 transition-opacity">
+                İncele
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="swiper-slide relative overflow-hidden">
+          <img
+            src="https://images.unsplash.com/photo-1476703993599-d85b5853188c?w=1920&q=90"
+            alt="Aile yürüyüşü"
+            class="absolute inset-0 w-full h-full object-cover object-top"
+            width="1920" height="1080"
+          >
+          <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/55"></div>
+          <div class="absolute inset-0 flex items-center">
+            <div class="max-w-[1280px] mx-auto w-full px-6 md:px-10 hero-text-inner">
+              <p class="text-white/70 text-xs font-semibold tracking-[0.25em] uppercase mb-3">Güvenli Yolculuk</p>
+              <h1 class="text-white text-[clamp(1.75rem,4.5vw,3.5rem)] font-bold leading-[1.1] max-w-[18ch]">
+                Güvenli Yolculuk,<br>Huzurlu Uykular.
+              </h1>
+              <p class="text-white/80 text-[0.9375rem] mt-4 max-w-[40ch] font-light leading-relaxed">
+                Avrupa standartlarında test edilen kapsül koleksiyonumuzu keşfedin.
+              </p>
+              <a href="#sec-popular" class="hero-cta inline-flex items-center gap-2 mt-7 text-white text-[0.8125rem] font-semibold tracking-wide border-b border-white/60 pb-0.5 hover:opacity-70 transition-opacity">
+                İncele
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Slider navigasyon — sol alt: 01 — 02, oklar -->
+      <div class="navigation absolute left-6 md:left-10 bottom-8 z-20 flex items-center gap-3 text-white text-[0.8125rem] font-semibold tracking-widest">
+        <span class="current-slide tabular-nums">01</span>
+        <span class="w-8 h-px bg-white/70" aria-hidden="true"></span>
+        <span class="total-slides tabular-nums">02</span>
+        <div class="ml-3 flex items-center gap-1">
+          <button type="button" class="swiper-button-prev-custom w-10 h-10 rounded-full border border-white/40 flex items-center justify-center hover:bg-white/15 transition-colors" aria-label="Önceki">
+            <i class="fas fa-chevron-left text-[0.65rem]"></i>
+          </button>
+          <button type="button" class="swiper-button-next-custom w-10 h-10 rounded-full border border-white/40 flex items-center justify-center hover:bg-white/15 transition-colors" aria-label="Sonraki">
+            <i class="fas fa-chevron-right text-[0.65rem]"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /Hero -->
+
+
+  <!-- İçerik bloğu: hero'un üzerinde kayar -->
+  <div class="relative z-10 bg-white">
+
+    <!-- ══════════════════════════════════════════
+         2. MİNİK GEZİNTİLER — kategori showcase
+    ══════════════════════════════════════════ -->
+    <section id="sec-categories" class="py-16 md:py-24 px-4 md:px-8 max-w-[1280px] mx-auto">
+      <div class="title-section text-center mb-10 md:mb-14">
+        <h2 class="title-animate text-[1.75rem] md:text-[2.25rem] font-bold tracking-tight">
+          <span class="block">Minik Gezintiler</span>
+        </h2>
+        <!-- Alt filtre nav -->
+        <nav class="flex items-center justify-center gap-6 mt-5 text-[0.8rem] font-medium text-muted flex-wrap" aria-label="Kategori filtresi">
+          <a href="#" class="hover:text-ink pb-0.5 border-b border-ink transition-colors">Bebek Arabaları</a>
+          <a href="#" class="hover:text-ink transition-colors">Pusetler</a>
+          <a href="#" class="hover:text-ink transition-colors">Kapsüller</a>
+          <a href="#" class="hover:text-ink transition-colors">Aksesuarlar</a>
+          <a href="#" class="hover:text-ink transition-colors">Yedek Parça</a>
+        </nav>
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+        <a href="#" class="group">
+          <div class="aspect-square bg-bg flex items-center justify-center overflow-hidden mb-3">
+            <img src="https://images.unsplash.com/photo-1524985063346-fc2c706a81d5?w=500&q=85" alt="Bebek Arabası" class="max-h-[82%] w-auto object-contain mix-blend-multiply scale-100 group-hover:scale-[1.04] transition-transform duration-500" width="300" height="300">
+          </div>
+          <p class="text-[0.8125rem] font-semibold text-ink">Nova Travel Sistem</p>
+          <p class="text-[0.8rem] text-muted mt-0.5">8.999,00 TL</p>
+        </a>
+        <a href="#" class="group">
+          <div class="aspect-square bg-bg flex items-center justify-center overflow-hidden mb-3">
+            <img src="https://images.unsplash.com/photo-1596138252645-84f1b1e8c1e0?w=500&q=85" alt="Kapsül" class="max-h-[82%] w-auto object-contain mix-blend-multiply scale-100 group-hover:scale-[1.04] transition-transform duration-500" width="300" height="300">
+          </div>
+          <p class="text-[0.8125rem] font-semibold text-ink">City Capsule 0-13 kg</p>
+          <p class="text-[0.8rem] text-muted mt-0.5">5.200,00 TL</p>
+        </a>
+        <a href="#" class="group">
+          <div class="aspect-square bg-bg flex items-center justify-center overflow-hidden mb-3">
+            <img src="https://images.unsplash.com/photo-1544966503-7cc5ac882d5f?w=500&q=85" alt="Puset" class="max-h-[82%] w-auto object-contain mix-blend-multiply scale-100 group-hover:scale-[1.04] transition-transform duration-500" width="300" height="300">
+          </div>
+          <p class="text-[0.8125rem] font-semibold text-ink">Air Lite Baston</p>
+          <p class="text-[0.8rem] text-muted mt-0.5">3.450,00 TL</p>
+        </a>
+        <a href="#" class="group">
+          <div class="aspect-square bg-bg flex items-center justify-center overflow-hidden mb-3">
+            <img src="https://images.unsplash.com/photo-1586107963894-2498e9a5e0a5?w=500&q=85" alt="Aksesuar" class="max-h-[82%] w-auto object-contain mix-blend-multiply scale-100 group-hover:scale-[1.04] transition-transform duration-500" width="300" height="300">
+          </div>
+          <p class="text-[0.8125rem] font-semibold text-ink">Baston &amp; Yağmurluk Set</p>
+          <p class="text-[0.8rem] text-muted mt-0.5">890,00 TL</p>
+        </a>
+      </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════
+         3. HAKKIMIZDA — metin + illüstrasyon
+    ══════════════════════════════════════════ -->
+    <section class="py-14 md:py-20 border-t border-border">
+      <div class="max-w-[1280px] mx-auto px-4 md:px-10 grid md:grid-cols-2 gap-10 md:gap-16 items-center">
+        <div class="title-section">
+          <p class="desc-animate text-[0.9375rem] md:text-base text-muted leading-[1.85] font-normal">
+            PRAVA olarak yerli üretim gücümüzle, bebeklerinizin güvenliği ve ebeveynlerin konforu için tasarlanan ürünler sunuyoruz. Yılların deneyimi, titiz kalite kontrolleri ve müşteri memnuniyeti odaklı yaklaşımımızla her ailede güvenilir bir yol arkadaşı olmaya devam ediyoruz.
+          </p>
+        </div>
+        <!-- Stroller illüstrasyon (SVG kalem çizimi hissi) -->
+        <div class="flex justify-center md:justify-end">
+          <div class="w-full max-w-[320px] md:max-w-[380px] aspect-[5/4] bg-bg flex items-center justify-center border border-border">
+            <svg viewBox="0 0 200 160" fill="none" stroke="#C8C4BC" stroke-width="1.1" class="w-[72%]" aria-hidden="true">
+              <!-- Gövde -->
+              <path d="M40 120 Q40 70 100 60 Q160 70 160 120"/>
+              <!-- Kol -->
+              <line x1="160" y1="60" x2="175" y2="35"/>
+              <line x1="40" y1="60" x2="25" y2="35"/>
+              <!-- Sap -->
+              <path d="M25 35 Q100 25 175 35" stroke-linecap="round"/>
+              <!-- Tekerlek sol -->
+              <circle cx="50" cy="124" r="12"/>
+              <circle cx="50" cy="124" r="4"/>
+              <!-- Tekerlek sağ -->
+              <circle cx="150" cy="124" r="12"/>
+              <circle cx="150" cy="124" r="4"/>
+              <!-- Tente -->
+              <path d="M62 60 Q100 40 138 60" stroke-linecap="round"/>
+              <line x1="62" y1="60" x2="65" y2="80"/>
+              <line x1="138" y1="60" x2="135" y2="80"/>
+              <!-- Koltuk -->
+              <path d="M65 80 Q100 88 135 80" stroke-linecap="round"/>
+              <!-- Ön tekerlek küçük -->
+              <circle cx="100" cy="130" r="7"/>
+              <!-- Aksanlar -->
+              <line x1="80" y1="124" x2="120" y2="124" stroke-dasharray="2 4"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════
+         4. POPÜLER SEÇİMLER — büyük lifestyle + ürün kartı
+    ══════════════════════════════════════════ -->
+    <section id="sec-popular" class="py-16 md:py-24 border-t border-border">
+      <div class="max-w-[1280px] mx-auto px-4 md:px-10">
+        <h2 class="text-[1.75rem] md:text-[2.1rem] font-bold tracking-tight mb-8 md:mb-10 title-section">
+          <span class="title-animate inline-block"><span class="block">Popüler Seçimler</span></span>
+        </h2>
+        <div class="grid md:grid-cols-[1.35fr_1fr] gap-0 md:gap-0 border border-border bg-white overflow-hidden">
+          <!-- Sol: parallax lifestyle foto -->
+          <div class="parallax relative min-h-[340px] md:min-h-[520px] overflow-hidden" data-speed="0.55" data-start="-15" data-end="12">
+            <img
+              src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=1200&q=90"
+              alt="Bebek arabası ile yürüyüş"
+              class="absolute inset-0 w-full h-full object-cover"
+              width="1200" height="900"
+            >
+          </div>
+          <!-- Sağ: ürün bilgisi -->
+          <div class="flex flex-col justify-center p-8 md:p-12 lg:p-16 bg-white border-t md:border-t-0 md:border-l border-border">
+            <div class="ptile bg-white p-6 md:p-8 border border-border max-w-[360px]">
+              <div class="aspect-[5/4] bg-bg mb-5 flex items-center justify-center overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1524985063346-fc2c706a81d5?w=600&q=85" alt="Avent Baby Travel Sistem" class="max-h-[190px] w-auto object-contain mix-blend-multiply" width="400" height="320">
+              </div>
+              <h3 class="font-semibold text-[0.9375rem] tracking-tight">Avent Baby Travel Sistem</h3>
+              <p class="text-[1.1rem] font-bold mt-1.5 tabular-nums">7.500,00 TL</p>
+              <div class="flex gap-2 mt-4" aria-label="Renk seçimi">
+                <span class="w-7 h-7 rounded-full bg-[#1C1C1C] ring-2 ring-white shadow-sm cursor-pointer" title="Siyah"></span>
+                <span class="w-7 h-7 rounded-full bg-[#B5A98E] ring-2 ring-white shadow-sm cursor-pointer" title="Bej"></span>
+                <span class="w-7 h-7 rounded-full bg-[#5B7FA6] ring-2 ring-white shadow-sm cursor-pointer" title="Mavi"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════
+         5. EN ÇOK TERCİH EDİLENLER — ürün grid
+    ══════════════════════════════════════════ -->
+    <section id="sec-products" class="py-16 md:py-24 bg-bg border-t border-border">
+      <div class="max-w-[1280px] mx-auto px-4 md:px-10">
+        <div class="flex items-end justify-between mb-8 md:mb-12 title-section">
+          <h2 class="title-animate text-[1.5rem] md:text-[1.875rem] font-bold tracking-tight"><span class="block">En Çok Tercih Edilenler</span></h2>
+          <a href="#" class="desc-animate text-[0.8rem] font-semibold underline underline-offset-4 text-muted hover:text-ink transition-colors uppercase tracking-wider">Tümünü Gör</a>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+
+          <article class="ptile bg-white border border-border overflow-hidden">
+            <div class="aspect-[5/4] bg-bg flex items-center justify-center p-8">
+              <img src="https://images.unsplash.com/photo-1596138252645-84f1b1e8c1e0?w=600&q=85" alt="Nova Travel Sistem" class="max-h-[180px] w-auto object-contain mix-blend-multiply" width="400" height="320">
+            </div>
+            <div class="p-5">
+              <h3 class="font-semibold text-[0.875rem]">Nova Travel Sistem</h3>
+              <p class="text-[1rem] font-bold mt-1 tabular-nums">8.999,00 TL</p>
+              <div class="flex gap-0.5 mt-2" aria-label="5 yıldız">
+                <i class="fas fa-star text-amber-400 text-[0.6rem]"></i><i class="fas fa-star text-amber-400 text-[0.6rem]"></i><i class="fas fa-star text-amber-400 text-[0.6rem]"></i><i class="fas fa-star text-amber-400 text-[0.6rem]"></i><i class="fas fa-star text-amber-400 text-[0.6rem]"></i>
+              </div>
+            </div>
+          </article>
+
+          <article class="ptile bg-white border border-border overflow-hidden">
+            <div class="aspect-[5/4] bg-bg flex items-center justify-center p-8">
+              <img src="https://images.unsplash.com/photo-1544966503-7cc5ac882d5f?w=600&q=85" alt="Air Lite Baston" class="max-h-[180px] w-auto object-contain mix-blend-multiply" width="400" height="320">
+            </div>
+            <div class="p-5">
+              <h3 class="font-semibold text-[0.875rem]">Air Lite Baston Puset</h3>
+              <p class="text-[1rem] font-bold mt-1 tabular-nums">3.450,00 TL</p>
+              <div class="flex gap-0.5 mt-2" aria-label="4 yıldız">
+                <i class="fas fa-star text-amber-400 text-[0.6rem]"></i><i class="fas fa-star text-amber-400 text-[0.6rem]"></i><i class="fas fa-star text-amber-400 text-[0.6rem]"></i><i class="fas fa-star text-amber-400 text-[0.6rem]"></i><i class="far fa-star text-amber-400 text-[0.6rem]"></i>
+              </div>
+            </div>
+          </article>
+
+          <article class="ptile bg-white border border-border overflow-hidden sm:col-span-2 lg:col-span-1">
+            <div class="aspect-[5/4] bg-bg flex items-center justify-center p-8">
+              <img src="https://images.unsplash.com/photo-1586107963894-2498e9a5e0a5?w=600&q=85" alt="City Capsule" class="max-h-[180px] w-auto object-contain mix-blend-multiply" width="400" height="320">
+            </div>
+            <div class="p-5">
+              <h3 class="font-semibold text-[0.875rem]">City Capsule 0-13 kg</h3>
+              <p class="text-[1rem] font-bold mt-1 tabular-nums">5.200,00 TL</p>
+              <div class="flex gap-0.5 mt-2" aria-label="5 yıldız">
+                <i class="fas fa-star text-amber-400 text-[0.6rem]"></i><i class="fas fa-star text-amber-400 text-[0.6rem]"></i><i class="fas fa-star text-amber-400 text-[0.6rem]"></i><i class="fas fa-star text-amber-400 text-[0.6rem]"></i><i class="fas fa-star text-amber-400 text-[0.6rem]"></i>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════
+         6. BLOG — Mutlu Yolculuklar Blogu
+    ══════════════════════════════════════════ -->
+    <section id="sec-blog" class="py-16 md:py-24 bg-white border-t border-border">
+      <div class="max-w-[1280px] mx-auto px-4 md:px-10">
+        <div class="grid lg:grid-cols-12 gap-10 lg:gap-14">
+
+          <div class="lg:col-span-4 title-section flex flex-col justify-center">
+            <h2 class="title-animate text-[1.5rem] md:text-[1.875rem] font-bold tracking-tight leading-snug">
+              <span class="block">Mutlu</span>
+              <span class="block">Yolculuklar</span>
+              <span class="block">Blogu</span>
+            </h2>
+            <p class="desc-animate mt-4 text-[0.875rem] text-muted leading-[1.75]">Gezi önerileri, güvenlik ipuçları ve ürün rehberleri.</p>
+            <a href="#" class="mt-6 text-[0.8rem] font-bold underline underline-offset-4 uppercase tracking-wider text-ink hover:opacity-60 self-start">Tüm Yazılar</a>
+          </div>
+
+          <div class="lg:col-span-8 space-y-4">
+            <a href="#" class="blog-card flex flex-col sm:flex-row gap-0 border border-border bg-white overflow-hidden block">
+              <div class="sm:w-[220px] shrink-0">
+                <img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=500&q=85" alt="" class="w-full h-48 sm:h-full object-cover" width="500" height="360">
+              </div>
+              <div class="p-6 md:p-8 flex flex-col justify-center">
+                <h3 class="font-semibold text-[0.9375rem] md:text-base tracking-tight leading-snug">İlk geziye çıkmadan önce kontrol listesi</h3>
+                <p class="text-[0.8125rem] text-muted mt-2 leading-relaxed">Bebek arabanızı ve aksesuarlarınızı yola çıkmadan nasıl hazırlarsınız?</p>
+              </div>
+            </a>
+            <a href="#" class="blog-card flex flex-col sm:flex-row gap-0 border border-border bg-white overflow-hidden block">
+              <div class="sm:w-[220px] shrink-0">
+                <img src="https://images.unsplash.com/photo-1476703993599-d85b5853188c?w=500&q=85" alt="" class="w-full h-48 sm:h-full object-cover" width="500" height="360">
+              </div>
+              <div class="p-6 md:p-8 flex flex-col justify-center">
+                <h3 class="font-semibold text-[0.9375rem] md:text-base tracking-tight leading-snug">Kış aylarında bebekle seyahat</h3>
+                <p class="text-[0.8125rem] text-muted mt-2 leading-relaxed">Soğuk havalarda konfor ve güvenlik için pratik öneriler.</p>
+              </div>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════
+         7. TARİHÇE — 1988'den günümüze
+    ══════════════════════════════════════════ -->
+    <section class="py-20 md:py-28 bg-bg border-t border-border overflow-hidden relative" aria-labelledby="tl-heading">
+      <div class="max-w-[860px] mx-auto px-4 text-center relative z-[2] title-section">
+        <h2 id="tl-heading" class="title-animate text-[1.35rem] md:text-[1.75rem] lg:text-[2rem] font-bold leading-[1.2] tracking-tight">
+          <span class="block">1988'den Günümüze Prego'nun</span>
+          <span class="block">Yerli ve Milli Yolculuğu.</span>
+        </h2>
+      </div>
+
+      <div class="relative max-w-[1100px] mx-auto mt-14 md:mt-20 min-h-[260px] sm:min-h-[380px]">
+        <!-- Kesik çizgili SVG bağlantı -->
+        <svg class="absolute inset-0 w-full h-full pointer-events-none" aria-hidden="true" style="z-index:1">
+          <path d="M60,220 Q240,130 400,200 T720,155 T1020,210" fill="none" stroke="#D5D1CA" stroke-width="1" stroke-dasharray="3 9"/>
+          <path d="M120,300 Q300,240 500,290 T900,260" fill="none" stroke="#D5D1CA" stroke-width="1" stroke-dasharray="3 9"/>
+        </svg>
+
+        <!-- Yüzen küçük görsel kartlar -->
+        <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=240&q=80" alt="" class="tl-img w-[17%] max-w-[96px] aspect-[4/3] object-cover top-[3%] left-[2%] hidden sm:block" style="z-index:2">
+        <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=240&q=80" alt="" class="tl-img w-[20%] max-w-[108px] aspect-[4/3] object-cover bottom-[8%] left-[12%]" style="z-index:2">
+        <img src="https://images.unsplash.com/photo-1519003722824-cd8fee186935?w=240&q=80" alt="" class="tl-img w-[17%] max-w-[96px] aspect-[4/3] object-cover top-[4%] right-[8%] hidden md:block" style="z-index:2">
+        <img src="https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?w=240&q=80" alt="" class="tl-img w-[21%] max-w-[114px] aspect-[4/3] object-cover bottom-[10%] right-[3%]" style="z-index:2">
+        <img src="https://images.unsplash.com/photo-1524985063346-fc2c706a81d5?w=240&q=80" alt="" class="tl-img w-[15%] max-w-[82px] aspect-square object-cover top-[30%] left-1/2 -translate-x-1/2" style="z-index:2">
+      </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════
+         8. PRAVA ÇOCUK — değerler
+    ══════════════════════════════════════════ -->
+    <section class="py-12 md:py-16 bg-white border-t border-border">
+      <div class="max-w-[1280px] mx-auto px-4 md:px-10 flex flex-col md:flex-row md:items-center justify-between gap-8 md:gap-20">
+        <p class="text-[1.5rem] md:text-[1.875rem] font-bold tracking-tight shrink-0">Prego Çocuk</p>
+        <ul class="space-y-2.5 text-[0.875rem] text-muted leading-relaxed font-normal max-w-lg">
+          <li>• Avrupa güvenlik normlarına uygun testler</li>
+          <li>• Geniş servis ve yedek parça ağı</li>
+          <li>• 2 yıl garanti ve müşteri desteği</li>
+          <li>• 1988'den bu yana Türkiye'de yerli üretim</li>
+        </ul>
+      </div>
+    </section>
+
+  </div>
+  <!-- /İçerik bloğu -->
+
+</main>
+
+
+<!-- ══════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════ -->
+<footer id="sec-footer" class="bg-bg border-t border-border pt-14 md:pt-20 pb-6">
+  <div class="max-w-[1280px] mx-auto px-4 md:px-10 grid sm:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8">
+
+    <div>
+      <p class="text-[0.75rem] font-bold uppercase tracking-widest mb-4">E-Bültene Kaydol</p>
+      <form class="flex flex-col gap-2" onsubmit="event.preventDefault()">
+        <input type="email" placeholder="E-posta adresiniz" class="px-4 py-2.5 border border-border bg-white text-[0.8125rem] focus:outline-none focus:ring-1 focus:ring-ink/20 placeholder:text-muted">
+        <button type="submit" class="bg-ink text-white text-[0.75rem] font-bold uppercase tracking-widest py-2.5 hover:bg-black transition-colors">Kaydol</button>
+      </form>
+      <div class="flex gap-5 mt-6 text-[1rem] text-muted">
+        <a href="#" class="hover:text-ink transition-colors" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="hover:text-ink transition-colors" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="hover:text-ink transition-colors" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+        <a href="#" class="hover:text-ink transition-colors" aria-label="X"><i class="fab fa-x-twitter"></i></a>
+      </div>
+    </div>
+
+    <div>
+      <p class="text-[0.75rem] font-bold uppercase tracking-widest mb-4">Kurumsal</p>
+      <ul class="space-y-2.5 text-[0.8125rem] text-muted">
+        <li><a href="#" class="hover:text-ink">Hakkımızda</a></li>
+        <li><a href="#" class="hover:text-ink">Kariyer</a></li>
+        <li><a href="#" class="hover:text-ink">Basın</a></li>
+        <li><a href="#" class="hover:text-ink">Mağazalar</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <p class="text-[0.75rem] font-bold uppercase tracking-widest mb-4">Destek</p>
+      <ul class="space-y-2.5 text-[0.8125rem] text-muted">
+        <li><a href="#" class="hover:text-ink">SSS</a></li>
+        <li><a href="#" class="hover:text-ink">İade ve Değişim</a></li>
+        <li><a href="#" class="hover:text-ink">Garanti</a></li>
+        <li><a href="#" class="hover:text-ink">Kargo Takip</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <p class="text-[0.75rem] font-bold uppercase tracking-widest mb-4">Kategoriler</p>
+      <ul class="space-y-2.5 text-[0.8125rem] text-muted">
+        <li><a href="#" class="hover:text-ink">Bebek Arabaları</a></li>
+        <li><a href="#" class="hover:text-ink">Pusetler</a></li>
+        <li><a href="#" class="hover:text-ink">Kapsüller</a></li>
+        <li><a href="#" class="hover:text-ink">Aksesuarlar</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <p class="text-[0.75rem] font-bold uppercase tracking-widest mb-4">İletişim</p>
+      <address class="text-[0.8125rem] text-muted not-italic space-y-1.5 leading-relaxed">
+        <p>İstanbul, Türkiye</p>
+        <p><a href="tel:+902121234567" class="hover:text-ink">0212 123 45 67</a></p>
+        <p><a href="mailto:info@prava.com" class="hover:text-ink">info@prava.com</a></p>
+      </address>
+    </div>
+
+  </div>
+
+  <!-- Büyük PRAVA watermark -->
+  <p class="text-center select-none pointer-events-none text-ink/[0.06] font-bold tracking-[0.02em] leading-none mt-12 md:mt-16 overflow-hidden text-[clamp(4rem,18vw,11rem)]">PRAVA</p>
+
+  <div class="max-w-[1280px] mx-auto mt-6 pt-5 border-t border-border/60 flex flex-col sm:flex-row items-center justify-between gap-3 text-[0.7rem] text-muted px-4 md:px-10">
+    <span>© <span id="cpy"></span> PRAVA. Tüm hakları saklıdır.</span>
+    <div class="flex gap-4">
+      <a href="#" class="hover:text-ink">Gizlilik Politikası</a>
+      <a href="#" class="hover:text-ink">KVKK</a>
+      <a href="#" class="hover:text-ink">Kullanım Koşulları</a>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ══════════════════════════════════════════
+     MEGA MENÜ VERİSİ & JS
+══════════════════════════════════════════ -->
+<script>
+(function () {
+
+  document.getElementById('cpy').textContent = new Date().getFullYear();
+
+  /* ── Menü veri kaynağı ── */
+  var CATS = [
+    {
+      id: 'bebek',
+      label: 'Bebek Arabaları',
+      img: 'https://images.unsplash.com/photo-1524985063346-fc2c706a81d5?w=1000&q=90',
+      items: [
+        {
+          title: 'Travel Sistem Bebek Arabaları',
+          desc:  'Puset ve ana kucağını bir arada sunan pratik çözümlerdir.',
+          img:   'https://images.unsplash.com/photo-1524985063346-fc2c706a81d5?w=1000&q=90',
+          icon: 'travel'
+        },
+        {
+          title: 'Çift Yönlü Bebek Arabaları',
+          desc:  'Çift yönlü kullanım sayesinde esnek ve konforlu sürüş sağlar.',
+          img:   'https://images.unsplash.com/photo-1596138252645-84f1b1e8c1e0?w=1000&q=90',
+          icon: 'reversible'
+        },
+        {
+          title: 'Baston Bebek Arabası',
+          desc:  'Hafif ve kolay katlanabilir yapısıyla günlük kullanım için ideal.',
+          img:   'https://images.unsplash.com/photo-1544966503-7cc5ac882d5f?w=1000&q=90',
+          icon: 'umbrella'
+        }
+      ]
+    },
+    {
+      id: 'puset',
+      label: 'Pusetler',
+      img: 'https://images.unsplash.com/photo-1596138252645-84f1b1e8c1e0?w=1000&q=90',
+      items: [
+        { title: 'Klasik Pusetler', desc: 'Geniş iç hacim ve tam yatış pozisyonu ile uzun gezintilerde konfor.', img: 'https://images.unsplash.com/photo-1596138252645-84f1b1e8c1e0?w=1000&q=90', icon: 'travel' },
+        { title: 'İkiz Pusetler', desc: 'İki çocuk için yan yana veya ardışık kullanım seçenekleri.', img: 'https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?w=1000&q=90', icon: 'reversible' },
+        { title: 'Şehir Puseti', desc: 'Kompakt katlanır gövde ile toplu taşımada pratik kullanım.', img: 'https://images.unsplash.com/photo-1544966503-7cc5ac882d5f?w=1000&q=90', icon: 'umbrella' }
+      ]
+    },
+    {
+      id: 'kapsul',
+      label: 'Kapsüller',
+      img: 'https://images.unsplash.com/photo-1544966503-7cc5ac882d5f?w=1000&q=90',
+      items: [
+        { title: '0-13 kg Ana Kucağı', desc: 'Araç ve travel sistem uyumlu güvenli taşıma.', img: 'https://images.unsplash.com/photo-1544966503-7cc5ac882d5f?w=1000&q=90', icon: 'travel' },
+        { title: '9-18 kg Grup 1', desc: 'Büyüyen çocuklar için yan koruma ve baş desteği.', img: 'https://images.unsplash.com/photo-1586107963894-2498e9a5e0a5?w=1000&q=90', icon: 'reversible' },
+        { title: 'Isofix Baza', desc: 'Hızlı ve güvenli montaj için Isofix uyumlu bazalar.', img: 'https://images.unsplash.com/photo-1596138252645-84f1b1e8c1e0?w=1000&q=90', icon: 'umbrella' }
+      ]
+    },
+    {
+      id: 'aksesuar',
+      label: 'Aksesuarlar',
+      img: 'https://images.unsplash.com/photo-1586107963894-2498e9a5e0a5?w=1000&q=90',
+      items: [
+        { title: 'Baston ve Yağmurluk', desc: 'Hava koşullarına karşı koruma ve konfor.', img: 'https://images.unsplash.com/photo-1586107963894-2498e9a5e0a5?w=1000&q=90', icon: 'umbrella' },
+        { title: 'Organizer ve Çantalar', desc: 'Biberon, bez ve küçük eşyalar için düzenli saklama.', img: 'https://images.unsplash.com/photo-1524985063346-fc2c706a81d5?w=1000&q=90', icon: 'travel' },
+        { title: 'Ayak Örtüsü', desc: 'Soğuk günlerde ekstra sıcak tutma.', img: 'https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?w=1000&q=90', icon: 'reversible' }
+      ]
+    },
+    {
+      id: 'yedek',
+      label: 'Yedek Parça',
+      img: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1000&q=90',
+      items: [
+        { title: 'Tekerlek ve Göbek', desc: 'Orijinal ölçülerde yedek tekerlek setleri.', img: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1000&q=90', icon: 'travel' },
+        { title: 'Kumaş ve Tente', desc: 'Model bazlı tente ve döşeme parçaları.', img: 'https://images.unsplash.com/photo-1524985063346-fc2c706a81d5?w=1000&q=90', icon: 'reversible' },
+        { title: 'Kilit ve Mekanizma', desc: 'Katlanır kol ve fren mekanizması yedekleri.', img: 'https://images.unsplash.com/photo-1596138252645-84f1b1e8c1e0?w=1000&q=90', icon: 'umbrella' }
+      ]
+    }
+  ];
+
+  /* ── Stroller line-art SVG ikonlar (tasarımdaki kalem çizimi stili) ── */
+  var ICONS = {
+    travel:
+      '<svg viewBox="0 0 52 52" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" class="w-[48px] h-[48px] shrink-0 text-ink/60">' +
+        '<circle cx="15" cy="43" r="4.5"/><circle cx="37" cy="43" r="4.5"/>' +
+        '<path d="M10.5 38.5V24c0-5 3-9 7.5-10h9c4.5 1 7.5 5 7.5 10v14.5"/>' +
+        '<path d="M8 24h36"/>' +
+        '<path d="M20 14V7c0-1.5 1-2.5 2.5-2.5h7c1.5 0 2.5 1 2.5 2.5v7"/>' +
+        '<path d="M9 24 L6 18"/><path d="M43 24 L46 18"/>' +
+      '</svg>',
+    reversible:
+      '<svg viewBox="0 0 52 52" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" class="w-[48px] h-[48px] shrink-0 text-ink/60">' +
+        '<circle cx="15" cy="43" r="4.5"/><circle cx="37" cy="43" r="4.5"/>' +
+        '<path d="M10.5 38.5V22c0-6 3.5-10 8-11h9c4.5 1 8 5 8 11v16.5"/>' +
+        '<path d="M7 26l5-8"/><path d="M45 26l-5-8"/>' +
+        '<path d="M10.5 26h31"/>' +
+        '<path d="M19 11c0-3.5 7-6 7-6s7 2.5 7 6"/>' +
+      '</svg>',
+    umbrella:
+      '<svg viewBox="0 0 52 52" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" class="w-[48px] h-[48px] shrink-0 text-ink/60">' +
+        '<circle cx="15" cy="44" r="4"/><circle cx="37" cy="44" r="4"/>' +
+        '<path d="M11 40V28l6-14h18l6 14v12"/>' +
+        '<line x1="26" y1="14" x2="26" y2="7"/>' +
+        '<path d="M21 14h10"/>' +
+        '<path d="M11 28h30"/>' +
+        '<path d="M8 28l3 0"/><path d="M44 28l-3 0"/>' +
+      '</svg>'
+  };
+
+  var menu = document.getElementById('megaMenu');
+  var tabList = document.getElementById('menuTabs');
+  var panelsEl = document.getElementById('menuPanels');
+  var imgEl = document.getElementById('menuImg');
+  var closeBtn = document.getElementById('menuClose');
+  var curTab = 0;
+  var curItem = 0;
+  var prevFocus = null;
+
+  function html(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+  /* ── DOM oluştur ── */
+  function build() {
+    tabList.innerHTML = '';
+    panelsEl.innerHTML = '';
+
+    CATS.forEach(function (cat, i) {
+      /* Sekme */
+      var li = document.createElement('li');
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'mega-tab' + (i === 0 ? ' is-active' : '');
+      btn.textContent = cat.label;
+      btn.setAttribute('role', 'tab');
+      btn.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+      btn.addEventListener('click', function () { switchTab(i); });
+      li.appendChild(btn);
+      tabList.appendChild(li);
+
+      /* Panel */
+      var panel = document.createElement('div');
+      panel.className = 'mega-panel' + (i === 0 ? '' : ' hidden');
+      panel.setAttribute('role', 'tabpanel');
+      panel.setAttribute('data-panel', String(i));
+
+      cat.items.forEach(function (item, j) {
+        var row = document.createElement('button');
+        row.type = 'button';
+        row.className = 'mega-item-row' + (i === 0 && j === 0 ? ' is-active' : '');
+        row.innerHTML =
+          (ICONS[item.icon] || ICONS.travel) +
+          '<span class="min-w-0 text-left">' +
+            '<span class="block text-[0.9375rem] font-semibold text-ink leading-tight">' + html(item.title) + '</span>' +
+            '<span class="block text-[0.8125rem] text-muted mt-1.5 leading-relaxed">' + html(item.desc) + '</span>' +
+          '</span>';
+        row.addEventListener('click', function () { switchItem(i, j); });
+        row.addEventListener('mouseenter', function () { switchItem(i, j); });
+        panel.appendChild(row);
+      });
+      panelsEl.appendChild(panel);
+    });
+    setImg();
+  }
+
+  function switchTab(i) {
+    curTab = i;
+    curItem = 0;
+    tabList.querySelectorAll('.mega-tab').forEach(function (b, k) {
+      b.classList.toggle('is-active', k === i);
+      b.setAttribute('aria-selected', k === i ? 'true' : 'false');
+    });
+    panelsEl.querySelectorAll('.mega-panel').forEach(function (p, k) {
+      p.classList.toggle('hidden', k !== i);
+    });
+    highlight();
+    setImg();
+  }
+
+  function switchItem(i, j) {
+    if (curTab !== i) switchTab(i);
+    curItem = j;
+    highlight();
+    setImg();
+  }
+
+  function highlight() {
+    panelsEl.querySelectorAll('.mega-item-row').forEach(function (row) {
+      var pi = parseInt(row.closest('.mega-panel').dataset.panel, 10);
+      var rows = row.closest('.mega-panel').querySelectorAll('.mega-item-row');
+      var j = Array.prototype.indexOf.call(rows, row);
+      var on = pi === curTab && j === curItem;
+      row.classList.toggle('is-active', on);
+    });
+  }
+
+  function setImg() {
+    var it = CATS[curTab].items[curItem];
+    imgEl.src = it.img;
+    imgEl.alt = it.title;
+  }
+
+  function openMenu() {
+    prevFocus = document.activeElement;
+    menu.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('menu-open');
+    closeBtn.focus();
+  }
+  function closeMenu() {
+    menu.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('menu-open');
+    if (prevFocus && prevFocus.focus) prevFocus.focus();
+  }
+
+  build();
+
+  closeBtn.addEventListener('click', closeMenu);
+  menu.addEventListener('click', function (e) { if (e.target === menu) closeMenu(); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && menu.getAttribute('aria-hidden') === 'false') closeMenu();
+  });
+  document.querySelectorAll('.open-menu-trigger').forEach(function (el) {
+    el.addEventListener('click', function (e) { e.preventDefault(); openMenu(); });
+  });
+  document.getElementById('menuAllBtn').addEventListener('click', function () {
+    closeMenu();
+    document.getElementById('sec-products').scrollIntoView({ behavior: 'smooth' });
+  });
+  document.getElementById('menuDiscoverLink').addEventListener('click', function (e) {
+    e.preventDefault();
+    closeMenu();
+    document.getElementById('sec-categories').scrollIntoView({ behavior: 'smooth' });
+  });
+
+})();
+</script>
+
+
+<!-- ══════════════════════════════════════════
+     GSAP + Lenis + Swiper — index.html mantığı
+══════════════════════════════════════════ -->
+<script>
+(function () {
+
+  /* ─ Swiper (assets/js/swiper.js ile aynı mantık) ─ */
+  function initSwiper() {
+    if (typeof Swiper === 'undefined') { setTimeout(initSwiper, 80); return; }
+    var swiper = new Swiper('.mainSwiper', {
+      slidesPerView: 1,
+      loop: true,
+      speed: 1400,
+      autoplay: { delay: 6000, disableOnInteraction: true },
+      navigation: { nextEl: '.swiper-button-next-custom', prevEl: '.swiper-button-prev-custom' },
+      on: {
+        init: function () {
+          updateNums(this);
+          initSlideText(this.slides[this.activeIndex]);
+        },
+        slideChangeTransitionStart: function () {
+          prepareText(this.slides[this.activeIndex]);
+          initSlideText(this.slides[this.activeIndex]);
+        },
+        slideChange: function () { updateNums(this); }
+      }
+    });
+  }
+
+  function updateNums(sw) {
+    var nav = document.querySelector('#mainSlider .navigation');
+    if (!nav) return;
+    var cur = nav.querySelector('.current-slide');
+    var tot = nav.querySelector('.total-slides');
+    var real = Array.from(sw.slides || []).filter(function(s){ return !s.classList.contains('swiper-slide-duplicate'); });
+    if (cur) cur.textContent = String(sw.realIndex + 1).padStart(2, '0');
+    if (tot) tot.textContent = String(real.length).padStart(2, '0');
+  }
+
+  function prepareText(slide) {
+    if (!slide) return;
+    var h1 = slide.querySelector('h1');
+    var p  = slide.querySelector('p');
+    if (h1) h1.style.whiteSpace = 'normal';
+    if (p)  p.style.whiteSpace  = 'normal';
+  }
+
+  function initSlideText(slide) {
+    if (!slide || typeof gsap === 'undefined') return;
+    var inner = slide.querySelector('.hero-text-inner');
+    if (!inner) return;
+    gsap.fromTo(inner.querySelectorAll('h1, p, a'),
+      { y: 28, opacity: 0 },
+      { y: 0, opacity: 1, stagger: 0.12, duration: 0.75, ease: 'power3.out' }
+    );
+  }
+
+  /* ─ Header scroll ─ */
+  function initHeader() {
+    var h = document.getElementById('siteHeader');
+    if (!h) return;
+    function update() { h.classList.toggle('scrolled', window.scrollY > 50); }
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+  }
+
+  /* ─ Lenis smooth scroll (main.js'ten) ─ */
+  function initLenis() {
+    if (typeof Lenis === 'undefined' || typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+    var lenis = new Lenis({ lerp: 0.07, smoothWheel: true, wheelMultiplier: 1, touchMultiplier: 2 });
+    lenis.on('scroll', function () { ScrollTrigger.update(); });
+    (function tick(t) { lenis.raf(t); requestAnimationFrame(tick); })(0);
+  }
+
+  /* ─ Hero parallax scroll (main.js gsapInit ile aynı) ─ */
+  function initHeroParallax() {
+    var slider = document.querySelector('.main-slider');
+    if (!slider) return;
+    gsap.fromTo('.main-slider img',
+      { y: 0 },
+      { y: -70, ease: 'none', scrollTrigger: { trigger: slider, start: 'top top', end: 'bottom top', scrub: true } }
+    );
+    gsap.fromTo('.main-slider .hero-text-inner h1, .main-slider .hero-text-inner p',
+      { y: 0, opacity: 1 },
+      { y: -80, opacity: 0, ease: 'none', scrollTrigger: { trigger: slider, start: 'top top', end: 'bottom top', scrub: true } }
+    );
+  }
+
+  /* ─ Parallax kartlar (main.js initParallaxEffects) ─ */
+  function initParallax() {
+    gsap.utils.toArray('.parallax').forEach(function (el) {
+      var child = el.children[0];
+      if (!child) return;
+      var speed = parseFloat(el.dataset.speed) || 1;
+      var s = parseFloat(el.dataset.start) || -20;
+      var e = parseFloat(el.dataset.end)   || 20;
+      var tl = gsap.timeline({ scrollTrigger: { trigger: el, scrub: true } });
+      tl.fromTo(child, { yPercent: s, ease: 'none' }, { yPercent: e, ease: 'none' }, 0);
+      tl.timeScale(speed);
+    });
+  }
+
+  /* ─ Başlık + açıklama animasyonları (main.js initTitleAnimations) ─ */
+  function initTitleAnims() {
+    document.querySelectorAll('.title-section').forEach(function (sec) {
+      var ta = sec.querySelector('.title-animate');
+      var da = sec.querySelector('.desc-animate');
+      if (ta) {
+        var spans = ta.querySelectorAll('span');
+        var targets = spans.length ? spans : [ta];
+        gsap.fromTo(targets,
+          { y: 70, opacity: 0 },
+          {
+            y: 0, opacity: 1, duration: 0.9, stagger: 0.07, ease: 'power3.out',
+            scrollTrigger: { trigger: sec, start: 'top 82%', toggleActions: 'play none none reverse' }
+          }
+        );
+      }
+      if (da) {
+        gsap.fromTo(da,
+          { y: 35, opacity: 0 },
+          {
+            y: 0, opacity: 1, duration: 0.75, ease: 'power2.out',
+            scrollTrigger: { trigger: sec, start: 'top 82%', toggleActions: 'play none none reverse' }
+          }
+        );
+      }
+    });
+  }
+
+  /* ─ Timeline yüzen görseller (ufak stagger) ─ */
+  function initTimeline() {
+    var imgs = document.querySelectorAll('.tl-img');
+    imgs.forEach(function (img, i) {
+      gsap.fromTo(img,
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1, y: 0, duration: 0.6, delay: i * 0.08, ease: 'power2.out',
+          scrollTrigger: { trigger: img.closest('section'), start: 'top 78%', toggleActions: 'play none none none' }
+        }
+      );
+    });
+  }
+
+  /* ─ Tüm efektleri GSAP hazır olunca çalıştır ─ */
+  function runGSAP() {
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') { setTimeout(runGSAP, 60); return; }
+    gsap.registerPlugin(ScrollTrigger);
+    initLenis();
+    initHeroParallax();
+    initParallax();
+    initTitleAnims();
+    initTimeline();
+    ScrollTrigger.refresh();
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    initHeader();
+    initSwiper();
+    runGSAP();
+  });
+
+})();
+</script>
+
+</body>
+</html>
