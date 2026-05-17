@@ -1,0 +1,3823 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fenomastic Zen — İç Cephe Boyası | Ürün Detay</title>
+    <style>
+      :root {
+        --grey-10: #f7f7f5;
+        --grey-20: #e8e8e4;
+        --grey-30: #c4c4be;
+        --grey-70: #6b6b66;
+        --grey-80: #3d3d3a;
+        --grey-100: #1a1a18;
+        --white: #fff;
+        --accent: #3d3d3a;
+        --success: #2d6a4f;
+        --radius: 4px;
+        --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        --font-serif: Georgia, "Times New Roman", serif;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: var(--font-sans);
+        color: var(--grey-100);
+        background: var(--white);
+        line-height: 1.5;
+      }
+
+      .site-header {
+        border-bottom: 1px solid var(--grey-20);
+        padding: 1rem 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        max-width: 1600px;
+        margin: 0 auto;
+      }
+      .site-header__logo {
+        display: inline-flex;
+        align-items: center;
+        text-decoration: none;
+        color: inherit;
+      }
+      .site-header__logo img {
+        display: block;
+        height: 2.25rem;
+        width: auto;
+        max-width: 180px;
+        object-fit: contain;
+      }
+      .site-header__cart {
+        font-size: 0.875rem;
+        color: var(--grey-70);
+      }
+
+      .product-detail {
+        max-width: 1600px;
+        margin: 0 auto;
+        padding: 0 1.5rem 4rem;
+      }
+
+      .product-detail__grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      @media (min-width: 1024px) {
+        .product-detail__grid {
+          grid-template-columns: 7fr 5fr;
+          gap: 3rem;
+          align-items: start;
+        }
+        .product-detail__gallery {
+          order: 1;
+        }
+        .product-detail__info {
+          order: 2;
+          position: sticky;
+          top: 2rem;
+        }
+      }
+
+      /* Galeri liste: 2 tekli + grid */
+      .gallery-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+      }
+      .gallery-list__single {
+        position: relative;
+        margin: 0;
+        background: var(--grey-10);
+        overflow: hidden;
+      }
+      .gallery-list__single img {
+        width: 100%;
+        display: block;
+        aspect-ratio: 0.8;
+        object-fit: cover;
+      }
+      .gallery-list__single--product {
+        min-height: 320px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      @media (min-width: 1024px) {
+        .gallery-list__single--product {
+          min-height: calc(100vh - 132px);
+          max-height: 800px;
+        }
+      }
+      .gallery-list__single--product .product-detail__hero-preview {
+        position: absolute;
+        inset: 0;
+        transition: background-color 0.35s ease;
+        opacity: 0.35;
+      }
+      .gallery-list__single--product img {
+        position: relative;
+        z-index: 1;
+        aspect-ratio: auto;
+        max-height: 90%;
+        max-width: 60%;
+        object-fit: contain;
+      }
+      .gallery-list__grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.25rem;
+      }
+      @media (min-width: 640px) {
+        .gallery-list__grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      .gallery-list__grid-item {
+        margin: 0;
+        overflow: hidden;
+        background: var(--grey-10);
+      }
+      .gallery-list__grid-item img {
+        width: 100%;
+        display: block;
+        aspect-ratio: 0.8;
+        object-fit: cover;
+        transition: opacity 0.2s;
+      }
+      .gallery-list__grid-item img:hover {
+        opacity: 0.92;
+      }
+
+      /* Alt bölümler */
+      .product-sections {
+        max-width: 1600px;
+        margin: 0 auto;
+        padding: 0 1.5rem 4rem;
+      }
+      .discover {
+        background: var(--grey-10);
+        padding: 3rem 1.5rem;
+        margin-bottom: 3rem;
+      }
+      @media (min-width: 768px) {
+        .discover {
+          padding: 4rem 1.5rem;
+          margin-bottom: 4rem;
+        }
+      }
+      .discover__grid {
+        max-width: 1600px;
+        margin: 0 auto;
+        display: grid;
+        gap: 1.5rem;
+      }
+      @media (min-width: 1024px) {
+        .discover__grid {
+          grid-template-columns: 5fr 6fr;
+          gap: 3rem;
+          align-items: start;
+        }
+      }
+      .discover__title {
+        font-family: var(--font-serif);
+        font-size: clamp(1.75rem, 4vw, 3rem);
+        font-weight: 400;
+        margin: 0;
+        line-height: 1.15;
+      }
+      .discover__text {
+        font-size: 1rem;
+        color: var(--grey-80);
+        margin: 0;
+        line-height: 1.65;
+      }
+
+      .expander {
+        border-bottom: 1px solid var(--grey-20);
+      }
+      .expander__trigger {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 1rem 0;
+        border: none;
+        border-top: 1px solid var(--grey-20);
+        background: none;
+        cursor: pointer;
+        text-align: left;
+        font-family: inherit;
+        color: inherit;
+      }
+      .expander__trigger:hover {
+        color: var(--grey-70);
+      }
+      .expander__title {
+        font-family: var(--font-serif);
+        font-size: clamp(1.5rem, 3vw, 2.5rem);
+        font-weight: 400;
+        margin: 0;
+      }
+      .expander__icon {
+        flex-shrink: 0;
+        transition: transform 0.25s ease;
+      }
+      .expander.is-open .expander__icon {
+        transform: rotate(180deg);
+      }
+      .expander__panel {
+        display: grid;
+        grid-template-rows: 0fr;
+        transition: grid-template-rows 0.3s ease;
+      }
+      .expander.is-open .expander__panel {
+        grid-template-rows: 1fr;
+      }
+      .expander__panel-inner {
+        overflow: hidden;
+      }
+      .expander__content {
+        padding-bottom: 1.5rem;
+      }
+
+      .spec-grid {
+        display: grid;
+        gap: 0;
+      }
+      @media (min-width: 768px) {
+        .spec-grid {
+          grid-template-columns: 1fr 1fr;
+          column-gap: 2rem;
+        }
+      }
+      .spec-item {
+        display: flex;
+        gap: 1rem;
+        padding: 1.25rem 0;
+        border-bottom: 1px solid var(--grey-20);
+      }
+      .spec-item__icon {
+        width: 3rem;
+        height: 3rem;
+        flex-shrink: 0;
+        color: var(--grey-80);
+      }
+      .spec-item__label {
+        font-size: 1.25rem;
+        font-weight: 300;
+        display: block;
+        margin-bottom: 0.25rem;
+      }
+      .spec-item__value {
+        margin: 0;
+        font-size: 1rem;
+        color: var(--grey-80);
+      }
+
+      .doc-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .doc-list__item {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        padding: 1rem 0;
+        border-bottom: 1px solid var(--grey-20);
+      }
+      .doc-list__item:last-child {
+        border-bottom: none;
+      }
+      .doc-list__meta {
+        font-size: 0.875rem;
+        color: var(--grey-70);
+      }
+      .doc-list__name {
+        font-weight: 500;
+        display: block;
+        color: var(--grey-100);
+      }
+      .doc-list__link {
+        font-size: 0.875rem;
+        padding: 0.5rem 1rem;
+        border: 1px solid var(--grey-80);
+        border-radius: var(--radius);
+        text-decoration: none;
+        color: var(--grey-100);
+        transition:
+          background 0.15s,
+          color 0.15s;
+      }
+      .doc-list__link:hover {
+        background: var(--grey-80);
+        color: var(--white);
+      }
+
+      .ambience {
+        margin-top: 4rem;
+        padding-top: 3rem;
+        border-top: 1px solid var(--grey-20);
+      }
+      .ambience__header {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+      .ambience__title {
+        font-family: var(--font-serif);
+        font-size: clamp(1.5rem, 3vw, 2.25rem);
+        margin: 0;
+        font-weight: 400;
+      }
+      .ambience__subtitle {
+        margin: 0.25rem 0 0;
+        color: var(--grey-70);
+        font-size: 0.9375rem;
+      }
+      .ambience-carousel {
+        display: flex;
+        gap: 0.75rem;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 0.5rem;
+        margin: 0 -1.5rem;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+        scrollbar-width: thin;
+        scrollbar-color: var(--grey-30) transparent;
+      }
+      .ambience-carousel::-webkit-scrollbar {
+        height: 6px;
+      }
+      .ambience-carousel::-webkit-scrollbar-thumb {
+        background: var(--grey-30);
+        border-radius: 3px;
+      }
+      .ambience-carousel__card {
+        flex: 0 0 min(78vw, 320px);
+        scroll-snap-align: start;
+        scroll-snap-stop: always;
+        margin: 0;
+      }
+      @media (min-width: 768px) {
+        .ambience-carousel__card {
+          flex-basis: min(42vw, 380px);
+        }
+      }
+      @media (min-width: 1200px) {
+        .ambience-carousel__card {
+          flex-basis: min(28vw, 400px);
+        }
+      }
+      .ambience-carousel__card img {
+        width: 100%;
+        aspect-ratio: 0.8;
+        object-fit: cover;
+        display: block;
+        background: var(--grey-10);
+      }
+      .ambience-carousel__caption {
+        padding: 0.65rem 0 0;
+        font-size: 0.8125rem;
+        color: var(--grey-70);
+        line-height: 1.4;
+      }
+      .ambience__scroll-hint {
+        margin: 0.75rem 0 0;
+        font-size: 0.75rem;
+        color: var(--grey-70);
+      }
+
+      .module-section {
+        margin-top: 4rem;
+        padding-top: 3rem;
+        border-top: 1px solid var(--grey-20);
+      }
+      .module-section__header {
+        margin-bottom: 1.5rem;
+      }
+      .module-section__title {
+        font-family: var(--font-serif);
+        font-size: clamp(1.5rem, 3vw, 2.25rem);
+        margin: 0;
+        font-weight: 400;
+      }
+      .module-section__subtitle {
+        margin: 0.35rem 0 0;
+        font-size: 0.9375rem;
+        color: var(--grey-70);
+      }
+
+      .faq-list {
+        border-top: 1px solid var(--grey-20);
+      }
+      .faq-item.expander {
+        border-bottom: none;
+      }
+      .faq-item .expander__trigger {
+        padding: 1.1rem 0;
+      }
+      .faq-item .expander__title {
+        font-family: inherit;
+        font-size: 1rem;
+        font-weight: 500;
+        line-height: 1.4;
+      }
+      .faq-item .expander__content {
+        padding-bottom: 1.25rem;
+      }
+      .faq-item .expander__content p {
+        margin: 0 0 0.75rem;
+        font-size: 0.9375rem;
+        color: var(--grey-70);
+        line-height: 1.65;
+      }
+      .faq-item .expander__content p:last-child {
+        margin-bottom: 0;
+      }
+      .faq-item .expander__content a {
+        color: var(--grey-100);
+        text-decoration: underline;
+        text-underline-offset: 2px;
+      }
+      .module-carousel {
+        display: flex;
+        gap: 0.75rem;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 0.5rem;
+        margin: 0 -1.5rem;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+        scrollbar-width: thin;
+        scrollbar-color: var(--grey-30) transparent;
+      }
+      .module-carousel::-webkit-scrollbar {
+        height: 6px;
+      }
+      .module-carousel::-webkit-scrollbar-thumb {
+        background: var(--grey-30);
+        border-radius: 3px;
+      }
+
+      /* Uyumlu renkler */
+      .harmony-card {
+        flex: 0 0 min(85vw, 340px);
+        scroll-snap-align: start;
+        background: var(--white);
+        border: 1px solid var(--grey-20);
+        border-radius: var(--radius);
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+      @media (min-width: 768px) {
+        .harmony-card {
+          flex-basis: min(44vw, 360px);
+        }
+      }
+      .harmony-card__swatches {
+        display: flex;
+        height: 4.5rem;
+        border-radius: var(--radius);
+        overflow: hidden;
+        border: 1px solid var(--grey-20);
+      }
+      .harmony-card__swatches span {
+        flex: 1;
+        min-width: 0;
+      }
+      .harmony-card__name {
+        font-size: 1.0625rem;
+        font-weight: 500;
+        margin: 0;
+      }
+      .harmony-card__codes {
+        margin: 0;
+        font-size: 0.8125rem;
+        color: var(--grey-70);
+        line-height: 1.45;
+      }
+      .harmony-card__pick {
+        margin-top: auto;
+        padding: 0.6rem 1rem;
+        font-size: 0.8125rem;
+        font-family: inherit;
+        border: 1px solid var(--grey-80);
+        background: transparent;
+        border-radius: var(--radius);
+        cursor: pointer;
+        transition:
+          background 0.15s,
+          color 0.15s;
+      }
+      .harmony-card__pick:hover {
+        background: var(--grey-80);
+        color: var(--white);
+      }
+
+      /* Birlikte satın al */
+      .bundle-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        border: 1px solid var(--grey-20);
+        border-radius: var(--radius);
+        overflow: hidden;
+      }
+      .bundle-item {
+        border-bottom: 1px solid var(--grey-20);
+      }
+      .bundle-item:last-child {
+        border-bottom: none;
+      }
+      .bundle-item__label {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem 1.25rem;
+        cursor: pointer;
+        transition: background 0.15s;
+      }
+      .bundle-item__label:hover {
+        background: var(--grey-10);
+      }
+      .bundle-item__check {
+        width: 1.125rem;
+        height: 1.125rem;
+        flex-shrink: 0;
+        accent-color: var(--grey-80);
+      }
+      .bundle-item__thumb {
+        width: 3.5rem;
+        height: 3.5rem;
+        flex-shrink: 0;
+        background: var(--grey-10);
+        border-radius: var(--radius);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+      }
+      .bundle-item__info {
+        flex: 1;
+        min-width: 0;
+      }
+      .bundle-item__name {
+        display: block;
+        font-weight: 500;
+        font-size: 0.9375rem;
+      }
+      .bundle-item__desc {
+        display: block;
+        font-size: 0.8125rem;
+        color: var(--grey-70);
+        margin-top: 0.15rem;
+      }
+      .bundle-item__price {
+        font-size: 0.9375rem;
+        font-weight: 500;
+        white-space: nowrap;
+      }
+      .bundle-footer {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-top: 1.25rem;
+        padding-top: 1.25rem;
+        border-top: 1px solid var(--grey-20);
+      }
+      .bundle-footer__total {
+        font-size: 0.9375rem;
+        color: var(--grey-70);
+      }
+      .bundle-footer__total strong {
+        display: block;
+        font-size: 1.25rem;
+        color: var(--grey-100);
+        margin-top: 0.15rem;
+      }
+      .bundle-footer__actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+      .bundle-footer__select-all {
+        padding: 0.65rem 1rem;
+        font-size: 0.8125rem;
+        font-family: inherit;
+        border: 1px solid var(--grey-30);
+        background: var(--white);
+        border-radius: var(--radius);
+        cursor: pointer;
+      }
+      .bundle-footer__select-all:hover {
+        border-color: var(--grey-80);
+      }
+      .bundle-footer__add {
+        padding: 0.75rem 1.25rem;
+        font-size: 0.875rem;
+        font-family: inherit;
+        border: none;
+        background: var(--grey-80);
+        color: var(--white);
+        border-radius: var(--radius);
+        cursor: pointer;
+        transition: background 0.15s;
+      }
+      .bundle-footer__add:hover:not(:disabled) {
+        background: var(--grey-100);
+      }
+      .bundle-footer__add:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+      }
+
+      /* Boya hesaplayıcı drawer */
+      .calc-drawer {
+        pointer-events: none;
+      }
+      .calc-drawer.is-open {
+        pointer-events: auto;
+      }
+      body.calc-drawer-open {
+        overflow: hidden;
+      }
+      .calc-drawer__backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 40;
+        background: rgba(0, 0, 0, 0.8);
+        opacity: 0;
+        transition: opacity 0.25s ease;
+      }
+      .calc-drawer.is-open .calc-drawer__backdrop {
+        opacity: 1;
+      }
+      .calc-drawer__panel {
+        position: fixed;
+        top: 0;
+        right: 0;
+        z-index: 50;
+        width: 100%;
+        max-width: 667px;
+        height: 100dvh;
+        background: var(--grey-10);
+        color: var(--grey-100);
+        display: flex;
+        flex-direction: column;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        outline: none;
+      }
+      .calc-drawer.is-open .calc-drawer__panel {
+        transform: translateX(0);
+      }
+      .calc-drawer__head {
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        background: var(--grey-10);
+        padding: 1.5rem 3rem 1.5rem 1.5rem;
+        border-bottom: 1px solid var(--grey-20);
+      }
+      @media (min-width: 768px) {
+        .calc-drawer__head {
+          padding: 2.5rem 3.5rem 2.5rem 3rem;
+        }
+      }
+      .calc-drawer__title {
+        font-family: var(--font-serif);
+        font-size: 1.75rem;
+        font-weight: 400;
+        margin: 0;
+      }
+      .calc-drawer__close {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        width: 2.5rem;
+        height: 2.5rem;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--grey-100);
+      }
+      .calc-drawer__close svg {
+        width: 1.25rem;
+        height: 1.25rem;
+      }
+      .calc-drawer__body {
+        flex: 1;
+        overflow-y: auto;
+        padding: 1.5rem;
+      }
+      @media (min-width: 768px) {
+        .calc-drawer__body {
+          padding: 2.5rem 3rem;
+        }
+      }
+      .calc-tabs {
+        display: flex;
+        gap: 2rem;
+        border-bottom: none;
+        margin-bottom: 0.25rem;
+      }
+      .calc-tabs__btn {
+        padding: 0.35rem 0;
+        font-size: 0.875rem;
+        font-family: inherit;
+        background: none;
+        border: none;
+        border-bottom: 2px solid transparent;
+        color: var(--grey-70);
+        cursor: pointer;
+      }
+      .calc-tabs__btn.is-active {
+        border-bottom-color: var(--grey-100);
+        color: var(--grey-100);
+        font-weight: 600;
+      }
+      .calc-toolbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-bottom: 0.5rem;
+      }
+      .calc-unit {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.75rem;
+        color: var(--grey-80);
+      }
+      .calc-unit__toggle {
+        display: flex;
+        border: 1px solid var(--grey-80);
+        border-radius: var(--radius);
+        overflow: hidden;
+      }
+      .calc-unit__toggle button {
+        padding: 0.25rem 0.75rem;
+        font-size: 0.875rem;
+        border: none;
+        background: var(--white);
+        cursor: pointer;
+        font-family: inherit;
+      }
+      .calc-unit__toggle button.is-active {
+        background: var(--grey-20);
+      }
+      .calc-unit__toggle button + button {
+        border-left: 1px solid var(--grey-80);
+      }
+      .calc-tab-desc {
+        font-size: 0.875rem;
+        color: var(--grey-70);
+        margin: 0 0 1.25rem;
+      }
+      .calc-panel {
+        display: none;
+      }
+      .calc-panel.is-active {
+        display: block;
+      }
+      .calc-field-row {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+      .calc-field {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+      }
+      .calc-field label {
+        font-size: 0.75rem;
+        color: var(--grey-70);
+      }
+      .calc-field__wrap {
+        position: relative;
+      }
+      .calc-field input {
+        width: 100%;
+        height: 2.75rem;
+        padding: 0 2.25rem 0 0.75rem;
+        border: 1px solid var(--grey-30);
+        border-radius: var(--radius);
+        font-size: 1rem;
+        font-family: inherit;
+        background: var(--white);
+      }
+      .calc-field__unit {
+        position: absolute;
+        right: 0.75rem;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 0.875rem;
+        color: var(--grey-70);
+        pointer-events: none;
+      }
+      .calc-wall {
+        padding-bottom: 1rem;
+        margin-bottom: 1rem;
+        border-bottom: 1px solid var(--grey-20);
+      }
+      .calc-wall__head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.75rem;
+      }
+      .calc-wall__title {
+        font-size: 0.875rem;
+        font-weight: 500;
+        margin: 0;
+      }
+      .calc-link-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        padding: 0;
+        border: none;
+        background: none;
+        font-size: 0.875rem;
+        font-family: inherit;
+        color: var(--grey-100);
+        text-decoration: underline;
+        text-underline-offset: 2px;
+        cursor: pointer;
+      }
+      .calc-link-btn:hover {
+        color: var(--grey-70);
+      }
+      .calc-deduct {
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px dashed var(--grey-30);
+      }
+      .calc-deduct[hidden] {
+        display: none;
+      }
+      .calc-disclaimer {
+        font-size: 0.875rem;
+        font-style: italic;
+        color: var(--grey-70);
+        text-align: center;
+        margin: 1.5rem 0 0;
+      }
+      .calc-drawer__footer {
+        flex-shrink: 0;
+        border-top: 1px solid var(--grey-30);
+        background: var(--white);
+        padding: 1rem 1.5rem;
+      }
+      @media (min-width: 768px) {
+        .calc-drawer__footer {
+          padding: 1rem 3rem;
+        }
+      }
+      .calc-result-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+        font-size: 0.875rem;
+        color: var(--grey-70);
+        margin-bottom: 1rem;
+      }
+      .calc-result-meta div {
+        display: flex;
+        justify-content: space-between;
+      }
+      .calc-result-main {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+      .calc-result-main span {
+        font-size: 1.25rem;
+        font-weight: 300;
+      }
+      .calc-apply-hint {
+        font-size: 0.8125rem;
+        color: var(--grey-70);
+        margin: 0 0 0.75rem;
+        line-height: 1.4;
+      }
+      .calc-apply-btn {
+        width: 100%;
+        margin-bottom: 0.75rem;
+      }
+      .calc-apply-btn:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+      }
+      .calc-share {
+        display: flex;
+        gap: 0.75rem;
+      }
+      .calc-share .btn {
+        flex: 1;
+        padding: 0.75rem 0.5rem;
+        font-size: 0.8125rem;
+      }
+
+      /* Info */
+      .product-detail__category {
+        font-size: 1rem;
+        color: var(--grey-70);
+        margin: 0 0 0.25rem;
+      }
+      .product-detail__title {
+        font-family: var(--font-serif);
+        font-size: clamp(2rem, 5vw, 3.5rem);
+        font-weight: 400;
+        margin: 0 0 1rem;
+        line-height: 1.1;
+      }
+      .product-detail__description {
+        font-size: 1.125rem;
+        font-weight: 300;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--grey-20);
+      }
+      .product-detail__usps {
+        list-style: disc;
+        padding-left: 1.25rem;
+        margin: 1rem 0;
+        color: var(--grey-70);
+      }
+      .product-detail__usps li {
+        margin-bottom: 0.35rem;
+      }
+      .product-detail__usps p {
+        margin: 0;
+        color: var(--grey-100);
+        font-size: 1rem;
+      }
+
+      .product-detail__price-block {
+        margin: 1.5rem 0 1rem;
+      }
+      .product-detail__price {
+        font-size: 1.75rem;
+        font-weight: 500;
+      }
+      .product-detail__price-note {
+        font-size: 0.8125rem;
+        color: var(--grey-70);
+        margin-top: 0.25rem;
+      }
+
+      .product-detail__option {
+        margin-bottom: 1.5rem;
+      }
+      .product-detail__option-label {
+        display: block;
+        font-size: 0.875rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        margin-bottom: 0.75rem;
+        color: var(--grey-80);
+      }
+      .product-detail__option-selected {
+        font-weight: 400;
+        text-transform: none;
+        letter-spacing: 0;
+        color: var(--grey-70);
+      }
+
+      /* Volume buttons — e-ticaret variant yapısı */
+      .product-detail__option-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .product-detail__option-buttons li {
+        margin: 0;
+      }
+      .product-detail__option-buttons input.variation-radio {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+      .product-detail__option-buttons label {
+        display: inline-block;
+        padding: 0.65rem 1.1rem;
+        border: 1px solid var(--grey-30);
+        border-radius: var(--radius);
+        cursor: pointer;
+        font-size: 0.9375rem;
+        transition:
+          border-color 0.15s,
+          background 0.15s,
+          color 0.15s;
+        user-select: none;
+      }
+      .product-detail__option-buttons input:checked + label {
+        border-color: var(--grey-100);
+        background: var(--grey-100);
+        color: var(--white);
+      }
+      .product-detail__option-buttons label:hover {
+        border-color: var(--grey-80);
+      }
+
+      /* Renk — kompakt tetikleyici */
+      .product-detail__option--color .product-detail__option-selected {
+        display: none;
+      }
+      .color-trigger {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-start;
+        width: 100%;
+        min-height: 5.5rem;
+        padding: 0.85rem 1rem;
+        border: 1px solid var(--grey-30);
+        border-radius: var(--radius);
+        background: var(--grey-10);
+        cursor: pointer;
+        text-align: left;
+        font-family: inherit;
+        transition:
+          border-color 0.15s,
+          box-shadow 0.15s;
+      }
+      .color-trigger:hover {
+        border-color: var(--grey-80);
+      }
+      .color-trigger:focus-visible {
+        outline: 2px solid var(--grey-100);
+        outline-offset: 2px;
+      }
+      .color-trigger:disabled {
+        opacity: 0.65;
+        cursor: wait;
+      }
+      .color-trigger.has-color .color-trigger__code {
+        color: var(--grey-100);
+      }
+      .color-trigger__code {
+        font-size: 0.9375rem;
+        font-weight: 500;
+        color: var(--grey-70);
+        line-height: 1.3;
+        max-width: 85%;
+        word-break: break-word;
+      }
+      .color-trigger__action {
+        align-self: flex-end;
+        font-size: 0.875rem;
+        color: var(--grey-80);
+        text-decoration: underline;
+        text-underline-offset: 2px;
+      }
+      .product-detail__color-variations-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+      }
+      .product-detail__loading-colors .color-trigger__code::after {
+        content: "…";
+      }
+
+      /* Renk seçim modalı */
+      .color-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 55;
+        pointer-events: none;
+        visibility: hidden;
+      }
+      .color-modal.is-open {
+        pointer-events: auto;
+        visibility: visible;
+      }
+      body.color-modal-open {
+        overflow: hidden;
+      }
+      .color-modal__backdrop {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45);
+        opacity: 0;
+        transition: opacity 0.25s ease;
+        pointer-events: none;
+      }
+      .color-modal:not(.is-open) .color-modal__backdrop {
+        opacity: 0;
+        visibility: hidden;
+      }
+      .color-modal.is-open .color-modal__backdrop {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+      }
+      .color-modal__panel {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        background: var(--white);
+        transform: translateY(100%);
+        transition: transform 0.32s ease;
+        pointer-events: none;
+        visibility: hidden;
+      }
+      .color-modal.is-open .color-modal__panel {
+        transform: translateY(0);
+        visibility: visible;
+        pointer-events: auto;
+      }
+      @media (min-width: 768px) {
+        .color-modal__panel {
+          inset: 4vh 12vw;
+          max-height: 92vh;
+          border-radius: 2px;
+          box-shadow: 0 12px 48px rgba(0, 0, 0, 0.18);
+        }
+      }
+      .color-modal__head {
+        flex-shrink: 0;
+        padding: 1.25rem 3rem 0.75rem 1.25rem;
+        border-bottom: 1px solid var(--grey-20);
+      }
+      @media (min-width: 768px) {
+        .color-modal__head {
+          padding: 1.75rem 3.5rem 1rem 2rem;
+        }
+      }
+      .color-modal__title {
+        font-family: var(--font-serif);
+        font-size: clamp(1.25rem, 3vw, 1.5rem);
+        font-weight: 400;
+        margin: 0 0 1rem;
+        line-height: 1.25;
+        max-width: 28rem;
+      }
+      .color-modal__close {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        width: 2.5rem;
+        height: 2.5rem;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        color: var(--grey-100);
+      }
+      .color-modal__close svg {
+        width: 1.25rem;
+        height: 1.25rem;
+      }
+      .color-modal__search-wrap {
+        position: relative;
+        max-width: 100%;
+      }
+      .color-modal__search-wrap svg {
+        position: absolute;
+        left: 0.75rem;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 1.125rem;
+        height: 1.125rem;
+        color: var(--grey-70);
+        pointer-events: none;
+      }
+      .color-modal__search {
+        width: 100%;
+        height: 2.75rem;
+        padding: 0 0.75rem 0 2.5rem;
+        border: 1px solid var(--grey-30);
+        border-radius: var(--radius);
+        font-size: 1rem;
+        font-family: inherit;
+      }
+      .color-modal__search:focus {
+        outline: none;
+        border-color: var(--grey-100);
+      }
+      .color-modal__families-wrap {
+        flex-shrink: 0;
+        padding: 0.75rem 0 0.5rem;
+        border-bottom: 1px solid var(--grey-20);
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      .color-modal__families {
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+        padding: 0 1.25rem;
+        min-width: min-content;
+      }
+      @media (min-width: 768px) {
+        .color-modal__families {
+          padding: 0 2rem;
+        }
+      }
+      .color-family {
+        flex-shrink: 0;
+        width: 2.25rem;
+        height: 2.25rem;
+        padding: 0;
+        border: 2px solid transparent;
+        border-radius: 2px;
+        cursor: pointer;
+        position: relative;
+        box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06);
+      }
+      .color-family.is-active {
+        border-color: var(--grey-100);
+      }
+      .color-family__check {
+        display: none;
+        position: absolute;
+        inset: 0;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.875rem;
+        font-weight: 700;
+        color: var(--grey-100);
+        text-shadow:
+          0 0 3px #fff,
+          0 0 3px #fff;
+      }
+      .color-family.is-active .color-family__check {
+        display: flex;
+      }
+      .color-modal__body {
+        flex: 1;
+        overflow-y: auto;
+        padding: 1rem 1.25rem 1.5rem;
+      }
+      @media (min-width: 768px) {
+        .color-modal__body {
+          padding: 1.25rem 2rem 2rem;
+        }
+      }
+      .color-modal__group-title {
+        font-size: 0.9375rem;
+        font-weight: 400;
+        margin: 0 0 0.75rem;
+        color: var(--grey-100);
+      }
+      .color-modal__grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.35rem;
+      }
+      @media (min-width: 480px) {
+        .color-modal__grid {
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+      @media (min-width: 768px) {
+        .color-modal__grid {
+          grid-template-columns: repeat(6, 1fr);
+          gap: 0.5rem;
+        }
+      }
+      .color-modal__cell {
+        position: relative;
+        aspect-ratio: 1 / 1.05;
+        min-height: 4.5rem;
+        border: 2px solid transparent;
+        border-radius: 2px;
+        padding: 0;
+        cursor: pointer;
+        text-align: left;
+        overflow: hidden;
+        transition:
+          border-color 0.15s,
+          transform 0.12s;
+      }
+      .color-modal__cell:hover {
+        transform: scale(1.02);
+      }
+      .color-modal__cell.is-selected {
+        border-color: var(--grey-100);
+        box-shadow:
+          0 0 0 1px var(--white),
+          0 0 0 3px var(--grey-100);
+      }
+      .color-modal__cell-code {
+        position: absolute;
+        left: 0.35rem;
+        bottom: 0.35rem;
+        right: 1.5rem;
+        font-size: 0.625rem;
+        line-height: 1.2;
+        color: var(--grey-100);
+        text-shadow:
+          0 0 4px rgba(255, 255, 255, 0.9),
+          0 1px 2px rgba(255, 255, 255, 0.8);
+        pointer-events: none;
+      }
+      .color-modal__cell-fav {
+        position: absolute;
+        top: 0.35rem;
+        right: 0.35rem;
+        width: 1rem;
+        height: 1rem;
+        opacity: 0.35;
+        pointer-events: none;
+      }
+      .color-modal__more {
+        display: block;
+        width: 100%;
+        margin-top: 1rem;
+        padding: 0.5rem;
+        border: none;
+        background: none;
+        font-family: inherit;
+        font-size: 0.875rem;
+        color: var(--grey-80);
+        text-decoration: underline;
+        text-underline-offset: 2px;
+        cursor: pointer;
+      }
+      .color-modal__more[hidden] {
+        display: none;
+      }
+
+      .product-detail__qty-row {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+      .product-detail__qty {
+        display: flex;
+        border: 1px solid var(--grey-30);
+        border-radius: var(--radius);
+      }
+      .product-detail__qty button {
+        width: 2.5rem;
+        height: 2.5rem;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        font-size: 1.125rem;
+        color: var(--grey-80);
+      }
+      .product-detail__qty input {
+        width: 3rem;
+        text-align: center;
+        border: none;
+        border-left: 1px solid var(--grey-20);
+        border-right: 1px solid var(--grey-20);
+        font-size: 1rem;
+        -moz-appearance: textfield;
+      }
+      .product-detail__qty input::-webkit-outer-spin-button,
+      .product-detail__qty input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      .product-detail__actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.875rem 1.5rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        border-radius: var(--radius);
+        cursor: pointer;
+        transition:
+          background 0.15s,
+          color 0.15s,
+          border-color 0.15s;
+        text-decoration: none;
+        border: 1px solid transparent;
+        font-family: inherit;
+      }
+      .btn--primary {
+        flex: 1;
+        min-width: 200px;
+        background: var(--grey-80);
+        color: var(--white);
+        border-color: var(--grey-80);
+      }
+      .btn--primary:hover:not(:disabled) {
+        background: var(--grey-100);
+      }
+      .btn--primary:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+      }
+      .btn--outline {
+        background: transparent;
+        border-color: var(--grey-80);
+        color: var(--grey-100);
+      }
+      .btn--outline:hover {
+        background: var(--grey-80);
+        color: var(--white);
+      }
+
+      .product-detail__coverage {
+        font-size: 0.8125rem;
+        color: var(--grey-70);
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--grey-20);
+      }
+
+      .toast {
+        position: fixed;
+        bottom: 1.5rem;
+        left: 50%;
+        transform: translateX(-50%) translateY(120%);
+        background: var(--grey-100);
+        color: var(--white);
+        padding: 0.875rem 1.25rem;
+        border-radius: var(--radius);
+        font-size: 0.875rem;
+        z-index: 100;
+        transition: transform 0.3s ease;
+        max-width: 90vw;
+      }
+      .toast.is-visible {
+        transform: translateX(-50%) translateY(0);
+      }
+      .toast code {
+        font-size: 0.75rem;
+        opacity: 0.85;
+        display: block;
+        margin-top: 0.35rem;
+        word-break: break-all;
+      }
+
+      .product-detail__loading-colors {
+        color: var(--grey-70);
+        font-size: 0.875rem;
+      }
+
+      @media (max-width: 1023px) {
+        .product-detail__info {
+          padding-top: 1.5rem;
+          text-align: center;
+        }
+        .product-detail__usps {
+          text-align: left;
+          display: inline-block;
+        }
+        .product-detail__option-buttons {
+          justify-content: center;
+        }
+        .color-trigger {
+          text-align: left;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <a href="#" class="site-header__logo">
+        <img
+          src="https://www.wawmuhendislik.com.tr/media/uploads/logo.png"
+          alt="WAW Mühendislik"
+          width="160"
+          height="48"
+        />
+      </a>
+      <span class="site-header__cart" id="cart-badge">Sepet (0)</span>
+    </header>
+
+    <main
+      class="product-detail"
+      itemscope
+      itemtype="https://schema.org/Product"
+    >
+      <form
+        id="product-form"
+        class="product-detail__grid"
+        action="#"
+        method="post"
+      >
+        <input type="hidden" name="product_id" value="202091" />
+        <input type="hidden" name="product_slug" value="fenomastic-zen" />
+
+        <!-- Galeri: 2 tekli görsel + yan yana liste -->
+        <div class="product-detail__gallery">
+          <div class="gallery-list">
+            <figure class="gallery-list__single gallery-list__single--product">
+              <div
+                class="product-detail__hero-preview"
+                id="wall-preview"
+                style="background-color: #f0efea"
+              ></div>
+              <img
+                id="product-image"
+                src="https://cdn-pim.jotun.com/images/ProductImages/202091/1300x1334/202091.png"
+                alt="Fenomastic Zen boya kutusu"
+                itemprop="image"
+                width="400"
+                height="410"
+              />
+            </figure>
+            <figure
+              class="gallery-list__single"
+              id="gallery-single-second"
+            ></figure>
+            <div class="gallery-list__grid" id="gallery-grid" role="list"></div>
+          </div>
+        </div>
+
+        <!-- Bilgi & variantlar -->
+        <div class="product-detail__info">
+          <p class="product-detail__category" itemprop="category">Boya</p>
+          <h1 class="product-detail__title" itemprop="name">Fenomastic Zen</h1>
+
+          <p class="product-detail__description" itemprop="description">
+            Benzersiz teknolojisi sayesinde eşsiz mat görünüm sunarken kolay
+            temizlenir ve leke tutmaz.
+          </p>
+
+          <ul class="product-detail__usps">
+            <li><p>Daima Güzel ve Temiz Duvarlar</p></li>
+            <li><p>Mat iç cephe boyası</p></li>
+            <li><p>Leke tutmaz</p></li>
+            <li><p>Yıkanabilir</p></li>
+            <li><p>Antibakteriyel</p></li>
+            <li><p>Eşsiz mat ve doğal görünüm</p></li>
+          </ul>
+
+          <div class="product-detail__price-block">
+            <div
+              class="product-detail__price"
+              id="display-price"
+              itemprop="offers"
+              itemscope
+              itemtype="https://schema.org/Offer"
+            >
+              <span itemprop="price" content="549.90">549,90 ₺</span>
+              <meta itemprop="priceCurrency" content="TRY" />
+            </div>
+            <p class="product-detail__price-note">
+              KDV dahil · Seçilen hacme göre güncellenir
+            </p>
+          </div>
+
+          <!-- Hacim variant (set 1) -->
+          <fieldset class="product-detail__option">
+            <legend class="product-detail__option-label">
+              Hacim
+              <span class="product-detail__option-selected" id="volume-label"
+                >— seçin</span
+              >
+            </legend>
+            <ul class="product-detail__option-buttons" data-variant-set="1">
+              <li>
+                <input
+                  type="radio"
+                  name="variation[1]"
+                  id="variation-1"
+                  value="1"
+                  class="variation-radio"
+                  data-variation-id="1"
+                  data-set-id="1"
+                  data-label="0,9 Lt"
+                  data-litres="0.9"
+                  data-price="549.90"
+                />
+                <label for="variation-1">0,9 Lt</label>
+              </li>
+              <li>
+                <input
+                  type="radio"
+                  name="variation[1]"
+                  id="variation-2"
+                  value="2"
+                  class="variation-radio"
+                  data-variation-id="2"
+                  data-set-id="1"
+                  data-label="2,25 Lt"
+                  data-litres="2.25"
+                  data-price="1249.90"
+                />
+                <label for="variation-2">2,25 Lt</label>
+              </li>
+              <li>
+                <input
+                  type="radio"
+                  name="variation[1]"
+                  id="variation-3"
+                  value="3"
+                  class="variation-radio"
+                  data-variation-id="3"
+                  data-set-id="1"
+                  data-label="6,75 Lt"
+                  data-litres="6.75"
+                  data-price="3299.90"
+                />
+                <label for="variation-3">6,75 Lt</label>
+              </li>
+              <li>
+                <input
+                  type="radio"
+                  name="variation[1]"
+                  id="variation-4"
+                  value="4"
+                  class="variation-radio"
+                  data-variation-id="4"
+                  data-set-id="1"
+                  data-label="13,5 Lt"
+                  data-litres="13.5"
+                  data-price="5899.90"
+                />
+                <label for="variation-4">13,5 Lt</label>
+              </li>
+            </ul>
+          </fieldset>
+
+          <!-- Renk variant (set 2) — modal ile seçim -->
+          <fieldset
+            class="product-detail__option product-detail__option--color"
+          >
+            <legend class="product-detail__option-label">Renk</legend>
+            <button
+              type="button"
+              class="color-trigger product-detail__loading-colors"
+              id="color-trigger"
+              aria-haspopup="dialog"
+              aria-controls="color-modal"
+              disabled
+            >
+              <span class="color-trigger__code" id="color-trigger-code"
+                >Renk paleti yükleniyor</span
+              >
+              <span class="color-trigger__action">Renk değiştir</span>
+            </button>
+            <div
+              id="color-picker"
+              class="product-detail__color-variations-hidden"
+              aria-hidden="true"
+            ></div>
+          </fieldset>
+
+          <div class="product-detail__qty-row">
+            <label
+              class="product-detail__option-label"
+              for="quantity"
+              style="margin: 0"
+              >Adet</label
+            >
+            <div class="product-detail__qty">
+              <button type="button" id="qty-minus" aria-label="Azalt">−</button>
+              <input
+                type="number"
+                id="quantity"
+                name="quantity"
+                value="1"
+                min="1"
+                max="99"
+              />
+              <button type="button" id="qty-plus" aria-label="Artır">+</button>
+            </div>
+          </div>
+
+          <div class="product-detail__actions">
+            <button
+              type="submit"
+              class="btn btn--primary"
+              id="add-to-cart"
+              disabled
+            >
+              Sepete Ekle
+            </button>
+            <button
+              type="button"
+              class="btn btn--outline"
+              id="paint-calculator"
+            >
+              Boya Hesaplayıcı
+            </button>
+          </div>
+
+          <p class="product-detail__coverage">
+            Kaplama: litre başına ~12,82 m² (2 kat). Tahmini hesaplama için Boya
+            Hesaplayıcı'yı kullanın.
+          </p>
+        </div>
+      </form>
+    </main>
+
+    <section class="discover" aria-labelledby="discover-heading">
+      <div class="discover__grid">
+        <h2 class="discover__title" id="discover-heading">
+          Keşfetmek Fenomastic Zen
+        </h2>
+        <p class="discover__text">
+          Özel geliştirilen yüzey teknolojisi sayesinde leke tutmaz. Yüzeyde
+          oluşabilecek lekeler kolayca silinir, böylece duvarlarınız her gün ilk
+          günkü güzel görünümünü korur. Antibakteriyel formülü sayesinde küf ve
+          bakteri oluşumunu engeller, size ve sevdiklerinize güvenli ve sağlıklı
+          bir yaşam alanı sunar. Su bazlıdır; koku problemi yaşamadan yılın her
+          döneminde evinizi özgürce renklendirebilirsiniz.
+        </p>
+      </div>
+    </section>
+
+    <div class="product-sections">
+      <div class="expander is-open" data-expander>
+        <button
+          type="button"
+          class="expander__trigger"
+          aria-expanded="true"
+          aria-controls="panel-specs"
+        >
+          <h2 class="expander__title">Ürün özellikleri</h2>
+          <svg
+            class="expander__icon"
+            width="16"
+            height="16"
+            viewBox="0 0 1024 1024"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              d="M97.833 328.835l60.34-60.34 353.831 353.828 353.83-353.828 60.339 60.34-414.17 414.171-414.171-414.171z"
+            />
+          </svg>
+        </button>
+        <div class="expander__panel" id="panel-specs">
+          <div class="expander__panel-inner">
+            <div class="expander__content">
+              <div class="spec-grid">
+                <div class="spec-item">
+                  <div>
+                    <span class="spec-item__label">Kullanım alanı</span>
+                    <p class="spec-item__value">Duvar</p>
+                  </div>
+                </div>
+                <div class="spec-item">
+                  <div>
+                    <span class="spec-item__label">Alan</span>
+                    <p class="spec-item__value">12,82 m²/kat</p>
+                  </div>
+                </div>
+                <div class="spec-item">
+                  <div>
+                    <span class="spec-item__label">Yüzeyler</span>
+                    <p class="spec-item__value">Alçı, Beton</p>
+                  </div>
+                </div>
+                <div class="spec-item">
+                  <div>
+                    <span class="spec-item__label">Kuruma Süresi</span>
+                    <p class="spec-item__value">6 saat</p>
+                  </div>
+                </div>
+                <div class="spec-item">
+                  <div>
+                    <span class="spec-item__label">Uygulama</span>
+                    <p class="spec-item__value">2 Uygulama</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="expander" data-expander>
+        <button
+          type="button"
+          class="expander__trigger"
+          aria-expanded="false"
+          aria-controls="panel-docs"
+        >
+          <h2 class="expander__title">Teknik Bilgi Föyü</h2>
+          <svg
+            class="expander__icon"
+            width="16"
+            height="16"
+            viewBox="0 0 1024 1024"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              d="M97.833 328.835l60.34-60.34 353.831 353.828 353.83-353.828 60.339 60.34-414.17 414.171-414.171-414.171z"
+            />
+          </svg>
+        </button>
+        <div class="expander__panel" id="panel-docs">
+          <div class="expander__panel-inner">
+            <div class="expander__content">
+              <ul class="doc-list">
+                <li class="doc-list__item">
+                  <div>
+                    <span class="doc-list__name">TDS — Teknik Bilgi Föyü</span>
+                    <span class="doc-list__meta">Türk · Turkey</span>
+                  </div>
+                  <a
+                    class="doc-list__link"
+                    href="https://jotundatasheetsprod.blob.core.windows.net/tds/TDS%C2%A444882%C2%A4Fenomastic%20Zen%C2%A4tr-TR%C2%A4TR.pdf"
+                    target="_blank"
+                    rel="noopener"
+                    >İndir</a
+                  >
+                </li>
+                <li class="doc-list__item">
+                  <div>
+                    <span class="doc-list__name">Güvenlik Bilgi Föyü</span>
+                    <span class="doc-list__meta">Türk · SDS</span>
+                  </div>
+                  <a
+                    class="doc-list__link"
+                    href="https://jotundatasheetsprod.blob.core.windows.net/sds/SDS%C2%A444882%C2%A4Fenomastic%20Zen%C2%A4tr-TR%C2%A4TR.pdf"
+                    target="_blank"
+                    rel="noopener"
+                    >İndir</a
+                  >
+                </li>
+                <li class="doc-list__item">
+                  <div>
+                    <span class="doc-list__name">Güvenlik Bilgi Föyü</span>
+                    <span class="doc-list__meta">English · SDS</span>
+                  </div>
+                  <a
+                    class="doc-list__link"
+                    href="https://jotundatasheetsprod.blob.core.windows.net/sds/SDS%C2%A444882%C2%A4Fenomastic%20Zen%C2%A4Euk%C2%A4TR.pdf"
+                    target="_blank"
+                    rel="noopener"
+                    >İndir</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section class="ambience" aria-labelledby="ambience-heading">
+        <div class="ambience__header">
+          <div>
+            <h2 class="ambience__title" id="ambience-heading">
+              Mekânda Fenomastic Zen
+            </h2>
+            <p class="ambience__subtitle">
+              Gerçek uygulama fotoğrafları — kaydırarak gezin
+            </p>
+          </div>
+        </div>
+        <div
+          class="ambience-carousel"
+          tabindex="0"
+          aria-label="Uygulama fotoğrafları galerisi"
+        >
+          <figure class="ambience-carousel__card">
+            <img
+              src="https://www.jotun.com/contentassetsjot03/d9428f065609419aa37c3133042b1349/jotun-livingroom-2149-coffee-20362-pink-ambience-1974-golden-walnut_1408x1760.jpg?format=webp&width=800&quality=70"
+              alt="Oturma odası — Coffee, Pink Ambience, Golden Walnut"
+              loading="lazy"
+            />
+            <figcaption class="ambience-carousel__caption">
+              2149 Coffee · 20362 Pink Ambience · 1974 Golden Walnut
+            </figcaption>
+          </figure>
+          <figure class="ambience-carousel__card">
+            <img
+              src="https://www.jotun.com/contentassetsjot03/af443d70809345a59207cf3e54139820/jotun-livingroom-2149-coffee-1303-observe-1974-golden-walnut_1408x1760.jpg?format=webp&width=800&quality=70"
+              alt="Oturma odası — Coffee ve Observe"
+              loading="lazy"
+            />
+            <figcaption class="ambience-carousel__caption">
+              2149 Coffee · 1303 Observe
+            </figcaption>
+          </figure>
+          <figure class="ambience-carousel__card">
+            <img
+              src="https://www.jotun.com/contentassetsjot03/c532adada5154bfdb510ab5a5c98ecaf/jotun-kitchen-20362-pink-ambience-2149-coffee-2951-sophisticated-red-07_1408x1760.jpg?format=webp&width=800&quality=70"
+              alt="Mutfak — Pink Ambience"
+              loading="lazy"
+            />
+            <figcaption class="ambience-carousel__caption">
+              20362 Pink Ambience — mutfak
+            </figcaption>
+          </figure>
+          <figure class="ambience-carousel__card">
+            <img
+              src="https://www.jotun.com/contentassetsjot03/f0466bd3d2914712bd0a114fe5500afa/jotun-kitchen-20362-pink-ambience-1624-skylight_1408x1760.jpg?format=webp&width=800&quality=70"
+              alt="Mutfak — Pink Ambience ve Skylight"
+              loading="lazy"
+            />
+            <figcaption class="ambience-carousel__caption">
+              20362 Pink Ambience · 1624 Skylight
+            </figcaption>
+          </figure>
+          <figure class="ambience-carousel__card">
+            <img
+              src="https://www.jotun.com/contentassetsjot03/560a3c1214b045de9db535ed4be1ca4d/jotun-livingroom-12313-soft-dunes-1974-golden-walnut_1408x1760.jpg?format=webp&width=800&quality=70"
+              alt="Oturma odası — Soft Dunes"
+              loading="lazy"
+            />
+            <figcaption class="ambience-carousel__caption">
+              12313 Soft Dunes · 1974 Golden Walnut
+            </figcaption>
+          </figure>
+          <figure class="ambience-carousel__card">
+            <img
+              src="https://www.jotun.com/contentassetsjot03/912541e98118497daf7afc86c4b7df45/lady_aqua_6378-iconic_6352-evening-green-1.jpg?format=webp&width=800&quality=70"
+              alt="Evening Green uygulaması"
+              loading="lazy"
+            />
+            <figcaption class="ambience-carousel__caption">
+              6352 Evening Green
+            </figcaption>
+          </figure>
+          <figure class="ambience-carousel__card">
+            <img
+              src="https://www.jotun.com/contentassetsjot03/0e9c6d917c5845dea8cdfcfa233a5d96/197_jotun_7613_northern_mystic_gcc19_750x1124_tcm301-168091?format=webp&width=800&quality=70"
+              alt="7613 Northern Mystic"
+              loading="lazy"
+            />
+            <figcaption class="ambience-carousel__caption">
+              7613 Northern Mystic
+            </figcaption>
+          </figure>
+          <figure class="ambience-carousel__card">
+            <img
+              src="https://www.jotun.com/contentassetsjot03/c07609e827a3415390ae793a183be61c/157_jotun_4477_deco-blue_gcc16_750x1124_tcm301-168591?format=webp&width=800&quality=70"
+              alt="4477 Deco Blue oturma odası"
+              loading="lazy"
+            />
+            <figcaption class="ambience-carousel__caption">
+              4477 Deco Blue
+            </figcaption>
+          </figure>
+          <figure class="ambience-carousel__card">
+            <img
+              src="https://www.jotun.com/contentassetsjot03/a836ac5b18754b2a90bc40c2a60ba5a6/156_jotun_4477_deco-blue_gcc16_750x1124_tcm301-168584?format=webp&width=800&quality=70"
+              alt="4477 Deco Blue mutfak"
+              loading="lazy"
+            />
+            <figcaption class="ambience-carousel__caption">
+              4477 Deco Blue — mutfak
+            </figcaption>
+          </figure>
+          <figure class="ambience-carousel__card">
+            <img
+              src="https://www.jotun.com/contentassetsjot03/19ede1e6a67d42bdb5393cde0e299200/283_jotun-20145-wisdom_750x1124_tcm301-167999?format=webp&width=800&quality=70"
+              alt="20145 Wisdom"
+              loading="lazy"
+            />
+            <figcaption class="ambience-carousel__caption">
+              20145 Wisdom
+            </figcaption>
+          </figure>
+          <figure class="ambience-carousel__card">
+            <img
+              src="https://www.jotun.com/contentassetsjot03/d94445351cf84f29ba5164c436eaa8d1/2021-072-jotun-12126-silhouette_750x1124_tcm312-213329?format=webp&width=800&quality=70"
+              alt="12126 Silhouette"
+              loading="lazy"
+            />
+            <figcaption class="ambience-carousel__caption">
+              12126 Silhouette
+            </figcaption>
+          </figure>
+          <figure class="ambience-carousel__card">
+            <img
+              src="https://www.jotun.com/contentassetsjot03/b92fcd999eb440c983c1db7ab268c585/2021-074-jotun-12126-silhouette_750x1124_tcm312-213333?format=webp&width=800&quality=70"
+              alt="12126 Silhouette detay"
+              loading="lazy"
+            />
+            <figcaption class="ambience-carousel__caption">
+              12126 Silhouette — detay
+            </figcaption>
+          </figure>
+          <figure class="ambience-carousel__card">
+            <img
+              src="https://www.jotun.com/contentassetsjot03/2d005f69f6a34fe89133ac4f29e30792/2021-037-jotun-12125-impression_750x1124_tcm312-213259?format=webp&width=800&quality=70"
+              alt="12125 Impression"
+              loading="lazy"
+            />
+            <figcaption class="ambience-carousel__caption">
+              12125 Impression
+            </figcaption>
+          </figure>
+          <figure class="ambience-carousel__card">
+            <img
+              src="https://www.jotun.com/contentassetsjot03/726ec83769c349cdb498e576df2ceb2e/067_jotun-0394-soft-grey-gcc19_750x1124_tcm301-167690?format=webp&width=800&quality=70"
+              alt="0394 Soft Grey"
+              loading="lazy"
+            />
+            <figcaption class="ambience-carousel__caption">
+              0394 Soft Grey
+            </figcaption>
+          </figure>
+        </div>
+        <p class="ambience__scroll-hint">
+          ← Kaydırarak diğer mekân fotoğraflarını görün →
+        </p>
+      </section>
+      <section class="module-section harmony" aria-labelledby="harmony-heading">
+        <header class="module-section__header">
+          <h2 class="module-section__title" id="harmony-heading">
+            Birbiriyle uyumlu renkler
+          </h2>
+          <p class="module-section__subtitle">
+            Fenomastic Zen ile birlikte kullanılabilecek önerilen paletler —
+            kaydırarak keşfedin
+          </p>
+        </header>
+        <div
+          class="module-carousel harmony-carousel"
+          tabindex="0"
+          aria-label="Uyumlu renk paletleri"
+        >
+          <article class="harmony-card" data-palette-id="warm-living">
+            <div class="harmony-card__swatches" aria-hidden="true">
+              <span
+                style="background-color: #524240"
+                title="2149 Coffee"
+              ></span>
+              <span
+                style="background-color: #c4a591"
+                title="20362 Pink Ambience"
+              ></span>
+              <span
+                style="background-color: #927a5c"
+                title="1974 Golden Walnut"
+              ></span>
+              <span
+                style="background-color: #f0efea"
+                title="9918 Classic White"
+              ></span>
+            </div>
+            <h3 class="harmony-card__name">Sıcak oturma odası</h3>
+            <p class="harmony-card__codes">
+              2149 Coffee · 20362 Pink Ambience · 1974 Golden Walnut · tavan
+              için Classic White
+            </p>
+            <button
+              type="button"
+              class="harmony-card__pick"
+              data-color-code="10385-BELGIAN BROWN"
+            >
+              Paleti uygula
+            </button>
+          </article>
+          <article class="harmony-card" data-palette-id="calm-blue">
+            <div class="harmony-card__swatches" aria-hidden="true">
+              <span style="background-color: #525c64"></span>
+              <span style="background-color: #bbc6c8"></span>
+              <span style="background-color: #f2f1e8"></span>
+            </div>
+            <h3 class="harmony-card__name">Sakin mavi tonlar</h3>
+            <p class="harmony-card__codes">
+              4477 Deco Blue · 5452 Nordic Breeze · 1624 Skylight
+            </p>
+            <button
+              type="button"
+              class="harmony-card__pick"
+              data-color-code="4477-DECO BLUE"
+            >
+              Paleti uygula
+            </button>
+          </article>
+          <article class="harmony-card" data-palette-id="natural-green">
+            <div class="harmony-card__swatches" aria-hidden="true">
+              <span style="background-color: #8d9b8d"></span>
+              <span style="background-color: #c8cdb0"></span>
+              <span style="background-color: #ebe9e2"></span>
+            </div>
+            <h3 class="harmony-card__name">Doğal yeşil huzur</h3>
+            <p class="harmony-card__codes">
+              7543 Dusty Green · 7386 Pistachio · 1622 Akis
+            </p>
+            <button
+              type="button"
+              class="harmony-card__pick"
+              data-color-code="7543-DUSTY GREEN"
+            >
+              Paleti uygula
+            </button>
+          </article>
+          <article class="harmony-card" data-palette-id="soft-neutral">
+            <div class="harmony-card__swatches" aria-hidden="true">
+              <span style="background-color: #afa99c"></span>
+              <span style="background-color: #cac0af"></span>
+              <span style="background-color: #f3f4ee"></span>
+            </div>
+            <h3 class="harmony-card__name">Yumuşak nötrler</h3>
+            <p class="harmony-card__codes">
+              0394 Soft Grey · 12075 Soothing Beige · 7236 Jazz White
+            </p>
+            <button
+              type="button"
+              class="harmony-card__pick"
+              data-color-code="0394-SOFT GREY"
+            >
+              Paleti uygula
+            </button>
+          </article>
+          <article class="harmony-card" data-palette-id="evening-mood">
+            <div class="harmony-card__swatches" aria-hidden="true">
+              <span style="background-color: #426884"></span>
+              <span style="background-color: #7c877c"></span>
+              <span style="background-color: #d3c5ac"></span>
+            </div>
+            <h3 class="harmony-card__name">Akşam ışığı</h3>
+            <p class="harmony-card__codes">
+              4947 True Blue · 7686 Mindful Green · 11173 Humble Yellow
+            </p>
+            <button
+              type="button"
+              class="harmony-card__pick"
+              data-color-code="4947-TRUE BLUE"
+            >
+              Paleti uygula
+            </button>
+          </article>
+          <article class="harmony-card" data-palette-id="kitchen-fresh">
+            <div class="harmony-card__swatches" aria-hidden="true">
+              <span style="background-color: #acc1b7"></span>
+              <span style="background-color: #f3e5c0"></span>
+              <span style="background-color: #f0efea"></span>
+            </div>
+            <h3 class="harmony-card__name">Ferah mutfak</h3>
+            <p class="harmony-card__codes">
+              6383 Imagine · 1349 Light · beyaz detaylar
+            </p>
+            <button
+              type="button"
+              class="harmony-card__pick"
+              data-color-code="6383-IMAGINE"
+            >
+              Paleti uygula
+            </button>
+          </article>
+        </div>
+        <p class="ambience__scroll-hint">← Uyumlu paletleri kaydırın →</p>
+      </section>
+
+      <section
+        class="module-section bundle"
+        aria-labelledby="bundle-heading"
+        id="bundle-module"
+      >
+        <header class="module-section__header">
+          <h2 class="module-section__title" id="bundle-heading">
+            Birlikte satın al
+          </h2>
+          <p class="module-section__subtitle">
+            Boya ile birlikte ihtiyacınız olabilecek malzemeleri seçin
+          </p>
+        </header>
+        <ul class="bundle-list">
+          <li class="bundle-item">
+            <label class="bundle-item__label">
+              <input
+                type="checkbox"
+                class="bundle-item__check"
+                name="bundle[]"
+                value="brush-set"
+                data-price="189.90"
+                data-name="Profesyonel boya fırçası seti"
+                checked
+              />
+              <span class="bundle-item__thumb" aria-hidden="true">🖌</span>
+              <span class="bundle-item__info">
+                <span class="bundle-item__name"
+                  >Profesyonel boya fırçası seti</span
+                >
+                <span class="bundle-item__desc"
+                  >Kesim, rulo ve detay fırçası — 3 parça</span
+                >
+              </span>
+              <span class="bundle-item__price">189,90 ₺</span>
+            </label>
+          </li>
+          <li class="bundle-item">
+            <label class="bundle-item__label">
+              <input
+                type="checkbox"
+                class="bundle-item__check"
+                name="bundle[]"
+                value="filler-1kg"
+                data-price="124.90"
+                data-name="Akrilik kapatıcı macun 1 kg"
+                checked
+              />
+              <span class="bundle-item__thumb" aria-hidden="true">🪣</span>
+              <span class="bundle-item__info">
+                <span class="bundle-item__name"
+                  >Akrilik kapatıcı macun 1 kg</span
+                >
+                <span class="bundle-item__desc"
+                  >Çatlak ve delikler için, zımparalanabilir</span
+                >
+              </span>
+              <span class="bundle-item__price">124,90 ₺</span>
+            </label>
+          </li>
+          <li class="bundle-item">
+            <label class="bundle-item__label">
+              <input
+                type="checkbox"
+                class="bundle-item__check"
+                name="bundle[]"
+                value="masking-tape"
+                data-price="49.90"
+                data-name="Maskeleme bandı 48 mm"
+              />
+              <span class="bundle-item__thumb" aria-hidden="true">📏</span>
+              <span class="bundle-item__info">
+                <span class="bundle-item__name">Maskeleme bandı 48 mm</span>
+                <span class="bundle-item__desc"
+                  >50 m — temiz kenar çizgisi için</span
+                >
+              </span>
+              <span class="bundle-item__price">49,90 ₺</span>
+            </label>
+          </li>
+          <li class="bundle-item">
+            <label class="bundle-item__label">
+              <input
+                type="checkbox"
+                class="bundle-item__check"
+                name="bundle[]"
+                value="tray-roller"
+                data-price="159.90"
+                data-name="Boya haznesi ve rulo seti"
+              />
+              <span class="bundle-item__thumb" aria-hidden="true">🎨</span>
+              <span class="bundle-item__info">
+                <span class="bundle-item__name">Boya haznesi ve rulo seti</span>
+                <span class="bundle-item__desc"
+                  >25 cm rulo + teleskopik sap + hazne</span
+                >
+              </span>
+              <span class="bundle-item__price">159,90 ₺</span>
+            </label>
+          </li>
+          <li class="bundle-item">
+            <label class="bundle-item__label">
+              <input
+                type="checkbox"
+                class="bundle-item__check"
+                name="bundle[]"
+                value="sandpaper"
+                data-price="79.90"
+                data-name="Zımpara paketi"
+              />
+              <span class="bundle-item__thumb" aria-hidden="true">📦</span>
+              <span class="bundle-item__info">
+                <span class="bundle-item__name">Zımpara paketi</span>
+                <span class="bundle-item__desc"
+                  >P120 / P180 / P240 — 9’lu set</span
+                >
+              </span>
+              <span class="bundle-item__price">79,90 ₺</span>
+            </label>
+          </li>
+          <li class="bundle-item">
+            <label class="bundle-item__label">
+              <input
+                type="checkbox"
+                class="bundle-item__check"
+                name="bundle[]"
+                value="primer-1l"
+                data-price="219.90"
+                data-name="Su bazlı astar 1 Lt"
+              />
+              <span class="bundle-item__thumb" aria-hidden="true">🧴</span>
+              <span class="bundle-item__info">
+                <span class="bundle-item__name">Su bazlı astar 1 Lt</span>
+                <span class="bundle-item__desc"
+                  >Emici yüzeyler için önerilir</span
+                >
+              </span>
+              <span class="bundle-item__price">219,90 ₺</span>
+            </label>
+          </li>
+        </ul>
+        <footer class="bundle-footer">
+          <p class="bundle-footer__total">
+            Seçili aksesuarlar
+            <strong id="bundle-total">314,80 ₺</strong>
+          </p>
+          <div class="bundle-footer__actions">
+            <button
+              type="button"
+              class="bundle-footer__select-all"
+              id="bundle-select-all"
+            >
+              Tümünü seç
+            </button>
+            <button type="button" class="bundle-footer__add" id="bundle-add">
+              Seçilenleri sepete ekle
+            </button>
+          </div>
+        </footer>
+      </section>
+
+      <section class="module-section faq" aria-labelledby="faq-heading">
+        <header class="module-section__header">
+          <h2 class="module-section__title" id="faq-heading">
+            Sıkça sorulan sorular
+          </h2>
+          <p class="module-section__subtitle">
+            Fenomastic Zen ve sipariş süreci hakkında
+          </p>
+        </header>
+        <div class="faq-list">
+
+          <div class="expander faq-item" data-expander>
+            <button type="button" class="expander__trigger" aria-expanded="false" aria-controls="faq-panel-1">
+              <h3 class="expander__title">Fenomastic Zen hangi yüzeylere uygulanır?</h3>
+              <svg class="expander__icon" width="16" height="16" viewBox="0 0 1024 1024" fill="currentColor" aria-hidden="true">
+                <path d="M97.833 328.835l60.34-60.34 353.831 353.828 353.83-353.828 60.339 60.34-414.17 414.171-414.171-414.171z"/>
+              </svg>
+            </button>
+            <div class="expander__panel" id="faq-panel-1">
+              <div class="expander__panel-inner">
+                <div class="expander__content">
+                  <p>İç mekân duvarlarında alçı ve beton yüzeyler için uygundur. Yüzey temiz, kuru ve sağlam olmalıdır. Emici veya gözenekli zeminlerde su bazlı astar kullanımı önerilir.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="expander faq-item" data-expander>
+            <button type="button" class="expander__trigger" aria-expanded="false" aria-controls="faq-panel-2">
+              <h3 class="expander__title">Kaç kat boya sürülmeli?</h3>
+              <svg class="expander__icon" width="16" height="16" viewBox="0 0 1024 1024" fill="currentColor" aria-hidden="true">
+                <path d="M97.833 328.835l60.34-60.34 353.831 353.828 353.83-353.828 60.339 60.34-414.17 414.171-414.171-414.171z"/>
+              </svg>
+            </button>
+            <div class="expander__panel" id="faq-panel-2">
+              <div class="expander__panel-inner">
+                <div class="expander__content">
+                  <p>Standart uygulama <strong>2 kattır</strong>. Kaplama hesaplarımız ve Boya Hesaplayıcı da litre başına 12,82 m² (2 kat) esas alınarak yapılır. Koyu renk veya zorlu yüzeylerde ek kat gerekebilir.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="expander faq-item" data-expander>
+            <button type="button" class="expander__trigger" aria-expanded="false" aria-controls="faq-panel-3">
+              <h3 class="expander__title">İki kat arasında ne kadar beklemeliyim?</h3>
+              <svg class="expander__icon" width="16" height="16" viewBox="0 0 1024 1024" fill="currentColor" aria-hidden="true">
+                <path d="M97.833 328.835l60.34-60.34 353.831 353.828 353.83-353.828 60.339 60.34-414.17 414.171-414.171-414.171z"/>
+              </svg>
+            </button>
+            <div class="expander__panel" id="faq-panel-3">
+              <div class="expander__panel-inner">
+                <div class="expander__content">
+                  <p>Oda sıcaklığı ve havalandırmaya bağlı olarak katlar arası <strong>en az 6 saat</strong> kuruma süresi önerilir. Tam sertleşme ve koku kaybı için 24 saate kadar bekleyebilirsiniz.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="expander faq-item" data-expander>
+            <button type="button" class="expander__trigger" aria-expanded="false" aria-controls="faq-panel-4">
+              <h3 class="expander__title">Boya Hesaplayıcı ile ne kadar almalıyım?</h3>
+              <svg class="expander__icon" width="16" height="16" viewBox="0 0 1024 1024" fill="currentColor" aria-hidden="true">
+                <path d="M97.833 328.835l60.34-60.34 353.831 353.828 353.83-353.828 60.339 60.34-414.17 414.171-414.171-414.171z"/>
+              </svg>
+            </button>
+            <div class="expander__panel" id="faq-panel-4">
+              <div class="expander__panel-inner">
+                <div class="expander__content">
+                  <p>Duvar ölçülerinizi veya toplam alanı girerek tahmini litre ihtiyacını hesaplayın. Seçtiğiniz kova hacmine göre <strong>Adeti uygula</strong> ile sepet adedini güncelleyebilirsiniz. Sonuçlar bilgilendirme amaçlıdır; fire ve yüzey emiciliği miktarı değiştirebilir.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="expander faq-item" data-expander>
+            <button type="button" class="expander__trigger" aria-expanded="false" aria-controls="faq-panel-5">
+              <h3 class="expander__title">Renk seçimini sonradan değiştirebilir miyim?</h3>
+              <svg class="expander__icon" width="16" height="16" viewBox="0 0 1024 1024" fill="currentColor" aria-hidden="true">
+                <path d="M97.833 328.835l60.34-60.34 353.831 353.828 353.83-353.828 60.339 60.34-414.17 414.171-414.171-414.171z"/>
+              </svg>
+            </button>
+            <div class="expander__panel" id="faq-panel-5">
+              <div class="expander__panel-inner">
+                <div class="expander__content">
+                  <p>Evet. Ürün sayfasındaki renk kartına tıklayarak paleti açabilir, renk ailesine göre filtreleyebilir veya kod ile arama yapabilirsiniz. Seçtiğiniz renk duvar önizlemesinde anında görünür.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="expander faq-item" data-expander>
+            <button type="button" class="expander__trigger" aria-expanded="false" aria-controls="faq-panel-6">
+              <h3 class="expander__title">Teslimat ve iade koşulları nelerdir?</h3>
+              <svg class="expander__icon" width="16" height="16" viewBox="0 0 1024 1024" fill="currentColor" aria-hidden="true">
+                <path d="M97.833 328.835l60.34-60.34 353.831 353.828 353.83-353.828 60.339 60.34-414.17 414.171-414.171-414.171z"/>
+              </svg>
+            </button>
+            <div class="expander__panel" id="faq-panel-6">
+              <div class="expander__panel-inner">
+                <div class="expander__content">
+                  <p>Siparişleriniz onay sonrası kargoya verilir; teslimat süresi bölgenize göre değişir. Açılmamış ve orijinal ambalajındaki ürünlerde iade koşulları geçerlidir — detaylar için <a href="https://www.wawmuhendislik.com.tr" target="_blank" rel="noopener">wawmuhendislik.com.tr</a> üzerinden bizimle iletişime geçebilirsiniz.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </div>
+
+    <div id="calc-drawer" class="calc-drawer" aria-hidden="true">
+      <div
+        class="calc-drawer__backdrop"
+        id="calc-backdrop"
+        aria-hidden="true"
+      ></div>
+      <div
+        id="calc-panel"
+        class="calc-drawer__panel"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Boya Hesaplayıcı"
+        tabindex="-1"
+      >
+        <header class="calc-drawer__head">
+          <h2 class="calc-drawer__title">Boya Hesaplayıcı</h2>
+          <button
+            type="button"
+            class="calc-drawer__close"
+            id="calc-close"
+            aria-label="Kapat"
+          >
+            <svg viewBox="0 0 1024 1024" fill="currentColor" aria-hidden="true">
+              <path
+                d="M783.531 843.87l-603.397-603.398 60.34-60.34 603.397 603.398-60.339 60.339z"
+              />
+              <path
+                d="M843.874 240.469l-603.397 603.397-60.34-60.339 603.398-603.398 60.339 60.34z"
+              />
+            </svg>
+          </button>
+        </header>
+        <div class="calc-drawer__body">
+          <div class="calc-toolbar">
+            <div class="calc-tabs" role="tablist">
+              <button
+                type="button"
+                class="calc-tabs__btn is-active"
+                role="tab"
+                aria-selected="true"
+                data-tab="surface"
+              >
+                Yüzey
+              </button>
+              <button
+                type="button"
+                class="calc-tabs__btn"
+                role="tab"
+                aria-selected="false"
+                data-tab="area"
+              >
+                Alan
+              </button>
+            </div>
+            <div class="calc-unit">
+              <span>Birim</span>
+              <div
+                class="calc-unit__toggle"
+                role="group"
+                aria-label="Ölçü birimi"
+              >
+                <button type="button" class="is-active" data-unit="m">m</button>
+                <button type="button" data-unit="ft">ft</button>
+              </div>
+            </div>
+          </div>
+          <p class="calc-tab-desc" id="calc-tab-desc">Yüzeye göre hesapla</p>
+          <div
+            class="calc-panel is-active"
+            id="calc-panel-surface"
+            role="tabpanel"
+          >
+            <div id="calc-walls"></div>
+            <button type="button" class="calc-link-btn" id="calc-add-wall">
+              <span>+</span> Duvar ekle
+            </button>
+            <button
+              type="button"
+              class="calc-link-btn"
+              id="calc-toggle-deduct"
+              style="margin-top: 0.75rem"
+            >
+              <span>+</span> Kapı ve pencere ekleyin
+            </button>
+            <div class="calc-deduct" id="calc-deduct" hidden>
+              <div class="calc-field-row">
+                <div class="calc-field">
+                  <label for="calc-doors">Kapılar (adet)</label>
+                  <div class="calc-field__wrap">
+                    <input
+                      type="number"
+                      id="calc-doors"
+                      min="0"
+                      step="1"
+                      value="0"
+                      inputmode="numeric"
+                    />
+                  </div>
+                </div>
+                <div class="calc-field">
+                  <label for="calc-windows">Camlar (adet)</label>
+                  <div class="calc-field__wrap">
+                    <input
+                      type="number"
+                      id="calc-windows"
+                      min="0"
+                      step="1"
+                      value="0"
+                      inputmode="numeric"
+                    />
+                  </div>
+                </div>
+              </div>
+              <p class="calc-tab-desc" style="margin: 0; font-size: 0.75rem">
+                Standart: kapı 0,9×2,1 m · pencere 1,2×1,2 m
+              </p>
+            </div>
+          </div>
+          <div class="calc-panel" id="calc-panel-area" role="tabpanel" hidden>
+            <div id="calc-areas"></div>
+            <button type="button" class="calc-link-btn" id="calc-add-area">
+              <span>+</span> Alan ekle
+            </button>
+          </div>
+          <p class="calc-disclaimer">
+            Gerçek sonuçlar değişebilir. Hesaplama, litre başına 12,82 m²
+            kaplamaya sahip 2 kata dayanmaktadır.
+          </p>
+        </div>
+        <footer class="calc-drawer__footer">
+          <div class="calc-result-meta">
+            <div><span>Tahmini</span><span id="calc-est-area">0 m²</span></div>
+            <div><span>Boya kaplama per litre</span><span>12,82 m²</span></div>
+          </div>
+          <div class="calc-result-main">
+            <span>İhtiyacınız olacaklar:</span>
+            <span id="calc-litres">0 Litre</span>
+          </div>
+          <p class="calc-apply-hint" id="calc-apply-hint">
+            Önce hacim seçin, ardından ölçü girin.
+          </p>
+          <button
+            type="button"
+            class="btn btn--primary calc-apply-btn"
+            id="calc-apply-qty"
+            disabled
+          >
+            Adeti uygula
+          </button>
+          <div class="calc-share">
+            <button type="button" class="btn btn--outline" id="calc-whatsapp">
+              Whatsapp'a gönder
+            </button>
+            <button type="button" class="btn btn--primary" id="calc-email">
+              E-postaya gönder
+            </button>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+    <div id="color-modal" class="color-modal" aria-hidden="true">
+      <div class="color-modal__backdrop" id="color-modal-backdrop"></div>
+      <div
+        class="color-modal__panel"
+        id="color-modal-panel"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Renk seçin"
+        tabindex="-1"
+      >
+        <header class="color-modal__head">
+          <h2 class="color-modal__title">Aklımdaki palet şu şekildedir…</h2>
+          <button
+            type="button"
+            class="color-modal__close"
+            id="color-modal-close"
+            aria-label="Kapat"
+          >
+            <svg viewBox="0 0 1024 1024" fill="currentColor" aria-hidden="true">
+              <path
+                d="M783.531 843.87l-603.397-603.398 60.34-60.34 603.397 603.398-60.339 60.339z"
+              />
+              <path
+                d="M843.874 240.469l-603.397 603.397-60.34-60.339 603.398-603.398 60.339 60.34z"
+              />
+            </svg>
+          </button>
+          <div class="color-modal__search-wrap">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <circle cx="11" cy="11" r="7" />
+              <path d="M20 20l-3-3" />
+            </svg>
+            <input
+              type="search"
+              class="color-modal__search"
+              id="color-search"
+              placeholder="Renk ara"
+              autocomplete="off"
+            />
+          </div>
+        </header>
+        <div class="color-modal__families-wrap">
+          <div
+            class="color-modal__families"
+            id="color-families"
+            role="tablist"
+            aria-label="Renk ailesi"
+          ></div>
+        </div>
+        <div class="color-modal__body">
+          <h3 class="color-modal__group-title" id="color-modal-group-title">
+            —
+          </h3>
+          <div
+            class="color-modal__grid"
+            id="color-modal-grid"
+            role="listbox"
+            aria-label="Renkler"
+          ></div>
+          <button
+            type="button"
+            class="color-modal__more"
+            id="color-show-more"
+            hidden
+          >
+            Tüm renkleri göster
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script>
+      (function () {
+        const PRICES = { 1: 549.9, 2: 1249.9, 3: 3299.9, 4: 5899.9 };
+        const DEFAULT_COLOR = {
+          code: "9918-CLASSIC WHITE",
+          backgroundColor: "#f0efea",
+          group: "Beyaz",
+        };
+
+        const form = document.getElementById("product-form");
+        const colorPicker = document.getElementById("color-picker");
+        const displayPrice = document.getElementById("display-price");
+        const volumeLabel = document.getElementById("volume-label");
+        const colorTrigger = document.getElementById("color-trigger");
+        const colorTriggerCode = document.getElementById("color-trigger-code");
+        const colorModal = document.getElementById("color-modal");
+        const colorModalPanel = document.getElementById("color-modal-panel");
+        const colorFamiliesEl = document.getElementById("color-families");
+        const colorModalTitle = document.getElementById(
+          "color-modal-group-title",
+        );
+        const colorModalGrid = document.getElementById("color-modal-grid");
+        const colorSearchInput = document.getElementById("color-search");
+        const colorShowMoreBtn = document.getElementById("color-show-more");
+        const addBtn = document.getElementById("add-to-cart");
+        const wallPreview = document.getElementById("wall-preview");
+        const qtyInput = document.getElementById("quantity");
+        const toast = document.getElementById("toast");
+        const cartBadge = document.getElementById("cart-badge");
+
+        let cartCount = 0;
+        let colorIdCounter = 100;
+        let selectedVolume = null;
+        let selectedColor = null;
+        let colorSchema = null;
+        let activeColorGroupIndex = 0;
+        let colorGridExpanded = false;
+        const COLOR_GRID_PREVIEW = 18;
+        const FAV_ICON =
+          '<svg class="color-modal__cell-fav" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">' +
+          '<path d="M12 20.25l-1.45-1.32C5.4 14.36 2 11.28 2 7.5 2 5 4 3 6.5 3c1.74 0 3.41 1.01 4.22 2.44C11.09 4.01 12.76 3 14.5 3 17 3 19 5 19 7.5c0 3.78-3.4 6.86-8.55 11.43L12 20.25z"/></svg>';
+
+        function formatPrice(n) {
+          return (
+            n.toLocaleString("tr-TR", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            }) + " ₺"
+          );
+        }
+
+        function getSelectedVolume() {
+          return form.querySelector('input[name="variation[1]"]:checked');
+        }
+
+        function getSelectedColor() {
+          return form.querySelector('input[name="variation[2]"]:checked');
+        }
+
+        function updateAddButton() {
+          const ok = getSelectedVolume() && getSelectedColor();
+          addBtn.disabled = !ok;
+        }
+
+        function updatePrice() {
+          const vol = getSelectedVolume();
+          if (!vol) return;
+          const unit = parseFloat(vol.dataset.price);
+          const qty = Math.max(1, parseInt(qtyInput.value, 10) || 1);
+          displayPrice.querySelector("span").textContent = formatPrice(
+            unit * qty,
+          );
+          displayPrice
+            .querySelector('[itemprop="price"]')
+            .setAttribute("content", String(unit * qty));
+        }
+
+        function applyColor(input, options) {
+          if (!input) return;
+          const opts = options || {};
+          const bg = input.dataset.backgroundColor;
+          const code = input.dataset.colorCode;
+          const group = input.dataset.colorGroup;
+          wallPreview.style.backgroundColor = bg;
+          if (colorTrigger) {
+            colorTrigger.style.backgroundColor = bg;
+            colorTrigger.classList.add("has-color");
+          }
+          if (colorTriggerCode) colorTriggerCode.textContent = code;
+          selectedColor = {
+            variationId: input.dataset.variationId,
+            code,
+            backgroundColor: bg,
+            group,
+          };
+          updateAddButton();
+          syncColorModalSelection();
+          if (opts.closeModal) closeColorModal();
+        }
+
+        function openColorModal() {
+          if (!colorSchema || !colorModal) return;
+          colorModal.classList.add("is-open");
+          colorModal.setAttribute("aria-hidden", "false");
+          document.body.classList.add("color-modal-open");
+          colorModalPanel.focus();
+          syncColorModalSelection();
+        }
+
+        function closeColorModal() {
+          if (!colorModal) return;
+          colorModal.classList.remove("is-open");
+          colorModal.setAttribute("aria-hidden", "true");
+          document.body.classList.remove("color-modal-open");
+          if (colorTrigger) colorTrigger.focus();
+        }
+
+        function syncColorModalSelection() {
+          const checked = getSelectedColor();
+          if (!colorModalGrid) return;
+          colorModalGrid
+            .querySelectorAll(".color-modal__cell")
+            .forEach(function (cell) {
+              cell.classList.toggle(
+                "is-selected",
+                Boolean(
+                  checked &&
+                  cell.dataset.colorCode === checked.dataset.colorCode,
+                ),
+              );
+              cell.setAttribute(
+                "aria-selected",
+                cell.classList.contains("is-selected") ? "true" : "false",
+              );
+            });
+        }
+
+        function pickColorByCode(code) {
+          let input = null;
+          form
+            .querySelectorAll('input[name="variation[2]"]')
+            .forEach(function (el) {
+              if (el.dataset.colorCode === code) input = el;
+            });
+          if (!input) return false;
+          input.checked = true;
+          applyColor(input, { closeModal: true });
+          return true;
+        }
+
+        function buildColorFamilies() {
+          if (!colorFamiliesEl || !colorSchema) return;
+          colorFamiliesEl.innerHTML = "";
+          colorSchema.groups.forEach(function (group, index) {
+            const btn = document.createElement("button");
+            btn.type = "button";
+            btn.className =
+              "color-family" +
+              (index === activeColorGroupIndex ? " is-active" : "");
+            btn.style.backgroundColor =
+              group.colorCode ||
+              (group.colors[0] && group.colors[0].backgroundColor) ||
+              "#ccc";
+            btn.title = group.name;
+            btn.setAttribute("role", "tab");
+            btn.setAttribute(
+              "aria-selected",
+              index === activeColorGroupIndex ? "true" : "false",
+            );
+            btn.dataset.groupIndex = String(index);
+            btn.innerHTML =
+              '<span class="color-family__check" aria-hidden="true">✓</span>';
+            btn.addEventListener("click", function () {
+              activeColorGroupIndex = index;
+              colorGridExpanded = false;
+              if (colorSearchInput) colorSearchInput.value = "";
+              buildColorFamilies();
+              renderColorGrid();
+            });
+            colorFamiliesEl.appendChild(btn);
+          });
+        }
+
+        function getColorsForGrid() {
+          const q =
+            (colorSearchInput && colorSearchInput.value.trim().toLowerCase()) ||
+            "";
+          if (q) {
+            const list = [];
+            colorSchema.groups.forEach(function (group) {
+              group.colors.forEach(function (color) {
+                if (color.code.toLowerCase().indexOf(q) !== -1) {
+                  list.push({ color: color, groupName: group.name });
+                }
+              });
+            });
+            return {
+              mode: "search",
+              items: list,
+              title: "Arama (" + list.length + ")",
+            };
+          }
+          const group = colorSchema.groups[activeColorGroupIndex];
+          if (!group) return { mode: "group", items: [], title: "—" };
+          return {
+            mode: "group",
+            items: group.colors.map(function (c) {
+              return { color: c, groupName: group.name };
+            }),
+            title: group.name + " (" + group.colors.length + ")",
+          };
+        }
+
+        function renderColorGrid() {
+          if (!colorModalGrid || !colorSchema) return;
+          const data = getColorsForGrid();
+          const isSearch = data.mode === "search";
+          if (colorModalTitle) colorModalTitle.textContent = data.title;
+          if (colorFamiliesEl)
+            colorFamiliesEl.parentElement.style.opacity = isSearch
+              ? "0.45"
+              : "1";
+
+          const total = data.items.length;
+          const limit =
+            colorGridExpanded || isSearch
+              ? total
+              : Math.min(COLOR_GRID_PREVIEW, total);
+          const visible = data.items.slice(0, limit);
+
+          colorModalGrid.innerHTML = "";
+          visible.forEach(function (item) {
+            const cell = document.createElement("button");
+            cell.type = "button";
+            cell.className = "color-modal__cell";
+            cell.style.backgroundColor = item.color.backgroundColor;
+            cell.dataset.colorCode = item.color.code;
+            cell.setAttribute("role", "option");
+            cell.innerHTML =
+              FAV_ICON +
+              '<span class="color-modal__cell-code">' +
+              item.color.code +
+              "</span>";
+            cell.addEventListener("click", function () {
+              pickColorByCode(item.color.code);
+            });
+            colorModalGrid.appendChild(cell);
+          });
+
+          syncColorModalSelection();
+
+          if (colorShowMoreBtn) {
+            if (!isSearch && total > COLOR_GRID_PREVIEW) {
+              colorShowMoreBtn.hidden = false;
+              colorShowMoreBtn.textContent = colorGridExpanded
+                ? "Daha az göster"
+                : "Tüm renkleri göster (" + total + ")";
+            } else {
+              colorShowMoreBtn.hidden = true;
+            }
+          }
+        }
+
+        function initColorModal() {
+          if (colorTrigger) {
+            colorTrigger.addEventListener("click", openColorModal);
+          }
+          document
+            .getElementById("color-modal-close")
+            .addEventListener("click", closeColorModal);
+          document
+            .getElementById("color-modal-backdrop")
+            .addEventListener("click", closeColorModal);
+          document.addEventListener("keydown", function (e) {
+            if (
+              e.key === "Escape" &&
+              colorModal &&
+              colorModal.classList.contains("is-open")
+            ) {
+              closeColorModal();
+            }
+          });
+          if (colorSearchInput) {
+            colorSearchInput.addEventListener("input", function () {
+              colorGridExpanded = Boolean(colorSearchInput.value.trim());
+              renderColorGrid();
+            });
+          }
+          if (colorShowMoreBtn) {
+            colorShowMoreBtn.addEventListener("click", function () {
+              colorGridExpanded = !colorGridExpanded;
+              renderColorGrid();
+            });
+          }
+        }
+
+        function bindVolumeRadios() {
+          form
+            .querySelectorAll('input[name="variation[1]"]')
+            .forEach(function (radio) {
+              radio.addEventListener("change", function () {
+                selectedVolume = {
+                  variationId: radio.dataset.variationId,
+                  label: radio.dataset.label,
+                  price: parseFloat(radio.dataset.price),
+                };
+                volumeLabel.textContent = radio.dataset.label;
+                updatePrice();
+                updateAddButton();
+                if (refreshCalcApplyHint) refreshCalcApplyHint();
+              });
+            });
+        }
+
+        function buildColorPicker(schema) {
+          colorSchema = schema;
+          colorPicker.innerHTML = "";
+          if (colorTrigger) {
+            colorTrigger.classList.remove("product-detail__loading-colors");
+            colorTrigger.disabled = false;
+          }
+
+          schema.groups.forEach(function (group) {
+            group.colors.forEach(function (color) {
+              const id = colorIdCounter++;
+              const input = document.createElement("input");
+              input.type = "radio";
+              input.name = "variation[2]";
+              input.id = "color-variation-" + id;
+              input.value = String(id);
+              input.className = "variation-radio";
+              input.dataset.variationId = String(id);
+              input.dataset.setId = "2";
+              input.dataset.colorCode = color.code;
+              input.dataset.backgroundColor = color.backgroundColor;
+              input.dataset.colorGroup = group.name;
+              colorPicker.appendChild(input);
+            });
+          });
+
+          activeColorGroupIndex = 0;
+          colorGridExpanded = false;
+          buildColorFamilies();
+          renderColorGrid();
+
+          const defaultInput = form.querySelector(
+            'input[data-color-code="' + DEFAULT_COLOR.code + '"]',
+          );
+          if (defaultInput) {
+            defaultInput.checked = true;
+            applyColor(defaultInput);
+          } else {
+            const first = form.querySelector('input[name="variation[2]"]');
+            if (first) {
+              first.checked = true;
+              applyColor(first);
+            }
+          }
+        }
+
+        function loadColors() {
+          fetch("color-schema.json")
+            .then(function (r) {
+              if (!r.ok) throw new Error("fetch failed");
+              return r.json();
+            })
+            .then(buildColorPicker)
+            .catch(function () {
+              /* Çevrimdışı / file:// için gömülü şema */
+              buildColorPicker({
+                groups: [
+                  {
+                    name: "Beyaz",
+                    colors: [
+                      { code: "7236-JAZZ WHITE", backgroundColor: "#f3f4ee" },
+                      {
+                        code: "9918-CLASSIC WHITE",
+                        backgroundColor: "#f0efea",
+                      },
+                      { code: "1624-SKYLIGHT", backgroundColor: "#f2f1e8" },
+                    ],
+                  },
+                  {
+                    name: "Mavi",
+                    colors: [
+                      {
+                        code: "5452-NORDIC BREEZE",
+                        backgroundColor: "#bbc6c8",
+                      },
+                      { code: "4947-TRUE BLUE", backgroundColor: "#426884" },
+                      { code: "5200-DUSKY BLUE", backgroundColor: "#9eadb2" },
+                    ],
+                  },
+                  {
+                    name: "Yeşil",
+                    colors: [
+                      { code: "7386-PISTACHIO", backgroundColor: "#c8cdb0" },
+                      { code: "7543-DUSTY GREEN", backgroundColor: "#8d9b8d" },
+                    ],
+                  },
+                ],
+              });
+            });
+        }
+
+        function showToast(message, payload) {
+          toast.innerHTML =
+            message +
+            (payload ? "<code>" + JSON.stringify(payload) + "</code>" : "");
+          toast.classList.add("is-visible");
+          clearTimeout(showToast._t);
+          showToast._t = setTimeout(function () {
+            toast.classList.remove("is-visible");
+          }, 5000);
+        }
+
+        document
+          .getElementById("qty-minus")
+          .addEventListener("click", function () {
+            qtyInput.value = Math.max(
+              1,
+              (parseInt(qtyInput.value, 10) || 1) - 1,
+            );
+            updatePrice();
+          });
+        document
+          .getElementById("qty-plus")
+          .addEventListener("click", function () {
+            qtyInput.value = Math.min(
+              99,
+              (parseInt(qtyInput.value, 10) || 1) + 1,
+            );
+            updatePrice();
+          });
+        qtyInput.addEventListener("change", updatePrice);
+
+        let refreshCalcApplyHint = null;
+
+        /* Boya hesaplayıcı drawer */
+        (function initPaintCalculator() {
+          const COVERAGE = 12.82;
+          const COATS = 2;
+          const DOOR_M2 = 0.9 * 2.1;
+          const WINDOW_M2 = 1.2 * 1.2;
+          const FT_PER_M = 3.280839895;
+          const M2_PER_FT2 = 0.09290304;
+
+          const drawer = document.getElementById("calc-drawer");
+          const backdrop = document.getElementById("calc-backdrop");
+          const panel = document.getElementById("calc-panel");
+          const openBtn = document.getElementById("paint-calculator");
+          const closeBtn = document.getElementById("calc-close");
+          const wallsEl = document.getElementById("calc-walls");
+          const areasEl = document.getElementById("calc-areas");
+          const estAreaEl = document.getElementById("calc-est-area");
+          const litresEl = document.getElementById("calc-litres");
+          const tabDescEl = document.getElementById("calc-tab-desc");
+          const deductEl = document.getElementById("calc-deduct");
+          let unit = "m";
+          let activeTab = "surface";
+          let wallCount = 0;
+          let areaCount = 0;
+          let lastLitresNeeded = 0;
+          const applyBtn = document.getElementById("calc-apply-qty");
+          const applyHintEl = document.getElementById("calc-apply-hint");
+
+          function toMetres(v) {
+            const n = parseFloat(String(v).replace(",", "."));
+            if (isNaN(n) || n < 0) return 0;
+            return unit === "ft" ? n / FT_PER_M : n;
+          }
+
+          function formatArea(m2) {
+            if (unit === "ft") {
+              const ft2 = m2 / M2_PER_FT2;
+              return (
+                ft2.toLocaleString("tr-TR", { maximumFractionDigits: 1 }) +
+                " ft²"
+              );
+            }
+            return (
+              m2.toLocaleString("tr-TR", { maximumFractionDigits: 2 }) + " m²"
+            );
+          }
+
+          function formatLitres(l) {
+            const rounded = Math.ceil(l * 10) / 10;
+            return (
+              rounded.toLocaleString("tr-TR", { maximumFractionDigits: 1 }) +
+              " Litre"
+            );
+          }
+
+          function unitSuffix(isArea) {
+            if (isArea) return unit === "ft" ? "ft²" : "m²";
+            return unit === "ft" ? "ft" : "m";
+          }
+
+          function recalc() {
+            let grossM2 = 0;
+            if (activeTab === "surface") {
+              wallsEl.querySelectorAll(".calc-wall").forEach(function (wall) {
+                const len = toMetres(
+                  wall.querySelector('[data-field="length"]').value,
+                );
+                const h = toMetres(
+                  wall.querySelector('[data-field="height"]').value,
+                );
+                grossM2 += len * h;
+              });
+              if (!deductEl.hidden) {
+                const doors =
+                  parseInt(document.getElementById("calc-doors").value, 10) ||
+                  0;
+                const windows =
+                  parseInt(document.getElementById("calc-windows").value, 10) ||
+                  0;
+                grossM2 -= doors * DOOR_M2 + windows * WINDOW_M2;
+              }
+            } else {
+              areasEl.querySelectorAll(".calc-wall").forEach(function (row) {
+                const val =
+                  parseFloat(
+                    String(row.querySelector("input").value).replace(",", "."),
+                  ) || 0;
+                grossM2 += unit === "ft" ? val * M2_PER_FT2 : val;
+              });
+            }
+            grossM2 = Math.max(0, grossM2);
+            const litres = (grossM2 * COATS) / COVERAGE;
+            lastLitresNeeded = litres;
+            if (estAreaEl) estAreaEl.textContent = formatArea(grossM2);
+            if (litresEl) litresEl.textContent = formatLitres(litres);
+            updateApplyState();
+          }
+
+          function getVolumeLitres(volRadio) {
+            if (!volRadio) return 0;
+            const fromData = parseFloat(volRadio.dataset.litres);
+            if (!isNaN(fromData) && fromData > 0) return fromData;
+            const m = String(volRadio.dataset.label || "").match(/[\d,.]+/);
+            if (!m) return 0;
+            return parseFloat(m[0].replace(",", ".")) || 0;
+          }
+
+          function suggestedQty() {
+            const vol = getSelectedVolume();
+            const perUnit = getVolumeLitres(vol);
+            if (!vol || perUnit <= 0 || lastLitresNeeded <= 0) return 0;
+            return Math.min(
+              99,
+              Math.max(1, Math.ceil(lastLitresNeeded / perUnit)),
+            );
+          }
+
+          function updateApplyState() {
+            const vol = getSelectedVolume();
+            const qty = suggestedQty();
+            const canApply = Boolean(vol && lastLitresNeeded > 0 && qty > 0);
+            if (applyBtn) applyBtn.disabled = !canApply;
+            if (!applyHintEl) return;
+            if (!vol) {
+              applyHintEl.textContent = "Önce ürün sayfasından hacim seçin.";
+              return;
+            }
+            if (lastLitresNeeded <= 0) {
+              applyHintEl.textContent = "Önerilen adet için ölçü girin.";
+              return;
+            }
+            applyHintEl.textContent =
+              "Önerilen: " +
+              qty +
+              " adet · " +
+              vol.dataset.label +
+              " (toplam ~" +
+              formatLitres(lastLitresNeeded) +
+              ")";
+          }
+
+          function applyQuantityFromCalc() {
+            const vol = getSelectedVolume();
+            if (!vol) {
+              showToast("Önce hacim seçin.");
+              return;
+            }
+            if (lastLitresNeeded <= 0) {
+              showToast("Hesaplama için önce alan veya yüzey girin.");
+              return;
+            }
+            const qty = suggestedQty();
+            qtyInput.value = String(qty);
+            updatePrice();
+            closeDrawer();
+            qtyInput.focus();
+            showToast(
+              "Adet güncellendi: " +
+                qty +
+                " × " +
+                vol.dataset.label +
+                " (~" +
+                formatLitres(lastLitresNeeded) +
+                " ihtiyaç)",
+            );
+          }
+
+          function bindInputs(root) {
+            root.querySelectorAll("input").forEach(function (inp) {
+              inp.addEventListener("input", recalc);
+              inp.addEventListener("change", recalc);
+            });
+          }
+
+          function createWall(index) {
+            const wrap = document.createElement("div");
+            wrap.className = "calc-wall";
+            wrap.dataset.wallIndex = String(index);
+            const suf = unitSuffix(false);
+            wrap.innerHTML =
+              '<div class="calc-wall__head">' +
+              '<p class="calc-wall__title">Duvar ' +
+              (index + 1) +
+              "</p>" +
+              (index > 0
+                ? '<button type="button" class="calc-link-btn calc-remove-wall">Kaldır</button>'
+                : "") +
+              "</div>" +
+              '<div class="calc-field-row">' +
+              '<div class="calc-field"><label>Uzunluk</label><div class="calc-field__wrap">' +
+              '<input type="number" data-field="length" min="0" step="0.01" inputmode="decimal" placeholder="0" />' +
+              '<span class="calc-field__unit">' +
+              suf +
+              "</span></div></div>" +
+              '<div class="calc-field"><label>Yükseklik/genişlik</label><div class="calc-field__wrap">' +
+              '<input type="number" data-field="height" min="0" step="0.01" inputmode="decimal" placeholder="0" />' +
+              '<span class="calc-field__unit">' +
+              suf +
+              "</span></div></div>" +
+              "</div>";
+            const removeBtn = wrap.querySelector(".calc-remove-wall");
+            if (removeBtn) {
+              removeBtn.addEventListener("click", function () {
+                wrap.remove();
+                recalc();
+              });
+            }
+            bindInputs(wrap);
+            return wrap;
+          }
+
+          function createArea(index) {
+            const wrap = document.createElement("div");
+            wrap.className = "calc-wall";
+            const suf = unitSuffix(true);
+            wrap.innerHTML =
+              '<div class="calc-wall__head">' +
+              '<p class="calc-wall__title">Alan ' +
+              (index + 1) +
+              "</p>" +
+              (index > 0
+                ? '<button type="button" class="calc-link-btn calc-remove-area">Kaldır</button>'
+                : "") +
+              "</div>" +
+              '<div class="calc-field-row">' +
+              '<div class="calc-field"><label>Alan</label><div class="calc-field__wrap">' +
+              '<input type="number" min="0" step="0.01" inputmode="decimal" placeholder="0" />' +
+              '<span class="calc-field__unit">' +
+              suf +
+              "</span></div></div></div>";
+            const removeBtn = wrap.querySelector(".calc-remove-area");
+            if (removeBtn) {
+              removeBtn.addEventListener("click", function () {
+                wrap.remove();
+                recalc();
+              });
+            }
+            bindInputs(wrap);
+            return wrap;
+          }
+
+          function refreshUnitLabels() {
+            wallsEl
+              .querySelectorAll(".calc-field__unit")
+              .forEach(function (el) {
+                el.textContent = unitSuffix(false);
+              });
+            areasEl
+              .querySelectorAll(".calc-field__unit")
+              .forEach(function (el) {
+                el.textContent = unitSuffix(true);
+              });
+            recalc();
+          }
+
+          function openDrawer() {
+            drawer.classList.add("is-open");
+            drawer.setAttribute("aria-hidden", "false");
+            document.body.classList.add("calc-drawer-open");
+            panel.focus();
+            recalc();
+          }
+
+          function closeDrawer() {
+            drawer.classList.remove("is-open");
+            drawer.setAttribute("aria-hidden", "true");
+            document.body.classList.remove("calc-drawer-open");
+            openBtn.focus();
+          }
+
+          if (wallsEl && !wallsEl.children.length) {
+            wallsEl.appendChild(createWall(0));
+            wallCount = 1;
+          }
+          if (areasEl && !areasEl.children.length) {
+            areasEl.appendChild(createArea(0));
+            areaCount = 1;
+          }
+
+          openBtn.addEventListener("click", openDrawer);
+          closeBtn.addEventListener("click", closeDrawer);
+          backdrop.addEventListener("click", closeDrawer);
+          document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape" && drawer.classList.contains("is-open"))
+              closeDrawer();
+          });
+
+          document.querySelectorAll(".calc-tabs__btn").forEach(function (btn) {
+            btn.addEventListener("click", function () {
+              activeTab = btn.dataset.tab;
+              document
+                .querySelectorAll(".calc-tabs__btn")
+                .forEach(function (b) {
+                  const on = b === btn;
+                  b.classList.toggle("is-active", on);
+                  b.setAttribute("aria-selected", on ? "true" : "false");
+                });
+              document
+                .getElementById("calc-panel-surface")
+                .classList.toggle("is-active", activeTab === "surface");
+              document.getElementById("calc-panel-surface").hidden =
+                activeTab !== "surface";
+              document
+                .getElementById("calc-panel-area")
+                .classList.toggle("is-active", activeTab === "area");
+              document.getElementById("calc-panel-area").hidden =
+                activeTab !== "area";
+              tabDescEl.textContent =
+                activeTab === "surface"
+                  ? "Yüzeye göre hesapla"
+                  : "Alana göre hesapla";
+              recalc();
+            });
+          });
+
+          document
+            .querySelectorAll(".calc-unit__toggle button")
+            .forEach(function (btn) {
+              btn.addEventListener("click", function () {
+                unit = btn.dataset.unit;
+                document
+                  .querySelectorAll(".calc-unit__toggle button")
+                  .forEach(function (b) {
+                    b.classList.toggle("is-active", b === btn);
+                  });
+                refreshUnitLabels();
+              });
+            });
+
+          document
+            .getElementById("calc-add-wall")
+            .addEventListener("click", function () {
+              wallsEl.appendChild(createWall(wallCount++));
+              recalc();
+            });
+
+          document
+            .getElementById("calc-add-area")
+            .addEventListener("click", function () {
+              areasEl.appendChild(createArea(areaCount++));
+              recalc();
+            });
+
+          document
+            .getElementById("calc-toggle-deduct")
+            .addEventListener("click", function () {
+              const show = deductEl.hidden;
+              deductEl.hidden = !show;
+              recalc();
+            });
+
+          document
+            .getElementById("calc-doors")
+            .addEventListener("input", recalc);
+          document
+            .getElementById("calc-windows")
+            .addEventListener("input", recalc);
+
+          document
+            .getElementById("calc-whatsapp")
+            .addEventListener("click", function () {
+              const text =
+                "Fenomastic Zen — " +
+                (litresEl ? litresEl.textContent : "") +
+                " (" +
+                (estAreaEl ? estAreaEl.textContent : "") +
+                ")";
+              window.open(
+                "https://wa.me/?text=" + encodeURIComponent(text),
+                "_blank",
+                "noopener",
+              );
+            });
+
+          document
+            .getElementById("calc-email")
+            .addEventListener("click", function () {
+              const subject = encodeURIComponent("Fenomastic Zen boya hesabı");
+              const body = encodeURIComponent(
+                "Tahmini alan: " +
+                  (estAreaEl ? estAreaEl.textContent : "") +
+                  "\n" +
+                  "İhtiyaç: " +
+                  (litresEl ? litresEl.textContent : "") +
+                  "\n" +
+                  "Kaplama: 12,82 m²/L · 2 kat",
+              );
+              window.location.href =
+                "mailto:?subject=" + subject + "&body=" + body;
+            });
+
+          document
+            .getElementById("calc-apply-qty")
+            .addEventListener("click", applyQuantityFromCalc);
+          refreshCalcApplyHint = updateApplyState;
+          updateApplyState();
+        })();
+
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+          const vol = getSelectedVolume();
+          const col = getSelectedColor();
+          if (!vol || !col) {
+            showToast("Lütfen hacim ve renk seçin.");
+            return;
+          }
+
+          const qty = Math.max(1, parseInt(qtyInput.value, 10) || 1);
+          const payload = {
+            product_id: form.product_id.value,
+            product_slug: form.product_slug.value,
+            product_name: "Fenomastic Zen",
+            quantity: qty,
+            variations: {
+              1: {
+                set_id: 1,
+                variation_id: vol.dataset.variationId,
+                value: vol.value,
+                label: vol.dataset.label,
+              },
+              2: {
+                set_id: 2,
+                variation_id: col.dataset.variationId,
+                value: col.value,
+                color_code: col.dataset.colorCode,
+                color_group: col.dataset.colorGroup,
+                background_color: col.dataset.backgroundColor,
+              },
+            },
+            unit_price: parseFloat(vol.dataset.price),
+            line_total: parseFloat(vol.dataset.price) * qty,
+          };
+
+          cartCount += qty;
+          cartBadge.textContent = "Sepet (" + cartCount + ")";
+          showToast("Sepete eklendi!", payload);
+        });
+
+        bindVolumeRadios();
+        initColorModal();
+        loadColors();
+
+        /* ——— Görseller (demo.html) ——— */
+        const JOTUN = "https://www.jotun.com";
+        function asset(path) {
+          return (
+            JOTUN + path + "?format=webp&width=1408&height=1760&quality=70"
+          );
+        }
+
+        const GALLERY_SLIDES = [
+          {
+            src: "https://cdn-pim.jotun.com/images/ProductImages/202091/1300x1334/202091.png",
+            alt: "Fenomastic Zen boya kutusu",
+            product: true,
+          },
+          {
+            src: asset(
+              "/contentassetsjot03/d9428f065609419aa37c3133042b1349/jotun-livingroom-2149-coffee-20362-pink-ambience-1974-golden-walnut_1408x1760.jpg",
+            ),
+            alt: "Oturma odası — Coffee, Pink Ambience, Golden Walnut",
+          },
+          {
+            src: asset(
+              "/contentassetsjot03/912541e98118497daf7afc86c4b7df45/lady_aqua_6378-iconic_6352-evening-green-1.jpg",
+            ),
+            alt: "İkonik yeşil ton uygulaması",
+          },
+          {
+            src: asset(
+              "/contentassetsjot03/0e9c6d917c5845dea8cdfcfa233a5d96/197_jotun_7613_northern_mystic_gcc19_750x1124_tcm301-168091",
+            ),
+            alt: "Northern Mystic — mutfak",
+          },
+          {
+            src: asset(
+              "/contentassetsjot03/c07609e827a3415390ae793a183be61c/157_jotun_4477_deco-blue_gcc16_750x1124_tcm301-168591",
+            ),
+            alt: "Deco Blue — oturma odası",
+          },
+          {
+            src: asset(
+              "/contentassetsjot03/19ede1e6a67d42bdb5393cde0e299200/283_jotun-20145-wisdom_750x1124_tcm301-167999",
+            ),
+            alt: "Wisdom — oturma odası",
+          },
+          {
+            src: asset(
+              "/contentassetsjot03/d94445351cf84f29ba5164c436eaa8d1/2021-072-jotun-12126-silhouette_750x1124_tcm312-213329",
+            ),
+            alt: "Silhouette — oturma odası",
+          },
+          {
+            src: asset(
+              "/contentassetsjot03/726ec83769c349cdb498e576df2ceb2e/067_jotun-0394-soft-grey-gcc19_750x1124_tcm301-167690",
+            ),
+            alt: "Soft Grey — oturma odası",
+          },
+        ];
+
+        function buildGalleryList() {
+          const secondEl = document.getElementById("gallery-single-second");
+          const gridEl = document.getElementById("gallery-grid");
+          if (!secondEl || !gridEl) return;
+
+          const second = GALLERY_SLIDES[1];
+          if (second) {
+            const img = document.createElement("img");
+            img.src = second.src;
+            img.alt = second.alt;
+            img.loading = "eager";
+            secondEl.appendChild(img);
+          }
+
+          GALLERY_SLIDES.slice(2).forEach(function (slide) {
+            const fig = document.createElement("figure");
+            fig.className = "gallery-list__grid-item";
+            fig.setAttribute("role", "listitem");
+            const img = document.createElement("img");
+            img.src = slide.src;
+            img.alt = slide.alt;
+            img.loading = "lazy";
+            fig.appendChild(img);
+            gridEl.appendChild(fig);
+          });
+        }
+
+        buildGalleryList();
+
+        document.querySelectorAll("[data-expander]").forEach(function (block) {
+          const btn = block.querySelector(".expander__trigger");
+          btn.addEventListener("click", function () {
+            const open = block.classList.toggle("is-open");
+            btn.setAttribute("aria-expanded", open ? "true" : "false");
+          });
+        });
+
+        /* Uyumlu renk paleti */
+        document
+          .querySelectorAll(".harmony-card__pick")
+          .forEach(function (btn) {
+            btn.addEventListener("click", function () {
+              const code = btn.dataset.colorCode;
+              if (!code) return;
+              const input =
+                form.querySelector(
+                  'input[data-color-code="' + code.replace(/"/g, '\\"') + '"]',
+                ) ||
+                Array.prototype.find.call(
+                  form.querySelectorAll('input[name="variation[2]"]'),
+                  function (el) {
+                    return (
+                      (el.dataset.colorCode || "")
+                        .toUpperCase()
+                        .indexOf(code.split("-")[0]) !== -1
+                    );
+                  },
+                );
+              if (input) {
+                input.checked = true;
+                applyColor(input);
+                const gi =
+                  colorSchema &&
+                  colorSchema.groups.findIndex(function (g) {
+                    return g.colors.some(function (c) {
+                      return c.code === input.dataset.colorCode;
+                    });
+                  });
+                if (gi >= 0) {
+                  activeColorGroupIndex = gi;
+                  buildColorFamilies();
+                  renderColorGrid();
+                }
+                showToast(
+                  "Renk paleti uygulandı: " + (input.dataset.colorCode || code),
+                );
+                document
+                  .getElementById("product-form")
+                  .scrollIntoView({ behavior: "smooth", block: "start" });
+              } else {
+                showToast("Bu renk paleti yüklendikten sonra seçilebilir.");
+              }
+            });
+          });
+
+        /* Birlikte satın al */
+        const bundleChecks = document.querySelectorAll(".bundle-item__check");
+        const bundleTotalEl = document.getElementById("bundle-total");
+        const bundleAddBtn = document.getElementById("bundle-add");
+        const bundleSelectAllBtn = document.getElementById("bundle-select-all");
+
+        function updateBundleTotal() {
+          let total = 0;
+          let count = 0;
+          bundleChecks.forEach(function (cb) {
+            if (cb.checked) {
+              total += parseFloat(cb.dataset.price) || 0;
+              count += 1;
+            }
+          });
+          if (bundleTotalEl) bundleTotalEl.textContent = formatPrice(total);
+          if (bundleAddBtn) bundleAddBtn.disabled = count === 0;
+          if (bundleSelectAllBtn) {
+            const allOn = count === bundleChecks.length;
+            bundleSelectAllBtn.textContent = allOn
+              ? "Tümünü kaldır"
+              : "Tümünü seç";
+          }
+        }
+
+        bundleChecks.forEach(function (cb) {
+          cb.addEventListener("change", updateBundleTotal);
+        });
+
+        if (bundleSelectAllBtn) {
+          bundleSelectAllBtn.addEventListener("click", function () {
+            const turnOn = bundleSelectAllBtn.textContent === "Tümünü seç";
+            bundleChecks.forEach(function (cb) {
+              cb.checked = turnOn;
+            });
+            updateBundleTotal();
+          });
+        }
+
+        if (bundleAddBtn) {
+          bundleAddBtn.addEventListener("click", function () {
+            const items = [];
+            let total = 0;
+            bundleChecks.forEach(function (cb) {
+              if (!cb.checked) return;
+              const price = parseFloat(cb.dataset.price) || 0;
+              items.push({
+                sku: cb.value,
+                name: cb.dataset.name,
+                quantity: 1,
+                unit_price: price,
+              });
+              total += price;
+            });
+            if (!items.length) {
+              showToast("Lütfen en az bir aksesuar seçin.");
+              return;
+            }
+            cartCount += items.length;
+            cartBadge.textContent = "Sepet (" + cartCount + ")";
+            showToast("Aksesuarlar sepete eklendi!", {
+              type: "bundle",
+              items: items,
+              bundle_total: total,
+            });
+          });
+        }
+
+        updateBundleTotal();
+
+        // Demo: varsayılan hacim
+        const defaultVol = document.getElementById("variation-2");
+        if (defaultVol) {
+          defaultVol.checked = true;
+          defaultVol.dispatchEvent(new Event("change"));
+        }
+      })();
+    </script>
+  </body>
+</html>

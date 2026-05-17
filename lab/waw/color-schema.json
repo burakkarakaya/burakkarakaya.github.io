@@ -1,0 +1,171 @@
+{
+    "groups": [
+      {
+        "name": "Beyaz",
+        "colorCode": "#f0efe9",
+        "colors": [
+          { "code": "7236-JAZZ WHITE", "backgroundColor": "#f3f4ee" },
+          { "code": "9918-CLASSIC WHITE", "backgroundColor": "#f0efea" },
+          { "code": "1624-SKYLIGHT", "backgroundColor": "#f2f1e8" },
+          { "code": "1622-AKIS", "backgroundColor": "#ebe9e2" },
+          { "code": "1001-EGG WHITE", "backgroundColor": "#efede3" },
+          { "code": "0486 KUŞ TÜYÜ", "backgroundColor": "#eae7dc" },
+          { "code": "1928-SUMMER SNOW", "backgroundColor": "#e5e2d8" },
+          { "code": "1024-TIMELESS", "backgroundColor": "#e0ddd3" },
+          { "code": "1376-MIST", "backgroundColor": "#e5e0d4" }
+        ]
+      },
+      {
+        "name": "Gri ve siyah",
+        "colorCode": "#71706d",
+        "colors": [
+          { "code": "8222-JURASSIC GREY", "backgroundColor": "#cac5a9" },
+          { "code": "12077-SHEER GREY", "backgroundColor": "#ccc7be" },
+          { "code": "9913-MATRIX", "backgroundColor": "#7b7a79" },
+          { "code": "1032-DUMAN", "backgroundColor": "#aaa79f" },
+          { "code": "1378-KONTUR", "backgroundColor": "#9e9a93" },
+          { "code": "10342-KALKGRÅ", "backgroundColor": "#bbb4a8" },
+          { "code": "9938-BLACKENED BLACK", "backgroundColor": "#494948" },
+          { "code": "10249-GÖLGE", "backgroundColor": "#79736d" },
+          { "code": "1145-BAND STONE", "backgroundColor": "#807972" },
+          { "code": "1434-LABRADOR", "backgroundColor": "#605d58" },
+          { "code": "10429-GÜZ", "backgroundColor": "#8c867f" },
+          { "code": "1352-TENDER GREY", "backgroundColor": "#9b948a" },
+          { "code": "0394-SOFT GREY", "backgroundColor": "#afa99c" },
+          { "code": "1877-PEBBLESTONE", "backgroundColor": "#96938b" }
+        ]
+      },
+      {
+        "name": "Bej ve kahverengi",
+        "colorCode": "#cac0af",
+        "colors": [
+          { "code": "1349-LIGHT", "backgroundColor": "#f3e5c0" },
+          { "code": "1775-FRESH PASTA", "backgroundColor": "#eadab1" },
+          { "code": "1391-BARE", "backgroundColor": "#d4d3c9" },
+          { "code": "1931-CASHEW", "backgroundColor": "#d4d3c9" },
+          { "code": "1875-POLEN", "backgroundColor": "#e6dfce" },
+          { "code": "12076-MODERN BEIGE", "backgroundColor": "#bfb3a4" },
+          { "code": "12180-PRESENT", "backgroundColor": "#b5ab9e" },
+          { "code": "12291 SOFT-BROWN", "backgroundColor": "#89755f" },
+          { "code": "10385-BELGIAN BROWN", "backgroundColor": "#7f7160" },
+          { "code": "12181-SOFT COMFORT", "backgroundColor": "#8a8076" },
+          { "code": "1929-MUSKATNØTT", "backgroundColor": "#a19485" },
+          { "code": "11130-SHADE", "backgroundColor": "#9d9386" },
+          { "code": "1623-PERSIAN KHAKI", "backgroundColor": "#aea191" },
+          { "code": "10961-RAW CANVAS", "backgroundColor": "#beaf97" },
+          { "code": "1233-MOHER", "backgroundColor": "#a49a8b" },
+          { "code": "12290-ANTWERP BEIGE", "backgroundColor": "#b9af9f" },
+          { "code": "10341-SAHLEP", "backgroundColor": "#d9d3c7" },
+          { "code": "10679-WASHED LINEN", "backgroundColor": "#c9c3b6" },
+          { "code": "12075-SOOTHING BEIGE", "backgroundColor": "#cac0af" },
+          { "code": "1359-MACCHIATO", "backgroundColor": "#cec1b1" },
+          { "code": "10678-SPACE", "backgroundColor": "#d6cfbf" },
+          { "code": "1519-VANILLA LATTE", "backgroundColor": "#e5dac8" }
+        ]
+      },
+      {
+        "name": "Şeftali ve portakal",
+        "colorCode": "#c0a78d",
+        "colors": [
+          { "code": "20217-MUTED CORAL", "backgroundColor": "#bb7d69" },
+          { "code": "1177-NOBILE", "backgroundColor": "#e8c099" },
+          { "code": "20046-SAVANNA SUNSET", "backgroundColor": "#af8a76" },
+          { "code": "11175-ADVENTURE", "backgroundColor": "#a48269" },
+          { "code": "20047-BLUSHING PEACH", "backgroundColor": "#c4a591" },
+          { "code": "12120-DESERT PINK", "backgroundColor": "#bf9f86" },
+          { "code": "2024-SENSES", "backgroundColor": "#bfa795" },
+          { "code": "12083-DEVINE", "backgroundColor": "#d2bea9" }
+        ]
+      },
+      {
+        "name": "Kırmızı ve pembe",
+        "colorCode": "#a06e60",
+        "colors": [
+          { "code": "20208-POETRY RED", "backgroundColor": "#9b6156" },
+          { "code": "2489-BELLA", "backgroundColor": "#d9916d" },
+          { "code": "2951-SOPHISTICATED RED", "backgroundColor": "#7c5953" },
+          { "code": "1259-RUSTY", "backgroundColor": "#a57252" },
+          { "code": "20167-WELCOMING RED", "backgroundColor": "#a06c5e" },
+          { "code": "12179-EMBRACE", "backgroundColor": "#b58c6f" }
+        ]
+      },
+      {
+        "name": "Mor",
+        "colorCode": "#9d9ba2",
+        "colors": [
+          { "code": "3377-SLATE LAVENDER", "backgroundColor": "#8e8687" },
+          { "code": "20218-HEALING LAVENDER", "backgroundColor": "#a59d9a" },
+          { "code": "20186-LAVENDER TOUCH", "backgroundColor": "#bbb2ad" },
+          { "code": "2588-ARTIST CLAY", "backgroundColor": "#cbc0b9" }
+        ]
+      },
+      {
+        "name": "Mavi",
+        "colorCode": "#b3c2c9",
+        "colors": [
+          { "code": "5452-NORDIC BREEZE", "backgroundColor": "#bbc6c8" },
+          { "code": "4468-ALLADIN", "backgroundColor": "#c1cdd5" },
+          { "code": "6384-WISH", "backgroundColor": "#88a5a2" },
+          { "code": "4894-OCEAN AIR", "backgroundColor": "#9daaaf" },
+          { "code": "4223-SAMA", "backgroundColor": "#86a0b1" },
+          { "code": "6084-SEA EMERALD", "backgroundColor": "#729592" },
+          { "code": "4619-DENIM BLÅ", "backgroundColor": "#677e8e" },
+          { "code": "4947-TRUE BLUE", "backgroundColor": "#426884" },
+          { "code": "5180-OSLO", "backgroundColor": "#526064" },
+          { "code": "5455-INDUSTRIAL BLUE", "backgroundColor": "#4d616c" },
+          { "code": "4744-SOPHISTICATED BLUE", "backgroundColor": "#454a4d" },
+          { "code": "5489-FREE SPIRIT", "backgroundColor": "#6a7e7e" },
+          { "code": "5030-ST. PAULS BLUE", "backgroundColor": "#737477" },
+          { "code": "4477-DECO BLUE", "backgroundColor": "#525c64" },
+          { "code": "5504-COASTAL BLUE", "backgroundColor": "#6d7d83" },
+          { "code": "4638-ELEGANT BLUE", "backgroundColor": "#657078" },
+          { "code": "5503-NATURAL BLUE", "backgroundColor": "#88959a" },
+          { "code": "4618-EVENING LIGHT", "backgroundColor": "#77838c" },
+          { "code": "5200-DUSKY BLUE", "backgroundColor": "#9eadb2" },
+          { "code": "4017-PILASTER BLUE", "backgroundColor": "#9caab2" }
+        ]
+      },
+      {
+        "name": "Yeşil",
+        "colorCode": "#87ad78",
+        "colors": [
+          { "code": "7386-PISTACHIO", "backgroundColor": "#c8cdb0" },
+          { "code": "6383-IMAGINE", "backgroundColor": "#acc1b7" },
+          { "code": "8493-GREEN TEA", "backgroundColor": "#a09b7c" },
+          { "code": "7685-SUBTLE GREEN", "backgroundColor": "#abaf9b" },
+          { "code": "8575-NATURAL GREEN", "backgroundColor": "#7a7861" },
+          { "code": "7629-ANTIQUE GREEN", "backgroundColor": "#8a9581" },
+          { "code": "8494-ORGANIC GREEN", "backgroundColor": "#646656" },
+          { "code": "7613-NORTHERN MYSTIC", "backgroundColor": "#696d61" },
+          { "code": "8469-GREEN LEAF", "backgroundColor": "#8a8774" },
+          { "code": "7686-MINDFUL GREEN", "backgroundColor": "#7c877c" },
+          { "code": "8252-GREEN HARMONY", "backgroundColor": "#9e9b86" },
+          { "code": "7543-DUSTY GREEN", "backgroundColor": "#8d9b8d" },
+          { "code": "6350-SOFT TEAL", "backgroundColor": "#9aa49e" },
+          { "code": "8302-LAURBÆR", "backgroundColor": "#b0ae96" },
+          { "code": "7628-TREASURE", "backgroundColor": "#a3a798" },
+          { "code": "7163-MINTY BREEZE", "backgroundColor": "#acb2a8" },
+          { "code": "8596-SUNNY GREEN", "backgroundColor": "#d0ccb1" },
+          { "code": "8281-PALE LINDEN", "backgroundColor": "#c7c6b6" },
+          { "code": "7555-SOFT MINT", "backgroundColor": "#c9d0c6" }
+        ]
+      },
+      {
+        "name": "Sarı",
+        "colorCode": "#f3e2a5",
+        "colors": [
+          { "code": "10235-SUMMER SUN", "backgroundColor": "#e9ce8c" },
+          { "code": "8583-EARTHY YELLOW", "backgroundColor": "#cdbc94" },
+          { "code": "8054-SUNNY SPOT", "backgroundColor": "#efcc6a" },
+          { "code": "0288-LIMON KÜFÜ", "backgroundColor": "#b99f6b" },
+          { "code": "10001-DIJON YELLOW", "backgroundColor": "#a98259" },
+          { "code": "10683-CASHMERE", "backgroundColor": "#b19c80" },
+          { "code": "10428-MASALA", "backgroundColor": "#c89f6e" },
+          { "code": "1392-ANTIQUE YELLOW", "backgroundColor": "#d4b58b" },
+          { "code": "11173-HUMBLE YELLOW", "backgroundColor": "#d3c5ac" },
+          { "code": "1017-KEISERGUL", "backgroundColor": "#edcda1" },
+          { "code": "1276-SOFT", "backgroundColor": "#dcd1ba" }
+        ]
+      }
+    ]
+  }
