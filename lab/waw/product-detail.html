@@ -991,17 +991,103 @@
         font-size: 1rem;
       }
 
+      .store-campaign-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        padding: 0.4rem 0.7rem;
+        font-size: 0.6875rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        line-height: 1.2;
+        background: var(--grey-100);
+        color: var(--white);
+        border-radius: var(--radius);
+      }
+      .store-campaign-badge svg {
+        width: 0.875rem;
+        height: 0.875rem;
+        flex-shrink: 0;
+      }
+      .store-campaign-badge--gallery {
+        position: absolute;
+        top: 1rem;
+        left: 1rem;
+        z-index: 2;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+      }
+      .product-detail__title-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        gap: 0.75rem 1rem;
+        margin-bottom: 1rem;
+      }
+      .product-detail__title-row .product-detail__title {
+        margin: 0;
+        flex: 1 1 12rem;
+      }
+
       .product-detail__price-block {
         margin: 1.5rem 0 1rem;
+      }
+      .product-detail__price-label {
+        display: block;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--grey-70);
+        margin-bottom: 0.25rem;
       }
       .product-detail__price {
         font-size: 1.75rem;
         font-weight: 500;
       }
+      .product-detail__store-block {
+        margin-top: 1.25rem;
+        padding-top: 1.25rem;
+        border-top: 1px solid var(--grey-20);
+      }
+      .product-detail__store-offer {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 0.35rem 0.5rem;
+        margin: 0;
+        padding: 0.75rem 0.85rem;
+        background: var(--grey-10);
+        border: 1px solid var(--grey-20);
+        border-radius: var(--radius);
+        font-size: 0.875rem;
+        color: var(--grey-80);
+        line-height: 1.45;
+      }
+      .product-detail__store-offer strong {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: var(--grey-100);
+      }
+      .product-detail__store-offer .store-campaign-badge {
+        margin-left: auto;
+        flex-shrink: 0;
+      }
+      @media (max-width: 1023px) {
+        .product-detail__store-offer .store-campaign-badge {
+          margin-left: 0;
+          width: 100%;
+          justify-content: center;
+        }
+      }
       .product-detail__price-note {
         font-size: 0.8125rem;
         color: var(--grey-70);
-        margin-top: 0.25rem;
+        margin-top: 0.35rem;
+      }
+      .product-detail__price-note--store {
+        margin-top: 0.5rem;
+        line-height: 1.5;
       }
 
       .product-detail__option {
@@ -1554,6 +1640,19 @@
         <div class="product-detail__gallery">
           <div class="gallery-list">
             <figure class="gallery-list__single gallery-list__single--product">
+              <span class="store-campaign-badge store-campaign-badge--gallery">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  aria-hidden="true"
+                >
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                  <polyline points="9 22 9 12 15 12 15 22" />
+                </svg>
+                Gel-al · %40'a varan
+              </span>
               <div
                 class="product-detail__hero-preview"
                 id="wall-preview"
@@ -1579,23 +1678,32 @@
         <!-- Bilgi & variantlar -->
         <div class="product-detail__info">
           <p class="product-detail__category" itemprop="category">Boya</p>
-          <h1 class="product-detail__title" itemprop="name">Fenomastic Zen</h1>
+          <div class="product-detail__title-row">
+            <h1 class="product-detail__title" itemprop="name">
+              Fenomastic Zen
+            </h1>
+            <span class="store-campaign-badge store-campaign-badge--inline">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                aria-hidden="true"
+              >
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                <polyline points="9 22 9 12 15 12 15 22" />
+              </svg>
+              Gel-al · %40'a varan
+            </span>
+          </div>
 
           <p class="product-detail__description" itemprop="description">
             Benzersiz teknolojisi sayesinde eşsiz mat görünüm sunarken kolay
             temizlenir ve leke tutmaz.
           </p>
 
-          <ul class="product-detail__usps">
-            <li><p>Daima Güzel ve Temiz Duvarlar</p></li>
-            <li><p>Mat iç cephe boyası</p></li>
-            <li><p>Leke tutmaz</p></li>
-            <li><p>Yıkanabilir</p></li>
-            <li><p>Antibakteriyel</p></li>
-            <li><p>Eşsiz mat ve doğal görünüm</p></li>
-          </ul>
-
           <div class="product-detail__price-block">
+            <span class="product-detail__price-label">Online fiyat</span>
             <div
               class="product-detail__price"
               id="display-price"
@@ -1607,7 +1715,7 @@
               <meta itemprop="priceCurrency" content="TRY" />
             </div>
             <p class="product-detail__price-note">
-              KDV dahil · Seçilen hacme göre güncellenir
+              KDV dahil · Seçilen hacim ve adete göre güncellenir
             </p>
           </div>
 
@@ -1751,6 +1859,25 @@
             Kaplama: litre başına ~12,82 m² (2 kat). Tahmini hesaplama için Boya
             Hesaplayıcı'yı kullanın.
           </p>
+
+          <div class="product-detail__store-block" id="store-block">
+            <p class="product-detail__store-offer" id="store-offer">
+              <span
+                >Mağazamıza gelip alırsanız
+                <strong id="store-price">329,94 ₺</strong>'ye varan fiyatlarla
+                alabilirsiniz.</span
+              >
+              <span class="store-campaign-badge">Gel-al fırsatı</span>
+            </p>
+            <p
+              class="product-detail__price-note product-detail__price-note--store"
+            >
+              Gel-al indirimi mağazalarımızda geçerlidir; online fiyatla aynı
+              değildir. Gösterilen mağaza fiyatı bilgilendirme amaçlıdır;
+              mağazadan gel-al fiyatları şube, dönem ve kampanyaya göre
+              değişiklik gösterebilir.
+            </p>
+          </div>
         </div>
       </form>
     </main>
@@ -2376,106 +2503,233 @@
           </p>
         </header>
         <div class="faq-list">
-
           <div class="expander faq-item" data-expander>
-            <button type="button" class="expander__trigger" aria-expanded="false" aria-controls="faq-panel-1">
-              <h3 class="expander__title">Fenomastic Zen hangi yüzeylere uygulanır?</h3>
-              <svg class="expander__icon" width="16" height="16" viewBox="0 0 1024 1024" fill="currentColor" aria-hidden="true">
-                <path d="M97.833 328.835l60.34-60.34 353.831 353.828 353.83-353.828 60.339 60.34-414.17 414.171-414.171-414.171z"/>
+            <button
+              type="button"
+              class="expander__trigger"
+              aria-expanded="false"
+              aria-controls="faq-panel-1"
+            >
+              <h3 class="expander__title">
+                Fenomastic Zen hangi yüzeylere uygulanır?
+              </h3>
+              <svg
+                class="expander__icon"
+                width="16"
+                height="16"
+                viewBox="0 0 1024 1024"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  d="M97.833 328.835l60.34-60.34 353.831 353.828 353.83-353.828 60.339 60.34-414.17 414.171-414.171-414.171z"
+                />
               </svg>
             </button>
             <div class="expander__panel" id="faq-panel-1">
               <div class="expander__panel-inner">
                 <div class="expander__content">
-                  <p>İç mekân duvarlarında alçı ve beton yüzeyler için uygundur. Yüzey temiz, kuru ve sağlam olmalıdır. Emici veya gözenekli zeminlerde su bazlı astar kullanımı önerilir.</p>
+                  <p>
+                    İç mekân duvarlarında alçı ve beton yüzeyler için uygundur.
+                    Yüzey temiz, kuru ve sağlam olmalıdır. Emici veya gözenekli
+                    zeminlerde su bazlı astar kullanımı önerilir.
+                  </p>
                 </div>
               </div>
             </div>
           </div>
 
           <div class="expander faq-item" data-expander>
-            <button type="button" class="expander__trigger" aria-expanded="false" aria-controls="faq-panel-2">
+            <button
+              type="button"
+              class="expander__trigger"
+              aria-expanded="false"
+              aria-controls="faq-panel-2"
+            >
               <h3 class="expander__title">Kaç kat boya sürülmeli?</h3>
-              <svg class="expander__icon" width="16" height="16" viewBox="0 0 1024 1024" fill="currentColor" aria-hidden="true">
-                <path d="M97.833 328.835l60.34-60.34 353.831 353.828 353.83-353.828 60.339 60.34-414.17 414.171-414.171-414.171z"/>
+              <svg
+                class="expander__icon"
+                width="16"
+                height="16"
+                viewBox="0 0 1024 1024"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  d="M97.833 328.835l60.34-60.34 353.831 353.828 353.83-353.828 60.339 60.34-414.17 414.171-414.171-414.171z"
+                />
               </svg>
             </button>
             <div class="expander__panel" id="faq-panel-2">
               <div class="expander__panel-inner">
                 <div class="expander__content">
-                  <p>Standart uygulama <strong>2 kattır</strong>. Kaplama hesaplarımız ve Boya Hesaplayıcı da litre başına 12,82 m² (2 kat) esas alınarak yapılır. Koyu renk veya zorlu yüzeylerde ek kat gerekebilir.</p>
+                  <p>
+                    Standart uygulama <strong>2 kattır</strong>. Kaplama
+                    hesaplarımız ve Boya Hesaplayıcı da litre başına 12,82 m² (2
+                    kat) esas alınarak yapılır. Koyu renk veya zorlu yüzeylerde
+                    ek kat gerekebilir.
+                  </p>
                 </div>
               </div>
             </div>
           </div>
 
           <div class="expander faq-item" data-expander>
-            <button type="button" class="expander__trigger" aria-expanded="false" aria-controls="faq-panel-3">
-              <h3 class="expander__title">İki kat arasında ne kadar beklemeliyim?</h3>
-              <svg class="expander__icon" width="16" height="16" viewBox="0 0 1024 1024" fill="currentColor" aria-hidden="true">
-                <path d="M97.833 328.835l60.34-60.34 353.831 353.828 353.83-353.828 60.339 60.34-414.17 414.171-414.171-414.171z"/>
+            <button
+              type="button"
+              class="expander__trigger"
+              aria-expanded="false"
+              aria-controls="faq-panel-3"
+            >
+              <h3 class="expander__title">
+                İki kat arasında ne kadar beklemeliyim?
+              </h3>
+              <svg
+                class="expander__icon"
+                width="16"
+                height="16"
+                viewBox="0 0 1024 1024"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  d="M97.833 328.835l60.34-60.34 353.831 353.828 353.83-353.828 60.339 60.34-414.17 414.171-414.171-414.171z"
+                />
               </svg>
             </button>
             <div class="expander__panel" id="faq-panel-3">
               <div class="expander__panel-inner">
                 <div class="expander__content">
-                  <p>Oda sıcaklığı ve havalandırmaya bağlı olarak katlar arası <strong>en az 6 saat</strong> kuruma süresi önerilir. Tam sertleşme ve koku kaybı için 24 saate kadar bekleyebilirsiniz.</p>
+                  <p>
+                    Oda sıcaklığı ve havalandırmaya bağlı olarak katlar arası
+                    <strong>en az 6 saat</strong> kuruma süresi önerilir. Tam
+                    sertleşme ve koku kaybı için 24 saate kadar
+                    bekleyebilirsiniz.
+                  </p>
                 </div>
               </div>
             </div>
           </div>
 
           <div class="expander faq-item" data-expander>
-            <button type="button" class="expander__trigger" aria-expanded="false" aria-controls="faq-panel-4">
-              <h3 class="expander__title">Boya Hesaplayıcı ile ne kadar almalıyım?</h3>
-              <svg class="expander__icon" width="16" height="16" viewBox="0 0 1024 1024" fill="currentColor" aria-hidden="true">
-                <path d="M97.833 328.835l60.34-60.34 353.831 353.828 353.83-353.828 60.339 60.34-414.17 414.171-414.171-414.171z"/>
+            <button
+              type="button"
+              class="expander__trigger"
+              aria-expanded="false"
+              aria-controls="faq-panel-4"
+            >
+              <h3 class="expander__title">
+                Boya Hesaplayıcı ile ne kadar almalıyım?
+              </h3>
+              <svg
+                class="expander__icon"
+                width="16"
+                height="16"
+                viewBox="0 0 1024 1024"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  d="M97.833 328.835l60.34-60.34 353.831 353.828 353.83-353.828 60.339 60.34-414.17 414.171-414.171-414.171z"
+                />
               </svg>
             </button>
             <div class="expander__panel" id="faq-panel-4">
               <div class="expander__panel-inner">
                 <div class="expander__content">
-                  <p>Duvar ölçülerinizi veya toplam alanı girerek tahmini litre ihtiyacını hesaplayın. Seçtiğiniz kova hacmine göre <strong>Adeti uygula</strong> ile sepet adedini güncelleyebilirsiniz. Sonuçlar bilgilendirme amaçlıdır; fire ve yüzey emiciliği miktarı değiştirebilir.</p>
+                  <p>
+                    Duvar ölçülerinizi veya toplam alanı girerek tahmini litre
+                    ihtiyacını hesaplayın. Seçtiğiniz kova hacmine göre
+                    <strong>Adeti uygula</strong> ile sepet adedini
+                    güncelleyebilirsiniz. Sonuçlar bilgilendirme amaçlıdır; fire
+                    ve yüzey emiciliği miktarı değiştirebilir.
+                  </p>
                 </div>
               </div>
             </div>
           </div>
 
           <div class="expander faq-item" data-expander>
-            <button type="button" class="expander__trigger" aria-expanded="false" aria-controls="faq-panel-5">
-              <h3 class="expander__title">Renk seçimini sonradan değiştirebilir miyim?</h3>
-              <svg class="expander__icon" width="16" height="16" viewBox="0 0 1024 1024" fill="currentColor" aria-hidden="true">
-                <path d="M97.833 328.835l60.34-60.34 353.831 353.828 353.83-353.828 60.339 60.34-414.17 414.171-414.171-414.171z"/>
+            <button
+              type="button"
+              class="expander__trigger"
+              aria-expanded="false"
+              aria-controls="faq-panel-5"
+            >
+              <h3 class="expander__title">
+                Renk seçimini sonradan değiştirebilir miyim?
+              </h3>
+              <svg
+                class="expander__icon"
+                width="16"
+                height="16"
+                viewBox="0 0 1024 1024"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  d="M97.833 328.835l60.34-60.34 353.831 353.828 353.83-353.828 60.339 60.34-414.17 414.171-414.171-414.171z"
+                />
               </svg>
             </button>
             <div class="expander__panel" id="faq-panel-5">
               <div class="expander__panel-inner">
                 <div class="expander__content">
-                  <p>Evet. Ürün sayfasındaki renk kartına tıklayarak paleti açabilir, renk ailesine göre filtreleyebilir veya kod ile arama yapabilirsiniz. Seçtiğiniz renk duvar önizlemesinde anında görünür.</p>
+                  <p>
+                    Evet. Ürün sayfasındaki renk kartına tıklayarak paleti
+                    açabilir, renk ailesine göre filtreleyebilir veya kod ile
+                    arama yapabilirsiniz. Seçtiğiniz renk duvar önizlemesinde
+                    anında görünür.
+                  </p>
                 </div>
               </div>
             </div>
           </div>
 
           <div class="expander faq-item" data-expander>
-            <button type="button" class="expander__trigger" aria-expanded="false" aria-controls="faq-panel-6">
-              <h3 class="expander__title">Teslimat ve iade koşulları nelerdir?</h3>
-              <svg class="expander__icon" width="16" height="16" viewBox="0 0 1024 1024" fill="currentColor" aria-hidden="true">
-                <path d="M97.833 328.835l60.34-60.34 353.831 353.828 353.83-353.828 60.339 60.34-414.17 414.171-414.171-414.171z"/>
+            <button
+              type="button"
+              class="expander__trigger"
+              aria-expanded="false"
+              aria-controls="faq-panel-6"
+            >
+              <h3 class="expander__title">
+                Teslimat ve iade koşulları nelerdir?
+              </h3>
+              <svg
+                class="expander__icon"
+                width="16"
+                height="16"
+                viewBox="0 0 1024 1024"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  d="M97.833 328.835l60.34-60.34 353.831 353.828 353.83-353.828 60.339 60.34-414.17 414.171-414.171-414.171z"
+                />
               </svg>
             </button>
             <div class="expander__panel" id="faq-panel-6">
               <div class="expander__panel-inner">
                 <div class="expander__content">
-                  <p>Siparişleriniz onay sonrası kargoya verilir; teslimat süresi bölgenize göre değişir. Açılmamış ve orijinal ambalajındaki ürünlerde iade koşulları geçerlidir — detaylar için <a href="https://www.wawmuhendislik.com.tr" target="_blank" rel="noopener">wawmuhendislik.com.tr</a> üzerinden bizimle iletişime geçebilirsiniz.</p>
+                  <p>
+                    Siparişleriniz onay sonrası kargoya verilir; teslimat süresi
+                    bölgenize göre değişir. Açılmamış ve orijinal ambalajındaki
+                    ürünlerde iade koşulları geçerlidir — detaylar için
+                    <a
+                      href="https://www.wawmuhendislik.com.tr"
+                      target="_blank"
+                      rel="noopener"
+                      >wawmuhendislik.com.tr</a
+                    >
+                    üzerinden bizimle iletişime geçebilirsiniz.
+                  </p>
                 </div>
               </div>
             </div>
           </div>
-
         </div>
       </section>
-
     </div>
 
     <div id="calc-drawer" class="calc-drawer" aria-hidden="true">
@@ -2721,6 +2975,8 @@
     <script>
       (function () {
         const PRICES = { 1: 549.9, 2: 1249.9, 3: 3299.9, 4: 5899.9 };
+        /** Mağaza kampanyası: online fiyat üzerinden en fazla %40 indirim */
+        const STORE_MAX_DISCOUNT = 0.4;
         const DEFAULT_COLOR = {
           code: "9918-CLASSIC WHITE",
           backgroundColor: "#f0efea",
@@ -2730,6 +2986,7 @@
         const form = document.getElementById("product-form");
         const colorPicker = document.getElementById("color-picker");
         const displayPrice = document.getElementById("display-price");
+        const storePriceEl = document.getElementById("store-price");
         const volumeLabel = document.getElementById("volume-label");
         const colorTrigger = document.getElementById("color-trigger");
         const colorTriggerCode = document.getElementById("color-trigger-code");
@@ -2787,12 +3044,16 @@
           if (!vol) return;
           const unit = parseFloat(vol.dataset.price);
           const qty = Math.max(1, parseInt(qtyInput.value, 10) || 1);
-          displayPrice.querySelector("span").textContent = formatPrice(
-            unit * qty,
-          );
+          const onlineTotal = unit * qty;
+          displayPrice.querySelector("span").textContent =
+            formatPrice(onlineTotal);
           displayPrice
             .querySelector('[itemprop="price"]')
-            .setAttribute("content", String(unit * qty));
+            .setAttribute("content", String(onlineTotal));
+          if (storePriceEl) {
+            const storeFrom = onlineTotal * (1 - STORE_MAX_DISCOUNT);
+            storePriceEl.textContent = formatPrice(storeFrom);
+          }
         }
 
         function applyColor(input, options) {
