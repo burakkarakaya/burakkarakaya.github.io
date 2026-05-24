@@ -1,637 +1,1019 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="tr">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Burak Karakaya — Selected Works</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>Burak Karakaya — Selected Works</title>
 
-  <!-- Lenis (smooth scroll) — 2D drag için kendi lerp loop'umuzu kullanıyoruz; -->
-  <!-- Lenis ileride sayfa-içi vertical smoothing için hazır dursun diye yükleniyor. -->
-  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+    <!-- Lenis (smooth scroll) — 2D drag için kendi lerp loop'umuzu kullanıyoruz; -->
+    <!-- Lenis ileride sayfa-içi vertical smoothing için hazır dursun diye yükleniyor. -->
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
 
-  <style>
-    :root {
-      --canvas-bg: #e9e4df;
-      --grid-line: rgba(0, 0, 0, 0.05);
-      --grid-size: 56px;
-      --nav-bg: #1f1d18;
-      --nav-fg: rgba(255, 255, 255, 0.7);
-      --nav-fg-strong: #ffffff;
-      --easing: cubic-bezier(0.85, 0.09, 0.15, 0.91);
-    }
+    <style>
+      :root {
+        --canvas-bg: #e9e4df;
+        --grid-line: rgba(0, 0, 0, 0.05);
+        --grid-size: 56px;
+        --nav-bg: #1f1d18;
+        --nav-fg: rgba(255, 255, 255, 0.7);
+        --nav-fg-strong: #ffffff;
+        --easing: cubic-bezier(0.85, 0.09, 0.15, 0.91);
+      }
 
-    *,
-    *::before,
-    *::after { box-sizing: border-box; }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
 
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      width: 100%;
-      overflow: hidden;
-      overscroll-behavior: none;
-      background-color: var(--canvas-bg);
-      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI", Roboto, sans-serif;
-      color: #1c1a14;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+        overscroll-behavior: none;
+        background-color: var(--canvas-bg);
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI",
+          Roboto, sans-serif;
+        color: #1c1a14;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
 
-    img { display: block; max-width: 100%; }
+      img {
+        display: block;
+        max-width: 100%;
+      }
 
-    /* ───────────── Navbar (the "window header") ───────────── */
-    .navbar {
-      position: fixed;
-      top: 16px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      padding: 6px;
-      background: rgba(15, 13, 10, 0.85);
-      -webkit-backdrop-filter: blur(20px);
-      backdrop-filter: blur(20px);
-      border-radius: 10px;
-      z-index: 100;
-      color: var(--nav-fg);
-      opacity: 0;
-      transition: opacity 0.5s ease;
-    }
-
-    .navbar.is-visible { opacity: 1; }
-
-    .navbar__logo {
-      min-width: 36px;
-      height: 28px;
-      padding: 0 8px;
-      border-radius: 6px;
-      background: #b1a781;
-      color: #1f1d18;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 12px;
-      letter-spacing: 0.02em;
-    }
-
-    .navbar__menu {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      align-items: center;
-      gap: 2px;
-    }
-
-    .navbar__menu a {
-      display: inline-flex;
-      align-items: center;
-      padding: 9px 12px;
-      text-decoration: none;
-      color: var(--nav-fg);
-      text-transform: uppercase;
-      font-size: 12px;
-      font-weight: 500;
-      letter-spacing: 0.04em;
-      border-radius: 6px;
-      transition: background-color 0.2s ease, color 0.2s ease;
-    }
-
-    .navbar__menu a:hover {
-      background: rgba(255, 255, 255, 0.08);
-      color: var(--nav-fg-strong);
-    }
-
-    /* ───────────── Canvas viewport ("window" the user looks through) ───────────── */
-    .canvas-wrapper {
-      position: fixed;
-      inset: 0;
-      overflow: hidden;
-      background-color: var(--canvas-bg);
-      background-image:
-        linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
-        linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
-      background-size: var(--grid-size) var(--grid-size);
-      cursor: grab;
-      user-select: none;
-      -webkit-user-select: none;
-      touch-action: none;
-    }
-
-    .canvas-wrapper.is-dragging { cursor: grabbing; }
-
-    /* ───────────── Inner canvas (larger than viewport, transformed by JS) ───────────── */
-    .canvas {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: var(--canvas-width);
-      height: var(--canvas-height);
-      transform: translate3d(-50%, -50%, 0);
-      will-change: transform;
-      pointer-events: none;
-    }
-
-    .canvas-content {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-    }
-
-    /* ───────────── Hero title (viewport ortasında SABİT, ama canvas stacking context'inde) ───────────── */
-    .hero {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      /* transform JS tarafından her frame yazılır → canvas hareketinin tersi uygulanır,
-         hero görsel olarak sabit kalır. Sadece -50% offset (centering) burada başlangıç değeri. */
-      transform: translate(-50%, -50%);
-      will-change: transform;
-      text-align: center;
-      pointer-events: none;
-      /* Orta katman — back kartlar arkasında, front kartlar önünde */
-      z-index: 5;
-    }
-
-    .hero__title {
-      margin: 0;
-      line-height: 0;
-      mix-blend-mode: difference;
-    }
-
-    .hero__logo {
-      display: block;
-      width: auto;
-      height: clamp(53px, 8vw, 99px);
-      margin: 0 auto;
-      overflow: visible;
-    }
-
-    .hero__logo-path {
-      fill: transparent;
-      stroke: #000;
-      stroke-width: 10;
-      stroke-linejoin: round;
-      stroke-dasharray: var(--path-len);
-      stroke-dashoffset: var(--path-len);
-    }
-
-    .hero__logo-path.is-drawing {
-      animation: svgDraw 1.6s cubic-bezier(0.65, 0, 0.35, 1) forwards;
-    }
-
-    .hero__logo-path.is-filling {
-      animation: svgFill 0.8s ease forwards;
-    }
-
-    @keyframes svgDraw {
-      to { stroke-dashoffset: 0; }
-    }
-
-    @keyframes svgFill {
-      0%   { fill: transparent; stroke-opacity: 1; }
-      60%  { fill: #000; stroke-opacity: 0.4; }
-      100% { fill: #000; stroke-opacity: 0; }
-    }
-
-    .hero__subtitle {
-      margin: 12px 0 0;
-      font-size: 14px;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: rgba(0, 0, 0, 0.45);
-      opacity: 0;
-      transform: translateY(8px);
-    }
-
-    .hero__subtitle.is-visible {
-      animation: subtitleIn 0.6s ease forwards;
-    }
-
-    @keyframes subtitleIn {
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ───────────── Intro — kart düşme animasyonu ───────────── */
-    .card {
-      opacity: 0;
-    }
-
-    .card.is-intro {
-      opacity: 1;
-      animation: cardDrop 0.7s cubic-bezier(0.22, 1, 0.36, 1) backwards;
-    }
-
-    .card.is-ready {
-      opacity: 1;
-    }
-
-    @keyframes cardDrop {
-      from {
+      /* ───────────── Navbar (the "window header") ───────────── */
+      .navbar {
+        position: fixed;
+        top: 16px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        padding: 6px;
+        background: rgba(15, 13, 10, 0.85);
+        -webkit-backdrop-filter: blur(20px);
+        backdrop-filter: blur(20px);
+        border-radius: 10px;
+        z-index: 100;
+        color: var(--nav-fg);
         opacity: 0;
-        transform: translateY(-120px) scale(0.92);
+        transition: opacity 0.5s ease;
       }
-      to {
+
+      .navbar.is-visible {
         opacity: 1;
-        transform: translateY(0) scale(1);
       }
-    }
 
-    /* ───────────── Project cards ───────────── */
-    .card {
-      position: absolute;
-      width: var(--card-w);
-      height: var(--card-h);
-      pointer-events: auto;
-      cursor: pointer;
-      will-change: transform;
-      border-radius: 4px;
-      overflow: hidden;
-      background-color: rgba(0, 0, 0, 0.05);
-      /* transform her frame JS'ten yazılır (mouse parallax + hover lift compose edilir).
+      .navbar__logo {
+        min-width: 36px;
+        height: 28px;
+        padding: 0 8px;
+        border-radius: 6px;
+        background: #b1a781;
+        color: #1f1d18;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 12px;
+        letter-spacing: 0.02em;
+      }
+
+      .navbar__menu {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        gap: 2px;
+      }
+
+      .navbar__menu a {
+        display: inline-flex;
+        align-items: center;
+        padding: 9px 12px;
+        text-decoration: none;
+        color: var(--nav-fg);
+        text-transform: uppercase;
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        border-radius: 6px;
+        transition:
+          background-color 0.2s ease,
+          color 0.2s ease;
+      }
+
+      .navbar__menu a:hover {
+        background: rgba(255, 255, 255, 0.08);
+        color: var(--nav-fg-strong);
+      }
+
+      /* ───────────── Canvas viewport ("window" the user looks through) ───────────── */
+      .canvas-wrapper {
+        position: fixed;
+        inset: 0;
+        overflow: hidden;
+        background-color: var(--canvas-bg);
+        background-image:
+          linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+          linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+        background-size: var(--grid-size) var(--grid-size);
+        cursor: grab;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: none;
+      }
+
+      .canvas-wrapper.is-dragging {
+        cursor: grabbing;
+      }
+
+      /* ───────────── Inner canvas (larger than viewport, transformed by JS) ───────────── */
+      .canvas {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: var(--canvas-width);
+        height: var(--canvas-height);
+        transform: translate3d(-50%, -50%, 0);
+        will-change: transform;
+        pointer-events: none;
+      }
+
+      .canvas-content {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+      }
+
+      /* ───────────── Hero title (viewport ortasında SABİT, ama canvas stacking context'inde) ───────────── */
+      .hero {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        /* transform JS tarafından her frame yazılır → canvas hareketinin tersi uygulanır,
+         hero görsel olarak sabit kalır. Sadece -50% offset (centering) burada başlangıç değeri. */
+        transform: translate(-50%, -50%);
+        will-change: transform;
+        text-align: center;
+        pointer-events: none;
+        /* Orta katman — back kartlar arkasında, front kartlar önünde */
+        z-index: 5;
+      }
+
+      .hero__title {
+        margin: 0;
+        line-height: 0;
+        mix-blend-mode: difference;
+      }
+
+      .hero__logo {
+        display: block;
+        width: auto;
+        height: clamp(53px, 8vw, 99px);
+        margin: 0 auto;
+        overflow: visible;
+      }
+
+      .hero__logo-path {
+        fill: transparent;
+        stroke: #000;
+        stroke-width: 10;
+        stroke-linejoin: round;
+        stroke-dasharray: var(--path-len);
+        stroke-dashoffset: var(--path-len);
+      }
+
+      .hero__logo-path.is-drawing {
+        animation: svgDraw 1.6s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+      }
+
+      .hero__logo-path.is-filling {
+        animation: svgFill 0.8s ease forwards;
+      }
+
+      @keyframes svgDraw {
+        to {
+          stroke-dashoffset: 0;
+        }
+      }
+
+      @keyframes svgFill {
+        0% {
+          fill: transparent;
+          stroke-opacity: 1;
+        }
+        60% {
+          fill: #000;
+          stroke-opacity: 0.4;
+        }
+        100% {
+          fill: #000;
+          stroke-opacity: 0;
+        }
+      }
+
+      .hero__subtitle {
+        margin: 12px 0 0;
+        font-size: 14px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: rgba(0, 0, 0, 0.45);
+        opacity: 0;
+        transform: translateY(8px);
+      }
+
+      .hero__subtitle.is-visible {
+        animation: subtitleIn 0.6s ease forwards;
+      }
+
+      @keyframes subtitleIn {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* ───────────── Intro — kart düşme animasyonu ───────────── */
+      .card {
+        opacity: 0;
+      }
+
+      .card.is-intro {
+        opacity: 1;
+        animation: cardDrop 0.7s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+      }
+
+      .card.is-ready {
+        opacity: 1;
+      }
+
+      @keyframes cardDrop {
+        from {
+          opacity: 0;
+          transform: translateY(-120px) scale(0.92);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      /* ───────────── Project cards ───────────── */
+      .card {
+        position: absolute;
+        width: var(--card-w);
+        height: var(--card-h);
+        pointer-events: auto;
+        cursor: pointer;
+        will-change: transform;
+        border-radius: 4px;
+        overflow: hidden;
+        background-color: rgba(0, 0, 0, 0.05);
+        /* transform her frame JS'ten yazılır (mouse parallax + hover lift compose edilir).
          CSS transition burada yok → per-frame update'ler smear olmasın; smoothing JS lerp. */
-    }
-    /* Katmanlar — hero z-index: 5 baz alınarak */
-    .card[data-layer="back"]  { z-index: 1;  }
-    .card[data-layer="front"] { z-index: 10; }
+      }
+      /* Katmanlar — hero z-index: 5 baz alınarak */
+      .card[data-layer="back"] {
+        z-index: 1;
+      }
+      .card[data-layer="front"] {
+        z-index: 10;
+      }
 
-    .card__inner {
-      position: absolute;
-      inset: 0;
-      overflow: hidden;
-    }
+      .card__inner {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+      }
 
-    .card__image {
-      /* Görsel kart boyutundan %36 büyük (her tarafta %18 taşar) → parallax marjini */
-      position: absolute;
-      inset: -18%;
-      will-change: transform;
-      background-color: rgba(0, 0, 0, 0.06);
-    }
+      .card__image {
+        /* Görsel kart boyutundan %36 büyük (her tarafta %18 taşar) → parallax marjini */
+        position: absolute;
+        inset: -18%;
+        will-change: transform;
+        background-color: rgba(0, 0, 0, 0.06);
+      }
 
-    /* img + video aynı katmanda absolute. Video kartlarında video img'in üstündedir
+      /* img + video aynı katmanda absolute. Video kartlarında video img'in üstündedir
        → poster img'i hızla yüklenip boşluğu doldurur, video oynayınca üzerine biner. */
-    .card__image img,
-    .card__image video {
-      position: absolute;
-      inset: 0;
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      pointer-events: none;
-      -webkit-user-drag: none;
-    }
+      .card__image img,
+      .card__image video {
+        position: absolute;
+        inset: 0;
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        pointer-events: none;
+        -webkit-user-drag: none;
+      }
 
-    .card__image video { z-index: 2; }
-    .card__poster      { z-index: 1; }
+      .card__image video {
+        z-index: 2;
+      }
+      .card__poster {
+        z-index: 1;
+      }
 
-    .card__meta {
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: -28px;
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 0 2px;
-      font-size: 12px;
-      color: rgba(0, 0, 0, 0.55);
-      opacity: 0;
-      transform: translateY(-4px);
-      transition: opacity 0.3s ease, transform 0.3s ease;
-      pointer-events: none;
-    }
+      .card__meta {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -28px;
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 0 2px;
+        font-size: 12px;
+        color: rgba(0, 0, 0, 0.55);
+        opacity: 0;
+        transform: translateY(-4px);
+        transition:
+          opacity 0.3s ease,
+          transform 0.3s ease;
+        pointer-events: none;
+      }
 
-    .card:hover .card__meta {
-      opacity: 1;
-      transform: translateY(0);
-    }
+      .card:hover .card__meta {
+        opacity: 1;
+        transform: translateY(0);
+      }
 
-    .card__name { font-weight: 500; color: rgba(0, 0, 0, 0.75); }
-    .card__type { text-transform: uppercase; letter-spacing: 0.06em; font-size: 10px; }
+      .card__name {
+        font-weight: 500;
+        color: rgba(0, 0, 0, 0.75);
+      }
+      .card__type {
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        font-size: 10px;
+      }
 
-    /* ───────────── Footer hint ───────────── */
-    .hint {
-      position: fixed;
-      bottom: 24px;
-      left: 50%;
-      transform: translateX(-50%);
-      padding: 8px 14px;
-      border-radius: 999px;
-      background: rgba(0, 0, 0, 0.06);
-      color: rgba(0, 0, 0, 0.55);
-      font-size: 11px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      pointer-events: none;
-      z-index: 50;
-      -webkit-backdrop-filter: blur(8px);
-      backdrop-filter: blur(8px);
-      opacity: 0;
-      transition: opacity 0.5s ease;
-    }
+      /* ───────────── Footer hint ───────────── */
+      .hint {
+        position: fixed;
+        bottom: 24px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 8px 14px;
+        border-radius: 999px;
+        background: rgba(0, 0, 0, 0.06);
+        color: rgba(0, 0, 0, 0.55);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        pointer-events: none;
+        z-index: 50;
+        -webkit-backdrop-filter: blur(8px);
+        backdrop-filter: blur(8px);
+        opacity: 0;
+        transition: opacity 0.5s ease;
+      }
 
-    .hint.is-visible { opacity: 1; }
-  </style>
-</head>
+      .hint.is-visible {
+        opacity: 1;
+      }
 
-<body>
-  <!-- ───────────── Navbar (window/header) ───────────── -->
-  <header class="navbar">
-    <div class="navbar__logo">BK</div>
-    <nav>
-      <ul class="navbar__menu">
-        <li><a href="#">Work</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Contact</a></li>
-      </ul>
-    </nav>
-  </header>
+      /* ───────────── Tooltip — hover sırasında proje adı (cursor takipli) ─────────────
+       Tek element, body altında fixed; JS pointer pozisyonuyla translate3d yazar.
+       Transform'a transition vermiyoruz → cursor'u 1:1 takip etsin, sallanmasın.
+       Sadece opacity geçişli (fade in/out). */
+      .tooltip {
+        position: fixed;
+        top: 0;
+        left: 0;
+        padding: 6px 10px;
+        background: rgba(15, 13, 10, 0.92);
+        -webkit-backdrop-filter: blur(8px);
+        backdrop-filter: blur(8px);
+        color: rgba(255, 255, 255, 0.92);
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        border-radius: 6px;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.18s ease;
+        z-index: 200;
+        white-space: nowrap;
+        will-change: transform, opacity;
+      }
 
-  <!-- ───────────── Canvas viewport ───────────── -->
-  <div class="canvas-wrapper" id="canvasWrapper">
-    <div class="canvas" id="canvas">
-      <div class="canvas-content" id="canvasContent">
-        <div class="hero">
-          <h1 class="hero__title">
-            <svg class="hero__logo" xmlns="http://www.w3.org/2000/svg" viewBox="456 546 1162 904" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Burak Karakaya">
-              <path class="hero__logo-path" d="M 461.136 552.039 C 478.786 552.814 498.908 552.276 516.835 552.287 L 600.087 552.588 L 849.139 552.536 L 924.814 552.227 C 941.922 552.148 958.236 551.849 975.208 552.951 C 1103.07 561.253 1187.61 653.655 1176.16 782.689 C 1168.63 867.549 1127.25 925.071 1064.68 978.424 C 1072.2 985.586 1081.19 992.551 1088.48 1000.09 C 1122.56 1035.97 1165.33 1084.03 1179.37 1132.09 C 1202.93 1212.78 1184.4 1317.56 1122.56 1377.07 C 1077.21 1420.71 1019.33 1442.43 957.173 1445.4 C 931.761 1446.61 906.183 1445.96 881.036 1445.95 L 757.707 1445.86 L 594.052 1446.01 C 593.23 1411.65 593.993 1374.54 594.001 1340 L 593.79 1118.17 C 612.722 1104.39 627.73 1092.7 633.737 1068.79 C 639.365 1046.53 635.756 1022.94 623.73 1003.37 C 598.14 961.415 547.98 945.501 502.932 934.708 C 533.501 932.299 581.122 933.28 613.075 933.217 L 804.108 933.059 C 867.763 933.065 943.108 942.434 992.442 894.864 C 1059.26 830.434 1050.04 703.557 947.37 683.293 C 933.121 680.48 919.633 679.561 905.103 679.774 C 802.019 678.598 698.135 681.498 595.147 679.254 C 581.581 668.703 554.591 641.997 541.9 629.559 C 516.331 604.499 485.802 577.394 461.136 552.039 z M 743.88 1319.9 C 780.473 1320.95 817.27 1320.41 853.919 1320.41 C 879.891 1320.41 908.07 1321.22 933.883 1319.12 C 963.622 1316.71 987.536 1304.08 1009.36 1284.08 C 1037.81 1255.05 1048.27 1220.88 1048.16 1180.89 C 1047.98 1116.66 1009.81 1059.51 946.006 1043.83 C 917.808 1036.89 888.77 1038.49 859.938 1038.1 C 821.479 1037.56 782.431 1038.89 744.045 1037.72 C 744.108 1130.55 745.536 1227.46 743.88 1319.9 z"/>
-              <path class="hero__logo-path" d="M 1381.33 551.883 C 1404.19 553.093 1430.64 552.346 1453.89 552.317 C 1488.49 552.274 1525.26 553.231 1559.64 551.792 C 1548.77 565.355 1534.91 587.129 1524.96 601.926 L 1468.08 686.784 L 1275.48 976.181 C 1300.44 1009.87 1325.55 1046.76 1349.93 1081.23 L 1454.44 1227.4 L 1546.41 1356.12 C 1563.17 1379.48 1583.46 1406.31 1599.11 1429.93 C 1603.57 1435.84 1607.15 1440.38 1612.05 1445.91 L 1443.03 1445.99 C 1432.34 1432.91 1416.97 1409.73 1406.86 1395.41 C 1381.11 1358.91 1355.63 1322.24 1330.39 1285.39 L 1117.39 979.051 C 1125.51 962.687 1143.73 935.161 1153.77 919.001 L 1211.28 824.97 L 1316.99 654.624 C 1337.21 622.067 1360.11 582.957 1381.33 551.883 z"/>
-            </svg>
-          </h1>
-          <p class="hero__subtitle">Selected works</p>
+      .tooltip.is-visible {
+        opacity: 1;
+      }
+
+      /* ───────────── Cross-document View Transitions ─────────────
+         Chrome 126+ / Edge 126+ destekler. Browser navigation sırasında
+         kaynak ve hedef sayfanın snapshot'larını alır, GPU compositor
+         thread'inde animate eder → JS frame yok, çok performanslı.
+
+         Akış:
+         1) Kart tıklanır → JS o kart için view-transition-name: hero-media
+         2) browser navigation öncesi snapshot alır (kart bir snapshot,
+            geri kalan herşey "root" snapshot)
+         3) detail sayfası yüklenir → onun .cover__media öğesinde de
+            view-transition-name: hero-media tanımlı
+         4) browser her iki tarafın snapshot'ını alır, morph animate eder
+
+         Desteklemeyen tarayıcılar (Safari/Firefox) için aşağıda
+         card-fly JS fallback'i var. */
+      @view-transition {
+        navigation: auto;
+      }
+
+      /* Morph eden ortak element — kart → kapak görseli */
+      ::view-transition-group(hero-media) {
+        animation-duration: 0.7s;
+        animation-timing-function: cubic-bezier(0.85, 0.09, 0.15, 0.91);
+      }
+
+      ::view-transition-image-pair(hero-media) {
+        isolation: auto;
+      }
+
+      ::view-transition-old(hero-media),
+      ::view-transition-new(hero-media) {
+        /* Browser default cross-fade'i devre dışı bırak — sadece geometric
+           morph kalsın. Çift görsel cross-fade'i mismatch içerikler
+           (kart thumbnail vs cover hero) için daha akıcı. */
+        animation-duration: 0.7s;
+        animation-timing-function: cubic-bezier(0.85, 0.09, 0.15, 0.91);
+        mix-blend-mode: normal;
+      }
+
+      /* Root cross-fade — navbar, hero logo, hint gibi VT-name'i olmayan
+         herşey buradan geçer. Daha kısa süre → odak kart morph'unda. */
+      ::view-transition-old(root),
+      ::view-transition-new(root) {
+        animation-duration: 0.45s;
+        animation-timing-function: ease;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        ::view-transition-group(*),
+        ::view-transition-old(*),
+        ::view-transition-new(*) {
+          animation-duration: 0.1s !important;
+        }
+      }
+
+      /* ───────────── Card-fly fallback (Safari / Firefox) ───────────── */
+      .card-fly {
+        position: fixed;
+        z-index: 9999;
+        overflow: hidden;
+        border-radius: 4px;
+        pointer-events: none;
+        background-color: var(--canvas-bg);
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
+        transition:
+          left 0.7s cubic-bezier(0.85, 0.09, 0.15, 0.91),
+          top 0.7s cubic-bezier(0.85, 0.09, 0.15, 0.91),
+          width 0.7s cubic-bezier(0.85, 0.09, 0.15, 0.91),
+          height 0.7s cubic-bezier(0.85, 0.09, 0.15, 0.91),
+          border-radius 0.7s cubic-bezier(0.85, 0.09, 0.15, 0.91),
+          box-shadow 0.7s ease;
+        will-change: left, top, width, height;
+      }
+
+      .card-fly img,
+      .card-fly video {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        pointer-events: none;
+      }
+
+      .card-fly.is-expanding {
+        left: 0 !important;
+        top: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        border-radius: 0;
+        box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+      }
+
+      body.is-leaving .navbar,
+      body.is-leaving .hint,
+      body.is-leaving .tooltip,
+      body.is-leaving .hero {
+        transition: opacity 0.35s ease;
+        opacity: 0 !important;
+        pointer-events: none;
+      }
+
+      body.is-leaving .canvas-wrapper {
+        transition: opacity 0.45s ease;
+        opacity: 0;
+      }
+
+      .card.is-departing {
+        opacity: 0;
+        transition: opacity 0.05s linear;
+      }
+
+      body.is-leaving .card:not(.is-departing) {
+        transition: opacity 0.35s ease, filter 0.35s ease;
+        opacity: 0.25;
+        filter: blur(2px);
+      }
+
+      .card[data-url] { cursor: pointer; }
+    </style>
+  </head>
+
+  <body>
+    <!-- ───────────── Navbar (window/header) ───────────── -->
+    <header class="navbar">
+      <div class="navbar__logo">BK</div>
+      <nav>
+        <ul class="navbar__menu">
+          <li><a href="#">Work</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- ───────────── Canvas viewport ───────────── -->
+    <div class="canvas-wrapper" id="canvasWrapper">
+      <div class="canvas" id="canvas">
+        <div class="canvas-content" id="canvasContent">
+          <div class="hero">
+            <h1 class="hero__title">
+              <svg
+                class="hero__logo"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="456 546 1162 904"
+                preserveAspectRatio="xMidYMid meet"
+                role="img"
+                aria-label="Burak Karakaya"
+              >
+                <path
+                  class="hero__logo-path"
+                  d="M 461.136 552.039 C 478.786 552.814 498.908 552.276 516.835 552.287 L 600.087 552.588 L 849.139 552.536 L 924.814 552.227 C 941.922 552.148 958.236 551.849 975.208 552.951 C 1103.07 561.253 1187.61 653.655 1176.16 782.689 C 1168.63 867.549 1127.25 925.071 1064.68 978.424 C 1072.2 985.586 1081.19 992.551 1088.48 1000.09 C 1122.56 1035.97 1165.33 1084.03 1179.37 1132.09 C 1202.93 1212.78 1184.4 1317.56 1122.56 1377.07 C 1077.21 1420.71 1019.33 1442.43 957.173 1445.4 C 931.761 1446.61 906.183 1445.96 881.036 1445.95 L 757.707 1445.86 L 594.052 1446.01 C 593.23 1411.65 593.993 1374.54 594.001 1340 L 593.79 1118.17 C 612.722 1104.39 627.73 1092.7 633.737 1068.79 C 639.365 1046.53 635.756 1022.94 623.73 1003.37 C 598.14 961.415 547.98 945.501 502.932 934.708 C 533.501 932.299 581.122 933.28 613.075 933.217 L 804.108 933.059 C 867.763 933.065 943.108 942.434 992.442 894.864 C 1059.26 830.434 1050.04 703.557 947.37 683.293 C 933.121 680.48 919.633 679.561 905.103 679.774 C 802.019 678.598 698.135 681.498 595.147 679.254 C 581.581 668.703 554.591 641.997 541.9 629.559 C 516.331 604.499 485.802 577.394 461.136 552.039 z M 743.88 1319.9 C 780.473 1320.95 817.27 1320.41 853.919 1320.41 C 879.891 1320.41 908.07 1321.22 933.883 1319.12 C 963.622 1316.71 987.536 1304.08 1009.36 1284.08 C 1037.81 1255.05 1048.27 1220.88 1048.16 1180.89 C 1047.98 1116.66 1009.81 1059.51 946.006 1043.83 C 917.808 1036.89 888.77 1038.49 859.938 1038.1 C 821.479 1037.56 782.431 1038.89 744.045 1037.72 C 744.108 1130.55 745.536 1227.46 743.88 1319.9 z"
+                />
+                <path
+                  class="hero__logo-path"
+                  d="M 1381.33 551.883 C 1404.19 553.093 1430.64 552.346 1453.89 552.317 C 1488.49 552.274 1525.26 553.231 1559.64 551.792 C 1548.77 565.355 1534.91 587.129 1524.96 601.926 L 1468.08 686.784 L 1275.48 976.181 C 1300.44 1009.87 1325.55 1046.76 1349.93 1081.23 L 1454.44 1227.4 L 1546.41 1356.12 C 1563.17 1379.48 1583.46 1406.31 1599.11 1429.93 C 1603.57 1435.84 1607.15 1440.38 1612.05 1445.91 L 1443.03 1445.99 C 1432.34 1432.91 1416.97 1409.73 1406.86 1395.41 C 1381.11 1358.91 1355.63 1322.24 1330.39 1285.39 L 1117.39 979.051 C 1125.51 962.687 1143.73 935.161 1153.77 919.001 L 1211.28 824.97 L 1316.99 654.624 C 1337.21 622.067 1360.11 582.957 1381.33 551.883 z"
+                />
+              </svg>
+            </h1>
+            <p class="hero__subtitle">Selected works</p>
+          </div>
+          <!-- Cards JS tarafından enjekte edilir -->
         </div>
-        <!-- Cards JS tarafından enjekte edilir -->
       </div>
     </div>
-  </div>
 
-  <div class="hint">Drag · Scroll · Trackpad</div>
+    <div class="hint">Drag · Scroll · Trackpad</div>
+    <div class="tooltip" id="tooltip" aria-hidden="true"></div>
 
-  <script>
-    // ───────────── Project data ─────────────
-    // type: "image" | "video"
-    // poster_url: video için ilk frame (varsa). Image için yok sayılır.
-    const PROJECTS = [
-      { name: "Nike",            type: "image", media_url: "https://www.minus99.com/wp-content/uploads/nike-thumbnail.jpg" },
-      { name: "IPEKYOL",       type: "video", media_url: "https://player.vimeo.com/external/591456280.hd.mp4?s=ceb6c93c814aca15b69046755f7d4bc39f62170c&profile_id=175",                                                                                  poster_url: "https://cdn.proj-e.com/proje/uploads/works/ipekyol-poster.jpg" },
-      { name: "TWIST",         type: "video", media_url: "https://player.vimeo.com/progressive_redirect/playback/678638721/rendition/540p?loc=external&signature=0bd4391e29d7fadf9b8ae9bcba17b4a0825d3bb748dbfacd17b7bfdc42e66e67",                       poster_url: "https://cdn.proj-e.com/proje/uploads/works/ana2502_d.jpeg" },
-      { name: "SUWEN",         type: "image", media_url: "https://cdn.proj-e.com/proje/uploads/works/MicrosoftTeams-image(6).png" },
-      { name: "1907",          type: "video", media_url: "https://player.vimeo.com/external/570174709.hd.mp4?s=fdfeaf7eef1ded7102e289d96c3cc852450296f2&profile_id=175",                                                                                  poster_url: "https://cdn.proj-e.com/proje/uploads/works/12-16-SARI.png" },
-      { name: "KORAYSPOR",     type: "video", media_url: "https://player.vimeo.com/progressive_redirect/playback/678758410/rendition/360p?loc=external&signature=3063870f55d4568f5d7e0d6157e63cbae97daa004f840f47ca0aa1ba62f65f0b",                       poster_url: "https://cdn.proj-e.com/proje/uploads/works/korayspor-poster.jpg" },
-      { name: "KARTAL YUVASI", type: "video", media_url: "https://player.vimeo.com/progressive_redirect/playback/666666587/rendition/480p/480p.mp4?loc=external&signature=40196ce03d94406f41b218bbc6ccabada83631656ec4a03fae1b884e2d6449c7",            poster_url: "https://cdn.proj-e.com/proje/uploads/works/bjk-poster.jpg" },
-      { name: "UNI BABY",      type: "image", media_url: "https://cdn.proj-e.com/proje/uploads/works/UniBaby_urunler.png" },
-      { name: "LESCON",        type: "image", media_url: "https://cdn.proj-e.com/proje/uploads/works/Lescon.jpg" },
-      { name: "NEW BALANCE",   type: "video", media_url: "https://player.vimeo.com/external/253609371.sd.mp4?s=8f6fbebebe2ff36a323d6767af9ca75743db8b0f&profile_id=165",                                                                                  poster_url: "https://cdn.proj-e.com/proje/uploads/works/newbalance-poster.jpg" },
-      { name: "VITRA",         type: "image", media_url: "https://cdn.proj-e.com/proje/uploads/works/vitra-cover.jpg" },
-      { name: "MONSTER",       type: "image", media_url: "https://cdn.proj-e.com/proje/uploads/works/monster-cover.jpg" },
-      { name: "FAIK SONMEZ",   type: "image", media_url: "https://cdn.proj-e.com/proje/uploads/works/a2021-22%20KIS%20KATALOG-WEB-35.jpg" },
-      { name: "MACHKA",        type: "image", media_url: "https://cdn.proj-e.com/proje/uploads/works/machka.jpg" },
-      { name: "KONYALI SAAT",  type: "image", media_url: "https://cdn.proj-e.com/proje/uploads/works/works_500x500.jpg" },
-      { name: "GS STORE",      type: "image", media_url: "https://cdn.proj-e.com/proje/uploads/works/gs-cover.jpg" },
-      { name: "UKINOX",        type: "image", media_url: "https://cdn.proj-e.com/proje/uploads/works/ukinox.3.png" },
-      { name: "KIDEGA",        type: "image", media_url: "https://cdn.proj-e.com/proje/uploads/works/kidega-works.png" },
-      { name: "EVESHOP",       type: "image", media_url: "https://cdn.proj-e.com/proje/uploads/works/EVE_MAKEUP_1000x1000.png" },
-      { name: "NUSR-ET",       type: "video", media_url: "https://player.vimeo.com/progressive_redirect/playback/666666122/rendition/540p/540p.mp4?loc=external&signature=05f6ca9a8dd45c932b3c54f2bf4e04090da4bad23a613f083bbe46a42bb2ac34",            poster_url: "https://cdn.proj-e.com/proje/uploads/works/nusret-poster.jpg" },
-      { name: "WAT",           type: "video", media_url: "https://player.vimeo.com/progressive_redirect/playback/666666997/rendition/540p/540p.mp4?loc=external&signature=38d5950d51302910abeb86fed2008c58bb119dccd09ac7e47d1a4f312ce58f83",            poster_url: "https://cdn.proj-e.com/proje/uploads/works/wat-poster.jpg" },
-      { name: "COSMETICA",     type: "video", media_url: "https://player.vimeo.com/progressive_redirect/playback/666664863/rendition/540p/540p.mp4?loc=external&signature=61c3cd893061c6b2e47f443eb579cd049a804903615359adc74c1b8cec512bf8",            poster_url: "https://cdn.proj-e.com/proje/uploads/works/cosmetica-poster.jpg" },
-      { name: "EXQUISE",       type: "video", media_url: "https://player.vimeo.com/progressive_redirect/playback/666665647/rendition/540p/540p.mp4?loc=external&signature=8874b7dd4693e71513310c133d60256b565469ee45809151d87f202fe5adff17",            poster_url: "https://cdn.proj-e.com/proje/uploads/works/exquise-poster.jpg" },
-      { name: "FLORMAR",       type: "video", media_url: "https://player.vimeo.com/external/253754217.sd.mp4?s=a69398670eb618a8fc8f7fcc21b1c285def09255&profile_id=165",                                                                                  poster_url: "https://cdn.proj-e.com/proje/uploads/works/flormar-poster.jpg" },
-      { name: "FAKIR",         type: "image", media_url: "https://cdn.proj-e.com/proje/uploads/works/fakir-global-1.jpg" },
-    ];
+    <script>
+      // ───────────── Project data ─────────────
+      // type: "image" | "video"
+      // poster_url: video için ilk frame (varsa). Image için yok sayılır.
+      const PROJECTS = [
+        {
+          name: "Nike",
+          type: "image",
+          media_url:
+            "https://www.minus99.com/wp-content/uploads/nike-thumbnail.jpg",
+          url: "nike-detail.html",
+        },
+        {
+          name: "IPEKYOL",
+          type: "video",
+          media_url:
+            "https://player.vimeo.com/external/591456280.hd.mp4?s=ceb6c93c814aca15b69046755f7d4bc39f62170c&profile_id=175",
+          poster_url:
+            "https://cdn.proj-e.com/proje/uploads/works/ipekyol-poster.jpg",
+        },
+        {
+          name: "TWIST",
+          type: "video",
+          media_url:
+            "https://player.vimeo.com/progressive_redirect/playback/678638721/rendition/540p?loc=external&signature=0bd4391e29d7fadf9b8ae9bcba17b4a0825d3bb748dbfacd17b7bfdc42e66e67",
+          poster_url:
+            "https://cdn.proj-e.com/proje/uploads/works/ana2502_d.jpeg",
+        },
+        {
+          name: "SUWEN",
+          type: "image",
+          media_url:
+            "https://cdn.proj-e.com/proje/uploads/works/MicrosoftTeams-image(6).png",
+        },
+        {
+          name: "1907",
+          type: "video",
+          media_url:
+            "https://player.vimeo.com/external/570174709.hd.mp4?s=fdfeaf7eef1ded7102e289d96c3cc852450296f2&profile_id=175",
+          poster_url:
+            "https://cdn.proj-e.com/proje/uploads/works/12-16-SARI.png",
+        },
+        {
+          name: "KORAYSPOR",
+          type: "video",
+          media_url:
+            "https://player.vimeo.com/progressive_redirect/playback/678758410/rendition/360p?loc=external&signature=3063870f55d4568f5d7e0d6157e63cbae97daa004f840f47ca0aa1ba62f65f0b",
+          poster_url:
+            "https://cdn.proj-e.com/proje/uploads/works/korayspor-poster.jpg",
+        },
+        {
+          name: "KARTAL YUVASI",
+          type: "video",
+          media_url:
+            "https://player.vimeo.com/progressive_redirect/playback/666666587/rendition/480p/480p.mp4?loc=external&signature=40196ce03d94406f41b218bbc6ccabada83631656ec4a03fae1b884e2d6449c7",
+          poster_url:
+            "https://cdn.proj-e.com/proje/uploads/works/bjk-poster.jpg",
+          url: "kartalyuvasi-detail.html",
+        },
+        {
+          name: "UNI BABY",
+          type: "image",
+          media_url:
+            "https://cdn.proj-e.com/proje/uploads/works/UniBaby_urunler.png",
+        },
+        {
+          name: "LESCON",
+          type: "image",
+          media_url: "https://cdn.proj-e.com/proje/uploads/works/Lescon.jpg",
+        },
+        {
+          name: "NEW BALANCE",
+          type: "video",
+          media_url:
+            "https://player.vimeo.com/external/253609371.sd.mp4?s=8f6fbebebe2ff36a323d6767af9ca75743db8b0f&profile_id=165",
+          poster_url:
+            "https://cdn.proj-e.com/proje/uploads/works/newbalance-poster.jpg",
+        },
+        {
+          name: "VITRA",
+          type: "image",
+          media_url:
+            "https://cdn.proj-e.com/proje/uploads/works/vitra-cover.jpg",
+        },
+        {
+          name: "MONSTER",
+          type: "image",
+          media_url:
+            "https://cdn.proj-e.com/proje/uploads/works/monster-cover.jpg",
+        },
+        {
+          name: "FAIK SONMEZ",
+          type: "image",
+          media_url:
+            "https://cdn.proj-e.com/proje/uploads/works/a2021-22%20KIS%20KATALOG-WEB-35.jpg",
+        },
+        {
+          name: "MACHKA",
+          type: "image",
+          media_url: "https://cdn.proj-e.com/proje/uploads/works/machka.jpg",
+        },
+        {
+          name: "KONYALI SAAT",
+          type: "image",
+          media_url:
+            "https://cdn.proj-e.com/proje/uploads/works/works_500x500.jpg",
+        },
+        {
+          name: "GS STORE",
+          type: "image",
+          media_url: "https://cdn.proj-e.com/proje/uploads/works/gs-cover.jpg",
+        },
+        {
+          name: "UKINOX",
+          type: "image",
+          media_url: "https://cdn.proj-e.com/proje/uploads/works/ukinox.3.png",
+        },
+        {
+          name: "KIDEGA",
+          type: "image",
+          media_url:
+            "https://cdn.proj-e.com/proje/uploads/works/kidega-works.png",
+        },
+        {
+          name: "EVESHOP",
+          type: "image",
+          media_url:
+            "https://cdn.proj-e.com/proje/uploads/works/EVE_MAKEUP_1000x1000.png",
+        },
+        {
+          name: "NUSR-ET",
+          type: "video",
+          media_url:
+            "https://player.vimeo.com/progressive_redirect/playback/666666122/rendition/540p/540p.mp4?loc=external&signature=05f6ca9a8dd45c932b3c54f2bf4e04090da4bad23a613f083bbe46a42bb2ac34",
+          poster_url:
+            "https://cdn.proj-e.com/proje/uploads/works/nusret-poster.jpg",
+        },
+        {
+          name: "WAT",
+          type: "video",
+          media_url:
+            "https://player.vimeo.com/progressive_redirect/playback/666666997/rendition/540p/540p.mp4?loc=external&signature=38d5950d51302910abeb86fed2008c58bb119dccd09ac7e47d1a4f312ce58f83",
+          poster_url:
+            "https://cdn.proj-e.com/proje/uploads/works/wat-poster.jpg",
+        },
+        {
+          name: "COSMETICA",
+          type: "video",
+          media_url:
+            "https://player.vimeo.com/progressive_redirect/playback/666664863/rendition/540p/540p.mp4?loc=external&signature=61c3cd893061c6b2e47f443eb579cd049a804903615359adc74c1b8cec512bf8",
+          poster_url:
+            "https://cdn.proj-e.com/proje/uploads/works/cosmetica-poster.jpg",
+        },
+        {
+          name: "EXQUISE",
+          type: "video",
+          media_url:
+            "https://player.vimeo.com/progressive_redirect/playback/666665647/rendition/540p/540p.mp4?loc=external&signature=8874b7dd4693e71513310c133d60256b565469ee45809151d87f202fe5adff17",
+          poster_url:
+            "https://cdn.proj-e.com/proje/uploads/works/exquise-poster.jpg",
+        },
+        {
+          name: "FLORMAR",
+          type: "video",
+          media_url:
+            "https://player.vimeo.com/external/253754217.sd.mp4?s=a69398670eb618a8fc8f7fcc21b1c285def09255&profile_id=165",
+          poster_url:
+            "https://cdn.proj-e.com/proje/uploads/works/flormar-poster.jpg",
+        },
+        {
+          name: "FAKIR",
+          type: "image",
+          media_url:
+            "https://cdn.proj-e.com/proje/uploads/works/fakir-global-1.jpg",
+        },
+      ];
 
-    // ───────────── Canvas / layout config ─────────────
-    // 24 proje × 5 col = 5 row (son hücre boş kalır). Canvas'ı kompakt tutuyoruz
-    // (3800×2500) → ilk açılışta hero'nun çevresindeki ring 1 kartların gözle
-    // seçilebilir bir kısmı viewport'a düşsün, dış halkadaki kartlar da canvas
-    // kenarına yakın dursun (kenarda boş "ölü" alan kalmasın). Padding'i
-    // kasıtlı düşük tutuyoruz; collision separation pass clamp'i padding×0.4
-    // olduğu için kartlar gerekirse canvas kenarına 40px'e kadar yanaşabilir.
-    // Merkez hücre boş kalır (spiral merkez atlanır) → hero metnini hiçbir
-    // kart örtmez.
-    const CANVAS_W         = 3800;
-    const CANVAS_H         = 2500;
-    const CANVAS_PADDING_X = 100;
-    const CANVAS_PADDING_Y = 100;
-    const COLS = 5;
-    const ROWS = Math.ceil(PROJECTS.length / COLS);
-    const CELL_RANDOM_RANGE = 0.28; // hücre boyutunun ±%14'ü kadar rastgele kayma
-    const COLLISION_GAP     = 24;   // kartlar arası min boşluk (px) — separation pass'te kullanılır
+      // ───────────── Canvas / layout config ─────────────
+      // 24 proje × 5 col = 5 row (son hücre boş kalır). Canvas'ı kompakt tutuyoruz
+      // (3800×2500) → ilk açılışta hero'nun çevresindeki ring 1 kartların gözle
+      // seçilebilir bir kısmı viewport'a düşsün, dış halkadaki kartlar da canvas
+      // kenarına yakın dursun (kenarda boş "ölü" alan kalmasın). Padding'i
+      // kasıtlı düşük tutuyoruz; collision separation pass clamp'i padding×0.4
+      // olduğu için kartlar gerekirse canvas kenarına 40px'e kadar yanaşabilir.
+      // Merkez hücre boş kalır (spiral merkez atlanır) → hero metnini hiçbir
+      // kart örtmez.
+      const CANVAS_W = 3800;
+      const CANVAS_H = 2500;
+      const CANVAS_PADDING_X = 100;
+      const CANVAS_PADDING_Y = 100;
+      const COLS = 5;
+      const ROWS = Math.ceil(PROJECTS.length / COLS);
+      const CELL_RANDOM_RANGE = 0.28; // hücre boyutunun ±%14'ü kadar rastgele kayma
+      const COLLISION_GAP = 24; // kartlar arası min boşluk (px) — separation pass'te kullanılır
 
-    // Tüm kartlar 1:1 (kare). Sadece boyut çeşitleniyor → tutarlı bir grid hissi
-    // + içerik (image/video) tipinden bağımsız aynı görsel ritim.
-    function getCardSize(i) {
-      if (i % 4 === 0) return { w: 520, h: 520, type: "large"  };
-      if (i % 4 === 1) return { w: 420, h: 420, type: "medium" };
-      if (i % 4 === 2) return { w: 480, h: 480, type: "medium" };
-      return                  { w: 360, h: 360, type: "small"  };
-    }
-
-    // Deterministik (seeded) random — her açılışta aynı dağılım, ama "random gibi"
-    function rand(seed) {
-      const x = Math.sin(seed * 9999.137) * 43758.5453;
-      return x - Math.floor(x);
-    }
-
-    // ───────────── Spiral cell ordering (center → outward) ─────────────
-    // Merkezden başlayıp saat yönünde dışa doğru sarmal hücre sırası üretir.
-    // PROJECTS[0] → ring 1 ilk hücre (sağ), [1..7] → ring 1 spiral, [8..23] → ring 2.
-    // Merkez hücre kasıtlı olarak ATLANIR → hero metni boş alanda kalır,
-    // kart hero'yu kapatmaz (sadece kenardan kuşatır).
-    // Algoritma: standart "expanding step length" sarmal. Adım dizisi 1,1,2,2,3,3,...
-    // her iki adım dönüşünde adım uzunluğu artar. Her adımda yön saat yönü
-    // dönerken (dx,dy)→(-dy,dx) rotation uygulanır.
-    function generateSpiralCells(cols, rows) {
-      const cx = Math.floor(cols / 2);
-      const cy = Math.floor(rows / 2);
-      const total = cols * rows;
-      const need = total - 1; // merkez hariç
-      const inBounds = (x, y) => x >= 0 && x < cols && y >= 0 && y < rows;
-
-      const cells = [];
-      let x = cx, y = cy;
-      let dx = 1, dy = 0; // başlangıç yönü: sağ
-      let steps = 1;
-      let dirCount = 0;
-      let safetyIter = 0;
-      const maxIter = (cols + rows) * 4 + 16;
-
-      while (cells.length < need && safetyIter++ < maxIter) {
-        for (let s = 0; s < steps; s++) {
-          x += dx;
-          y += dy;
-          if (inBounds(x, y)) {
-            cells.push({ col: x, row: y });
-            if (cells.length >= need) break;
-          }
-        }
-        // saat yönü dönüş: right→down→left→up→right
-        const ndx = -dy;
-        const ndy =  dx;
-        dx = ndx;
-        dy = ndy;
-        dirCount++;
-        if (dirCount === 2) { steps++; dirCount = 0; }
+      // Tüm kartlar 1:1 (kare). Sadece boyut çeşitleniyor → tutarlı bir grid hissi
+      // + içerik (image/video) tipinden bağımsız aynı görsel ritim.
+      function getCardSize(i) {
+        if (i % 4 === 0) return { w: 520, h: 520, type: "large" };
+        if (i % 4 === 1) return { w: 420, h: 420, type: "medium" };
+        if (i % 4 === 2) return { w: 480, h: 480, type: "medium" };
+        return { w: 360, h: 360, type: "small" };
       }
-      return cells;
-    }
 
-    // ───────────── Build cards ─────────────
-    const canvas        = document.getElementById("canvas");
-    const canvasContent = document.getElementById("canvasContent");
-    canvas.style.setProperty("--canvas-width",  CANVAS_W + "px");
-    canvas.style.setProperty("--canvas-height", CANVAS_H + "px");
+      // Deterministik (seeded) random — her açılışta aynı dağılım, ama "random gibi"
+      function rand(seed) {
+        const x = Math.sin(seed * 9999.137) * 43758.5453;
+        return x - Math.floor(x);
+      }
 
-    // Grid yalnızca padding'in iç kısmına yerleşir → köşelerdeki kartlar canvas kenarına yapışmaz
-    const gridW = CANVAS_W - 2 * CANVAS_PADDING_X;
-    const gridH = CANVAS_H - 2 * CANVAS_PADDING_Y;
-    const cellW = gridW / COLS;
-    const cellH = gridH / ROWS;
+      // ───────────── Spiral cell ordering (center → outward) ─────────────
+      // Merkezden başlayıp saat yönünde dışa doğru sarmal hücre sırası üretir.
+      // PROJECTS[0] → ring 1 ilk hücre (sağ), [1..7] → ring 1 spiral, [8..23] → ring 2.
+      // Merkez hücre kasıtlı olarak ATLANIR → hero metni boş alanda kalır,
+      // kart hero'yu kapatmaz (sadece kenardan kuşatır).
+      // Algoritma: standart "expanding step length" sarmal. Adım dizisi 1,1,2,2,3,3,...
+      // her iki adım dönüşünde adım uzunluğu artar. Her adımda yön saat yönü
+      // dönerken (dx,dy)→(-dy,dx) rotation uygulanır.
+      function generateSpiralCells(cols, rows) {
+        const cx = Math.floor(cols / 2);
+        const cy = Math.floor(rows / 2);
+        const total = cols * rows;
+        const need = total - 1; // merkez hariç
+        const inBounds = (x, y) => x >= 0 && x < cols && y >= 0 && y < rows;
 
-    // Spiral hücre sırası — merkezden dışa doğru. Merkez hücre dahil değil.
-    // Ring 1 (hero'nun en yakın komşuları) → cells[0..7]
-    // Ring 2 (dış halka)                    → cells[8..23]
-    const spiralCells = generateSpiralCells(COLS, ROWS);
-    const RING1_COUNT = 8; // 5×5 grid'te merkez etrafındaki ilk halka
+        const cells = [];
+        let x = cx,
+          y = cy;
+        let dx = 1,
+          dy = 0; // başlangıç yönü: sağ
+        let steps = 1;
+        let dirCount = 0;
+        let safetyIter = 0;
+        const maxIter = (cols + rows) * 4 + 16;
 
-    // 1) Önce tüm pozisyonları hesapla (rect listesi). 2) Collision separation
-    //    pass çalıştır (üst üste binen kartları minimum eksende ittir). 3) Final
-    //    konuma göre DOM'u inşa et ve _snapX/_snapY cache'le.
-    // PROJECTS[i] → spiralCells[i] eşleşmesi: array'in başı hero'ya en yakın,
-    // sonu en uzak. İlk 8 (ring 1) hero'yu kuşatır, kalan 16 dış halkadadır.
-    const placements = [];
-    PROJECTS.forEach((project, i) => {
-      const cell = spiralCells[i];
-      if (!cell) return; // proje sayısı hücre sayısını aşarsa atla (defensive)
-      placements.push(computePlacement(project, i, cell.col, cell.row));
-    });
-
-    function computePlacement(project, i, col, row) {
-      const size  = getCardSize(i);
-
-      const baseX = CANVAS_PADDING_X + col * cellW + cellW / 2;
-      const baseY = CANVAS_PADDING_Y + row * cellH + cellH / 2;
-
-      const r1 = rand(i * 1.13 + 7);
-      const r2 = rand(i * 2.71 + 3);
-      const offX = (r1 - 0.5) * cellW * CELL_RANDOM_RANGE;
-      const offY = (r2 - 0.5) * cellH * CELL_RANDOM_RANGE;
-
-      return {
-        project, i,
-        size,
-        x: baseX + offX - size.w / 2,
-        y: baseY + offY - size.h / 2,
-        w: size.w,
-        h: size.h,
-        // Ring 1 (hero'nun komşuları) — random offset ile hero kenarına yaklaşma
-        // ihtimaline karşı back-layer'a atanır → hero metni üstünde kalır.
-        isInnerRing: i < RING1_COUNT,
-      };
-    }
-
-    // ───────────── Collision separation ─────────────
-    // Pair-wise AABB overlap — varsa minimum eksende ittirip ayır. Birkaç
-    // iterasyon yeter; convergence için "moved" bayrağı ile erken çıkış.
-    function resolveCollisions(rects, iterations = 8, gap = COLLISION_GAP) {
-      const minX = CANVAS_PADDING_X * 0.4;
-      const maxX = CANVAS_W - CANVAS_PADDING_X * 0.4;
-      const minY = CANVAS_PADDING_Y * 0.4;
-      const maxY = CANVAS_H - CANVAS_PADDING_Y * 0.4;
-
-      for (let iter = 0; iter < iterations; iter++) {
-        let moved = false;
-        for (let i = 0; i < rects.length; i++) {
-          for (let j = i + 1; j < rects.length; j++) {
-            const a = rects[i];
-            const b = rects[j];
-            const overlapX = Math.min(a.x + a.w, b.x + b.w) - Math.max(a.x, b.x);
-            const overlapY = Math.min(a.y + a.h, b.y + b.h) - Math.max(a.y, b.y);
-
-            if (overlapX + gap > 0 && overlapY + gap > 0) {
-              // Minimum eksende ayır → en az görsel bozulma
-              if (overlapX < overlapY) {
-                const push = (overlapX + gap) / 2;
-                if (a.x < b.x) { a.x -= push; b.x += push; }
-                else           { a.x += push; b.x -= push; }
-              } else {
-                const push = (overlapY + gap) / 2;
-                if (a.y < b.y) { a.y -= push; b.y += push; }
-                else           { a.y += push; b.y -= push; }
-              }
-              moved = true;
+        while (cells.length < need && safetyIter++ < maxIter) {
+          for (let s = 0; s < steps; s++) {
+            x += dx;
+            y += dy;
+            if (inBounds(x, y)) {
+              cells.push({ col: x, row: y });
+              if (cells.length >= need) break;
             }
           }
+          // saat yönü dönüş: right→down→left→up→right
+          const ndx = -dy;
+          const ndy = dx;
+          dx = ndx;
+          dy = ndy;
+          dirCount++;
+          if (dirCount === 2) {
+            steps++;
+            dirCount = 0;
+          }
         }
-        // Canvas dışına itilen kartları geri çek (clamp)
-        for (let i = 0; i < rects.length; i++) {
-          const r = rects[i];
-          if (r.x < minX)            r.x = minX;
-          if (r.x + r.w > maxX)      r.x = maxX - r.w;
-          if (r.y < minY)            r.y = minY;
-          if (r.y + r.h > maxY)      r.y = maxY - r.h;
-        }
-        if (!moved) break;
-      }
-    }
-    resolveCollisions(placements);
-
-    placements.forEach((p) => placeCard(p));
-
-    function placeCard(p) {
-      const { project, i, size, x, y, isInnerRing } = p;
-
-      // Parallax katsayısı (1.0 - 2.6) → her kart farklı derinlik hissi
-      const parallax = 1.0 + rand(i + 100) * 1.6;
-
-      const card = document.createElement("div");
-      card.className = "card";
-      card.style.setProperty("--card-w", size.w + "px");
-      card.style.setProperty("--card-h", size.h + "px");
-      card.style.left = x + "px";
-      card.style.top  = y + "px";
-      card.dataset.parallax = parallax.toFixed(3);
-      card.dataset.type     = size.type;
-      card.dataset.media    = project.type; // "image" | "video"
-
-      // Per-card cache → RAF loop'unda her frame attribute parse etmemek için
-      card._w = size.w;
-      card._h = size.h;
-      card._parallax = parallax;
-      card._parallaxIntensity = 0.55 + ((parallax - 1.0) / 1.6) * 0.45;
-      card._reachX = 0.6 + rand(i * 3.71 + 11) * 0.9;
-      card._reachY = 0.6 + rand(i * 5.13 + 17) * 0.9;
-
-      // İç halka (hero komşuları) her zaman back-layer → hero metnini örtmez.
-      // Dış halkada %30 back, %70 front rastgele dağılım korunuyor.
-      const isBack = isInnerRing || rand(i * 11.7 + 5) < 0.30;
-      card.dataset.layer = isBack ? "back" : "front";
-
-      // Snap hedefi (final konuma göre — collision sonrası)
-      card._snapX = CANVAS_W / 2 - (x + size.w / 2);
-      card._snapY = CANVAS_H / 2 - (y + size.h / 2);
-
-      // Media: video veya image
-      // Video kartlarında poster'ı ALT katmana statik <img> olarak da ekliyoruz →
-      // <video preload="metadata"> metadata gelene kadar boş kare göstermesin diye.
-      // Img anında yüklenir, video sonradan üzerine biner. Img 404 verirse
-      // onerror ile gizlenir, .card__image bg-color zemini görünür.
-      let mediaHtml;
-      if (project.type === "video") {
-        const posterImg = project.poster_url
-          ? `<img class="card__poster" src="${project.poster_url}" alt="${project.name}" loading="eager" draggable="false" onerror="this.style.display='none'" />`
-          : "";
-        mediaHtml = `${posterImg}<video class="card__media" src="${project.media_url}"${project.poster_url ? ` poster="${project.poster_url}"` : ""} muted playsinline loop preload="metadata" disablepictureinpicture></video>`;
-      } else {
-        mediaHtml = `<img class="card__media" src="${project.media_url}" alt="${project.name}" loading="lazy" draggable="false" />`;
+        return cells;
       }
 
-      card.innerHTML = `
+      // ───────────── Build cards ─────────────
+      const canvas = document.getElementById("canvas");
+      const canvasContent = document.getElementById("canvasContent");
+      canvas.style.setProperty("--canvas-width", CANVAS_W + "px");
+      canvas.style.setProperty("--canvas-height", CANVAS_H + "px");
+
+      // Grid yalnızca padding'in iç kısmına yerleşir → köşelerdeki kartlar canvas kenarına yapışmaz
+      const gridW = CANVAS_W - 2 * CANVAS_PADDING_X;
+      const gridH = CANVAS_H - 2 * CANVAS_PADDING_Y;
+      const cellW = gridW / COLS;
+      const cellH = gridH / ROWS;
+
+      // Spiral hücre sırası — merkezden dışa doğru. Merkez hücre dahil değil.
+      // Ring 1 (hero'nun en yakın komşuları) → cells[0..7]
+      // Ring 2 (dış halka)                    → cells[8..23]
+      const spiralCells = generateSpiralCells(COLS, ROWS);
+      const RING1_COUNT = 8; // 5×5 grid'te merkez etrafındaki ilk halka
+
+      // 1) Önce tüm pozisyonları hesapla (rect listesi). 2) Collision separation
+      //    pass çalıştır (üst üste binen kartları minimum eksende ittir). 3) Final
+      //    konuma göre DOM'u inşa et ve _snapX/_snapY cache'le.
+      // PROJECTS[i] → spiralCells[i] eşleşmesi: array'in başı hero'ya en yakın,
+      // sonu en uzak. İlk 8 (ring 1) hero'yu kuşatır, kalan 16 dış halkadadır.
+      const placements = [];
+      PROJECTS.forEach((project, i) => {
+        const cell = spiralCells[i];
+        if (!cell) return; // proje sayısı hücre sayısını aşarsa atla (defensive)
+        placements.push(computePlacement(project, i, cell.col, cell.row));
+      });
+
+      function computePlacement(project, i, col, row) {
+        const size = getCardSize(i);
+
+        const baseX = CANVAS_PADDING_X + col * cellW + cellW / 2;
+        const baseY = CANVAS_PADDING_Y + row * cellH + cellH / 2;
+
+        const r1 = rand(i * 1.13 + 7);
+        const r2 = rand(i * 2.71 + 3);
+        const offX = (r1 - 0.5) * cellW * CELL_RANDOM_RANGE;
+        const offY = (r2 - 0.5) * cellH * CELL_RANDOM_RANGE;
+
+        return {
+          project,
+          i,
+          size,
+          x: baseX + offX - size.w / 2,
+          y: baseY + offY - size.h / 2,
+          w: size.w,
+          h: size.h,
+          // Ring 1 (hero'nun komşuları) — random offset ile hero kenarına yaklaşma
+          // ihtimaline karşı back-layer'a atanır → hero metni üstünde kalır.
+          isInnerRing: i < RING1_COUNT,
+        };
+      }
+
+      // ───────────── Collision separation ─────────────
+      // Pair-wise AABB overlap — varsa minimum eksende ittirip ayır. Birkaç
+      // iterasyon yeter; convergence için "moved" bayrağı ile erken çıkış.
+      function resolveCollisions(rects, iterations = 8, gap = COLLISION_GAP) {
+        const minX = CANVAS_PADDING_X * 0.4;
+        const maxX = CANVAS_W - CANVAS_PADDING_X * 0.4;
+        const minY = CANVAS_PADDING_Y * 0.4;
+        const maxY = CANVAS_H - CANVAS_PADDING_Y * 0.4;
+
+        for (let iter = 0; iter < iterations; iter++) {
+          let moved = false;
+          for (let i = 0; i < rects.length; i++) {
+            for (let j = i + 1; j < rects.length; j++) {
+              const a = rects[i];
+              const b = rects[j];
+              const overlapX =
+                Math.min(a.x + a.w, b.x + b.w) - Math.max(a.x, b.x);
+              const overlapY =
+                Math.min(a.y + a.h, b.y + b.h) - Math.max(a.y, b.y);
+
+              if (overlapX + gap > 0 && overlapY + gap > 0) {
+                // Minimum eksende ayır → en az görsel bozulma
+                if (overlapX < overlapY) {
+                  const push = (overlapX + gap) / 2;
+                  if (a.x < b.x) {
+                    a.x -= push;
+                    b.x += push;
+                  } else {
+                    a.x += push;
+                    b.x -= push;
+                  }
+                } else {
+                  const push = (overlapY + gap) / 2;
+                  if (a.y < b.y) {
+                    a.y -= push;
+                    b.y += push;
+                  } else {
+                    a.y += push;
+                    b.y -= push;
+                  }
+                }
+                moved = true;
+              }
+            }
+          }
+          // Canvas dışına itilen kartları geri çek (clamp)
+          for (let i = 0; i < rects.length; i++) {
+            const r = rects[i];
+            if (r.x < minX) r.x = minX;
+            if (r.x + r.w > maxX) r.x = maxX - r.w;
+            if (r.y < minY) r.y = minY;
+            if (r.y + r.h > maxY) r.y = maxY - r.h;
+          }
+          if (!moved) break;
+        }
+      }
+      resolveCollisions(placements);
+
+      placements.forEach((p) => placeCard(p));
+
+      function placeCard(p) {
+        const { project, i, size, x, y, isInnerRing } = p;
+
+        // Parallax katsayısı (1.0 - 2.6) → her kart farklı derinlik hissi
+        const parallax = 1.0 + rand(i + 100) * 1.6;
+
+        const card = document.createElement("div");
+        card.className = "card";
+        card.style.setProperty("--card-w", size.w + "px");
+        card.style.setProperty("--card-h", size.h + "px");
+        card.style.left = x + "px";
+        card.style.top = y + "px";
+        card.dataset.parallax = parallax.toFixed(3);
+        card.dataset.type = size.type;
+        card.dataset.media = project.type; // "image" | "video"
+        // Detail sayfası varsa data-url → endDrag tap fallback ve click handler
+        // bunu kullanarak navigateToDetail tetikler. Yoksa kart tıklanamaz.
+        if (project.url) card.dataset.url = project.url;
+
+        // Per-card cache → RAF loop'unda her frame attribute parse etmemek için
+        card._w = size.w;
+        card._h = size.h;
+        card._parallax = parallax;
+        card._parallaxIntensity = 0.55 + ((parallax - 1.0) / 1.6) * 0.45;
+        card._reachX = 0.6 + rand(i * 3.71 + 11) * 0.9;
+        card._reachY = 0.6 + rand(i * 5.13 + 17) * 0.9;
+        card._projectName = project.name; // tooltip için
+
+        // İç halka (hero komşuları) her zaman back-layer → hero metnini örtmez.
+        // Dış halkada %30 back, %70 front rastgele dağılım korunuyor.
+        const isBack = isInnerRing || rand(i * 11.7 + 5) < 0.3;
+        card.dataset.layer = isBack ? "back" : "front";
+
+        // Snap hedefi (final konuma göre — collision sonrası)
+        card._snapX = CANVAS_W / 2 - (x + size.w / 2);
+        card._snapY = CANVAS_H / 2 - (y + size.h / 2);
+
+        // Media: video veya image
+        // Video kartlarında poster'ı ALT katmana statik <img> olarak da ekliyoruz →
+        // <video preload="metadata"> metadata gelene kadar boş kare göstermesin diye.
+        // Img anında yüklenir, video sonradan üzerine biner. Img 404 verirse
+        // onerror ile gizlenir, .card__image bg-color zemini görünür.
+        let mediaHtml;
+        if (project.type === "video") {
+          const posterImg = project.poster_url
+            ? `<img class="card__poster" src="${project.poster_url}" alt="${project.name}" loading="eager" draggable="false" onerror="this.style.display='none'" />`
+            : "";
+          mediaHtml = `${posterImg}<video class="card__media" src="${project.media_url}"${project.poster_url ? ` poster="${project.poster_url}"` : ""} muted playsinline loop preload="metadata" disablepictureinpicture></video>`;
+        } else {
+          mediaHtml = `<img class="card__media" src="${project.media_url}" alt="${project.name}" loading="lazy" draggable="false" />`;
+        }
+
+        card.innerHTML = `
         <div class="card__inner">
           <div class="card__image">
             ${mediaHtml}
@@ -643,438 +1025,726 @@
         </div>
       `;
 
-      card._imageEl = card.querySelector(".card__image");
-      card._videoEl = project.type === "video" ? card.querySelector("video") : null;
-      card._isVisible = false; // viewport-aware play/pause state
+        card._imageEl = card.querySelector(".card__image");
+        card._videoEl =
+          project.type === "video" ? card.querySelector("video") : null;
+        card._isVisible = false; // viewport-aware play/pause state
 
-      card.addEventListener("click", (e) => {
-        if (drag.didMove) e.preventDefault();
-      });
+        card.addEventListener("click", (e) => {
+          // Drag yaptıysa tıklamayı yok say.
+          if (drag.didMove) {
+            e.preventDefault();
+            return;
+          }
+          const url = card.dataset.url;
+          if (!url) return; // detail sayfası yok
+          if (introLocked || isNavigating) return;
+          e.preventDefault();
+          navigateToDetail(card, url, e);
+        });
 
-      canvasContent.appendChild(card);
-    }
+        // Detail URL'i varsa hover'da sayfayı prefetch et → tıklama sonrası
+        // parse süresi minimum hissedilir, VT akışı daha akıcı kapanır.
+        if (project.url) {
+          let prefetched = false;
+          card.addEventListener("pointerenter", () => {
+            if (prefetched) return;
+            prefetched = true;
+            const link = document.createElement("link");
+            link.rel = "prefetch";
+            link.href = project.url;
+            document.head.appendChild(link);
+          });
+        }
 
-    const cards = [...document.querySelectorAll(".card")];
-    const videoCards = cards.filter((c) => c._videoEl); // perf: viewport check sadece video kartlar için
-    const hero  = document.querySelector(".hero");
-
-    // ───────────── Mouse parallax (desktop / fine pointer) ─────────────
-    // Mouse pencere ortasında → kartlar olduğu yerde. Mouse kenara yaklaştıkça
-    // kartlar derinliklerine göre hafifçe TERS yönde kayar (klasik depth/window
-    // hissi). Her kart kendi _parallax (1.0–2.6) katsayısıyla farklı miktarda
-    // hareket eder → "yakın" görünen kartlar daha çok, "uzaktakiler" daha az
-    // kayar; x/y'den z izlenimi bu desync'ten gelir.
-    // Coarse pointer (touch) cihazlarda devre dışı → mobilde gereksiz iş yok.
-    const FINE_POINTER             = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-    const MOUSE_LERP               = 0.06;  // current → target hız
-    const MOUSE_PARALLAX_STRENGTH  = 8;     // px / depth-unit — toplam max ≈ 8 × 2.6 ≈ 21px
-    const MOUSE_PARALLAX_DIRECTION = -1;    // -1 = mouse'un tersi (depth), +1 = takip
-
-    const mouse = {
-      target:  { x: 0, y: 0 }, // -1..1 (window center = 0)
-      current: { x: 0, y: 0 },
-    };
-
-    if (FINE_POINTER) {
-      window.addEventListener("mousemove", (e) => {
-        // window center = (0,0); sağ-alt köşe (1,1); sol-üst (-1,-1).
-        // state.vw/vh resize-debounce ile güncellenir; mousemove yüksek-frekans olduğu
-        // için doğrudan innerWidth/Height okumak DOM hesabı tetiklemez (read-only).
-        mouse.target.x = ((e.clientX / window.innerWidth)  * 2 - 1) * MOUSE_PARALLAX_DIRECTION;
-        mouse.target.y = ((e.clientY / window.innerHeight) * 2 - 1) * MOUSE_PARALLAX_DIRECTION;
-      });
-
-      // Mouse pencereden çıkınca yumuşakça orta noktaya geri dön
-      document.addEventListener("mouseleave", () => {
-        mouse.target.x = 0;
-        mouse.target.y = 0;
-      });
-    }
-
-    // ───────────── 2D smooth drag (Lenis-style lerp) ─────────────
-    const wrapper = document.getElementById("canvasWrapper");
-
-    // Tunables — feel'i buradan ayarla
-    const LERP                   = 0.085; // current → target hız (büyük = daha keskin)
-    const MOMENTUM_FRICTION      = 0.93;  // her frame velocity *= friction (küçük = hızlı durur)
-    const MOMENTUM_STOP_VELOCITY = 0.04;  // px/ms eşiği — altına düşünce momentum biter
-    const VELOCITY_SAMPLE_MS     = 80;    // pointer-up anında son kaç ms'lik hareket?
-    const SNAP_ENABLED           = false;
-    const CLICK_THRESHOLD_PX     = 5;     // bu mesafenin altı tıklama, üstü drag
-
-    // Parallax — viewport-relative + per-card reach (organik desync):
-    //   Her kart kendi viewport pozisyonuna göre parallax alır.
-    //   Card center viewport ortasındayken parallax 0; kenarına yaklaştıkça MAX.
-    //   Her kartın kendi REACH'i var → bazıları hızlıca peak'e ulaşır (düşük reach),
-    //   bazıları yavaş ramp yapar (yüksek reach). X ve Y ayrı → çift eksenli desync.
-    const IMAGE_OVERFLOW_PCT     = 0.18;  // CSS .card__image inset: -18% ile EŞİT olmalı
-    const PARALLAX_MARGIN_USAGE  = 0.90;  // marjinin %90'ı kullanılır (kalan %10 güvenlik payı)
-    const PARALLAX_REACH_GLOBAL  = 1.0;   // global çarpan (per-card reach buna eklenir)
-
-    // Video viewport visibility — viewport sınırlarına ek pay (px). Hızlı drag/scroll
-    // sırasında bu pay sayesinde kart hafif kenara taşsa bile play durumunu korur,
-    // gereksiz play/pause flicker'ı önler.
-    const VIDEO_VISIBLE_MARGIN   = 240;
-
-    const state = {
-      target:  { x: 0, y: 0 },
-      current: { x: 0, y: 0 },
-      bounds:  { minX: 0, maxX: 0, minY: 0, maxY: 0 },
-      vw: window.innerWidth,
-      vh: window.innerHeight,
-    };
-
-    const drag = {
-      active: false,
-      didMove: false,
-      lastX: 0,
-      lastY: 0,
-      startX: 0,
-      startY: 0,
-      samples: [],   // [{x, y, t}] — pointer-up'ta velocity için
-    };
-
-    const momentum = {
-      active: false,
-      vx: 0,         // px / ms
-      vy: 0,
-    };
-
-    let snapPending = false;
-    let lastFrameTime = performance.now();
-
-    function computeBounds() {
-      state.vw = window.innerWidth;
-      state.vh = window.innerHeight;
-      const halfX = Math.max(0, (CANVAS_W - state.vw) / 2);
-      const halfY = Math.max(0, (CANVAS_H - state.vh) / 2);
-      state.bounds = { minX: -halfX, maxX: halfX, minY: -halfY, maxY: halfY };
-    }
-    computeBounds();
-
-    const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
-
-    function setTarget(x, y) {
-      state.target.x = clamp(x, state.bounds.minX, state.bounds.maxX);
-      state.target.y = clamp(y, state.bounds.minY, state.bounds.maxY);
-    }
-
-    // En yakın kartın snap hedefini bul → setTarget. Lerp doğal animasyonu sağlar.
-    function snapToNearest() {
-      if (!cards.length) return;
-      let best = null;
-      let bestDist = Infinity;
-      for (let i = 0; i < cards.length; i++) {
-        const c = cards[i];
-        const dx = c._snapX - state.target.x;
-        const dy = c._snapY - state.target.y;
-        const d = dx * dx + dy * dy; // squared, sqrt gerekmiyor
-        if (d < bestDist) { bestDist = d; best = c; }
+        canvasContent.appendChild(card);
       }
-      if (best) setTarget(best._snapX, best._snapY);
-    }
 
-    // Pointer-up anında son ~80ms'lik velocity'yi hesapla (px/ms)
-    function computeReleaseVelocity() {
-      const now = performance.now();
-      const recent = drag.samples.filter(s => now - s.t <= VELOCITY_SAMPLE_MS);
-      if (recent.length < 2) { momentum.vx = 0; momentum.vy = 0; return; }
-      const first = recent[0];
-      const last  = recent[recent.length - 1];
-      const dt = last.t - first.t;
-      if (dt <= 0) { momentum.vx = 0; momentum.vy = 0; return; }
-      momentum.vx = (last.x - first.x) / dt;
-      momentum.vy = (last.y - first.y) / dt;
-    }
+      const cards = [...document.querySelectorAll(".card")];
+      const videoCards = cards.filter((c) => c._videoEl); // perf: viewport check sadece video kartlar için
+      const hero = document.querySelector(".hero");
 
-    function cancelMomentumAndSnap() {
-      momentum.active = false;
-      momentum.vx = 0;
-      momentum.vy = 0;
-      snapPending = false;
-    }
+      // ───────────── Tooltip — kart hover'ında proje adı (cursor takipli) ─────────────
+      // Tek tooltip elementi, body'de fixed. Kartın pointerenter'ında bir timer başlar;
+      // HOVER_DELAY (ms) boyunca pointer kartta kalırsa tooltip görünür. Pointermove ile
+      // cursor'u 1:1 takip eder. Pointerleave → tooltip gizlenir + bekleyen timer iptal.
+      // Drag, momentum veya intro sırasında tooltip ASLA gösterilmez (gürültü olmasın).
+      const tooltipEl = document.getElementById("tooltip");
+      const HOVER_DELAY = 400; // ms — pointer kartta bu kadar kalırsa tooltip görünür
+      const TOOLTIP_OFFSET_X = 14;
+      const TOOLTIP_OFFSET_Y = 18;
+      const WHEEL_QUIET_MS = 180; // ms — son wheel'den bu kadar geçmediyse tooltip suppress
 
-    // ───────────── RAF loop ─────────────
-    function raf(time) {
-      const dt = Math.min(48, time - lastFrameTime); // ms — büyük sıçramaları sınırla
-      lastFrameTime = time;
+      let tooltipTimer = null;
+      let tooltipCard = null; // şu an üzerinde bulunulan kart (timer pending / tooltip visible)
+      let tooltipVisible = false;
+      let lastWheelTime = 0; // performance.now() — wheel quiet window için
 
-      // 1) Momentum: target'ı velocity ile ileri it, decay et
-      if (momentum.active) {
-        // friction'ı dt-bazlı uygula → 60fps'de FRICTION, diğer fps'lerde de aynı feel
-        const decay = Math.pow(MOMENTUM_FRICTION, dt / 16.667);
-
-        setTarget(
-          state.target.x + momentum.vx * dt,
-          state.target.y + momentum.vy * dt
+      function tooltipsBlocked() {
+        // Drag/momentum/intro açıkken VEYA yakın zamanda wheel olduysa tooltip suppress.
+        // Wheel kontrolü kritik: trackpad scroll sırasında kartlar mouse altından kayar,
+        // browser pointerenter/leave fire eder → tooltip yanlış karta bağlanabilirdi.
+        return (
+          drag.active ||
+          momentum.active ||
+          introLocked ||
+          performance.now() - lastWheelTime < WHEEL_QUIET_MS
         );
-        momentum.vx *= decay;
-        momentum.vy *= decay;
+      }
 
-        const speed = Math.hypot(momentum.vx, momentum.vy);
-        // Sınıra çarptıysa (target clamp edildi) o eksende velocity'yi öldür → "duvara çarpıp dur"
-        if (state.target.x === state.bounds.minX || state.target.x === state.bounds.maxX) momentum.vx = 0;
-        if (state.target.y === state.bounds.minY || state.target.y === state.bounds.maxY) momentum.vy = 0;
+      function positionTooltip(x, y) {
+        // Sağ kenar taşmasını clamp et — tooltip viewport dışına çıkmasın
+        const tw = tooltipEl.offsetWidth || 0;
+        const th = tooltipEl.offsetHeight || 0;
+        let tx = x + TOOLTIP_OFFSET_X;
+        let ty = y + TOOLTIP_OFFSET_Y;
+        if (tx + tw > window.innerWidth - 8) tx = x - tw - TOOLTIP_OFFSET_X;
+        if (ty + th > window.innerHeight - 8) ty = y - th - TOOLTIP_OFFSET_Y;
+        tooltipEl.style.transform = `translate3d(${tx}px, ${ty}px, 0)`;
+      }
 
-        if (speed < MOMENTUM_STOP_VELOCITY) {
-          momentum.active = false;
-          momentum.vx = 0;
-          momentum.vy = 0;
-          if (snapPending) { snapToNearest(); snapPending = false; }
+      function showTooltip(card, x, y) {
+        if (!tooltipEl) return;
+        tooltipEl.textContent = card._projectName || "";
+        // textContent set → DOM güncelle → ardından offsetWidth okuyup pozisyonla → fade in
+        positionTooltip(x, y);
+        tooltipEl.classList.add("is-visible");
+        tooltipVisible = true;
+      }
+
+      function hideTooltip() {
+        if (tooltipTimer) {
+          clearTimeout(tooltipTimer);
+          tooltipTimer = null;
         }
+        if (tooltipVisible) {
+          tooltipEl.classList.remove("is-visible");
+          tooltipVisible = false;
+        }
+        tooltipCard = null;
       }
 
-      // 2) Lerp: current → target
-      state.current.x += (state.target.x - state.current.x) * LERP;
-      state.current.y += (state.target.y - state.current.y) * LERP;
-
-      if (Math.abs(state.target.x - state.current.x) < 0.05) state.current.x = state.target.x;
-      if (Math.abs(state.target.y - state.current.y) < 0.05) state.current.y = state.target.y;
-
-      canvas.style.transform =
-        `translate3d(calc(-50% + ${state.current.x}px), calc(-50% + ${state.current.y}px), 0)`;
-
-      // Hero — canvas hareketinin tersini uygula → viewport ortasında sabit kalır.
-      // DOM'da canvas-content içinde olduğu için z-index katmanlaması (front/back kartlar) korunur.
-      if (hero) {
-        hero.style.transform =
-          `translate(-50%, -50%) translate3d(${-state.current.x}px, ${-state.current.y}px, 0)`;
+      function scheduleTooltip(card) {
+        if (tooltipTimer) clearTimeout(tooltipTimer);
+        tooltipTimer = setTimeout(() => {
+          // Timer geç fire'larsa (kart artık aktif değilse / blokluysa) gösterme
+          if (tooltipCard === card && !tooltipsBlocked()) {
+            showTooltip(card, card._lastMouseX, card._lastMouseY);
+          }
+        }, HOVER_DELAY);
       }
 
-      // 3) Parallax — viewport-relative + per-card REACH (desync):
-      //    nx = (currentX - snapX) / (halfVw * card._reachX)
-      //    ↑ snapX = "kart viewport ortasında olsun istersem currentX ne olmalı" (precomputed)
-      //    Düşük reach → hızlı saturate, yüksek reach → yavaş ramp. Aynı sürüklemede her kart
-      //    farklı parallax tempoya sahip olduğu için organik desync feel'i oluşur.
-      //    OPPOSITE direction → klasik depth/window feel.
-      const halfVwBase = (state.vw / 2) * PARALLAX_REACH_GLOBAL || 1;
-      const halfVhBase = (state.vh / 2) * PARALLAX_REACH_GLOBAL || 1;
-      const maxTravelPct = IMAGE_OVERFLOW_PCT * PARALLAX_MARGIN_USAGE;
+      cards.forEach((card) => {
+        card.addEventListener("pointerenter", (e) => {
+          if (tooltipsBlocked()) return;
+          tooltipCard = card;
+          card._lastMouseX = e.clientX;
+          card._lastMouseY = e.clientY;
+          scheduleTooltip(card);
+        });
 
-      for (let i = 0; i < cards.length; i++) {
-        const card = cards[i];
-        if (!card._imageEl) continue;
+        card.addEventListener("pointermove", (e) => {
+          if (tooltipsBlocked()) return;
+          card._lastMouseX = e.clientX;
+          card._lastMouseY = e.clientY;
 
-        let nx = (state.current.x - card._snapX) / (halfVwBase * card._reachX);
-        let ny = (state.current.y - card._snapY) / (halfVhBase * card._reachY);
-        if (nx >  1) nx =  1; else if (nx < -1) nx = -1;
-        if (ny >  1) ny =  1; else if (ny < -1) ny = -1;
+          if (tooltipVisible && tooltipCard === card) {
+            positionTooltip(e.clientX, e.clientY);
+          } else if (tooltipCard !== card) {
+            // Missed-enter recovery: wheel/momentum sonrası mouse hâlâ bir kart üzerindeyse
+            // pointerenter ateşlenmemiş olabilir (cursor stationary). Pointermove'da kart
+            // değişikliğini yakalayıp tooltip flow'unu yeniden başlatıyoruz.
+            tooltipCard = card;
+            scheduleTooltip(card);
+          }
+        });
 
-        const intensity = card._parallaxIntensity;
-        const px = -nx * card._w * maxTravelPct * intensity;
-        const py = -ny * card._h * maxTravelPct * intensity;
+        card.addEventListener("pointerleave", () => {
+          if (tooltipCard === card) hideTooltip();
+        });
+      });
 
-        card._imageEl.style.transform = `translate3d(${px}px, ${py}px, 0)`;
-      }
+      // ───────────── Mouse parallax (desktop / fine pointer) ─────────────
+      // Mouse pencere ortasında → kartlar olduğu yerde. Mouse kenara yaklaştıkça
+      // kartlar derinliklerine göre hafifçe TERS yönde kayar (klasik depth/window
+      // hissi). Her kart kendi _parallax (1.0–2.6) katsayısıyla farklı miktarda
+      // hareket eder → "yakın" görünen kartlar daha çok, "uzaktakiler" daha az
+      // kayar; x/y'den z izlenimi bu desync'ten gelir.
+      // Coarse pointer (touch) cihazlarda devre dışı → mobilde gereksiz iş yok.
+      const FINE_POINTER = window.matchMedia(
+        "(hover: hover) and (pointer: fine)",
+      ).matches;
+      const MOUSE_LERP = 0.06; // current → target hız
+      const MOUSE_PARALLAX_STRENGTH = 8; // px / depth-unit — toplam max ≈ 8 × 2.6 ≈ 21px
+      const MOUSE_PARALLAX_DIRECTION = -1; // -1 = mouse'un tersi (depth), +1 = takip
 
-      // 4) Mouse parallax — kart-seviyesinde transform (fine pointer only).
-      //    mouse.current lerp ile target'a yaklaşır; sonra her kart kendi derinliğine
-      //    (card._parallax) göre ölçeklenmiş bir translate alır.
+      const mouse = {
+        target: { x: 0, y: 0 }, // -1..1 (window center = 0)
+        current: { x: 0, y: 0 },
+      };
+
       if (FINE_POINTER) {
-        mouse.current.x += (mouse.target.x - mouse.current.x) * MOUSE_LERP;
-        mouse.current.y += (mouse.target.y - mouse.current.y) * MOUSE_LERP;
+        window.addEventListener("mousemove", (e) => {
+          // window center = (0,0); sağ-alt köşe (1,1); sol-üst (-1,-1).
+          // state.vw/vh resize-debounce ile güncellenir; mousemove yüksek-frekans olduğu
+          // için doğrudan innerWidth/Height okumak DOM hesabı tetiklemez (read-only).
+          mouse.target.x =
+            ((e.clientX / window.innerWidth) * 2 - 1) *
+            MOUSE_PARALLAX_DIRECTION;
+          mouse.target.y =
+            ((e.clientY / window.innerHeight) * 2 - 1) *
+            MOUSE_PARALLAX_DIRECTION;
+        });
 
-        for (let i = 0; i < cards.length; i++) {
-          const card = cards[i];
-          const depth = card._parallax; // 1.0 – 2.6
-          const mx = mouse.current.x * MOUSE_PARALLAX_STRENGTH * depth;
-          const my = mouse.current.y * MOUSE_PARALLAX_STRENGTH * depth;
-          card.style.transform = `translate3d(${mx}px, ${my}px, 0)`;
-        }
+        // Mouse pencereden çıkınca yumuşakça orta noktaya geri dön
+        document.addEventListener("mouseleave", () => {
+          mouse.target.x = 0;
+          mouse.target.y = 0;
+        });
       }
 
-      // 5) Viewport-aware video play/pause — IntersectionObserver canvas
-      //    transform değişimini güvenilir tetiklemediği için manuel bbox testi:
-      //    kartın ekran merkezi = vw/2 + (current.x - snapX). Sadece video
-      //    kartlarına bak ve sadece state değişiminde play/pause çağır.
-      if (videoCards.length) {
-        const vw = state.vw;
-        const vh = state.vh;
-        const margin = VIDEO_VISIBLE_MARGIN;
-        for (let i = 0; i < videoCards.length; i++) {
-          const card = videoCards[i];
-          const cx = vw / 2 + (state.current.x - card._snapX);
-          const cy = vh / 2 + (state.current.y - card._snapY);
-          const halfW = card._w / 2;
-          const halfH = card._h / 2;
-          const visible =
-            cx + halfW > -margin && cx - halfW < vw + margin &&
-            cy + halfH > -margin && cy - halfH < vh + margin;
+      // ───────────── 2D smooth drag (Lenis-style lerp) ─────────────
+      const wrapper = document.getElementById("canvasWrapper");
 
-          if (visible !== card._isVisible) {
-            card._isVisible = visible;
-            const v = card._videoEl;
-            if (visible) {
-              const p = v.play();
-              if (p && typeof p.catch === "function") p.catch(() => {});
-            } else {
-              v.pause();
-            }
+      // Tunables — feel'i buradan ayarla
+      const LERP = 0.085; // current → target hız (büyük = daha keskin)
+      const MOMENTUM_FRICTION = 0.93; // her frame velocity *= friction (küçük = hızlı durur)
+      const MOMENTUM_STOP_VELOCITY = 0.04; // px/ms eşiği — altına düşünce momentum biter
+      const VELOCITY_SAMPLE_MS = 80; // pointer-up anında son kaç ms'lik hareket?
+      const SNAP_ENABLED = false;
+      const CLICK_THRESHOLD_PX = 5; // bu mesafenin altı tıklama, üstü drag
+
+      // Parallax — viewport-relative + per-card reach (organik desync):
+      //   Her kart kendi viewport pozisyonuna göre parallax alır.
+      //   Card center viewport ortasındayken parallax 0; kenarına yaklaştıkça MAX.
+      //   Her kartın kendi REACH'i var → bazıları hızlıca peak'e ulaşır (düşük reach),
+      //   bazıları yavaş ramp yapar (yüksek reach). X ve Y ayrı → çift eksenli desync.
+      const IMAGE_OVERFLOW_PCT = 0.18; // CSS .card__image inset: -18% ile EŞİT olmalı
+      const PARALLAX_MARGIN_USAGE = 0.9; // marjinin %90'ı kullanılır (kalan %10 güvenlik payı)
+      const PARALLAX_REACH_GLOBAL = 1.0; // global çarpan (per-card reach buna eklenir)
+
+      // Video viewport visibility — viewport sınırlarına ek pay (px). Hızlı drag/scroll
+      // sırasında bu pay sayesinde kart hafif kenara taşsa bile play durumunu korur,
+      // gereksiz play/pause flicker'ı önler.
+      const VIDEO_VISIBLE_MARGIN = 240;
+
+      const state = {
+        target: { x: 0, y: 0 },
+        current: { x: 0, y: 0 },
+        bounds: { minX: 0, maxX: 0, minY: 0, maxY: 0 },
+        vw: window.innerWidth,
+        vh: window.innerHeight,
+      };
+
+      const drag = {
+        active: false,
+        didMove: false,
+        lastX: 0,
+        lastY: 0,
+        startX: 0,
+        startY: 0,
+        samples: [], // [{x, y, t}] — pointer-up'ta velocity için
+      };
+
+      const momentum = {
+        active: false,
+        vx: 0, // px / ms
+        vy: 0,
+      };
+
+      let snapPending = false;
+      let lastFrameTime = performance.now();
+
+      function computeBounds() {
+        state.vw = window.innerWidth;
+        state.vh = window.innerHeight;
+        const halfX = Math.max(0, (CANVAS_W - state.vw) / 2);
+        const halfY = Math.max(0, (CANVAS_H - state.vh) / 2);
+        state.bounds = { minX: -halfX, maxX: halfX, minY: -halfY, maxY: halfY };
+      }
+      computeBounds();
+
+      const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+
+      function setTarget(x, y) {
+        state.target.x = clamp(x, state.bounds.minX, state.bounds.maxX);
+        state.target.y = clamp(y, state.bounds.minY, state.bounds.maxY);
+      }
+
+      // En yakın kartın snap hedefini bul → setTarget. Lerp doğal animasyonu sağlar.
+      function snapToNearest() {
+        if (!cards.length) return;
+        let best = null;
+        let bestDist = Infinity;
+        for (let i = 0; i < cards.length; i++) {
+          const c = cards[i];
+          const dx = c._snapX - state.target.x;
+          const dy = c._snapY - state.target.y;
+          const d = dx * dx + dy * dy; // squared, sqrt gerekmiyor
+          if (d < bestDist) {
+            bestDist = d;
+            best = c;
           }
         }
+        if (best) setTarget(best._snapX, best._snapY);
       }
 
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame((t) => { lastFrameTime = t; raf(t); });
-
-    // ───────────── Intro orchestration ─────────────
-    // Timeline: logo SVG çizim (1.6s) → fill (0.8s başlar, logo çizim bitmeden overlap)
-    //           → subtitle fade-in → kartlar staggered drop.
-    // Intro bitene kadar pointer/wheel eventleri bloke edilir (introLocked).
-    let introLocked = true;
-
-    (function runIntro() {
-      const logoPaths = [...document.querySelectorAll(".hero__logo-path")];
-      const subtitle  = document.querySelector(".hero__subtitle");
-      if (!logoPaths.length) { introLocked = false; return; }
-
-      // Her path için uzunluğu ölç ve CSS custom property olarak kendi elementine set et.
-      // Birden fazla path varsa (BK monogramı = B + K) her biri kendi uzunluğunda dasharray alır
-      // → ikisi de aynı sürede çizilir, görsel olarak senkron tamamlanır.
-      logoPaths.forEach((p) => {
-        const len = Math.ceil(p.getTotalLength());
-        p.style.setProperty("--path-len", len);
-      });
-
-      // 1) Logo çizim başlat — tüm path'ler aynı anda
-      requestAnimationFrame(() => {
-        logoPaths.forEach((p) => p.classList.add("is-drawing"));
-      });
-
-      // 2) Logo çizim ~%70 tamamlandığında fill'e geç (overlap → akıcı geçiş)
-      const drawDuration = 1600; // ms — CSS svgDraw ile eş
-      const fillOverlap  = 0.70; // çizimin %70'inde fill başlar
-
-      setTimeout(() => {
-        logoPaths.forEach((p) => {
-          p.classList.remove("is-drawing");
-          p.style.strokeDashoffset = "0";
-          p.classList.add("is-filling");
-        });
-      }, drawDuration * fillOverlap);
-
-      // 3) Subtitle fade-in (logo çizim bittikten az sonra)
-      setTimeout(() => {
-        if (subtitle) subtitle.classList.add("is-visible");
-      }, drawDuration * 0.85);
-
-      // 4) Kartlar staggered drop — spiral sırasına göre (ring 1 önce, dış halka sonra)
-      const cardDropStart = drawDuration * 0.80;
-      const staggerStep   = 50; // ms — her kart arasındaki gecikme
-
-      cards.forEach((card, idx) => {
-        const delay = cardDropStart + idx * staggerStep;
-        setTimeout(() => {
-          card.style.animationDelay = "0ms";
-          card.classList.add("is-intro");
-        }, delay);
-      });
-
-      // 5) Tüm kartlar düştükten sonra intro kilidini aç + hint göster
-      const totalIntroDuration = cardDropStart + cards.length * staggerStep + 700;
-      setTimeout(() => {
-        introLocked = false;
-        cards.forEach((c) => {
-          c.classList.remove("is-intro");
-          c.classList.add("is-ready");
-        });
-        const hint = document.querySelector(".hint");
-        if (hint) hint.classList.add("is-visible");
-        const navbar = document.querySelector(".navbar");
-        if (navbar) navbar.classList.add("is-visible");
-      }, totalIntroDuration);
-    })();
-
-    // ───────────── Pointer (mouse + touch unified) ─────────────
-    wrapper.addEventListener("pointerdown", (e) => {
-      if (introLocked) return;
-      // Yeni etkileşim → bekleyen momentum/snap'i hemen iptal et (kullanıcı kontrolü ele alır)
-      cancelMomentumAndSnap();
-
-      drag.active = true;
-      drag.didMove = false;
-      drag.lastX = drag.startX = e.clientX;
-      drag.lastY = drag.startY = e.clientY;
-      drag.samples = [{ x: e.clientX, y: e.clientY, t: performance.now() }];
-      wrapper.classList.add("is-dragging");
-      wrapper.setPointerCapture?.(e.pointerId);
-    });
-
-    wrapper.addEventListener("pointermove", (e) => {
-      if (!drag.active) return;
-      const dx = e.clientX - drag.lastX;
-      const dy = e.clientY - drag.lastY;
-      drag.lastX = e.clientX;
-      drag.lastY = e.clientY;
-
-      if (Math.hypot(e.clientX - drag.startX, e.clientY - drag.startY) > CLICK_THRESHOLD_PX) {
-        drag.didMove = true;
+      // Pointer-up anında son ~80ms'lik velocity'yi hesapla (px/ms)
+      function computeReleaseVelocity() {
+        const now = performance.now();
+        const recent = drag.samples.filter(
+          (s) => now - s.t <= VELOCITY_SAMPLE_MS,
+        );
+        if (recent.length < 2) {
+          momentum.vx = 0;
+          momentum.vy = 0;
+          return;
+        }
+        const first = recent[0];
+        const last = recent[recent.length - 1];
+        const dt = last.t - first.t;
+        if (dt <= 0) {
+          momentum.vx = 0;
+          momentum.vy = 0;
+          return;
+        }
+        momentum.vx = (last.x - first.x) / dt;
+        momentum.vy = (last.y - first.y) / dt;
       }
 
-      // Velocity sample buffer — sadece son ~120ms tut
-      const now = performance.now();
-      drag.samples.push({ x: e.clientX, y: e.clientY, t: now });
-      const cutoff = now - 120;
-      while (drag.samples.length > 0 && drag.samples[0].t < cutoff) drag.samples.shift();
-
-      setTarget(state.target.x + dx, state.target.y + dy);
-    });
-
-    function endDrag(e) {
-      if (!drag.active) return;
-      drag.active = false;
-      wrapper.classList.remove("is-dragging");
-      try { wrapper.releasePointerCapture?.(e.pointerId); } catch {}
-
-      // Sadece gerçekten sürüklendiyse momentum + snap düşün
-      if (!drag.didMove) {
-        drag.samples.length = 0;
-        return;
-      }
-
-      computeReleaseVelocity();
-      drag.samples.length = 0;
-
-      const releaseSpeed = Math.hypot(momentum.vx, momentum.vy);
-      snapPending = SNAP_ENABLED;
-
-      if (releaseSpeed < MOMENTUM_STOP_VELOCITY) {
-        // Hız çok düşük — momentum'u atla, doğrudan snap
+      function cancelMomentumAndSnap() {
         momentum.active = false;
         momentum.vx = 0;
         momentum.vy = 0;
-        if (snapPending) { snapToNearest(); snapPending = false; }
-      } else {
-        momentum.active = true;
+        snapPending = false;
       }
-    }
 
-    wrapper.addEventListener("pointerup",     endDrag);
-    wrapper.addEventListener("pointercancel", endDrag);
-    wrapper.addEventListener("pointerleave",  endDrag);
+      // ───────────── RAF loop ─────────────
+      function raf(time) {
+        const dt = Math.min(48, time - lastFrameTime); // ms — büyük sıçramaları sınırla
+        lastFrameTime = time;
 
-    // ───────────── Wheel / trackpad (iki eksen) ─────────────
-    wrapper.addEventListener("wheel", (e) => {
-      e.preventDefault();
-      if (introLocked) return;
-      cancelMomentumAndSnap();
-      setTarget(state.target.x - e.deltaX, state.target.y - e.deltaY);
-    }, { passive: false });
+        // 1) Momentum: target'ı velocity ile ileri it, decay et
+        if (momentum.active) {
+          // friction'ı dt-bazlı uygula → 60fps'de FRICTION, diğer fps'lerde de aynı feel
+          const decay = Math.pow(MOMENTUM_FRICTION, dt / 16.667);
 
-    // ───────────── Resize ─────────────
-    let resizeTimer;
-    window.addEventListener("resize", () => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(() => {
-        computeBounds();
-        // Sınırların yeni hâline göre re-clamp
-        setTarget(state.target.x, state.target.y);
-      }, 100);
-    });
+          setTarget(
+            state.target.x + momentum.vx * dt,
+            state.target.y + momentum.vy * dt,
+          );
+          momentum.vx *= decay;
+          momentum.vy *= decay;
 
-    // ───────────── Sürükleme sırasında native image drag'i tamamen kapat ─────────────
-    document.addEventListener("dragstart", (e) => e.preventDefault());
-  </script>
-</body>
+          const speed = Math.hypot(momentum.vx, momentum.vy);
+          // Sınıra çarptıysa (target clamp edildi) o eksende velocity'yi öldür → "duvara çarpıp dur"
+          if (
+            state.target.x === state.bounds.minX ||
+            state.target.x === state.bounds.maxX
+          )
+            momentum.vx = 0;
+          if (
+            state.target.y === state.bounds.minY ||
+            state.target.y === state.bounds.maxY
+          )
+            momentum.vy = 0;
+
+          if (speed < MOMENTUM_STOP_VELOCITY) {
+            momentum.active = false;
+            momentum.vx = 0;
+            momentum.vy = 0;
+            if (snapPending) {
+              snapToNearest();
+              snapPending = false;
+            }
+          }
+        }
+
+        // 2) Lerp: current → target
+        state.current.x += (state.target.x - state.current.x) * LERP;
+        state.current.y += (state.target.y - state.current.y) * LERP;
+
+        if (Math.abs(state.target.x - state.current.x) < 0.05)
+          state.current.x = state.target.x;
+        if (Math.abs(state.target.y - state.current.y) < 0.05)
+          state.current.y = state.target.y;
+
+        canvas.style.transform = `translate3d(calc(-50% + ${state.current.x}px), calc(-50% + ${state.current.y}px), 0)`;
+
+        // Hero — canvas hareketinin tersini uygula → viewport ortasında sabit kalır.
+        // DOM'da canvas-content içinde olduğu için z-index katmanlaması (front/back kartlar) korunur.
+        if (hero) {
+          hero.style.transform = `translate(-50%, -50%) translate3d(${-state.current.x}px, ${-state.current.y}px, 0)`;
+        }
+
+        // 3) Parallax — viewport-relative + per-card REACH (desync):
+        //    nx = (currentX - snapX) / (halfVw * card._reachX)
+        //    ↑ snapX = "kart viewport ortasında olsun istersem currentX ne olmalı" (precomputed)
+        //    Düşük reach → hızlı saturate, yüksek reach → yavaş ramp. Aynı sürüklemede her kart
+        //    farklı parallax tempoya sahip olduğu için organik desync feel'i oluşur.
+        //    OPPOSITE direction → klasik depth/window feel.
+        const halfVwBase = (state.vw / 2) * PARALLAX_REACH_GLOBAL || 1;
+        const halfVhBase = (state.vh / 2) * PARALLAX_REACH_GLOBAL || 1;
+        const maxTravelPct = IMAGE_OVERFLOW_PCT * PARALLAX_MARGIN_USAGE;
+
+        for (let i = 0; i < cards.length; i++) {
+          const card = cards[i];
+          if (!card._imageEl) continue;
+
+          let nx =
+            (state.current.x - card._snapX) / (halfVwBase * card._reachX);
+          let ny =
+            (state.current.y - card._snapY) / (halfVhBase * card._reachY);
+          if (nx > 1) nx = 1;
+          else if (nx < -1) nx = -1;
+          if (ny > 1) ny = 1;
+          else if (ny < -1) ny = -1;
+
+          const intensity = card._parallaxIntensity;
+          const px = -nx * card._w * maxTravelPct * intensity;
+          const py = -ny * card._h * maxTravelPct * intensity;
+
+          card._imageEl.style.transform = `translate3d(${px}px, ${py}px, 0)`;
+        }
+
+        // 4) Mouse parallax — kart-seviyesinde transform (fine pointer only).
+        //    mouse.current lerp ile target'a yaklaşır; sonra her kart kendi derinliğine
+        //    (card._parallax) göre ölçeklenmiş bir translate alır.
+        if (FINE_POINTER) {
+          mouse.current.x += (mouse.target.x - mouse.current.x) * MOUSE_LERP;
+          mouse.current.y += (mouse.target.y - mouse.current.y) * MOUSE_LERP;
+
+          for (let i = 0; i < cards.length; i++) {
+            const card = cards[i];
+            const depth = card._parallax; // 1.0 – 2.6
+            const mx = mouse.current.x * MOUSE_PARALLAX_STRENGTH * depth;
+            const my = mouse.current.y * MOUSE_PARALLAX_STRENGTH * depth;
+            card.style.transform = `translate3d(${mx}px, ${my}px, 0)`;
+          }
+        }
+
+        // 5) Viewport-aware video play/pause — IntersectionObserver canvas
+        //    transform değişimini güvenilir tetiklemediği için manuel bbox testi:
+        //    kartın ekran merkezi = vw/2 + (current.x - snapX). Sadece video
+        //    kartlarına bak ve sadece state değişiminde play/pause çağır.
+        if (videoCards.length) {
+          const vw = state.vw;
+          const vh = state.vh;
+          const margin = VIDEO_VISIBLE_MARGIN;
+          for (let i = 0; i < videoCards.length; i++) {
+            const card = videoCards[i];
+            const cx = vw / 2 + (state.current.x - card._snapX);
+            const cy = vh / 2 + (state.current.y - card._snapY);
+            const halfW = card._w / 2;
+            const halfH = card._h / 2;
+            const visible =
+              cx + halfW > -margin &&
+              cx - halfW < vw + margin &&
+              cy + halfH > -margin &&
+              cy - halfH < vh + margin;
+
+            if (visible !== card._isVisible) {
+              card._isVisible = visible;
+              const v = card._videoEl;
+              if (visible) {
+                const p = v.play();
+                if (p && typeof p.catch === "function") p.catch(() => {});
+              } else {
+                v.pause();
+              }
+            }
+          }
+        }
+
+        requestAnimationFrame(raf);
+      }
+      requestAnimationFrame((t) => {
+        lastFrameTime = t;
+        raf(t);
+      });
+
+      // ───────────── Intro orchestration ─────────────
+      // Timeline: logo SVG çizim (1.6s) → fill (0.8s başlar, logo çizim bitmeden overlap)
+      //           → subtitle fade-in → kartlar staggered drop.
+      // Intro bitene kadar pointer/wheel eventleri bloke edilir (introLocked).
+      let introLocked = true;
+
+      (function runIntro() {
+        const logoPaths = [...document.querySelectorAll(".hero__logo-path")];
+        const subtitle = document.querySelector(".hero__subtitle");
+        if (!logoPaths.length) {
+          introLocked = false;
+          return;
+        }
+
+        // Her path için uzunluğu ölç ve CSS custom property olarak kendi elementine set et.
+        // Birden fazla path varsa (BK monogramı = B + K) her biri kendi uzunluğunda dasharray alır
+        // → ikisi de aynı sürede çizilir, görsel olarak senkron tamamlanır.
+        logoPaths.forEach((p) => {
+          const len = Math.ceil(p.getTotalLength());
+          p.style.setProperty("--path-len", len);
+        });
+
+        // 1) Logo çizim başlat — tüm path'ler aynı anda
+        requestAnimationFrame(() => {
+          logoPaths.forEach((p) => p.classList.add("is-drawing"));
+        });
+
+        // 2) Logo çizim ~%70 tamamlandığında fill'e geç (overlap → akıcı geçiş)
+        const drawDuration = 1600; // ms — CSS svgDraw ile eş
+        const fillOverlap = 0.7; // çizimin %70'inde fill başlar
+
+        setTimeout(() => {
+          logoPaths.forEach((p) => {
+            p.classList.remove("is-drawing");
+            p.style.strokeDashoffset = "0";
+            p.classList.add("is-filling");
+          });
+        }, drawDuration * fillOverlap);
+
+        // 3) Subtitle fade-in (logo çizim bittikten az sonra)
+        setTimeout(() => {
+          if (subtitle) subtitle.classList.add("is-visible");
+        }, drawDuration * 0.85);
+
+        // 4) Kartlar staggered drop — spiral sırasına göre (ring 1 önce, dış halka sonra)
+        const cardDropStart = drawDuration * 0.8;
+        const staggerStep = 50; // ms — her kart arasındaki gecikme
+
+        cards.forEach((card, idx) => {
+          const delay = cardDropStart + idx * staggerStep;
+          setTimeout(() => {
+            card.style.animationDelay = "0ms";
+            card.classList.add("is-intro");
+          }, delay);
+        });
+
+        // 5) Tüm kartlar düştükten sonra intro kilidini aç + hint göster
+        const totalIntroDuration =
+          cardDropStart + cards.length * staggerStep + 700;
+        setTimeout(() => {
+          introLocked = false;
+          cards.forEach((c) => {
+            c.classList.remove("is-intro");
+            c.classList.add("is-ready");
+          });
+          const hint = document.querySelector(".hint");
+          if (hint) hint.classList.add("is-visible");
+          const navbar = document.querySelector(".navbar");
+          if (navbar) navbar.classList.add("is-visible");
+        }, totalIntroDuration);
+      })();
+
+      // ───────────── Pointer (mouse + touch unified) ─────────────
+      wrapper.addEventListener("pointerdown", (e) => {
+        if (introLocked) return;
+        // Yeni etkileşim → bekleyen momentum/snap'i ve tooltip'i hemen iptal et
+        cancelMomentumAndSnap();
+        hideTooltip();
+
+        drag.active = true;
+        drag.didMove = false;
+        drag.lastX = drag.startX = e.clientX;
+        drag.lastY = drag.startY = e.clientY;
+        drag.samples = [{ x: e.clientX, y: e.clientY, t: performance.now() }];
+        wrapper.classList.add("is-dragging");
+        wrapper.setPointerCapture?.(e.pointerId);
+      });
+
+      wrapper.addEventListener("pointermove", (e) => {
+        if (!drag.active) return;
+        const dx = e.clientX - drag.lastX;
+        const dy = e.clientY - drag.lastY;
+        drag.lastX = e.clientX;
+        drag.lastY = e.clientY;
+
+        if (
+          Math.hypot(e.clientX - drag.startX, e.clientY - drag.startY) >
+          CLICK_THRESHOLD_PX
+        ) {
+          drag.didMove = true;
+        }
+
+        // Velocity sample buffer — sadece son ~120ms tut
+        const now = performance.now();
+        drag.samples.push({ x: e.clientX, y: e.clientY, t: now });
+        const cutoff = now - 120;
+        while (drag.samples.length > 0 && drag.samples[0].t < cutoff)
+          drag.samples.shift();
+
+        setTarget(state.target.x + dx, state.target.y + dy);
+      });
+
+      function endDrag(e) {
+        if (!drag.active) return;
+        drag.active = false;
+        wrapper.classList.remove("is-dragging");
+        try {
+          wrapper.releasePointerCapture?.(e.pointerId);
+        } catch {}
+
+        // Sadece gerçekten sürüklendiyse momentum + snap düşün
+        if (!drag.didMove) {
+          drag.samples.length = 0;
+          // TAP — wrapper.setPointerCapture yüzünden click event'i bazı
+          // tarayıcılarda kart üstünde fire etmediği için, pointer altındaki
+          // kartı burada elementFromPoint ile yakalayıp navigate ediyoruz.
+          // Click handler hâlâ safety net (isNavigating çift tetiklemeyi önler).
+          handleCardTap(e.clientX, e.clientY, e);
+          return;
+        }
+
+        computeReleaseVelocity();
+        drag.samples.length = 0;
+
+        const releaseSpeed = Math.hypot(momentum.vx, momentum.vy);
+        snapPending = SNAP_ENABLED;
+
+        if (releaseSpeed < MOMENTUM_STOP_VELOCITY) {
+          // Hız çok düşük — momentum'u atla, doğrudan snap
+          momentum.active = false;
+          momentum.vx = 0;
+          momentum.vy = 0;
+          if (snapPending) {
+            snapToNearest();
+            snapPending = false;
+          }
+        } else {
+          momentum.active = true;
+        }
+      }
+
+      wrapper.addEventListener("pointerup", endDrag);
+      wrapper.addEventListener("pointercancel", endDrag);
+      wrapper.addEventListener("pointerleave", endDrag);
+
+      // ───────────── Wheel / trackpad (iki eksen) ─────────────
+      wrapper.addEventListener(
+        "wheel",
+        (e) => {
+          e.preventDefault();
+          if (introLocked) return;
+          cancelMomentumAndSnap();
+          // Tooltip: wheel sırasında suppress. Kartlar mouse altından kayar, pointerenter/leave
+          // ateşlenebilir → tooltip yanlış karta bağlanmasın. lastWheelTime ile WHEEL_QUIET_MS
+          // boyunca pointer event'lerinde de bloklu kalır.
+          lastWheelTime = performance.now();
+          hideTooltip();
+          setTarget(state.target.x - e.deltaX, state.target.y - e.deltaY);
+        },
+        { passive: false },
+      );
+
+      // ───────────── Resize ─────────────
+      let resizeTimer;
+      window.addEventListener("resize", () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+          computeBounds();
+          // Sınırların yeni hâline göre re-clamp
+          setTarget(state.target.x, state.target.y);
+        }, 100);
+      });
+
+      // ───────────── Sürükleme sırasında native image drag'i tamamen kapat ─────────────
+      document.addEventListener("dragstart", (e) => e.preventDefault());
+
+      // ───────────── Detail navigation — View Transitions API ─────────────
+      // İki yol var:
+      // 1) Cross-document VT (Chrome 126+, Edge 126+): kart'a view-transition-name
+      //    atayıp window.location.href ile navigate. Browser kaynak/hedef
+      //    snapshot'larını alıp GPU thread'inde morph eder. JS frame yok,
+      //    çok performanslı. Detail sayfasında aynı isimli element var
+      //    (.cover__media) → kart o görsele dönüşür.
+      // 2) Fallback (Safari/Firefox): JS-driven card-fly — kartın klonu
+      //    fixed olarak ekrana sabitlenir, top/left/width/height tween'iyle
+      //    viewport'u kaplar. Daha az performanslı ama görsel olarak benzer.
+
+      let isNavigating = false;
+
+      // Cross-document VT desteği:
+      // - "onpagereveal" → hedef sayfada VT signal'i (Chrome 126+)
+      // - CSS.supports → @view-transition rule kabul ediliyor mu
+      const supportsCrossDocVT =
+        "onpagereveal" in window &&
+        CSS.supports("view-transition-name", "none");
+
+      function handleCardTap(x, y, ev) {
+        if (introLocked || isNavigating) return;
+        const el = document.elementFromPoint(x, y);
+        if (!el) return;
+        const card = el.closest(".card");
+        if (!card) return;
+        const url = card.dataset.url;
+        if (!url) return;
+        navigateToDetail(card, url, ev);
+      }
+
+      function navigateToDetail(card, url, ev) {
+        if (isNavigating) return;
+        isNavigating = true;
+        introLocked = true;
+        hideTooltip();
+        cancelMomentumAndSnap();
+
+        // Sayfaya geri dönerken intro'yu skip etmek için işaret bırak
+        // (ileride detect edilip kullanılabilir).
+        try {
+          sessionStorage.setItem("bk:from-index", "1");
+          sessionStorage.setItem("bk:last-card", card._projectName || "");
+        } catch {}
+
+        if (supportsCrossDocVT) {
+          // ───── View Transitions path ─────
+          // Kart'a unique view-transition-name ata → bu element root snapshot'tan
+          // çıkar, kendi snapshot'ı olur. Detail sayfasındaki .cover__media de
+          // aynı isimle marked. Browser morph animate eder.
+          //
+          // Kart üstündeki .card__image (-18% inset ile büyük) yerine kart'ın
+          // kendisine atıyoruz → bounding box kullanıcının gördüğü çerçeveye eşit.
+          card.style.viewTransitionName = "hero-media";
+
+          // Diğer kartları root snapshot'tan görsel olarak çıkarmıyoruz; sadece
+          // tıklanan kart ayrı kanaldan morph oluyor. Geri kalan herşey (navbar,
+          // hero, grid) root cross-fade'de.
+
+          // Browser navigation'ı yapacak → VT otomatik tetiklenir.
+          window.location.href = url;
+        } else {
+          // ───── Card-fly fallback ─────
+          const rect = card.getBoundingClientRect();
+          const fly = document.createElement("div");
+          fly.className = "card-fly";
+          fly.style.left = rect.left + "px";
+          fly.style.top = rect.top + "px";
+          fly.style.width = rect.width + "px";
+          fly.style.height = rect.height + "px";
+
+          const sourceMedia = card.querySelector(".card__media, .card__poster");
+          if (sourceMedia) {
+            const clone = sourceMedia.cloneNode(true);
+            if (clone.tagName === "VIDEO") {
+              clone.removeAttribute("autoplay");
+              clone.muted = true;
+              clone.playsInline = true;
+              clone.preload = "none";
+            }
+            fly.appendChild(clone);
+          }
+          document.body.appendChild(fly);
+
+          card.classList.add("is-departing");
+          requestAnimationFrame(() => {
+            document.body.classList.add("is-leaving");
+            void fly.offsetWidth; // force reflow
+            fly.classList.add("is-expanding");
+          });
+
+          setTimeout(() => {
+            window.location.href = url;
+          }, 600);
+        }
+      }
+    </script>
+  </body>
 </html>

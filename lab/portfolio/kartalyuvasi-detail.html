@@ -1,0 +1,1744 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>BJK Kartal Yuvası — Burak Karakaya</title>
+
+  <!-- Lenis (smooth scroll) -->
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+
+  <style>
+    :root {
+      --canvas-bg: #e9e4df;
+      --canvas-bg-strong: #ddd6cd;
+      --ink: #1c1a14;
+      --ink-soft: rgba(28, 26, 20, 0.72);
+      --ink-mute: rgba(28, 26, 20, 0.52);
+      --ink-faint: rgba(28, 26, 20, 0.32);
+      --hairline: rgba(28, 26, 20, 0.12);
+      --grid-line: rgba(0, 0, 0, 0.05);
+      --grid-size: 56px;
+      --nav-bg: rgba(15, 13, 10, 0.85);
+      --nav-fg: rgba(255, 255, 255, 0.7);
+      --nav-fg-strong: #ffffff;
+      --accent: #b1a781;
+      --easing: cubic-bezier(0.85, 0.09, 0.15, 0.91);
+      --easing-soft: cubic-bezier(0.22, 1, 0.36, 1);
+      --content-max: 1280px;
+      --gutter: clamp(24px, 5vw, 80px);
+    }
+
+    *,
+    *::before,
+    *::after { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      background-color: var(--canvas-bg);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI", Roboto, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overscroll-behavior: none;
+    }
+
+    html {
+      background-image:
+        linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+      background-size: var(--grid-size) var(--grid-size);
+      background-attachment: fixed;
+    }
+
+    body {
+      min-height: 100%;
+      scroll-behavior: smooth;
+    }
+
+    img, video {
+      display: block;
+      max-width: 100%;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; padding: 0; margin: 0; }
+
+    ::selection { background: var(--ink); color: var(--canvas-bg); }
+
+    /* ───────────── Cross-document View Transitions (alıcı taraf) ─────────────
+       Index'ten karta tıklayıp gelindiğinde browser kaynak kartın snapshot'ını
+       .cover__media'ya morph eder. Detaylı yorum index.html'de. */
+    @view-transition {
+      navigation: auto;
+    }
+
+    ::view-transition-group(hero-media) {
+      animation-duration: 0.7s;
+      animation-timing-function: cubic-bezier(0.85, 0.09, 0.15, 0.91);
+    }
+
+    ::view-transition-old(hero-media),
+    ::view-transition-new(hero-media) {
+      animation-duration: 0.7s;
+      animation-timing-function: cubic-bezier(0.85, 0.09, 0.15, 0.91);
+      mix-blend-mode: normal;
+    }
+
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+      animation-duration: 0.45s;
+      animation-timing-function: ease;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      ::view-transition-group(*),
+      ::view-transition-old(*),
+      ::view-transition-new(*) {
+        animation-duration: 0.1s !important;
+      }
+    }
+
+    /* VT ile gelindiğinde cover'ın "hidden" başlangıç state'lerini ATLA */
+    html.vt-arrived .cover__media {
+      clip-path: inset(0 0 0 0);
+      transition: none;
+    }
+
+    html.vt-arrived .cover__media img,
+    html.vt-arrived .cover__media video {
+      transform: scale(1);
+      transition: none;
+    }
+
+    html.vt-arrived .cover__overlay {
+      opacity: 1;
+      transition: none;
+    }
+
+    /* ───────────── Navbar ───────────── */
+    .navbar {
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 6px;
+      background: var(--nav-bg);
+      -webkit-backdrop-filter: blur(20px);
+      backdrop-filter: blur(20px);
+      border-radius: 10px;
+      z-index: 100;
+      color: var(--nav-fg);
+      opacity: 0;
+      transform: translate(-50%, -8px);
+      transition: opacity 0.6s ease, transform 0.6s var(--easing-soft);
+    }
+
+    .navbar.is-visible {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    .navbar__logo {
+      min-width: 36px;
+      height: 28px;
+      padding: 0 8px;
+      border-radius: 6px;
+      background: var(--accent);
+      color: #1f1d18;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+    }
+
+    .navbar__menu {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .navbar__menu a {
+      display: inline-flex;
+      align-items: center;
+      padding: 9px 12px;
+      color: var(--nav-fg);
+      text-transform: uppercase;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      border-radius: 6px;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .navbar__menu a:hover,
+    .navbar__menu a.is-active {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--nav-fg-strong);
+    }
+
+    /* ───────────── Layout primitives ───────────── */
+    .wrap {
+      width: 100%;
+      max-width: var(--content-max);
+      margin: 0 auto;
+      padding: 0 var(--gutter);
+    }
+
+    .section {
+      padding: clamp(80px, 12vw, 160px) 0;
+    }
+
+    .section + .section { padding-top: 0; }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+      font-weight: 500;
+    }
+
+    .eyebrow::before {
+      content: "";
+      display: inline-block;
+      width: 18px;
+      height: 1px;
+      background: currentColor;
+      opacity: 0.6;
+    }
+
+    /* ───────────── Cover ───────────── */
+    .cover {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      min-height: 560px;
+      overflow: hidden;
+      background: var(--canvas-bg-strong);
+    }
+
+    .cover__media {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 1.4s var(--easing-soft);
+      z-index: 1;
+      /* Cross-document VT için — index'teki kart ile aynı isim → morph */
+      view-transition-name: hero-media;
+    }
+
+    .cover__media.is-visible {
+      clip-path: inset(0 0 0 0);
+    }
+
+    .cover__media img,
+    .cover__media video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.06);
+      transition: transform 2s var(--easing-soft);
+    }
+
+    .cover__media.is-visible img,
+    .cover__media.is-visible video {
+      transform: scale(1);
+    }
+
+    .cover__overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(15,13,10,0.45) 0%, rgba(15,13,10,0) 22%, rgba(15,13,10,0) 48%, rgba(15,13,10,0.72) 100%);
+      z-index: 2;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 1s ease 0.4s;
+    }
+
+    .cover__overlay.is-visible { opacity: 1; }
+
+    .cover__back {
+      position: absolute;
+      top: 32px;
+      left: var(--gutter);
+      width: 42px;
+      height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px);
+      color: #fff;
+      z-index: 5;
+      transition: background-color 0.25s ease, transform 0.4s var(--easing-soft);
+      opacity: 0;
+      transform: translateX(-8px);
+    }
+
+    .cover__back.is-visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .cover__back:hover {
+      background: rgba(255, 255, 255, 0.26);
+      transform: translateX(-2px);
+    }
+
+    .cover__back svg { width: 16px; height: 16px; }
+
+    /* Üstte sağda iki-parçalı kredi rozeti — Tasarım × Geliştirme */
+    .cover__credit {
+      position: absolute;
+      top: 32px;
+      right: var(--gutter);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px);
+      color: #fff;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      z-index: 5;
+      opacity: 0;
+      transform: translateY(-8px);
+      transition: opacity 0.6s ease 0.6s, transform 0.6s var(--easing-soft) 0.6s;
+    }
+
+    .cover__credit.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .cover__credit__group {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 2px 4px;
+    }
+
+    .cover__credit__group small {
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.55);
+    }
+
+    .cover__credit__group b {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: #fff;
+    }
+
+    .cover__credit__divider {
+      width: 1px;
+      height: 14px;
+      background: rgba(255, 255, 255, 0.22);
+    }
+
+    .cover__content {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: clamp(40px, 6vw, 80px);
+      padding: 0 var(--gutter);
+      color: #fff;
+      z-index: 3;
+    }
+
+    .cover__eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.72);
+      font-weight: 500;
+      margin-bottom: 18px;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.6s ease 0.3s, transform 0.6s var(--easing-soft) 0.3s;
+    }
+
+    .cover__eyebrow::before {
+      content: "";
+      display: inline-block;
+      width: 22px;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.6);
+    }
+
+    .cover__eyebrow.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .cover__meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: clamp(24px, 4vw, 48px);
+      flex-wrap: wrap;
+    }
+
+    .cover__title {
+      margin: 0;
+      font-size: clamp(48px, 9.5vw, 148px);
+      line-height: 0.92;
+      letter-spacing: -0.04em;
+      font-weight: 600;
+      color: #fff;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cover__title__line { overflow: hidden; display: block; }
+
+    .cover__title .letter {
+      display: inline-block;
+      transform: translateY(110%);
+      opacity: 0;
+      transition: transform 0.9s var(--easing-soft), opacity 0.9s ease;
+    }
+
+    .cover__title.is-visible .letter {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .cover__tagline {
+      max-width: 420px;
+      color: rgba(255, 255, 255, 0.82);
+      font-size: 15px;
+      line-height: 1.55;
+      margin: 0;
+      padding-bottom: 14px;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.6s ease 0.7s, transform 0.6s var(--easing-soft) 0.7s;
+    }
+
+    .cover__tagline.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .cover__scroll {
+      position: absolute;
+      left: 50%;
+      bottom: 24px;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      z-index: 3;
+      opacity: 0;
+      transition: opacity 0.6s ease 1.1s;
+    }
+
+    .cover__scroll.is-visible { opacity: 1; }
+
+    .cover__scroll__bar {
+      width: 1px;
+      height: 36px;
+      background: rgba(255, 255, 255, 0.4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cover__scroll__bar::after {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: 0;
+      width: 100%;
+      height: 50%;
+      background: #fff;
+      animation: scrollCue 1.8s var(--easing-soft) infinite;
+    }
+
+    @keyframes scrollCue {
+      0%   { transform: translateY(0); }
+      100% { transform: translateY(300%); }
+    }
+
+    /* ───────────── Overview ───────────── */
+    .overview {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: clamp(48px, 8vw, 120px);
+      padding-bottom: clamp(60px, 10vw, 140px);
+      border-bottom: 1px solid var(--hairline);
+    }
+
+    .overview__heading {
+      font-size: clamp(28px, 3.4vw, 44px);
+      line-height: 1.12;
+      letter-spacing: -0.02em;
+      font-weight: 500;
+      margin: 0 0 32px;
+      color: var(--ink);
+      max-width: 22ch;
+    }
+
+    .overview__lead {
+      color: var(--ink-soft);
+      font-size: clamp(18px, 1.8vw, 22px);
+      line-height: 1.55;
+      letter-spacing: -0.005em;
+      margin: 0 0 36px;
+      max-width: 38ch;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 22px;
+      background: var(--ink);
+      color: var(--canvas-bg);
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      transition: background-color 0.25s ease, color 0.25s ease, transform 0.4s var(--easing-soft);
+    }
+
+    .btn:hover {
+      background: #2a2620;
+      transform: translateY(-2px);
+    }
+
+    .btn svg {
+      width: 12px;
+      height: 12px;
+      transition: transform 0.3s var(--easing-soft);
+    }
+
+    .btn:hover svg {
+      transform: translate(3px, -3px);
+    }
+
+    .info-block + .info-block { margin-top: 40px; }
+
+    .info-block__label {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+      margin: 0 0 14px;
+      font-weight: 500;
+    }
+
+    .info-block__list li {
+      padding: 12px 0;
+      border-top: 1px solid var(--hairline);
+      font-size: 15px;
+      color: var(--ink);
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .info-block__list li:last-child { border-bottom: 1px solid var(--hairline); }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      background: rgba(28, 26, 20, 0.06);
+      border-radius: 999px;
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      color: var(--ink);
+    }
+
+    .tag__dot {
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+
+    /* ───────────── Featured video ───────────── */
+    .media {
+      max-width: var(--content-max);
+      margin: clamp(60px, 10vw, 120px) auto;
+      padding: 0 var(--gutter);
+    }
+
+    .media__frame {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: var(--canvas-bg-strong);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .media__frame video,
+    .media__frame img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* ───────────── Forma Tasarla — featured module callout ─────────────
+       Bu projenin imza özelliği. Sayfanın görsel ritmini kıracak,
+       koyu zeminli, dikkat çeken bir "case-study within case-study" bloğu. */
+    .module-spot {
+      position: relative;
+      padding: clamp(80px, 10vw, 140px) 0;
+      margin: clamp(80px, 12vw, 160px) 0 0;
+      background: #14110d;
+      color: #f1ece4;
+      overflow: hidden;
+    }
+
+    .module-spot::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: var(--grid-size) var(--grid-size);
+      pointer-events: none;
+    }
+
+    .module-spot__wrap {
+      position: relative;
+      max-width: var(--content-max);
+      margin: 0 auto;
+      padding: 0 var(--gutter);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(48px, 8vw, 120px);
+      align-items: center;
+    }
+
+    .module-spot__eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(241, 236, 228, 0.55);
+      font-weight: 500;
+      margin-bottom: 18px;
+    }
+
+    .module-spot__eyebrow::before {
+      content: "";
+      display: inline-block;
+      width: 22px;
+      height: 1px;
+      background: rgba(241, 236, 228, 0.45);
+    }
+
+    .module-spot__title {
+      font-size: clamp(32px, 4vw, 52px);
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      font-weight: 500;
+      margin: 0 0 22px;
+      color: #fff;
+    }
+
+    .module-spot__body {
+      color: rgba(241, 236, 228, 0.72);
+      font-size: 16px;
+      line-height: 1.7;
+      margin: 0 0 28px;
+      max-width: 52ch;
+    }
+
+    .module-spot__list {
+      display: grid;
+      gap: 6px;
+      border-top: 1px solid rgba(241, 236, 228, 0.12);
+    }
+
+    .module-spot__list li {
+      padding: 14px 0 14px 24px;
+      border-bottom: 1px solid rgba(241, 236, 228, 0.12);
+      position: relative;
+      font-size: 14px;
+      color: rgba(241, 236, 228, 0.85);
+      line-height: 1.45;
+    }
+
+    .module-spot__list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 22px;
+      width: 10px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    /* Forma simülasyonu — sağ kolonda canvas-mockup görsel */
+    .jersey-mock {
+      position: relative;
+      aspect-ratio: 4 / 5;
+      background: linear-gradient(180deg, #1c1a14 0%, #0e0c08 100%);
+      border-radius: 8px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4);
+    }
+
+    .jersey-mock__stripes {
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(90deg, #fff 0 28%, #1c1a14 28% 56%);
+      opacity: 0.92;
+    }
+
+    .jersey-mock__inner {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      color: #14110d;
+      padding: 0 12%;
+      font-family: "Arial Black", "Helvetica Neue", Arial, sans-serif;
+      letter-spacing: 0.04em;
+    }
+
+    .jersey-mock__name {
+      display: block;
+      font-size: clamp(26px, 4vw, 52px);
+      font-weight: 900;
+      text-transform: uppercase;
+      color: #14110d;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.2);
+      animation: nameSwap 8s steps(1) infinite;
+    }
+
+    .jersey-mock__number {
+      display: block;
+      font-size: clamp(80px, 14vw, 180px);
+      font-weight: 900;
+      line-height: 1;
+      margin-top: 8px;
+      color: #14110d;
+      animation: numberSwap 8s steps(1) infinite;
+    }
+
+    @keyframes nameSwap {
+      0%, 24%   { content: "KARAKAYA"; }
+      25%, 49%  { }
+      50%, 74%  { }
+      75%, 100% { }
+    }
+
+    /* JS ile name/number swap edilecek — keyframe sadece nameSwap için placeholder */
+
+    .jersey-mock__badge {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 700;
+      color: #1c1a14;
+      z-index: 3;
+      letter-spacing: 0;
+    }
+
+    .jersey-mock__caption {
+      position: absolute;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(241, 236, 228, 0.55);
+      z-index: 3;
+      white-space: nowrap;
+    }
+
+    /* ───────────── Essays (Challenge / Approach / Results / Awards) ───────────── */
+    .essays {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: clamp(48px, 8vw, 120px);
+      padding-top: clamp(60px, 10vw, 140px);
+      border-top: 1px solid var(--hairline);
+    }
+
+    .essay-block + .essay-block { margin-top: clamp(48px, 6vw, 80px); }
+
+    .essay__title {
+      font-size: clamp(22px, 2.4vw, 32px);
+      line-height: 1.18;
+      letter-spacing: -0.01em;
+      font-weight: 500;
+      margin: 0 0 18px;
+      color: var(--ink);
+    }
+
+    .essay__body {
+      color: var(--ink-soft);
+      font-size: 16px;
+      line-height: 1.7;
+      margin: 0;
+      max-width: 56ch;
+    }
+
+    .essay__body + .essay__body { margin-top: 1em; }
+
+    .results {
+      display: grid;
+      gap: 8px;
+      margin: 0 0 48px;
+    }
+
+    .results li {
+      position: relative;
+      padding: 14px 0 14px 24px;
+      border-top: 1px solid var(--hairline);
+      font-size: 16px;
+      color: var(--ink);
+      line-height: 1.5;
+    }
+
+    .results li:last-child { border-bottom: 1px solid var(--hairline); }
+
+    .results li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 22px;
+      width: 10px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .awards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 0;
+      border-top: 1px solid var(--hairline);
+    }
+
+    .awards li {
+      padding: 18px 4px;
+      border-bottom: 1px solid var(--hairline);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      color: var(--ink);
+    }
+
+    .awards__icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(28, 26, 20, 0.06);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 auto;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--ink);
+    }
+
+    .awards__copy { line-height: 1.3; }
+    .awards__name { display: block; font-size: 12px; font-weight: 600; color: var(--ink); letter-spacing: 0.02em; }
+    .awards__role { display: block; font-size: 11px; color: var(--ink-mute); margin-top: 3px; letter-spacing: 0.04em; }
+
+    /* ───────────── Tech stack chips ───────────── */
+    .stack-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 8px;
+      margin: 0;
+    }
+
+    .stack-chip {
+      display: flex;
+      flex-direction: column;
+      padding: 14px 16px;
+      border: 1px solid var(--hairline);
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.4);
+    }
+
+    .stack-chip__name {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: var(--ink);
+    }
+
+    .stack-chip__role {
+      font-size: 11px;
+      color: var(--ink-mute);
+      letter-spacing: 0.04em;
+      margin-top: 4px;
+      text-transform: uppercase;
+    }
+
+    /* ───────────── Gallery ───────────── */
+    .gallery {
+      padding-top: clamp(80px, 12vw, 160px);
+      display: grid;
+      gap: clamp(40px, 6vw, 96px);
+    }
+
+    .gallery__item {
+      width: 100%;
+      max-width: var(--content-max);
+      margin: 0 auto;
+      padding: 0 var(--gutter);
+    }
+
+    .gallery__item--full {
+      max-width: none;
+      padding: 0;
+    }
+
+    .gallery__media {
+      width: 100%;
+      border-radius: 6px;
+      overflow: hidden;
+      background: var(--canvas-bg-strong);
+      position: relative;
+    }
+
+    .gallery__item--full .gallery__media { border-radius: 0; }
+
+    .gallery__media img,
+    .gallery__media video {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* ───────────── Continue ───────────── */
+    .continue {
+      position: relative;
+      margin-top: clamp(120px, 18vw, 240px);
+      height: 100vh;
+      min-height: 600px;
+      overflow: hidden;
+    }
+
+    .continue__sticky {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      height: 100vh;
+      min-height: 600px;
+      overflow: hidden;
+    }
+
+    .continue__media {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+
+    .continue__media img,
+    .continue__media video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.08);
+      transition: transform 1.2s var(--easing-soft);
+    }
+
+    .continue:hover .continue__media img,
+    .continue:hover .continue__media video {
+      transform: scale(1);
+    }
+
+    .continue__overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(15,13,10,0.15) 0%, rgba(15,13,10,0.55) 100%);
+    }
+
+    .continue__copy {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: flex-start;
+      padding: var(--gutter);
+      color: #fff;
+      gap: 18px;
+    }
+
+    .continue__eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.65);
+    }
+
+    .continue__title {
+      font-size: clamp(56px, 11vw, 168px);
+      line-height: 0.92;
+      letter-spacing: -0.04em;
+      font-weight: 600;
+      margin: 0;
+      color: #fff;
+    }
+
+    .continue__btn {
+      margin-top: 8px;
+      background: #fff;
+      color: var(--ink);
+    }
+
+    .continue__btn:hover {
+      background: var(--accent);
+      color: var(--ink);
+    }
+
+    /* ───────────── Footer ───────────── */
+    .footer {
+      padding: 48px var(--gutter);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+      font-size: 12px;
+      color: var(--ink-mute);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .footer a:hover { color: var(--ink); }
+
+    /* ───────────── Reveal-on-scroll ───────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.9s ease, transform 0.9s var(--easing-soft);
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-stagger > * {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.6s ease, transform 0.6s var(--easing-soft);
+    }
+
+    .reveal-stagger.is-visible > * {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-stagger.is-visible > *:nth-child(1)  { transition-delay: 0ms; }
+    .reveal-stagger.is-visible > *:nth-child(2)  { transition-delay: 60ms; }
+    .reveal-stagger.is-visible > *:nth-child(3)  { transition-delay: 120ms; }
+    .reveal-stagger.is-visible > *:nth-child(4)  { transition-delay: 180ms; }
+    .reveal-stagger.is-visible > *:nth-child(5)  { transition-delay: 240ms; }
+    .reveal-stagger.is-visible > *:nth-child(6)  { transition-delay: 300ms; }
+    .reveal-stagger.is-visible > *:nth-child(7)  { transition-delay: 360ms; }
+    .reveal-stagger.is-visible > *:nth-child(8)  { transition-delay: 420ms; }
+    .reveal-stagger.is-visible > *:nth-child(9)  { transition-delay: 480ms; }
+    .reveal-stagger.is-visible > *:nth-child(10) { transition-delay: 540ms; }
+    .reveal-stagger.is-visible > *:nth-child(n+11) { transition-delay: 600ms; }
+
+    /* ───────────── Scroll progress ───────────── */
+    .scrollbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: transparent;
+      z-index: 99;
+      pointer-events: none;
+    }
+
+    .scrollbar__fill {
+      width: 100%;
+      height: 100%;
+      background: var(--ink);
+      transform: scaleX(0);
+      transform-origin: 0 50%;
+      transition: transform 0.05s linear;
+    }
+
+    /* ───────────── Responsive ───────────── */
+    @media (max-width: 900px) {
+      .overview,
+      .essays,
+      .module-spot__wrap {
+        grid-template-columns: 1fr;
+        gap: 56px;
+      }
+
+      .cover__meta {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .cover__back,
+      .cover__credit { top: 80px; }
+
+      .cover__credit { padding: 6px 10px; }
+      .cover__credit__group b { font-size: 11px; }
+      .cover__credit__group small { display: none; }
+      .cover__credit__divider { height: 12px; }
+
+      .cover__scroll { display: none; }
+
+      .footer {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .cover__credit__group:first-child b::after {
+        content: " ×";
+        color: rgba(255,255,255,0.4);
+      }
+      .cover__credit__divider { display: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="scrollbar"><div class="scrollbar__fill" id="scrollbarFill"></div></div>
+
+  <!-- ───────────── Navbar ───────────── -->
+  <header class="navbar" id="navbar">
+    <a class="navbar__logo" href="index.html">BK</a>
+    <nav>
+      <ul class="navbar__menu">
+        <li><a href="index.html" class="is-active">Çalışmalar</a></li>
+        <li><a href="#">Hakkımda</a></li>
+        <li><a href="#">İletişim</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="content">
+    <!-- ───────────── Cover ───────────── -->
+    <section class="cover">
+      <div class="cover__media" id="coverMedia">
+        <img
+          src="https://www.minus99.com/wp-content/uploads/bjk-cover-scaled.jpg"
+          srcset="https://www.minus99.com/wp-content/uploads/bjk-cover-768x439.jpg 768w,
+                  https://www.minus99.com/wp-content/uploads/bjk-cover-scaled.jpg 2560w"
+          sizes="100vw"
+          alt="BJK Kartal Yuvası kapak görseli"
+          loading="eager"
+        />
+      </div>
+
+      <div class="cover__overlay" id="coverOverlay"></div>
+
+      <a class="cover__back" href="index.html" aria-label="Çalışmalara dön">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 12H5"/>
+          <path d="M12 19l-7-7 7-7"/>
+        </svg>
+      </a>
+
+      <!-- İki-parçalı kredi: Tasarım Minus99 × Geliştirme Proj-e (benim ekibim) -->
+      <div class="cover__credit" id="coverCredit" aria-label="Tasarım Minus99 — Geliştirme Proj-e">
+        <span class="cover__credit__group">
+          <small>Tasarım</small>
+          <b>Minus99</b>
+        </span>
+        <span class="cover__credit__divider"></span>
+        <span class="cover__credit__group">
+          <small>Geliştirme</small>
+          <b>Proj-e</b>
+        </span>
+      </div>
+
+      <div class="cover__content">
+        <span class="cover__eyebrow" id="coverEyebrow">BJK Kartal Yuvası · E-ticaret</span>
+        <div class="cover__meta">
+          <h1 class="cover__title" id="coverTitle">
+            <span class="cover__title__line">
+              <span class="letter">K</span><span class="letter">a</span><span class="letter">r</span><span class="letter">t</span><span class="letter">a</span><span class="letter">l</span>
+            </span>
+            <span class="cover__title__line">
+              <span class="letter">Y</span><span class="letter">u</span><span class="letter">v</span><span class="letter">a</span><span class="letter">s</span><span class="letter">ı</span>
+            </span>
+          </h1>
+          <p class="cover__tagline" id="coverTagline">
+            Beşiktaş JK’nin resmi e-ticaret deneyimi. Minus99 tasarımını Proj-e’nin e-mos altyapısına ben entegre ettim; sitedeki forma tasarla başta olmak üzere özel modüllerin ve üçüncü-taraf entegrasyonlarının tamamı bana aitti.
+          </p>
+        </div>
+      </div>
+
+      <div class="cover__scroll" id="coverScroll" aria-hidden="true">
+        <span>Kaydır</span>
+        <span class="cover__scroll__bar"></span>
+      </div>
+    </section>
+
+    <!-- ───────────── Overview ───────────── -->
+    <section class="section">
+      <div class="wrap">
+        <div class="overview">
+          <div>
+            <span class="eyebrow reveal">Genel Bakış</span>
+            <h2 class="overview__heading reveal">Bir taraftarın mağazasında beklediği detaylar; teknik tarafta ise bir e-ticaret altyapısının ölçeklenebilir şekilde özelleştirilmesi.</h2>
+            <p class="overview__lead reveal">
+              Bu projeyi <strong style="color: var(--ink); font-weight: 600;">Proj-e Yazılım</strong> bünyesinde, ekibimizin geliştirdiği <strong style="color: var(--ink); font-weight: 600;">e-mos</strong> (.NET tabanlı e-ticaret platformu) üzerine inşa ettim. Tasarım dilini <strong style="color: var(--ink); font-weight: 600;">Minus99</strong> kurguladı; ben site genelindeki JavaScript çatısını, özel modülleri (özellikle “Forma Tasarla”), üçüncü-taraf entegrasyonlarını ve front-end render tarafını (C# / Razor) yazdım.
+            </p>
+            <a class="btn reveal" href="https://www.kartalyuvasi.com.tr/" target="_blank" rel="noopener">
+              <span>Projeyi Gör</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 17L17 7"/>
+                <path d="M7 7h10v10"/>
+              </svg>
+            </a>
+          </div>
+
+          <div>
+            <div class="info-block">
+              <h3 class="info-block__label">Rolüm</h3>
+              <ul class="info-block__list reveal-stagger">
+                <li><span>Front-end Geliştirme</span></li>
+                <li><span>Forma Tasarla Modülü</span></li>
+                <li><span>Canvas &amp; Custom Font Render</span></li>
+                <li><span>Site JS Modülleri</span></li>
+                <li><span>Razor / C# Front-end</span></li>
+                <li><span>Üçüncü-taraf Entegrasyonları</span></li>
+                <li><span>e-mos CMS Entegrasyonu</span></li>
+                <li><span>Performans &amp; Mobil Optimizasyon</span></li>
+              </ul>
+            </div>
+
+            <div class="info-block">
+              <h3 class="info-block__label">Çıktı</h3>
+              <div class="tags reveal-stagger">
+                <span class="tag"><span class="tag__dot"></span>E-ticaret Sitesi</span>
+                <span class="tag"><span class="tag__dot"></span>Forma Tasarla Modülü</span>
+                <span class="tag"><span class="tag__dot"></span>Design System Uygulaması</span>
+              </div>
+            </div>
+
+            <div class="info-block">
+              <h3 class="info-block__label">Künye</h3>
+              <ul class="info-block__list reveal-stagger">
+                <li><span>Müşteri</span><span style="color: var(--ink-mute);">Beşiktaş JK</span></li>
+                <li><span>Tasarım</span><span style="color: var(--ink-mute);">Minus99</span></li>
+                <li><span>Geliştirme</span><span style="color: var(--ink-mute);">Proj-e Yazılım</span></li>
+                <li><span>Platform</span><span style="color: var(--ink-mute);">e-mos CMS · .NET</span></li>
+                <li><span>Pozisyon</span><span style="color: var(--ink-mute);">Senior Front-end Developer</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────── Featured video ───────────── -->
+    <div class="media reveal">
+      <div class="media__frame">
+        <video
+          autoplay
+          loop
+          muted
+          playsinline
+          preload="metadata"
+          poster="https://www.minus99.com/wp-content/uploads/bjk-cover-scaled.jpg"
+          src="https://player.vimeo.com/external/558107073.hd.mp4?s=7ff4550587264db28e762ad3077da4f015842fb4&amp;profile_id=174"
+        ></video>
+      </div>
+    </div>
+
+    <!-- ───────────── Forma Tasarla — featured module ─────────────
+         Bu projenin imza özelliği — sayfanın görsel ritmini kıran
+         koyu zeminli case-within-case bloğu. -->
+    <section class="module-spot">
+      <div class="module-spot__wrap">
+        <div>
+          <span class="module-spot__eyebrow reveal">İmza Modül · Forma Tasarla</span>
+          <h2 class="module-spot__title reveal">Oyuncusunu seç, formanı kişiselleştir, sepete ekle.</h2>
+          <p class="module-spot__body reveal">
+            Modülün özü basit ama kuralları katı: kullanıcı kadrodan bir oyuncuyu seçer ya da kendi adını yazar; isim ve forma numarası, Beşiktaş JK’nin <strong style="color: #fff;">lisanslı kulüp fontuyla</strong> doğrudan tarayıcıda canvas üzerine render edilir. Önizleme gerçek zamanlıdır; “sepete ekle” adımında üretilen baskı-hazır görsel kişiselleştirme verisi olarak siparişe iliştirilir.
+          </p>
+          <ul class="module-spot__list reveal-stagger">
+            <li>Kadro picker — sezonluk oyuncu listesi (CMS-yönetilebilir, e-mos tarafı).</li>
+            <li>Lisanslı kulüp fontu Canvas’a embed; tarayıcıda piksel-net render.</li>
+            <li>Gerçek zamanlı önizleme — isim &amp; numara forma üstünde anında.</li>
+            <li>Karakter validasyonu (uzunluk, Türkçe karakter, harf seti) — UEFA kurallarına uygun.</li>
+            <li>Yüksek çözünürlüklü baskı çıktısı — sipariş geçildiğinde sunucu tarafına gönderilir.</li>
+            <li>Mobilde de masaüstüyle birebir aynı UX — touch eventleri ile %100 paritesi.</li>
+          </ul>
+        </div>
+
+        <!-- Canvas mockup — animasyonlu oyuncu seçimi simülasyonu -->
+        <div class="jersey-mock" aria-hidden="true">
+          <div class="jersey-mock__stripes"></div>
+          <div class="jersey-mock__badge">BJK</div>
+          <div class="jersey-mock__inner">
+            <span class="jersey-mock__name" id="jerseyName">KARAKAYA</span>
+            <span class="jersey-mock__number" id="jerseyNumber">10</span>
+          </div>
+          <span class="jersey-mock__caption">Canvas · Lisanslı kulüp fontu</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────── Challenge / Approach / Tech / Results / Awards ───────────── -->
+    <section class="section" style="padding-top: clamp(80px, 12vw, 160px);">
+      <div class="wrap">
+        <div class="essays">
+          <div>
+            <div class="essay-block">
+              <span class="eyebrow reveal">Sorun</span>
+              <h3 class="essay__title reveal" style="margin-top: 18px;">Marka deneyimini standart bir e-ticaret kalıbının dışına çıkarmak.</h3>
+              <p class="essay__body reveal">
+                Müşteri kitlesi aynı zamanda taraftar olduğu için deneyimin her detayı — yüklenme süresinden bir butonun yerine kadar — duygusal yoğunlukla okunuyor. Genel kullanılabilirlik standartlarının ötesine geçmek; taraftara özel “delight” anları üretmek gerekiyordu.
+              </p>
+              <p class="essay__body reveal">
+                Bunu yaparken altyapı olarak ekibimizin geliştirdiği <strong style="color: var(--ink); font-weight: 600;">e-mos</strong> CMS’yi kullanıyordum: ölçeklenebilirlik, sipariş yönetimi, stok ve admin tarafı oradan geliyordu. Görev, Minus99’un tasarım sistemini bu altyapıya birebir entegre etmek ve standart e-ticaret kalıbı dışında “Forma Tasarla” gibi imza özellikleri eklemekti.
+              </p>
+            </div>
+
+            <div class="essay-block">
+              <span class="eyebrow reveal">Yaklaşımım</span>
+              <h3 class="essay__title reveal" style="margin-top: 18px;">Altyapıyı zorlamadan, üstüne özelleştirme katmanı koymak.</h3>
+              <p class="essay__body reveal">
+                e-mos’un sayfa render katmanı C# &amp; Razor’dan oluşuyordu — sayfaların HTML çıktısını sunucu tarafında oluşturuyorduk. Tasarım sistemini Razor partial’ları ve component’ler hâlinde parçalayıp tekrar kullanılabilir hâle getirdim; vanilla JavaScript ile interaktif modülleri bu yapının üstüne enjekte ettim.
+              </p>
+              <p class="essay__body reveal">
+                Forma Tasarla, kategori landing’leri, ürün detay galerisi, mini-cart, arama önerileri, segment-bazlı pop-up’lar — sitedeki tüm JS bu kapsamda bana aitti. Üçüncü-taraf entegrasyonları (Insider, Personaclick, Segmentify, Google Analytics, Google Merchant XML) için bir event bus yazdım; modül-spesifik event’ler tek noktadan dispatch ediliyor, çoğul çağrı &amp; yarış koşulu sorunları ortadan kalkıyordu.
+              </p>
+              <p class="essay__body reveal">
+                e-mos panel tarafında ise kullanıcı giriş ekranlarının front-end’ini ben kurmuştum — projeden bağımsız, platform üzerine. Bu sayede yeni müşteri kurulumlarında aynı ekranlar gelmeye hazır hâlde duruyordu.
+              </p>
+            </div>
+
+            <div class="essay-block">
+              <span class="eyebrow reveal">Teknik Stack</span>
+              <h3 class="essay__title reveal" style="margin-top: 18px;">Üzerinde çalıştığım katmanlar.</h3>
+              <div class="stack-grid reveal-stagger" style="margin-top: 28px;">
+                <div class="stack-chip">
+                  <span class="stack-chip__name">e-mos CMS</span>
+                  <span class="stack-chip__role">.NET Altyapı</span>
+                </div>
+                <div class="stack-chip">
+                  <span class="stack-chip__name">C# · Razor</span>
+                  <span class="stack-chip__role">Front-end Render</span>
+                </div>
+                <div class="stack-chip">
+                  <span class="stack-chip__name">Vanilla JS</span>
+                  <span class="stack-chip__role">Modüller &amp; Etkileşim</span>
+                </div>
+                <div class="stack-chip">
+                  <span class="stack-chip__name">HTML5 Canvas</span>
+                  <span class="stack-chip__role">Forma Render</span>
+                </div>
+                <div class="stack-chip">
+                  <span class="stack-chip__name">Sass · CSS3</span>
+                  <span class="stack-chip__role">Tasarım Sistemi</span>
+                </div>
+                <div class="stack-chip">
+                  <span class="stack-chip__name">jQuery</span>
+                  <span class="stack-chip__role">Legacy Destek</span>
+                </div>
+                <div class="stack-chip">
+                  <span class="stack-chip__name">Insider</span>
+                  <span class="stack-chip__role">Pazarlama Aut.</span>
+                </div>
+                <div class="stack-chip">
+                  <span class="stack-chip__name">Personaclick</span>
+                  <span class="stack-chip__role">Öneri Motoru</span>
+                </div>
+                <div class="stack-chip">
+                  <span class="stack-chip__name">Segmentify</span>
+                  <span class="stack-chip__role">Kişiselleştirme</span>
+                </div>
+                <div class="stack-chip">
+                  <span class="stack-chip__name">Google Analytics</span>
+                  <span class="stack-chip__role">E-commerce Tracking</span>
+                </div>
+                <div class="stack-chip">
+                  <span class="stack-chip__name">Google Merchant</span>
+                  <span class="stack-chip__role">XML Feed</span>
+                </div>
+                <div class="stack-chip">
+                  <span class="stack-chip__name">Azure DevOps</span>
+                  <span class="stack-chip__role">CI / Repos</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="essay-block">
+              <span class="eyebrow reveal">Sorumluluğumdaki İşler</span>
+              <h3 class="essay__title reveal" style="margin-top: 18px;">Kısaca özet.</h3>
+              <ul class="results reveal-stagger" style="margin-top: 28px;">
+                <li>Minus99 tasarımının Razor component’leri olarak parçalanması ve e-mos’a entegre edilmesi.</li>
+                <li>“Forma Tasarla” modülü — lisanslı BJK fontuyla canvas render, oyuncu picker, baskı çıktısı pipeline.</li>
+                <li>Sitedeki tüm interaktif JS modülleri (mini-cart, galeri, arama, filtre, segment pop-up’ları).</li>
+                <li>Tek nokta event bus üzerinden üçüncü-taraf entegrasyonları (Insider · Personaclick · Segmentify · GA · GMC).</li>
+                <li>Mobil önceliklendirme; Chrome Lighthouse raporlarına göre performans iyileştirmeleri.</li>
+                <li>e-mos panelinin (admin tarafı) kullanıcı giriş ekranlarının front-end’i.</li>
+              </ul>
+            </div>
+
+            <div class="essay-block">
+              <span class="eyebrow reveal">Sonuçlar</span>
+              <h3 class="essay__title reveal" style="margin-top: 18px;">Sahaya çıkan rakamlar.</h3>
+              <ul class="results reveal-stagger" style="margin-top: 28px;">
+                <li>Mobil dönüşüm oranı iki katına çıktı.</li>
+                <li>Site genelinde satışlar belirgin biçimde arttı.</li>
+                <li>Forma Tasarla, sepete eklenen ürünler arasında en yüksek ortalama sepet tutarına ulaşan modül oldu.</li>
+              </ul>
+            </div>
+
+            <div class="essay-block">
+              <span class="eyebrow reveal">Ödüller</span>
+              <ul class="awards reveal-stagger" style="margin-top: 24px;">
+                <li>
+                  <span class="awards__icon">AÖ</span>
+                  <span class="awards__copy">
+                    <span class="awards__name">Altın Örümcek</span>
+                    <span class="awards__role">1.lik · Spor</span>
+                  </span>
+                </li>
+                <li>
+                  <span class="awards__icon">AÖ</span>
+                  <span class="awards__copy">
+                    <span class="awards__name">Altın Örümcek</span>
+                    <span class="awards__role">3.lük · E-ticaret</span>
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────── Media gallery ───────────── -->
+    <section class="gallery">
+      <figure class="gallery__item gallery__item--full reveal">
+        <div class="gallery__media">
+          <img
+            src="https://www.minus99.com/wp-content/uploads/ui-bjk_06.jpg"
+            srcset="https://www.minus99.com/wp-content/uploads/ui-bjk_06-768x433.jpg 768w,
+                    https://www.minus99.com/wp-content/uploads/ui-bjk_06-1536x865.jpg 1536w,
+                    https://www.minus99.com/wp-content/uploads/ui-bjk_06.jpg 2560w"
+            sizes="100vw"
+            alt="Kartal Yuvası — anasayfa görseli"
+            loading="lazy"
+          />
+        </div>
+      </figure>
+
+      <figure class="gallery__item reveal">
+        <div class="gallery__media">
+          <img
+            src="https://www.minus99.com/wp-content/uploads/ui-bjk_02.jpg"
+            srcset="https://www.minus99.com/wp-content/uploads/ui-bjk_02-500x350.jpg 500w,
+                    https://www.minus99.com/wp-content/uploads/ui-bjk_02-768x538.jpg 768w,
+                    https://www.minus99.com/wp-content/uploads/ui-bjk_02-1536x1075.jpg 1536w,
+                    https://www.minus99.com/wp-content/uploads/ui-bjk_02.jpg 2000w"
+            sizes="(max-width: 1280px) 100vw, 1280px"
+            alt="Kartal Yuvası — kategori sayfası tasarımı"
+            loading="lazy"
+          />
+        </div>
+      </figure>
+
+      <figure class="gallery__item reveal">
+        <div class="gallery__media">
+          <img
+            src="https://www.minus99.com/wp-content/uploads/ui-bjk_01.png"
+            srcset="https://www.minus99.com/wp-content/uploads/ui-bjk_01-500x602.png 500w,
+                    https://www.minus99.com/wp-content/uploads/ui-bjk_01-768x925.png 768w,
+                    https://www.minus99.com/wp-content/uploads/ui-bjk_01-1276x1536.png 1276w,
+                    https://www.minus99.com/wp-content/uploads/ui-bjk_01.png 2000w"
+            sizes="(max-width: 1280px) 100vw, 1280px"
+            alt="Kartal Yuvası — mobil arayüz"
+            loading="lazy"
+          />
+        </div>
+      </figure>
+
+      <figure class="gallery__item reveal">
+        <div class="gallery__media">
+          <img
+            src="https://www.minus99.com/wp-content/uploads/ui-bjk_03.jpg"
+            srcset="https://www.minus99.com/wp-content/uploads/ui-bjk_03-500x533.jpg 500w,
+                    https://www.minus99.com/wp-content/uploads/ui-bjk_03-768x819.jpg 768w,
+                    https://www.minus99.com/wp-content/uploads/ui-bjk_03-1441x1536.jpg 1441w,
+                    https://www.minus99.com/wp-content/uploads/ui-bjk_03.jpg 2000w"
+            sizes="(max-width: 1280px) 100vw, 1280px"
+            alt="Kartal Yuvası — ürün detay tasarımı"
+            loading="lazy"
+          />
+        </div>
+      </figure>
+
+      <figure class="gallery__item gallery__item--full reveal">
+        <div class="gallery__media">
+          <img
+            src="https://www.minus99.com/wp-content/uploads/bjk-kartal-yuvasi-3.jpg"
+            srcset="https://www.minus99.com/wp-content/uploads/bjk-kartal-yuvasi-3-768x460.jpg 768w,
+                    https://www.minus99.com/wp-content/uploads/bjk-kartal-yuvasi-3-1536x919.jpg 1536w,
+                    https://www.minus99.com/wp-content/uploads/bjk-kartal-yuvasi-3.jpg 2560w"
+            sizes="100vw"
+            alt="Kartal Yuvası — campaign visual"
+            loading="lazy"
+          />
+        </div>
+      </figure>
+
+      <figure class="gallery__item reveal">
+        <div class="gallery__media">
+          <img
+            src="https://www.minus99.com/wp-content/uploads/ui-bjk_04-scaled.jpg"
+            srcset="https://www.minus99.com/wp-content/uploads/ui-bjk_04-500x681.jpg 500w,
+                    https://www.minus99.com/wp-content/uploads/ui-bjk_04-768x1045.jpg 768w,
+                    https://www.minus99.com/wp-content/uploads/ui-bjk_04-1129x1536.jpg 1129w,
+                    https://www.minus99.com/wp-content/uploads/ui-bjk_04-scaled.jpg 1881w"
+            sizes="(max-width: 1280px) 100vw, 1280px"
+            alt="Kartal Yuvası — sepet ve ödeme akışı"
+            loading="lazy"
+          />
+        </div>
+      </figure>
+    </section>
+
+    <!-- ───────────── Next Project ───────────── -->
+    <a class="continue" href="nike-detail.html" id="continue">
+      <div class="continue__sticky">
+        <div class="continue__media">
+          <img
+            src="https://www.minus99.com/wp-content/uploads/nike-cover-scaled.jpg"
+            srcset="https://www.minus99.com/wp-content/uploads/nike-cover-768x439.jpg 768w,
+                    https://www.minus99.com/wp-content/uploads/nike-cover-scaled.jpg 2560w"
+            sizes="100vw"
+            alt="Nike kapak görseli"
+            loading="lazy"
+          />
+        </div>
+        <div class="continue__overlay"></div>
+        <div class="continue__copy">
+          <span class="continue__eyebrow">Sıradaki Proje</span>
+          <h2 class="continue__title">Nike</h2>
+          <span class="btn continue__btn">
+            <span>Projeyi Gör</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 17L17 7"/>
+              <path d="M7 7h10v10"/>
+            </svg>
+          </span>
+        </div>
+      </div>
+    </a>
+
+    <!-- ───────────── Footer ───────────── -->
+    <footer class="footer">
+      <span>© Burak Karakaya — 2026</span>
+      <span><a href="index.html">Tüm Çalışmalar ↗</a></span>
+    </footer>
+  </main>
+
+  <script>
+    // ───────────── Lenis smooth scroll ─────────────
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+    });
+
+    function rafLenis(time) {
+      lenis.raf(time);
+      requestAnimationFrame(rafLenis);
+    }
+    requestAnimationFrame(rafLenis);
+
+    // ───────────── Scroll progress bar ─────────────
+    const scrollbarFill = document.getElementById("scrollbarFill");
+    function updateScrollbar() {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+      scrollbarFill.style.transform = `scaleX(${progress})`;
+    }
+    window.addEventListener("scroll", updateScrollbar, { passive: true });
+    updateScrollbar();
+
+    // ───────────── Reveal-on-scroll ─────────────
+    const reveals = document.querySelectorAll(".reveal, .reveal-stagger");
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -60px 0px" });
+    reveals.forEach((el) => io.observe(el));
+
+    // ───────────── View Transitions — VT ile gelindiğinde işaretle ─────────────
+    // pagereveal cross-document VT'nin "hedef sayfa açılıyor" sinyali.
+    // event.viewTransition varsa cover'ı önceden görünür state'e taşı →
+    // browser destination snapshot'unu doğru görüntüyle alır.
+    if ("onpagereveal" in window) {
+      window.addEventListener("pagereveal", (event) => {
+        if (event.viewTransition) {
+          document.documentElement.classList.add("vt-arrived");
+        }
+      });
+    }
+
+    // ───────────── Cover intro orchestration ─────────────
+    // VT ile gelinmişse cover media zaten görünür (vt-arrived class CSS'te
+    // bypass ediyor) — metin elementleri sıkıştırılmış timing'le belirsinler.
+    window.addEventListener("load", () => {
+      const navbar = document.getElementById("navbar");
+      const back = document.querySelector(".cover__back");
+      const credit = document.getElementById("coverCredit");
+      const eyebrow = document.getElementById("coverEyebrow");
+      const title = document.getElementById("coverTitle");
+      const tagline = document.getElementById("coverTagline");
+      const media = document.getElementById("coverMedia");
+      const overlay = document.getElementById("coverOverlay");
+      const scroll = document.getElementById("coverScroll");
+
+      const fromVT = document.documentElement.classList.contains("vt-arrived");
+      const t = fromVT
+        ? { media: 0,   overlay: 0,   nav: 50,  back: 120, credit: 180, eb: 240, title: 320, tag: 460, scroll: 700 }
+        : { media: 60,  overlay: 120, nav: 220, back: 320, credit: 380, eb: 480, title: 560, tag: 720, scroll: 1000 };
+
+      requestAnimationFrame(() => {
+        setTimeout(() => media.classList.add("is-visible"),   t.media);
+        setTimeout(() => overlay.classList.add("is-visible"), t.overlay);
+        setTimeout(() => navbar.classList.add("is-visible"),  t.nav);
+        setTimeout(() => back.classList.add("is-visible"),    t.back);
+        setTimeout(() => credit.classList.add("is-visible"),  t.credit);
+        setTimeout(() => eyebrow.classList.add("is-visible"), t.eb);
+        setTimeout(() => title.classList.add("is-visible"),   t.title);
+        setTimeout(() => tagline.classList.add("is-visible"), t.tag);
+        setTimeout(() => scroll.classList.add("is-visible"),  t.scroll);
+      });
+    });
+
+    // ───────────── Title letter stagger ─────────────
+    document.querySelectorAll(".cover__title .letter").forEach((letter, i) => {
+      letter.style.transitionDelay = `${i * 50}ms`;
+    });
+
+    // ───────────── Forma mockup — oyuncu seçimi simülasyonu ─────────────
+    // Module-spot içindeki canvas-mockup için kadrodaki oyuncuları sırayla swap eder.
+    // Gerçek modülde bu liste e-mos CMS'den çekiliyordu; burada portfolyo amaçlı statik.
+    const jerseyPresets = [
+      { name: "KARAKAYA",   number: "10" },
+      { name: "QUARESMA",   number: "7"  },
+      { name: "PEPE",       number: "3"  },
+      { name: "BABEL",      number: "9"  },
+      { name: "TALİSCA",    number: "21" },
+      { name: "GUTI",       number: "23" },
+      { name: "TOSIC",      number: "5"  },
+    ];
+    const nameEl   = document.getElementById("jerseyName");
+    const numberEl = document.getElementById("jerseyNumber");
+    let presetIdx  = 0;
+
+    if (nameEl && numberEl) {
+      // İlk yerleştirme + her 2.4s'de bir yumuşak swap
+      const applyPreset = (p) => {
+        // Fade-out + swap + fade-in (CSS yerine inline opacity için micro-anim)
+        nameEl.style.transition   = "opacity 0.25s ease";
+        numberEl.style.transition = "opacity 0.25s ease";
+        nameEl.style.opacity   = "0";
+        numberEl.style.opacity = "0";
+        setTimeout(() => {
+          nameEl.textContent   = p.name;
+          numberEl.textContent = p.number;
+          nameEl.style.opacity   = "1";
+          numberEl.style.opacity = "1";
+        }, 260);
+      };
+
+      applyPreset(jerseyPresets[0]);
+      setInterval(() => {
+        presetIdx = (presetIdx + 1) % jerseyPresets.length;
+        applyPreset(jerseyPresets[presetIdx]);
+      }, 2400);
+    }
+
+    // ───────────── Continue safe-click ─────────────
+    const continueEl = document.getElementById("continue");
+    if (continueEl) {
+      continueEl.addEventListener("click", (e) => {
+        const href = continueEl.getAttribute("href");
+        if (!href || href === "#") e.preventDefault();
+      });
+    }
+  </script>
+</body>
+</html>
