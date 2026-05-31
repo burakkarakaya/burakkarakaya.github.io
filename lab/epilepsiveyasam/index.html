@@ -1,0 +1,3266 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Epilepsi ve Yaşam Derneği</title>
+    <meta
+      name="description"
+      content="Epilepsi ve Yaşam Derneği — 2000'lerin başından bu yana epilepsili bireyler ve aileleri için farkındalık, bilgi ve destek."
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* ============================================================
+       EPİLEPSİ VE YAŞAM DERNEĞİ
+       Tasarım dili: OCI / madebybuzzworthy (Swiss / editorial)
+       Düzen: açık hero · mor intro + stairs · dev split başlık +
+       accordion · dağınık process kartları · ortalı projeler ·
+       marka-sol dev alıntı · 12 kolon grid
+       Palet: epilepsi farkındalık moru
+       ============================================================ */
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --purple: #2a1a8c; /* OCI "blue" karşılığı, derin mor-mavi */
+        --purple-deep: #1c0f66;
+        --purple-bright: #6c3fd6;
+        --ink: #140a36;
+        --mercury: #e7e4dc; /* OCI "mercury" karşılığı, sıcak gri */
+        --mercury-2: #efede7;
+        --cream: #f3f1eb;
+        --white: #ffffff;
+        --lilac: #b49bea;
+        --lilac-soft: #dcd2f2;
+        --muted: #6b6480;
+        --line: rgba(42, 26, 140, 0.18);
+        --line-light: rgba(231, 228, 220, 0.18);
+
+        --pad: clamp(1.1rem, 3.2vw, 3.75rem);
+        --gap: clamp(0.6rem, 1.5vw, 0.94rem);
+      }
+
+      html {
+        scroll-behavior: smooth;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+      }
+      body {
+        font-family: "Inter", system-ui, sans-serif;
+        background: var(--mercury);
+        color: var(--ink);
+        overflow-x: hidden;
+        line-height: 1.4;
+      }
+      img {
+        display: block;
+        max-width: 100%;
+      }
+
+      .mono {
+        font-family: "Space Mono", monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      .grid12 {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        column-gap: var(--gap);
+      }
+      .wrap {
+        padding-inline: var(--pad);
+      }
+
+      /* mono etiket satırı:  SOL ........ [REF] */
+      .meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: var(--purple);
+      }
+      .meta .ref {
+        opacity: 0.5;
+      }
+      .on-dark .meta,
+      .intro .meta,
+      .quote-sec .meta,
+      .support .meta {
+        color: var(--lilac);
+      }
+
+      /* dev editorial başlıklar */
+      .giant {
+        font-weight: 500;
+        letter-spacing: -0.045em;
+        line-height: 0.86;
+        font-size: clamp(3rem, 15vw, 13rem);
+      }
+      .display {
+        font-weight: 600;
+        letter-spacing: -0.03em;
+        line-height: 0.96;
+        font-size: clamp(2rem, 5vw, 4.25rem);
+      }
+      .display em,
+      .giant em {
+        font-style: normal;
+        color: var(--purple);
+      }
+
+      /* ── HEADER / NAV (OCI slide panel) ── */
+      header {
+        position: fixed;
+        inset: 0;
+        z-index: 1000;
+        pointer-events: none;
+        --header-bar-h: calc(0.85rem * 2 + 44px);
+      }
+      header::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: var(--header-bar-h);
+        z-index: 1003;
+        pointer-events: none;
+        opacity: 0;
+        transition:
+          opacity 0.3s ease,
+          background 0.3s ease;
+      }
+      header.scrolled:not(.nav-open)::before {
+        opacity: 1;
+        background: rgba(231, 228, 220, 0.92);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--line);
+      }
+      header.nav-open::before {
+        opacity: 1;
+        background: var(--purple);
+      }
+      .header-brand {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1004;
+        display: flex;
+        align-items: center;
+        gap: 0.85rem;
+        height: var(--header-bar-h);
+        padding: 0.85rem var(--pad);
+        box-sizing: border-box;
+        text-decoration: none;
+        pointer-events: auto;
+      }
+      header.scrolled:not(.nav-open) .header-brand,
+      header.nav-open .header-brand {
+        background: transparent;
+      }
+      .header-menu-zone {
+        position: fixed;
+        top: 0;
+        right: 0;
+        z-index: 1004;
+        width: auto;
+        max-width: 100%;
+        height: var(--header-bar-h);
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: clamp(0.75rem, 2vw, 1.5rem);
+        padding: 0.85rem var(--pad);
+        pointer-events: auto;
+        transition:
+          background 0.35s ease,
+          border-color 0.35s ease,
+          width 0.35s ease;
+      }
+      @media (min-width: 768px) {
+        .header-menu-zone {
+          width: 50%;
+        }
+      }
+      @media (max-width: 767px) {
+        header.nav-open .header-menu-zone {
+          width: 100%;
+          border-left: none;
+        }
+        header.nav-open .header-brand {
+          z-index: 1005;
+        }
+      }
+      header.nav-open .header-menu-zone,
+      header.scrolled:not(.nav-open) .header-menu-zone {
+        background: transparent;
+        backdrop-filter: none;
+        border-left: none;
+        border-bottom: none;
+      }
+      .logo-mark {
+        display: block;
+        color: var(--purple);
+        transition: color 0.3s;
+      }
+      header.nav-open .logo-mark {
+        color: var(--mercury);
+      }
+      .header-brand .logo-mark {
+        height: 44px;
+        width: auto;
+        flex-shrink: 0;
+        transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      header.scrolled:not(.nav-open) .header-brand .logo-mark {
+        transform: rotate(360deg);
+      }
+      .brand-text {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.08;
+        gap: 0.12rem;
+      }
+      .brand-main {
+        font-family: "Space Mono", monospace;
+        font-weight: 700;
+        font-size: clamp(0.78rem, 1.1vw, 0.92rem);
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--purple-deep);
+        transition: color 0.3s;
+      }
+      .brand-sub {
+        font-family: "Space Mono", monospace;
+        font-size: clamp(0.62rem, 0.85vw, 0.72rem);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted);
+        transition: color 0.3s;
+      }
+      header.nav-open .brand-main,
+      header.nav-open .brand-sub {
+        color: var(--mercury);
+      }
+      header.nav-open .brand-sub {
+        opacity: 0.72;
+      }
+      .header-quick {
+        display: none;
+        font-family: "Space Mono", monospace;
+        font-size: 0.64rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--purple-deep);
+        text-decoration: none;
+        opacity: 0.75;
+        transition: opacity 0.2s;
+      }
+      .header-quick:hover {
+        opacity: 1;
+      }
+      header.nav-open .header-quick {
+        color: var(--mercury);
+        opacity: 0.9;
+      }
+      header.nav-open .header-quick:hover {
+        opacity: 1;
+      }
+      @media (min-width: 768px) {
+        .header-quick {
+          display: inline-block;
+        }
+        header.nav-open .header-quick {
+          display: inline-block;
+        }
+      }
+      .nav-toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.65rem;
+        min-width: 44px;
+        height: 44px;
+        padding: 0 1rem;
+        border: 1px solid var(--line);
+        border-radius: 0;
+        background: var(--white);
+        color: var(--purple);
+        cursor: pointer;
+        font-family: "Space Mono", monospace;
+        font-size: 0.66rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        transition:
+          background 0.25s,
+          border-color 0.25s,
+          color 0.25s;
+      }
+      header.nav-open .nav-toggle {
+        background: var(--white);
+        border-color: var(--purple);
+        color: var(--purple);
+      }
+      .nav-toggle-bars {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 16px;
+        height: 16px;
+        position: relative;
+      }
+      header.nav-open .nav-toggle-bars {
+        display: none;
+      }
+      .nav-toggle-close {
+        display: none;
+        width: 14px;
+        height: 14px;
+        position: relative;
+        flex-shrink: 0;
+      }
+      header.nav-open .nav-toggle-close {
+        display: block;
+      }
+      .nav-toggle-close::before,
+      .nav-toggle-close::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 14px;
+        height: 1.5px;
+        background: currentColor;
+        border-radius: 1px;
+      }
+      .nav-toggle-close::before {
+        transform: translate(-50%, -50%) rotate(45deg);
+      }
+      .nav-toggle-close::after {
+        transform: translate(-50%, -50%) rotate(-45deg);
+      }
+      .nav-toggle-bars span,
+      .nav-toggle-bars span::before,
+      .nav-toggle-bars span::after {
+        display: block;
+        width: 16px;
+        height: 1.5px;
+        background: currentColor;
+        transition:
+          transform 0.28s ease,
+          opacity 0.28s ease,
+          top 0.28s ease;
+      }
+      .nav-toggle-bars span {
+        position: relative;
+      }
+      .nav-toggle-bars span::before,
+      .nav-toggle-bars span::after {
+        content: "";
+        position: absolute;
+        left: 0;
+      }
+      .nav-toggle-bars span::before {
+        top: -5px;
+      }
+      .nav-toggle-bars span::after {
+        top: 5px;
+      }
+      .nav-drawer {
+        position: fixed;
+        top: var(--nav-top, 4.35rem);
+        right: var(--nav-right, var(--pad));
+        width: var(--nav-width, 50vw);
+        height: calc(
+          100dvh - var(--nav-top, 4.35rem) - var(--nav-bottom, 1rem)
+        );
+        z-index: 1001;
+        overflow: hidden;
+        visibility: hidden;
+        pointer-events: none;
+        transition: visibility 0s linear 0.48s;
+      }
+      header.nav-open .nav-drawer {
+        visibility: visible;
+        pointer-events: auto;
+        transition: visibility 0s linear 0s;
+      }
+      .nav-drawer-inner {
+        height: 100%;
+        background: var(--white);
+        overflow-x: hidden;
+        overflow-y: auto;
+        border: 1px solid var(--line);
+        transform: translateX(100%);
+        transition: transform 0.48s cubic-bezier(0.16, 1, 0.3, 1);
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(42, 26, 140, 0.38) transparent;
+      }
+      header.nav-open .nav-drawer-inner {
+        transform: translateX(0);
+      }
+      .nav-drawer-inner::-webkit-scrollbar {
+        width: 4px;
+      }
+      .nav-drawer-inner::-webkit-scrollbar-track {
+        background: transparent;
+        margin-block: 0.35rem;
+      }
+      .nav-drawer-inner::-webkit-scrollbar-thumb {
+        background: rgba(42, 26, 140, 0.38);
+        border-radius: 999px;
+      }
+      .nav-drawer-inner::-webkit-scrollbar-thumb:hover {
+        background: rgba(42, 26, 140, 0.58);
+      }
+      .nav-drawer-content {
+        display: flex;
+        flex-direction: column;
+        min-height: min-content;
+        padding: clamp(1.25rem, 3vh, 2rem) var(--pad) clamp(2rem, 5vh, 3rem);
+      }
+      .nav-primary {
+        list-style: none;
+        border-top: 1px solid var(--line);
+      }
+      .nav-primary li {
+        border-bottom: 1px solid var(--line);
+      }
+      .nav-primary a {
+        display: flex;
+        align-items: center;
+        gap: 0;
+        padding: clamp(0.75rem, 1.8vh, 1rem) 0;
+        font-size: clamp(1.85rem, 4.5vw, 3.35rem);
+        font-weight: 500;
+        letter-spacing: -0.03em;
+        line-height: 1.02;
+        color: var(--purple);
+        text-decoration: none;
+        transform: translateX(0);
+        transition:
+          color 0.25s ease,
+          transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .nav-primary a::before {
+        content: "→";
+        font-family: "Space Mono", monospace;
+        font-size: 0.42em;
+        font-weight: 400;
+        letter-spacing: 0;
+        line-height: 1;
+        color: var(--purple-bright);
+        opacity: 0;
+        width: 0;
+        overflow: hidden;
+        transform: translateX(-6px);
+        transition:
+          opacity 0.28s ease,
+          width 0.28s ease,
+          transform 0.32s cubic-bezier(0.16, 1, 0.3, 1),
+          margin 0.28s ease;
+        margin-right: 0;
+        flex-shrink: 0;
+      }
+      .nav-primary a:hover {
+        color: var(--purple-bright);
+        transform: translateX(0.4rem);
+      }
+      .nav-primary a:hover::before {
+        opacity: 1;
+        width: 0.65em;
+        margin-right: 0.35rem;
+        transform: translateX(0);
+      }
+      .nav-foot {
+        margin-top: auto;
+        padding-top: clamp(1.25rem, 3vh, 2rem);
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+      }
+      .nav-group {
+        display: grid;
+        grid-template-columns: minmax(88px, 120px) 1fr;
+        gap: 1rem 1.5rem;
+        align-items: start;
+        padding-block: 1rem;
+        border-top: 1px solid var(--line);
+      }
+      .nav-group-label {
+        font-family: "Space Mono", monospace;
+        font-size: 0.62rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted);
+        padding-top: 0.15rem;
+      }
+      .nav-group ul {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.55rem;
+      }
+      .nav-group a {
+        font-family: "Space Mono", monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: var(--purple-deep);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .nav-group a:hover {
+        color: var(--purple-bright);
+      }
+      .nav-group-contact a[href^="mailto:"],
+      .nav-group-contact a[href^="tel:"] {
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+      .nav-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 1000;
+        background: rgba(0, 0, 0, 0.72);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.4s ease;
+      }
+      header.nav-open .nav-backdrop {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      /* ── HERO (açık) ── */
+      .hero {
+        position: relative;
+        min-height: 100svh;
+        background: var(--mercury);
+        color: var(--purple);
+        padding: calc(var(--pad) + 52px) var(--pad) var(--pad);
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        overflow: hidden;
+      }
+      /* hero beyin sahnesi (epilepsi-anasayfa hero-right-inner uyarlaması) */
+      .hero-brain {
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 52%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1.4rem;
+        pointer-events: none;
+      }
+      @media (max-width: 999px) {
+        .hero-brain {
+          width: 100%;
+          opacity: 0.16;
+          z-index: 0;
+        }
+      }
+      .brain-scene {
+        position: relative;
+        width: clamp(300px, 40vw, 560px);
+        aspect-ratio: 1;
+      }
+      .pulse-ring {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        border-radius: 50%;
+        border: 1px solid var(--purple);
+        transform: translate(-50%, -50%);
+        opacity: 0;
+        animation: pulse-expand 4s ease-out infinite;
+      }
+      .pulse-ring:nth-child(1) {
+        width: 46%;
+        height: 46%;
+        animation-delay: 0s;
+      }
+      .pulse-ring:nth-child(2) {
+        width: 70%;
+        height: 70%;
+        animation-delay: 1s;
+      }
+      .pulse-ring:nth-child(3) {
+        width: 94%;
+        height: 94%;
+        animation-delay: 2s;
+      }
+      @keyframes pulse-expand {
+        0% {
+          opacity: 0.4;
+          transform: translate(-50%, -50%) scale(0.85);
+        }
+        100% {
+          opacity: 0;
+          transform: translate(-50%, -50%) scale(1.18);
+        }
+      }
+      .brain-wrap {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 64%;
+      }
+      .brain-wrap svg {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+      /* hero beyin videosu — şeffaf/loop, marka moruyla harmanlanır */
+      .brain-video {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 124%;
+        height: 124%;
+        transform: translate(-50%, -52%);
+        object-fit: cover;
+        opacity: 0.85;
+        mix-blend-mode: multiply;
+        pointer-events: none;
+        /* kenarları yumuşatır + sağ-alt filigranı gizler */
+        -webkit-mask-image: radial-gradient(
+          circle at 50% 47%,
+          #000 36%,
+          transparent 70%
+        );
+        mask-image: radial-gradient(
+          circle at 50% 47%,
+          #000 36%,
+          transparent 70%
+        );
+      }
+      .hero-quote {
+        max-width: 26ch;
+        text-align: center;
+        font-size: 1rem;
+        font-style: italic;
+        line-height: 1.5;
+        color: var(--purple);
+        opacity: 0.85;
+      }
+      .hero-quote cite {
+        display: block;
+        font-style: normal;
+        font-family: "Space Mono", monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-top: 0.6rem;
+      }
+      @media (max-width: 999px) {
+        .hero-quote {
+          display: none;
+        }
+      }
+      .hero-eeg {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 5%;
+        height: 68px;
+        overflow: hidden;
+        opacity: 0.35;
+      }
+      .hero-eeg .eeg-svg {
+        width: 200%;
+        height: 100%;
+        animation: eeg-scroll 9s linear infinite;
+      }
+      @keyframes eeg-scroll {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(-50%);
+        }
+      }
+      .hero-grid-lines {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        background-image: linear-gradient(
+          to right,
+          var(--line) 1px,
+          transparent 1px
+        );
+        background-size: calc((100% - 11 * var(--gap)) / 12 + var(--gap)) 100%;
+        opacity: 0.4;
+        display: none;
+      }
+      @media (min-width: 1000px) {
+        .hero-grid-lines {
+          display: block;
+        }
+      }
+      .hero-top {
+        position: absolute;
+        top: calc(var(--pad) + 46px);
+        left: var(--pad);
+        right: var(--pad);
+        z-index: 2;
+        display: flex;
+        justify-content: space-between;
+        color: var(--purple);
+      }
+      .hero-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.7rem;
+      }
+      .hero-eyebrow::before {
+        content: "";
+        width: 30px;
+        height: 1px;
+        background: var(--purple);
+      }
+      .hero-grid {
+        position: relative;
+        z-index: 2;
+        align-items: end;
+        row-gap: 1.5rem;
+      }
+      .hero-title {
+        grid-column: 1 / -1;
+      }
+      .hero-title.giant {
+        font-size: clamp(2.35rem, 7.2vw, 6rem);
+      }
+      @media (min-width: 1000px) {
+        .hero-title {
+          grid-column: 1 / 9;
+          margin-bottom: -0.05em;
+        }
+      }
+      .hero-tag {
+        grid-column: 1 / -1;
+      }
+      @media (min-width: 1000px) {
+        .hero-tag {
+          grid-column: 1 / 6;
+          padding-bottom: 0.6rem;
+        }
+      }
+      .hero-tag p {
+        font-weight: 400;
+        font-size: clamp(1rem, 1.4vw, 1.25rem);
+        line-height: 1.45;
+        color: var(--purple-deep);
+      }
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.7rem;
+        margin-top: 1.3rem;
+      }
+      .hero-stats {
+        position: relative;
+        z-index: 2;
+        margin-top: clamp(2rem, 5vh, 3rem);
+        padding-top: 1.3rem;
+        border-top: 1px solid var(--line);
+        display: flex;
+        flex-wrap: wrap;
+        gap: clamp(1.6rem, 6vw, 4rem);
+      }
+      .hero-stat strong {
+        display: block;
+        font-size: clamp(1.5rem, 2.4vw, 2.1rem);
+        font-weight: 600;
+        letter-spacing: -0.02em;
+      }
+      .hero-stat span {
+        font-size: 0.76rem;
+        color: var(--muted);
+      }
+
+      /* ── BUTONLAR ── */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.8rem 1.55rem;
+        border-radius: 100px;
+        font-size: 0.84rem;
+        font-weight: 500;
+        text-decoration: none;
+        cursor: pointer;
+        border: 1px solid transparent;
+        transition:
+          transform 0.2s,
+          background 0.2s,
+          color 0.2s,
+          border-color 0.2s;
+      }
+      .btn-solid {
+        background: var(--purple);
+        color: var(--white);
+      }
+      .btn-solid:hover {
+        background: var(--purple-deep);
+        transform: translateY(-1px);
+      }
+      .btn-light {
+        background: var(--purple);
+        color: var(--mercury);
+      }
+      .btn-light:hover {
+        background: var(--purple-deep);
+        transform: translateY(-1px);
+      }
+      .btn-outline {
+        border-color: var(--line);
+        color: var(--purple);
+      }
+      .btn-outline:hover {
+        border-color: var(--purple);
+      }
+      .btn-outline.on-dark {
+        border-color: rgba(180, 155, 234, 0.4);
+        color: var(--lilac);
+      }
+      .btn-outline.on-dark:hover {
+        border-color: var(--lilac);
+      }
+
+      /* OCI bracket link:  [ → Devamı → ] */
+      .bracket {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        font-family: "Space Mono", monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--purple);
+        text-decoration: none;
+      }
+      .bracket .br {
+        opacity: 0.45;
+      }
+      .bracket .arw {
+        transition: transform 0.25s;
+      }
+      .bracket:hover .arw {
+        transform: translateX(5px);
+      }
+
+      /* ── STAIRS geçişi ── */
+      .stairs {
+        position: relative;
+        height: clamp(45px, 5.5vw, 85px);
+        margin-top: clamp(2rem, 5vh, 4rem);
+        margin-inline: calc(var(--pad) * -1);
+        overflow: hidden;
+      }
+      .stairs .step {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 100%;
+        background: var(--mercury-2);
+        transform: scaleY(0);
+        transform-origin: bottom;
+        transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        will-change: transform;
+      }
+      .stairs .step:nth-child(1) {
+        width: 38%;
+        z-index: 1;
+        transition-delay: 0s;
+      }
+      .stairs .step:nth-child(2) {
+        width: 69%;
+        z-index: 2;
+        transition-delay: 0.08s;
+      }
+      .stairs .step:nth-child(3) {
+        width: 100%;
+        z-index: 3;
+        transition-delay: 0.16s;
+      }
+      .stairs.in .step {
+        transform: scaleY(1);
+      }
+
+      /* ── SATIR-MASKE REVEAL ── */
+      .lines .line {
+        display: block;
+        overflow: clip;
+        padding: 0.04em 0.04em 0.22em;
+        margin-bottom: -0.18em;
+      }
+      .lines .line > span {
+        display: block;
+        transform: translateY(125%);
+        transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .lines.in .line > span {
+        transform: translateY(0);
+      }
+      .lines.in .line:nth-child(2) > span {
+        transition-delay: 0.07s;
+      }
+      .lines.in .line:nth-child(3) > span {
+        transition-delay: 0.14s;
+      }
+      .lines.in .line:nth-child(4) > span {
+        transition-delay: 0.21s;
+      }
+      .lines.in .line:nth-child(5) > span {
+        transition-delay: 0.28s;
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(26px);
+        transition:
+          opacity 0.7s ease,
+          transform 0.7s ease;
+      }
+      .reveal.in {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      section.block {
+        padding-block: clamp(4rem, 9vh, 7.5rem);
+      }
+
+      section.block.intro {
+        padding-bottom: 0;
+      }
+
+      section.block.svc {
+        padding-top: 0;
+      }
+
+      /* ── INTRO (mor) ── */
+      .intro {
+        background: var(--purple);
+        color: var(--mercury);
+      }
+      .intro-lead {
+        grid-column: 1 / -1;
+        font-weight: 500;
+        letter-spacing: -0.025em;
+        line-height: 1.04;
+        font-size: clamp(1.5rem, 3.6vw, 3rem);
+      }
+      @media (min-width: 1000px) {
+        .intro-lead {
+          grid-column: 1 / 11;
+        }
+      }
+      .intro-cols {
+        grid-column: 1 / -1;
+        margin-top: clamp(2.5rem, 6vh, 4.5rem);
+        display: grid;
+        gap: 2rem;
+      }
+      @media (min-width: 1000px) {
+        .intro-cols {
+          grid-column: 7 / -1;
+          grid-template-columns: 1fr 1fr;
+          gap: 3rem;
+        }
+      }
+      .intro-cols p {
+        font-family: "Space Mono", monospace;
+        font-size: 0.74rem;
+        line-height: 1.55;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+        color: rgba(231, 228, 220, 0.72);
+      }
+
+      /* ── SPLIT GIANT + ACCORDION (OCI our_services) ── */
+      .svc {
+        background: var(--mercury-2);
+      }
+      .svc-giant {
+        grid-column: 1 / -1;
+        color: var(--purple);
+      }
+      @media (min-width: 1000px) {
+        .svc-giant {
+          display: grid;
+          grid-template-columns: repeat(12, 1fr);
+          column-gap: var(--gap);
+          align-items: start;
+        }
+        .svc-giant .g1 {
+          grid-column: 1 / 7;
+        }
+        .svc-giant .g2 {
+          grid-column: 7 / -1;
+        }
+      }
+      .svc-grid {
+        margin-top: clamp(2rem, 5vh, 3.5rem);
+      }
+      .svc-visual {
+        grid-column: 1 / -1;
+        display: none;
+      }
+      @media (min-width: 1000px) {
+        .svc-visual {
+          grid-column: 1 / 6;
+          display: block;
+          position: sticky;
+          top: 7rem;
+          align-self: start;
+        }
+      }
+      .svc-visual .frame {
+        border: 1px solid var(--line);
+        aspect-ratio: 4/3;
+        position: relative;
+        overflow: hidden;
+        background: var(--mercury);
+      }
+      .svc-visual .frame svg {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+      }
+      .acc {
+        grid-column: 1 / -1;
+        border-top: 1px solid var(--line);
+      }
+      @media (min-width: 1000px) {
+        .acc {
+          grid-column: 7 / -1;
+        }
+      }
+      .acc-item {
+        border-bottom: 1px solid var(--line);
+      }
+      .acc-btn {
+        width: 100%;
+        background: none;
+        border: 0;
+        cursor: pointer;
+        color: var(--purple);
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 1rem;
+        text-align: left;
+        padding: 1.35rem 0;
+        font-family: inherit;
+        font-size: clamp(1.05rem, 1.6vw, 1.4rem);
+        font-weight: 500;
+        letter-spacing: -0.01em;
+      }
+      .acc-btn .false {
+        font-family: "Space Mono", monospace;
+        font-size: 0.56rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #c0392b;
+        display: block;
+        margin-bottom: 0.35rem;
+      }
+      .acc-plus {
+        position: relative;
+        width: 17px;
+        height: 17px;
+        flex-shrink: 0;
+        margin-top: 0.45rem;
+        transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .acc-plus::before,
+      .acc-plus::after {
+        content: "";
+        position: absolute;
+        background: var(--purple);
+      }
+      .acc-plus::before {
+        top: 50%;
+        left: 0;
+        width: 100%;
+        height: 1.5px;
+        transform: translateY(-50%);
+      }
+      .acc-plus::after {
+        left: 50%;
+        top: 0;
+        height: 100%;
+        width: 1.5px;
+        transform: translateX(-50%);
+        transition: transform 0.35s;
+      }
+      .acc-item.open .acc-plus {
+        transform: rotate(135deg);
+      }
+      .acc-panel {
+        display: grid;
+        grid-template-rows: 0fr;
+        transition: grid-template-rows 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .acc-item.open .acc-panel {
+        grid-template-rows: 1fr;
+      }
+      .acc-panel > div {
+        overflow: hidden;
+      }
+      .acc-panel p {
+        color: var(--muted);
+        font-size: 0.92rem;
+        line-height: 1.65;
+        padding-bottom: 1.35rem;
+        max-width: 54ch;
+      }
+      .acc-panel .bracket {
+        margin-bottom: 1.35rem;
+      }
+
+      /* ── HİKAYE: dev başlık + dağınık kartlar (OCI home_process) ── */
+      .proc {
+        background: var(--mercury);
+      }
+      .proc-grid {
+        align-items: start;
+        row-gap: 3rem;
+      }
+      .proc-head {
+        grid-column: 1 / -1;
+      }
+      @media (min-width: 1000px) {
+        .proc-head {
+          grid-column: 1 / 7;
+          position: sticky;
+          top: 6rem;
+          align-self: start;
+        }
+      }
+      .proc-head .giant {
+        color: var(--purple);
+        line-height: 0.84;
+      }
+      .proc-head .giant.lines .line {
+        overflow: hidden;
+        padding: 0 0.04em 0.14em;
+        margin-bottom: -0.06em;
+      }
+      .proc-head .giant.lines .line > span {
+        padding-bottom: 0.03em;
+      }
+      .proc-head p {
+        margin-top: 1.5rem;
+        color: var(--muted);
+        max-width: 30ch;
+        line-height: 1.7;
+      }
+      .proc-cards {
+        grid-column: 1 / -1;
+        display: flex;
+        flex-direction: column;
+        gap: clamp(1.5rem, 3vw, 2.4rem);
+      }
+      .pcard {
+        background: var(--white);
+        color: var(--purple);
+        border: 1px solid var(--line);
+        padding: 1.4rem clamp(1.2rem, 2.5vw, 1.6rem) 1.6rem;
+        transition:
+          transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+          box-shadow 0.4s;
+      }
+      @media (min-width: 1000px) {
+        .proc-cards {
+          grid-column: 7 / -1;
+          padding-right: clamp(0.5rem, 2vw, 1.5rem);
+        }
+        .pcard:nth-child(odd) {
+          transform: rotate(-1.4deg) translateX(0);
+          width: 96%;
+          align-self: flex-start;
+        }
+        .pcard:nth-child(even) {
+          transform: rotate(1.6deg) translateX(4%);
+          width: 96%;
+          align-self: flex-start;
+        }
+        .pcard:hover {
+          transform: rotate(0) translateX(0);
+          box-shadow: 0 24px 60px rgba(42, 26, 140, 0.14);
+          z-index: 2;
+        }
+      }
+      .pcard-top {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+      }
+      .pcard-top h3 {
+        font-weight: 500;
+        font-size: clamp(1.3rem, 2.2vw, 1.9rem);
+        letter-spacing: -0.02em;
+      }
+      .pcard-top .n {
+        font-family: "Space Mono", monospace;
+        font-size: 0.82rem;
+        color: var(--muted);
+      }
+      .pcard hr {
+        border: 0;
+        border-top: 1px solid var(--line);
+        margin: 0.75rem 0 1rem;
+      }
+      .pcard p {
+        color: var(--muted);
+        font-size: 0.92rem;
+        line-height: 1.65;
+      }
+
+      /* ── PROJELER: ortalı dev başlık + minimal liste (OCI most recent) ── */
+      .projects {
+        background: var(--mercury-2);
+        text-align: center;
+      }
+      .projects .meta {
+        justify-content: center;
+        gap: 3rem;
+      }
+      .projects .giant {
+        color: var(--purple);
+        margin: clamp(1.5rem, 4vh, 3rem) auto clamp(2.5rem, 7vh, 5rem);
+        max-width: 16ch;
+      }
+      .proj-list {
+        max-width: 1100px;
+        margin-inline: auto;
+        border-top: 1px solid var(--line);
+      }
+      .proj-row {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        gap: 1.5rem;
+        align-items: center;
+        padding: clamp(1rem, 2.5vw, 1.6rem) 0.5rem;
+        border-bottom: 1px solid var(--line);
+        text-decoration: none;
+        color: var(--purple);
+        transition:
+          padding-inline 0.3s,
+          background 0.3s;
+      }
+      .proj-row:hover {
+        background: var(--mercury);
+        padding-inline: 1.2rem;
+      }
+      .proj-row .pn {
+        font-family: "Space Mono", monospace;
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+      .proj-row .pt {
+        text-align: left;
+        font-weight: 500;
+        font-size: clamp(1.1rem, 2.4vw, 1.9rem);
+        letter-spacing: -0.02em;
+      }
+      .proj-row .pc {
+        font-family: "Space Mono", monospace;
+        font-size: 0.64rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--purple);
+        background: var(--lilac-soft);
+        padding: 4px 12px;
+        border-radius: 100px;
+        white-space: nowrap;
+      }
+
+      /* ── DEV ALINTI: carousel (OCI testimonials) ── */
+      .quote-sec {
+        background: var(--white);
+      }
+      .quote-slider {
+        margin-top: clamp(2.5rem, 6vh, 4.5rem);
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+        align-items: start;
+      }
+      @media (min-width: 1000px) {
+        .quote-slider {
+          grid-template-columns: minmax(200px, 4fr) minmax(0, 8fr);
+          column-gap: clamp(2rem, 5vw, 4rem);
+          min-height: clamp(320px, 42vh, 480px);
+        }
+      }
+      .quote-sidebar {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 1.25rem 1.5rem;
+        align-items: end;
+      }
+      @media (min-width: 1000px) {
+        .quote-sidebar {
+          position: sticky;
+          top: 7rem;
+          align-self: start;
+          grid-template-columns: auto 1fr;
+          align-items: end;
+        }
+      }
+      .quote-rail {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.65rem;
+        padding-bottom: 0.35rem;
+      }
+      .quote-rail-line {
+        width: 1px;
+        flex: 1;
+        min-height: clamp(72px, 12vh, 140px);
+        background: var(--line);
+      }
+      .quote-nav {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        border: 1px solid var(--line);
+        background: var(--white);
+        color: var(--purple);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 0.95rem;
+        line-height: 1;
+        transition:
+          border-color 0.2s,
+          color 0.2s,
+          background 0.2s;
+      }
+      .quote-nav:hover:not(:disabled) {
+        border-color: var(--purple);
+        background: var(--purple);
+        color: var(--mercury);
+      }
+      .quote-nav:disabled {
+        opacity: 0.28;
+        cursor: not-allowed;
+      }
+      .quote-brand .b {
+        font-weight: 600;
+        font-size: clamp(1.5rem, 2.8vw, 2.35rem);
+        letter-spacing: -0.03em;
+        line-height: 1.02;
+        color: var(--purple);
+        transition: opacity 0.35s ease;
+      }
+      .quote-brand .r {
+        font-family: "Space Mono", monospace;
+        font-size: 0.68rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-top: 0.55rem;
+        transition: opacity 0.35s ease;
+      }
+      .quote-brand.is-changing .b,
+      .quote-brand.is-changing .r {
+        opacity: 0;
+      }
+      .quote-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: clamp(2rem, 4vh, 3rem);
+        min-height: 100%;
+      }
+      .quote-track {
+        position: relative;
+        overflow: hidden;
+      }
+      .quote-slide {
+        display: none;
+        animation: quoteIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+      }
+      .quote-slide.is-active {
+        display: block;
+      }
+      @keyframes quoteIn {
+        from {
+          opacity: 0;
+          transform: translateY(12px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .bigquote {
+        font-weight: 400;
+        letter-spacing: -0.02em;
+        line-height: 1.12;
+        color: var(--ink);
+        font-size: clamp(1.55rem, 3.4vw, 2.85rem);
+        margin: 0;
+      }
+      .bigquote em {
+        font-style: normal;
+        color: var(--purple);
+      }
+      .quote-foot {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 1rem 2rem;
+        padding-top: clamp(1.25rem, 3vh, 2rem);
+        border-top: 1px solid var(--line);
+      }
+      .quote-counter {
+        font-family: "Space Mono", monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0.12em;
+        color: var(--muted);
+      }
+      .quote-attr {
+        text-align: right;
+      }
+      .quote-attr-name {
+        font-family: "Space Mono", monospace;
+        font-size: 0.68rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--purple-deep);
+      }
+      .quote-attr-org {
+        font-family: "Space Mono", monospace;
+        font-size: 0.62rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-top: 0.35rem;
+      }
+
+      /* ── HABERLER ── */
+      .news {
+        background: var(--mercury);
+        overflow: hidden;
+      }
+      .news-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin-top: 2rem;
+        margin-bottom: 2.5rem;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+      }
+      .news-head .display {
+        color: var(--purple);
+      }
+      .news-head .display em {
+        font-style: normal;
+        color: var(--purple-bright);
+      }
+      .news-controls {
+        display: flex;
+        align-items: center;
+        gap: 0.55rem;
+      }
+      .news-nav {
+        width: 44px;
+        height: 38px;
+        border: 1px solid var(--line);
+        border-radius: 9px;
+        background: transparent;
+        color: var(--purple);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 1.05rem;
+        line-height: 1;
+        transition:
+          background 0.2s,
+          border-color 0.2s,
+          opacity 0.2s;
+      }
+      .news-nav:hover {
+        background: var(--white);
+        border-color: var(--purple);
+      }
+      .news-nav:disabled {
+        opacity: 0.3;
+        cursor: default;
+      }
+      .news-viewall {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        margin-left: 0.7rem;
+        font-family: "Space Mono", monospace;
+        font-size: 0.7rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--purple);
+        text-decoration: none;
+      }
+      .news-viewall:hover {
+        text-decoration: underline;
+      }
+
+      .news-rail-outer {
+        width: 100%;
+        overflow: hidden;
+      }
+
+      .news-rail {
+        --news-gap: 1.25rem;
+        --news-visible: 1.15;
+        --news-gaps: 1;
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: calc(
+          (100vw - var(--pad) - var(--news-gaps) * var(--news-gap)) /
+            var(--news-visible)
+        );
+        gap: var(--news-gap);
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        padding-left: var(--pad);
+        padding-right: var(--pad);
+        scroll-padding-inline: var(--pad);
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+      }
+      .news-rail::-webkit-scrollbar {
+        display: none;
+      }
+      @media (min-width: 640px) {
+        .news-rail {
+          --news-visible: 2.2;
+          --news-gaps: 2;
+        }
+      }
+      @media (min-width: 1000px) {
+        .news-rail {
+          --news-visible: 3.5;
+          --news-gaps: 3;
+        }
+      }
+
+      .news-card {
+        scroll-snap-align: start;
+        text-decoration: none;
+        color: inherit;
+        display: flex;
+        flex-direction: column;
+      }
+      .news-thumb {
+        aspect-ratio: 16/10;
+        position: relative;
+        overflow: hidden;
+        border-radius: 0;
+        background: linear-gradient(135deg, #2a1a8c, #1c0f66);
+      }
+      .news-thumb.t1 {
+        background: linear-gradient(135deg, #b49bea, #6c3fd6);
+      }
+      .news-thumb.t2 {
+        background: linear-gradient(135deg, #dcd2f2, #b49bea);
+      }
+      .news-thumb.t3 {
+        background: linear-gradient(135deg, #6c3fd6, #2a1a8c);
+      }
+      .news-thumb svg {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .news-card:hover .news-thumb svg {
+        transform: scale(1.05);
+      }
+      .news-tag {
+        position: absolute;
+        top: 0.85rem;
+        left: 0.85rem;
+        z-index: 2;
+        font-family: "Space Mono", monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--purple);
+        background: var(--white);
+        padding: 5px 12px;
+        border-radius: 100px;
+      }
+      .news-body {
+        padding-top: 1.05rem;
+      }
+      .news-date {
+        font-family: "Space Mono", monospace;
+        font-size: 0.68rem;
+        color: var(--muted);
+        margin-bottom: 0.5rem;
+      }
+      .news-body h3 {
+        font-weight: 500;
+        letter-spacing: -0.01em;
+        line-height: 1.32;
+        color: var(--ink);
+        font-size: 1.05rem;
+        transition: color 0.2s;
+      }
+      .news-card:hover .news-body h3 {
+        color: var(--purple);
+      }
+
+      /* ── DESTEK ── */
+      .support {
+        background: var(--purple);
+        color: var(--mercury);
+      }
+      .support-grid {
+        margin-top: clamp(2rem, 5vh, 4rem);
+        align-items: center;
+        row-gap: 2.5rem;
+      }
+      .support-left {
+        grid-column: 1 / -1;
+      }
+      @media (min-width: 1000px) {
+        .support-left {
+          grid-column: 1 / 6;
+        }
+      }
+      .support-left .display {
+        color: var(--mercury);
+      }
+      .support-left .display em {
+        color: var(--lilac);
+      }
+      .support-left p {
+        color: rgba(231, 228, 220, 0.72);
+        margin-top: 1.2rem;
+        line-height: 1.7;
+        max-width: 42ch;
+      }
+      .support-cards {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+      }
+      @media (min-width: 1000px) {
+        .support-cards {
+          grid-column: 7 / -1;
+        }
+      }
+      .support-card {
+        background: rgba(231, 228, 220, 0.06);
+        border: 1px solid var(--line-light);
+        padding: 1.5rem;
+        text-decoration: none;
+        display: block;
+        transition:
+          background 0.2s,
+          border-color 0.2s,
+          transform 0.2s;
+      }
+      .support-card:hover {
+        background: rgba(231, 228, 220, 0.12);
+        border-color: rgba(180, 155, 234, 0.4);
+        transform: translateY(-2px);
+      }
+      .support-card .ic {
+        font-size: 1.4rem;
+        margin-bottom: 0.7rem;
+      }
+      .support-card h4 {
+        font-weight: 600;
+        font-size: 0.98rem;
+        color: var(--mercury);
+        margin-bottom: 0.35rem;
+      }
+      .support-card p {
+        font-size: 0.8rem;
+        color: rgba(231, 228, 220, 0.55);
+        line-height: 1.5;
+      }
+
+      /* ── FOOTER ── */
+      footer {
+        background: var(--ink);
+        color: var(--mercury);
+        padding: clamp(3rem, 6vh, 4rem) var(--pad) 2rem;
+      }
+      .footer-logo {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.25rem;
+        margin-bottom: 3rem;
+      }
+      .logo-stage {
+        position: relative;
+        display: grid;
+        place-items: center;
+        padding: clamp(1.6rem, 5vw, 3.2rem);
+      }
+      .footer-logo .logo-mark {
+        position: relative;
+        z-index: 2;
+        width: clamp(110px, 18vw, 170px);
+        color: var(--lilac);
+        animation: logoBreath 4.5s ease-in-out infinite;
+      }
+      .logo-stage .wave {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: clamp(150px, 24vw, 235px);
+        aspect-ratio: 1;
+        border-radius: 50%;
+        border: 1px solid var(--lilac);
+        transform: translate(-50%, -50%) scale(0.5);
+        opacity: 0;
+        animation: logoWave 4.5s ease-out infinite;
+        pointer-events: none;
+      }
+      .logo-stage .wave:nth-child(2) {
+        animation-delay: 1.5s;
+      }
+      .logo-stage .wave:nth-child(3) {
+        animation-delay: 3s;
+      }
+      @keyframes logoWave {
+        0% {
+          opacity: 0.55;
+          transform: translate(-50%, -50%) scale(0.5);
+        }
+        70% {
+          opacity: 0.08;
+        }
+        100% {
+          opacity: 0;
+          transform: translate(-50%, -50%) scale(1.75);
+        }
+      }
+      @keyframes logoBreath {
+        0%,
+        100% {
+          transform: scale(1);
+          filter: drop-shadow(0 0 0 rgba(180, 155, 234, 0));
+        }
+        50% {
+          transform: scale(1.035);
+          filter: drop-shadow(0 0 16px rgba(180, 155, 234, 0.5));
+        }
+      }
+      .footer-wordmark {
+        font-family: "Space Mono", monospace;
+        font-size: clamp(0.8rem, 1.6vw, 1rem);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--mercury);
+      }
+      .footer-wordmark em {
+        font-style: normal;
+        color: var(--lilac);
+        opacity: 0.8;
+        font-size: 0.8em;
+      }
+      .footer-top {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+        padding-bottom: 2.5rem;
+        border-bottom: 1px solid var(--line-light);
+        margin-bottom: 1.75rem;
+      }
+      @media (min-width: 720px) {
+        .footer-top {
+          grid-template-columns: 1.6fr 1fr 1fr 1fr;
+        }
+      }
+      .footer-brand p {
+        font-size: 0.85rem;
+        color: rgba(231, 228, 220, 0.45);
+        line-height: 1.7;
+        margin-top: 1rem;
+        max-width: 30ch;
+      }
+      .footer-col h5 {
+        font-family: "Space Mono", monospace;
+        font-size: 0.62rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--lilac);
+        margin-bottom: 1.1rem;
+      }
+      .footer-col ul {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.55rem;
+      }
+      .footer-col a {
+        font-size: 0.85rem;
+        color: rgba(231, 228, 220, 0.5);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .footer-col a:hover {
+        color: var(--lilac);
+      }
+      .footer-bottom {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        justify-content: space-between;
+        align-items: center;
+        font-family: "Space Mono", monospace;
+        font-size: 0.64rem;
+        letter-spacing: 0.06em;
+        color: rgba(231, 228, 220, 0.35);
+        text-transform: uppercase;
+      }
+      .footer-social {
+        display: flex;
+        gap: 0.6rem;
+      }
+      .footer-social a {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        border: 1px solid var(--line-light);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: rgba(231, 228, 220, 0.5);
+        text-decoration: none;
+        font-size: 0.7rem;
+        transition: all 0.2s;
+      }
+      .footer-social a:hover {
+        border-color: var(--lilac);
+        color: var(--lilac);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .reveal,
+        .lines .line > span,
+        .stairs .step,
+        .pcard {
+          transition: none !important;
+          opacity: 1 !important;
+          transform: none !important;
+        }
+        .footer-logo .logo-mark {
+          animation: none !important;
+        }
+        .logo-stage .wave {
+          display: none;
+        }
+        .pulse-ring,
+        .hero-eeg .eeg-svg,
+        .brain-wrap svg animate {
+          animation: none !important;
+        }
+        .pulse-ring {
+          display: none;
+        }
+        .quote-slide {
+          animation: none !important;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- ═══ HEADER ═══ -->
+    <header id="site-header">
+      <a
+        href="index.html"
+        class="header-brand"
+        aria-label="Epilepsi ve Yaşam Derneği ana sayfa"
+      >
+        <svg
+          class="logo-mark"
+          viewBox="20 37 185 91"
+          fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+        >
+          <g transform="translate(0,225) scale(0.1,-0.1)">
+            <path
+              d="M1049 1818 c-47 -64 -88 -158 -101 -229 -6 -35 -12 -65 -13 -66 -1 -2 -33 11 -72 27 -38 16 -95 32 -126 36 l-57 7 0 -40 c0 -51 16 -97 51 -151 16 -24 29 -45 29 -47 0 -2 -47 -4 -105 -4 l-104 -1 -16 31 c-23 44 -39 31 -50 -42 -6 -35 -13 -59 -17 -54 -3 6 -9 46 -13 90 -8 81 -21 124 -34 109 -4 -5 -20 -51 -36 -102 -28 -89 -44 -104 -45 -40 0 33 -9 58 -21 58 -5 0 -17 -16 -26 -35 -14 -29 -22 -35 -42 -33 -13 2 -26 -3 -28 -9 -3 -9 8 -13 36 -13 22 0 43 6 48 13 4 7 12 -14 18 -52 5 -36 15 -66 21 -68 7 -2 23 33 39 84 15 48 30 92 34 96 4 4 13 -44 20 -106 12 -108 23 -148 35 -136 4 3 13 48 22 100 9 52 17 94 18 94 0 0 39 -2 86 -5 l85 -5 -46 -27 c-69 -40 -77 -54 -50 -82 56 -60 185 -101 294 -95 l55 4 12 -38 c11 -39 56 -76 117 -98 63 -21 183 58 183 121 0 12 18 15 98 16 84 0 105 4 159 28 33 15 73 41 89 57 27 28 27 29 8 50 -10 12 -41 32 -69 45 l-50 24 80 0 c46 0 86 5 92 11 8 8 13 -1 18 -37 14 -105 30 -98 69 27 16 52 31 90 32 84 2 -5 10 -61 18 -123 8 -63 17 -116 19 -119 15 -14 25 14 37 97 7 50 17 93 21 96 5 3 9 0 9 -5 0 -7 29 -11 75 -11 60 0 75 3 75 15 0 12 -14 15 -65 15 -62 0 -65 1 -80 30 -21 40 -33 38 -41 -7 -3 -21 -10 -54 -14 -73 l-7 -35 -6 45 c-4 25 -10 72 -14 104 -12 87 -28 81 -59 -21 -14 -48 -30 -92 -34 -97 -5 -4 -12 16 -17 45 -4 29 -13 54 -19 56 -5 2 -18 -12 -27 -32 l-17 -35 -94 0 -95 0 35 66 c37 72 47 150 20 160 -23 9 -126 -16 -178 -42 -60 -31 -68 -30 -68 4 0 38 -27 127 -55 182 -25 49 -91 130 -106 130 -5 0 -23 -19 -40 -42z m88 -50 c18 -29 39 -70 48 -92 16 -37 16 -38 -2 -31 -62 26 -94 29 -141 13 -25 -10 -47 -16 -49 -15 -11 11 88 177 105 177 4 0 22 -24 39 -52z m31 -155 c28 -17 52 -70 52 -112 0 -67 -86 -121 -161 -101 -56 15 -89 54 -89 106 0 61 18 94 65 116 44 20 94 17 133 -9z m-300 -99 c39 -19 72 -40 72 -46 0 -6 -9 -8 -22 -3 -13 4 -49 9 -80 12 -67 6 -70 0 -43 -78 l16 -43 -26 24 c-33 31 -75 116 -75 152 0 27 1 28 43 22 23 -3 75 -21 115 -40z m612 14 c0 -41 -32 -107 -69 -142 l-29 -28 16 44 c24 67 13 82 -51 75 -28 -3 -63 -9 -77 -13 -23 -7 -24 -6 -11 10 20 24 80 53 144 71 74 20 77 19 77 -17z m-127 -149 c-29 -54 -101 -111 -156 -125 l-29 -7 25 49 c13 27 30 66 36 86 10 30 20 40 54 52 56 20 91 24 95 9 2 -7 -9 -36 -25 -64z m-440 55 c26 -13 37 -26 47 -58 6 -22 23 -60 36 -83 13 -23 24 -44 24 -47 0 -14 -118 55 -147 86 -27 27 -63 93 -63 113 0 12 72 4 103 -11z m184 -74 c21 0 51 7 67 15 l29 15 -7 -32 c-6 -32 -75 -148 -88 -148 -19 0 -108 143 -108 175 0 2 16 -3 35 -11 19 -7 51 -14 72 -14z m-213 -95 c27 -16 76 -36 110 -46 l61 -17 -50 -23 c-42 -20 -66 -24 -150 -24 -95 0 -104 2 -170 35 -40 20 -70 41 -70 50 0 35 162 87 200 65 11 -6 42 -25 69 -40z m643 13 c71 -34 68 -52 -13 -90 -92 -43 -193 -50 -293 -19 -38 12 -72 25 -75 30 -3 5 11 12 32 16 48 9 128 42 172 73 43 29 103 25 177 -10z m-442 -108 c5 -8 11 -8 19 0 10 7 28 4 64 -12 56 -25 65 -45 36 -86 -50 -72 -180 -68 -219 8 -23 44 -19 56 25 69 21 6 42 16 45 21 8 13 22 13 30 0z"
+            />
+            <path
+              d="M1063 1580 c-70 -28 -45 -140 32 -140 24 0 39 7 54 26 28 35 26 69 -4 99 -25 26 -45 30 -82 15z m73 -55 c9 -23 -15 -55 -42 -55 -17 0 -28 8 -36 26 -11 23 -10 29 11 45 18 15 27 16 42 8 11 -6 22 -16 25 -24z"
+            />
+            <path
+              d="M1086 1523 c-11 -11 -6 -23 9 -23 8 0 15 4 15 9 0 13 -16 22 -24 14z"
+            />
+          </g>
+        </svg>
+        <span class="brand-text">
+          <span class="brand-main">Epilepsi ve Yaşam</span>
+          <span class="brand-sub">Derneği</span>
+        </span>
+      </a>
+
+      <div class="header-menu-zone">
+        <a href="katil.html" class="header-quick">Gönüllü Ol</a>
+        <button
+          class="nav-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="site-nav"
+          aria-label="Menüyü aç"
+        >
+          <span class="nav-toggle-label">Menü</span>
+          <span class="nav-toggle-bars" aria-hidden="true"><span></span></span>
+          <span class="nav-toggle-close" aria-hidden="true"></span>
+        </button>
+      </div>
+
+      <div class="nav-drawer" id="site-nav" aria-hidden="true">
+        <div class="nav-drawer-inner">
+          <div class="nav-drawer-content">
+            <ul class="nav-primary">
+              <li><a href="tarihce.html">Kurumsal</a></li>
+              <li><a href="epilepsi-nedir.html">Epilepsi Nedir?</a></li>
+              <li><a href="etkinlikler.html">Etkinlikler</a></li>
+              <li><a href="projeler.html">Projeler</a></li>
+            </ul>
+
+            <div class="nav-foot">
+              <div class="nav-group">
+                <span class="nav-group-label">Dernek</span>
+                <ul>
+                  <li><a href="tarihce.html">Tarihçemiz</a></li>
+                  <li><a href="yonetim.html">Yönetim Kurulu</a></li>
+                  <li><a href="temsilciler.html">Temsilcilerimiz</a></li>
+                  <li><a href="katil.html">Gönüllü Ol</a></li>
+                </ul>
+              </div>
+              <div class="nav-group">
+                <span class="nav-group-label">Bilgi</span>
+                <ul>
+                  <li><a href="nobet-turleri.html">Nöbet Türleri</a></li>
+                  <li><a href="ilk-yardim.html">İlk Yardım</a></li>
+                  <li><a href="kitaplar.html">Kitaplar</a></li>
+                </ul>
+              </div>
+              <div class="nav-group nav-group-contact">
+                <span class="nav-group-label">İletişim</span>
+                <ul>
+                  <li><a href="iletisim.html">Bize Ulaşın</a></li>
+                  <li>
+                    <a
+                      href="https://www.youtube.com/@epilepsiveyasamdernegi"
+                      target="_blank"
+                      rel="noopener"
+                      >Epilepsi TV</a
+                    >
+                  </li>
+                  <li>
+                    <a href="mailto:info@epilepsiveyasam.org.tr"
+                      >info@epilepsiveyasam.org.tr</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="nav-backdrop" data-nav-close aria-hidden="true"></div>
+    </header>
+
+    <!-- ═══ HERO ═══ -->
+    <section class="hero">
+      <div class="hero-grid-lines" aria-hidden="true"></div>
+      <div class="hero-brain" aria-hidden="true">
+        <div class="brain-scene">
+          <span class="pulse-ring"></span>
+          <span class="pulse-ring"></span>
+          <span class="pulse-ring"></span>
+          <video
+            class="brain-video"
+            src="brain.mp4"
+            autoplay
+            loop
+            muted
+            playsinline
+            preload="auto"
+            aria-hidden="true"
+          ></video>
+          <div class="brain-wrap" hidden>
+            <svg
+              viewBox="0 0 280 280"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle cx="140" cy="140" r="110" fill="rgba(42,26,140,0.05)" />
+              <path
+                d="M140 60 C105 55 72 72 58 95 C44 118 46 148 60 165 C74 182 90 188 108 192 C120 195 132 195 140 194"
+                stroke="#2A1A8C"
+                stroke-width="1.5"
+                fill="none"
+                opacity="0.55"
+              />
+              <path
+                d="M140 60 C175 55 208 72 222 95 C236 118 234 148 220 165 C206 182 190 188 172 192 C160 195 148 195 140 194"
+                stroke="#2A1A8C"
+                stroke-width="1.5"
+                fill="none"
+                opacity="0.55"
+              />
+              <line
+                x1="140"
+                y1="62"
+                x2="140"
+                y2="192"
+                stroke="#2A1A8C"
+                stroke-width="0.75"
+                stroke-dasharray="4,4"
+                opacity="0.3"
+              />
+              <path
+                d="M90 100 Q120 115 140 108 Q160 101 180 115"
+                stroke="#6C3FD6"
+                stroke-width="0.75"
+                fill="none"
+                opacity="0.55"
+              />
+              <path
+                d="M80 130 Q110 125 140 132 Q170 139 200 128"
+                stroke="#6C3FD6"
+                stroke-width="0.75"
+                fill="none"
+                opacity="0.55"
+              />
+              <path
+                d="M88 158 Q115 150 140 156 Q165 162 192 155"
+                stroke="#6C3FD6"
+                stroke-width="0.75"
+                fill="none"
+                opacity="0.55"
+              />
+              <path
+                d="M72 108 C78 100 88 97 96 100 C104 103 108 112 104 120 C100 128 89 130 80 126"
+                stroke="#6C3FD6"
+                stroke-width="1"
+                fill="none"
+                opacity="0.35"
+              />
+              <path
+                d="M64 138 C70 128 82 126 90 130 C98 134 100 144 96 152 C92 160 80 162 72 157"
+                stroke="#6C3FD6"
+                stroke-width="1"
+                fill="none"
+                opacity="0.35"
+              />
+              <path
+                d="M208 108 C202 100 192 97 184 100 C176 103 172 112 176 120 C180 128 191 130 200 126"
+                stroke="#6C3FD6"
+                stroke-width="1"
+                fill="none"
+                opacity="0.35"
+              />
+              <path
+                d="M216 138 C210 128 198 126 190 130 C182 134 180 144 184 152 C188 160 200 162 208 157"
+                stroke="#6C3FD6"
+                stroke-width="1"
+                fill="none"
+                opacity="0.35"
+              />
+              <path
+                d="M130 95 L122 118 L134 118 L124 142"
+                stroke="#6C3FD6"
+                stroke-width="1.6"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                opacity="0.9"
+              >
+                <animate
+                  attributeName="opacity"
+                  values="0.9;0.3;0.9"
+                  dur="2.5s"
+                  repeatCount="indefinite"
+                />
+              </path>
+              <path
+                d="M152 90 L144 113 L156 113 L146 137"
+                stroke="#B49BEA"
+                stroke-width="1.6"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                opacity="0.6"
+              >
+                <animate
+                  attributeName="opacity"
+                  values="0.6;0.2;0.6"
+                  dur="2.5s"
+                  begin="0.4s"
+                  repeatCount="indefinite"
+                />
+              </path>
+              <circle cx="100" cy="105" r="3" fill="#6C3FD6" opacity="0.7">
+                <animate
+                  attributeName="r"
+                  values="3;4.5;3"
+                  dur="3s"
+                  repeatCount="indefinite"
+                />
+              </circle>
+              <circle cx="75" cy="142" r="2.5" fill="#6C3FD6" opacity="0.5">
+                <animate
+                  attributeName="r"
+                  values="2.5;4;2.5"
+                  dur="3.5s"
+                  begin="0.5s"
+                  repeatCount="indefinite"
+                />
+              </circle>
+              <circle cx="170" cy="118" r="3" fill="#6C3FD6" opacity="0.7">
+                <animate
+                  attributeName="r"
+                  values="3;4.5;3"
+                  dur="2.8s"
+                  begin="1s"
+                  repeatCount="indefinite"
+                />
+              </circle>
+              <circle cx="200" cy="148" r="2.5" fill="#6C3FD6" opacity="0.5">
+                <animate
+                  attributeName="r"
+                  values="2.5;4;2.5"
+                  dur="3.2s"
+                  begin="0.8s"
+                  repeatCount="indefinite"
+                />
+              </circle>
+              <circle cx="140" cy="168" r="3.5" fill="#2A1A8C" opacity="0.6">
+                <animate
+                  attributeName="r"
+                  values="3.5;5;3.5"
+                  dur="4s"
+                  begin="1.5s"
+                  repeatCount="indefinite"
+                />
+              </circle>
+              <line
+                x1="100"
+                y1="105"
+                x2="140"
+                y2="132"
+                stroke="#2A1A8C"
+                stroke-width="0.5"
+                opacity="0.25"
+              />
+              <line
+                x1="75"
+                y1="142"
+                x2="140"
+                y2="132"
+                stroke="#2A1A8C"
+                stroke-width="0.5"
+                opacity="0.25"
+              />
+              <line
+                x1="170"
+                y1="118"
+                x2="140"
+                y2="132"
+                stroke="#2A1A8C"
+                stroke-width="0.5"
+                opacity="0.25"
+              />
+              <line
+                x1="200"
+                y1="148"
+                x2="140"
+                y2="168"
+                stroke="#2A1A8C"
+                stroke-width="0.5"
+                opacity="0.25"
+              />
+              <line
+                x1="140"
+                y1="132"
+                x2="140"
+                y2="168"
+                stroke="#2A1A8C"
+                stroke-width="0.5"
+                opacity="0.2"
+              />
+              <path
+                d="M118 210 Q140 200 162 210 Q140 220 118 210Z"
+                fill="#2A1A8C"
+                opacity="0.3"
+              />
+              <path
+                d="M125 215 Q140 205 155 215 Q140 222 125 215Z"
+                fill="#6C3FD6"
+                opacity="0.4"
+              />
+              <circle cx="140" cy="215" r="4" fill="#B49BEA" opacity="0.6" />
+            </svg>
+          </div>
+        </div>
+        <div class="hero-eeg">
+          <svg
+            class="eeg-svg"
+            viewBox="0 0 1200 80"
+            preserveAspectRatio="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <polyline
+              points="0,40 50,40 60,15 70,65 80,40 150,40 165,10 175,70 185,20 195,60 205,40 300,40 320,38 330,5 340,75 350,40 450,40 460,42 475,8 485,72 495,40 600,40 610,40 625,12 635,68 645,40 700,40 710,15 720,65 730,40 800,40 815,10 825,70 835,20 845,60 855,40 950,40 970,38 980,5 990,75 1000,40 1100,40 1110,42 1125,8 1135,72 1145,40 1200,40"
+              fill="none"
+              stroke="#2A1A8C"
+              stroke-width="1.2"
+            />
+          </svg>
+        </div>
+      </div>
+
+      <div class="hero-top">
+        <span class="hero-eyebrow mono">Farkındalık · Bilgi · Umut</span>
+        <span class="mono" aria-hidden="true">[EYD] · 2000</span>
+      </div>
+
+      <div class="hero-grid grid12">
+        <h1 class="hero-title giant lines">
+          <span class="line"
+            ><span>Yalnızlık <em>geçici</em></span></span
+          >
+          <span class="line"><span>dayanışma kalıcıdır.</span></span>
+        </h1>
+        <div class="hero-tag">
+          <p>
+            Türkiye'de 950 binden fazla insanın yanında; yanlış anlaşılmaları,
+            önyargıları ve sessizliği kırıyoruz.
+          </p>
+          <div class="hero-actions">
+            <a href="#bilgi" class="btn btn-light">Epilepsiyi Öğren</a>
+            <a href="#destek" class="btn btn-outline">Gönüllü Ol</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <strong>950K+</strong><span>Türkiye'de epilepsi hastası</span>
+        </div>
+        <div class="hero-stat">
+          <strong>%70</strong><span>İlaçla kontrol oranı</span>
+        </div>
+        <div class="hero-stat">
+          <strong>19 il</strong><span>Temsilciliğimiz</span>
+        </div>
+        <div class="hero-stat">
+          <strong>2021</strong><span>Dernek kuruluşu</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ INTRO (mor) ═══ -->
+    <section class="block intro wrap">
+      <div
+        class="meta mono reveal"
+        style="margin-bottom: clamp(2rem, 5vh, 4rem)"
+      >
+        <span>Misyon</span><span class="ref">[EYD.0]</span>
+      </div>
+      <div class="grid12">
+        <p class="intro-lead lines">
+          <span class="line"
+            ><span>2000'lerin başından bu yana epilepsili</span></span
+          >
+          <span class="line"
+            ><span>bireyler için farkındalık yaratıyor, doğru</span></span
+          >
+          <span class="line"
+            ><span>bilgiyi yayıyor ve yalnız olmadıklarını</span></span
+          >
+          <span class="line"><span>hatırlatıyoruz.</span></span>
+        </p>
+        <div class="intro-cols reveal">
+          <p>
+            Önyargıyı, yanlış bilgiyi ve sessizliği kırmak için 19 ilde
+            temsilcilik, seminer ve çalıştaylarla sahadayız.
+          </p>
+          <p>
+            Nöroloji uzmanları ve gönüllülerle birlikte; teşhisten ilk yardıma,
+            eğitimden sosyal desteğe kadar yanınızdayız.
+          </p>
+        </div>
+      </div>
+      <div class="stairs" aria-hidden="true">
+        <span class="step"></span><span class="step"></span
+        ><span class="step"></span>
+      </div>
+    </section>
+
+    <!-- ═══ EPİLEPSİ NEDİR: split giant + accordion ═══ -->
+    <section class="block svc wrap" id="bilgi">
+      <div class="meta mono reveal">
+        <span>Epilepsi Nedir</span><span class="ref">[EYD.1]</span>
+      </div>
+
+      <div
+        class="svc-giant lines"
+        style="margin-top: clamp(1.5rem, 4vh, 3rem)"
+        role="text"
+      >
+        <span class="g1 line"><span>Doğru</span></span>
+        <span class="g2 line"
+          ><span><em>Bilgi</em></span></span
+        >
+      </div>
+
+      <div class="svc-grid grid12">
+        <div class="svc-visual reveal" aria-hidden="true">
+          <div class="frame">
+            <svg viewBox="0 0 280 210" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="140" cy="105" r="78" fill="rgba(42,26,140,.05)" />
+              <path
+                d="M140 40 C108 36 80 52 70 74 C60 96 64 122 80 136 C96 150 120 152 140 150"
+                stroke="#2A1A8C"
+                stroke-width="1"
+                fill="none"
+                opacity=".5"
+              />
+              <path
+                d="M140 40 C172 36 200 52 210 74 C220 96 216 122 200 136 C184 150 160 152 140 150"
+                stroke="#2A1A8C"
+                stroke-width="1"
+                fill="none"
+                opacity=".5"
+              />
+              <line
+                x1="140"
+                y1="42"
+                x2="140"
+                y2="150"
+                stroke="#2A1A8C"
+                stroke-width=".5"
+                stroke-dasharray="4,4"
+                opacity=".3"
+              />
+              <path
+                d="M110 75 L102 96 L114 96 L104 118"
+                stroke="#6C3FD6"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <animate
+                  attributeName="opacity"
+                  values=".9;.3;.9"
+                  dur="2.5s"
+                  repeatCount="indefinite"
+                />
+              </path>
+              <circle cx="92" cy="84" r="3" fill="#6C3FD6" opacity=".6">
+                <animate
+                  attributeName="r"
+                  values="3;4.5;3"
+                  dur="3s"
+                  repeatCount="indefinite"
+                />
+              </circle>
+              <circle cx="190" cy="96" r="3" fill="#6C3FD6" opacity=".6">
+                <animate
+                  attributeName="r"
+                  values="3;4.5;3"
+                  dur="2.8s"
+                  begin="1s"
+                  repeatCount="indefinite"
+                />
+              </circle>
+            </svg>
+          </div>
+        </div>
+
+        <div class="acc reveal">
+          <div class="acc-item open">
+            <button class="acc-btn" aria-expanded="true">
+              <span
+                ><span class="false">Yanlış</span>"Ağzına bir şey koy!"</span
+              >
+              <span class="acc-plus" aria-hidden="true"></span>
+            </button>
+            <div class="acc-panel">
+              <div>
+                <p>
+                  Nöbet sırasında ağza hiçbir şey sokulmamalıdır. Çene kasılması
+                  nedeniyle ciddi yaralanmalara yol açar. Siz sadece başını yere
+                  değmekten koruyun ve yan yatırın.
+                </p>
+                <a href="#" class="bracket"
+                  ><span class="br">[</span>İlk Yardımı Öğren<span class="arw"
+                    >→</span
+                  ><span class="br">]</span></a
+                >
+              </div>
+            </div>
+          </div>
+          <div class="acc-item">
+            <button class="acc-btn" aria-expanded="false">
+              <span
+                ><span class="false">Yanlış</span>"Epilepsi akıl
+                hastalığıdır"</span
+              >
+              <span class="acc-plus" aria-hidden="true"></span>
+            </button>
+            <div class="acc-panel">
+              <div>
+                <p>
+                  Epilepsi nörolojik bir durumdur. Zeka, yetenek veya kişilikle
+                  hiçbir ilgisi yoktur. Tarihte pek çok dahi epilepsiyle
+                  yaşamıştır.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="acc-item">
+            <button class="acc-btn" aria-expanded="false">
+              <span
+                ><span class="false">Yanlış</span>"Epilepsili spor
+                yapamaz"</span
+              >
+              <span class="acc-plus" aria-hidden="true"></span>
+            </button>
+            <div class="acc-panel">
+              <div>
+                <p>
+                  Epilepsili bireyler, doktor gözetiminde neredeyse tüm sporları
+                  yapabilir. Nöbetler kontrol altındaysa yaşam
+                  kısıtlanmamalıdır.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="acc-item">
+            <button class="acc-btn" aria-expanded="false">
+              <span
+                ><span class="false">Yanlış</span>"Tüm nöbetler aynı
+                görünür"</span
+              >
+              <span class="acc-plus" aria-hidden="true"></span>
+            </button>
+            <div class="acc-panel">
+              <div>
+                <p>
+                  40'tan fazla nöbet türü vardır. Bazıları sadece birkaç
+                  saniyelik bilinç kaybı ya da kol seğirmesinden ibarettir —
+                  gözle fark edilemeyebilir.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ HİKAYE: dev başlık + dağınık kartlar ═══ -->
+    <section class="block proc wrap" id="hikaye">
+      <div class="meta mono reveal">
+        <span>Hikayemiz</span><span class="ref">[EYD.2]</span>
+      </div>
+
+      <div
+        class="proc-grid grid12"
+        style="margin-top: clamp(2rem, 5vh, 3.5rem)"
+      >
+        <div class="proc-head">
+          <h2 class="giant lines" role="text">
+            <span class="line"><span>Adım</span></span>
+            <span class="line"
+              ><span><em>adım</em></span></span
+            >
+            <span class="line"><span>sizinle</span></span>
+          </h2>
+          <p class="reveal">
+            Bir destek grubunda başlayan yolculuk, bugün binlerce kişinin ortak
+            sesi oldu.
+          </p>
+        </div>
+
+        <div class="proc-cards">
+          <article class="pcard reveal">
+            <div class="pcard-top">
+              <h3>Bir destek grubundan doğdu</h3>
+              <span class="n">01</span>
+            </div>
+            <hr />
+            <p>
+              2000'de Cerrahpaşa Tıp Fakültesi'nde, beyin ameliyatı geçirmiş
+              bireylerin bir araya geldiği bir destek grubunda başladı her şey.
+              Doktorların önerisiyle 2001'de ilk dernek kuruldu — "Neden bu
+              kadar yalnızız?" sorusuna birlikte yanıt aramak için.
+            </p>
+          </article>
+          <article class="pcard reveal">
+            <div class="pcard-top">
+              <h3>Türkiye'de bir ilk</h3>
+              <span class="n">02</span>
+            </div>
+            <hr />
+            <p>
+              Sadece nörologlarla değil; psikolog, psikiyatrist ve avukatlarla.
+              Epilepsiyi tıbbi olduğu kadar sosyal, hukuki ve insani yönüyle ele
+              alan bu çok disiplinli yaklaşım, ülkemizde bir ilkti.
+            </p>
+          </article>
+          <article class="pcard reveal">
+            <div class="pcard-top">
+              <h3>19 ilde tek ses</h3>
+              <span class="n">03</span>
+            </div>
+            <hr />
+            <p>
+              2018'de ilk kez İstanbul dışına çıktık: aynı gün, 19 ilde eş
+              zamanlı farkındalık seminerleri. Çalışmalarımız, IBE (Uluslararası
+              Epilepsi Bürosu) tarafından 142 ülke arasından başarılı örnek
+              seçildi.
+            </p>
+          </article>
+          <article class="pcard reveal">
+            <div class="pcard-top">
+              <h3>Tarihe geçen yönetmelik</h3>
+              <span class="n">04</span>
+            </div>
+            <hr />
+            <p>
+              19 Haziran 2021'de Epilepsi ve Yaşam Derneği kuruldu. 30 Eylül
+              2021'de ise Cumhuriyet tarihinde epilepsililer için çıkarılan ilk
+              yönetmelik onaylandı: ehliyet hakları genişledi, ilk Epilepsi
+              Klinik Protokolü yayımlandı.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ PROJELER: ortalı dev başlık + minimal liste ═══ -->
+    <section class="block projects wrap">
+      <div class="meta mono reveal">
+        <span>Programlar</span><span class="ref">[EYD.3]</span>
+      </div>
+      <h2 class="giant lines" role="text">
+        <span class="line"><span>Öne Çıkan</span></span>
+        <span class="line"
+          ><span><em>Programlar</em></span></span
+        >
+      </h2>
+
+      <div class="proj-list reveal">
+        <a href="projeler.html" class="proj-row">
+          <span class="pn">01</span>
+          <span class="pt">Epilepsilileri ve Toplumu Bilinçlendirme</span>
+          <span class="pc">Onaylı Proje</span>
+        </a>
+        <a href="projeler.html" class="proj-row">
+          <span class="pn">02</span>
+          <span class="pt">Hayata Tutun Projesi</span>
+          <span class="pc">İlk Yardım</span>
+        </a>
+        <a href="etkinlikler.html" class="proj-row">
+          <span class="pn">03</span>
+          <span class="pt">19 İlde Eş Zamanlı Seminerler</span>
+          <span class="pc">Farkındalık</span>
+        </a>
+        <a href="tarihce.html" class="proj-row">
+          <span class="pn">04</span>
+          <span class="pt">Ehliyet ve Haklar Yönetmeliği</span>
+          <span class="pc">Savunuculuk</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ═══ DEV ALINTI: carousel ═══ -->
+    <section class="block quote-sec wrap" id="yasayanlarin-sesi">
+      <div class="meta mono reveal">
+        <span>Yaşayanların Sesi</span><span class="ref">[EYD.4]</span>
+      </div>
+      <div class="quote-slider reveal">
+        <aside class="quote-sidebar">
+          <div class="quote-rail">
+            <button
+              class="quote-nav"
+              type="button"
+              data-quote-prev
+              aria-label="Önceki alıntı"
+            >
+              ↑
+            </button>
+            <span class="quote-rail-line" aria-hidden="true"></span>
+            <button
+              class="quote-nav"
+              type="button"
+              data-quote-next
+              aria-label="Sonraki alıntı"
+            >
+              ↓
+            </button>
+          </div>
+          <div class="quote-brand" id="quoteBrand">
+            <div class="b" id="quoteBrandName">Ebru Öztürk</div>
+            <div class="r" id="quoteBrandRole">Kurucu &amp; Başkan</div>
+          </div>
+        </aside>
+
+        <div class="quote-body">
+          <div class="quote-track" id="quoteTrack" aria-live="polite">
+            <blockquote class="bigquote quote-slide is-active" data-quote-slide>
+              "6 Haziran 2021'de o yazıları <em>ağlayarak okudum…</em> Epilepsililer
+              için çıkarılan ilk protokoldü. Yıllarca beklediğimiz andı."
+            </blockquote>
+            <blockquote class="bigquote quote-slide" data-quote-slide>
+              "Küçük yaşta menenjit kaynaklı bir hastalığa yakalandım.
+              <em>Bilinmediği için</em> okulda da işte de geri kaldım. Aynı
+              belirsizliği başkaları yaşamasın diye dernekteyim."
+            </blockquote>
+          </div>
+          <div class="quote-foot">
+            <span class="quote-counter" id="quoteCounter">01/02</span>
+            <div class="quote-attr">
+              <div class="quote-attr-name" id="quoteAttrName">
+                Ebru Öztürk, Kurucu &amp; Başkan
+              </div>
+              <div class="quote-attr-org" id="quoteAttrOrg">
+                Epilepsi ve Yaşam Derneği
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ HABERLER ═══ -->
+    <section class="block news" id="haberler">
+      <div class="wrap">
+        <div class="meta mono reveal">
+          <span>Gündem</span><span class="ref">[EYD.5]</span>
+        </div>
+
+        <div class="news-head reveal">
+          <h2 class="display">Sahadan <em>Haberler</em></h2>
+          <div class="news-controls">
+            <button
+              class="news-nav"
+              type="button"
+              data-news-prev
+              aria-label="Önceki haberler"
+            >
+              ←
+            </button>
+            <button
+              class="news-nav"
+              type="button"
+              data-news-next
+              aria-label="Sonraki haberler"
+            >
+              →
+            </button>
+            <a href="#" class="news-viewall">↪ Tümünü Gör</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="news-rail-outer">
+        <div class="news-rail reveal" id="newsRail">
+          <a href="#" class="news-card">
+            <div class="news-thumb">
+              <span class="news-tag">Etkinlik</span>
+              <svg
+                viewBox="0 0 500 300"
+                preserveAspectRatio="xMidYMid slice"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+              >
+                <circle
+                  cx="250"
+                  cy="150"
+                  r="120"
+                  fill="none"
+                  stroke="rgba(180,155,234,.3)"
+                  stroke-width="1"
+                />
+                <circle
+                  cx="250"
+                  cy="150"
+                  r="80"
+                  fill="none"
+                  stroke="rgba(180,155,234,.2)"
+                  stroke-width=".75"
+                />
+                <circle cx="250" cy="150" r="40" fill="rgba(180,155,234,.14)" />
+                <line
+                  x1="250"
+                  y1="30"
+                  x2="250"
+                  y2="270"
+                  stroke="rgba(180,155,234,.2)"
+                  stroke-width=".5"
+                />
+                <line
+                  x1="130"
+                  y1="150"
+                  x2="370"
+                  y2="150"
+                  stroke="rgba(180,155,234,.2)"
+                  stroke-width=".5"
+                />
+                <circle cx="250" cy="100" r="8" fill="#B49BEA" opacity=".7" />
+                <path
+                  d="M250 108 L250 130 L240 150 M250 130 L260 150"
+                  stroke="#B49BEA"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  fill="none"
+                  opacity=".7"
+                />
+                <circle
+                  cx="240"
+                  cy="153"
+                  r="6"
+                  fill="none"
+                  stroke="#B49BEA"
+                  stroke-width="1"
+                  opacity=".6"
+                />
+                <circle
+                  cx="260"
+                  cy="153"
+                  r="6"
+                  fill="none"
+                  stroke="#B49BEA"
+                  stroke-width="1"
+                  opacity=".6"
+                />
+              </svg>
+            </div>
+            <div class="news-body">
+              <div class="news-date">11 Şubat 2025</div>
+              <h3>Farkındalık İçin Tekerler Döndü — Ankara'dan Güçlü Mesaj</h3>
+            </div>
+          </a>
+
+          <a href="#" class="news-card">
+            <div class="news-thumb t1">
+              <span class="news-tag">Seminer</span>
+              <svg
+                viewBox="0 0 500 300"
+                preserveAspectRatio="xMidYMid slice"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+              >
+                <circle cx="250" cy="150" r="78" fill="rgba(231,228,220,.16)" />
+                <path
+                  d="M210 132 L250 192 L290 132"
+                  stroke="rgba(231,228,220,.7)"
+                  stroke-width="3"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <circle cx="250" cy="118" r="12" fill="rgba(231,228,220,.8)" />
+              </svg>
+            </div>
+            <div class="news-body">
+              <div class="news-date">11 Şubat 2025</div>
+              <h3>10 Şubat Epilepsi Semineri Gerçekleşti</h3>
+            </div>
+          </a>
+
+          <a href="#" class="news-card">
+            <div class="news-thumb t2">
+              <span class="news-tag">Duyuru</span>
+              <svg
+                viewBox="0 0 500 300"
+                preserveAspectRatio="xMidYMid slice"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+              >
+                <text
+                  x="250"
+                  y="150"
+                  text-anchor="middle"
+                  font-family="Inter, sans-serif"
+                  font-size="86"
+                  fill="#2A1A8C"
+                  font-weight="800"
+                >
+                  2025
+                </text>
+                <text
+                  x="250"
+                  y="190"
+                  text-anchor="middle"
+                  font-family="monospace"
+                  font-size="16"
+                  fill="#6C3FD6"
+                  letter-spacing="6"
+                >
+                  ETKİNLİKLER
+                </text>
+              </svg>
+            </div>
+            <div class="news-body">
+              <div class="news-date">Ocak 2025</div>
+              <h3>2025 Etkinlik Takvimi Açıklandı</h3>
+            </div>
+          </a>
+
+          <a href="#" class="news-card">
+            <div class="news-thumb t3">
+              <span class="news-tag">Eğitim</span>
+              <svg
+                viewBox="0 0 500 300"
+                preserveAspectRatio="xMidYMid slice"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+              >
+                <path
+                  d="M250 95 L355 140 L250 185 L145 140 Z"
+                  fill="none"
+                  stroke="rgba(231,228,220,.7)"
+                  stroke-width="3"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M190 162 L190 205 C190 222 310 222 310 205 L310 162"
+                  fill="none"
+                  stroke="rgba(231,228,220,.5)"
+                  stroke-width="3"
+                  stroke-linejoin="round"
+                />
+                <line
+                  x1="355"
+                  y1="140"
+                  x2="355"
+                  y2="195"
+                  stroke="rgba(231,228,220,.7)"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </div>
+            <div class="news-body">
+              <div class="news-date">Aralık 2024</div>
+              <h3>Okullarda Farkındalık Programı 12 İlde Başladı</h3>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ DESTEK ═══ -->
+    <section class="block support wrap on-dark" id="destek">
+      <div class="meta mono reveal">
+        <span>Destek Ol</span><span class="ref">[EYD.6]</span>
+      </div>
+
+      <div class="support-grid grid12">
+        <div class="support-left reveal">
+          <h2 class="display">Değişim için <em>birlikte</em> daha güçlüyüz.</h2>
+          <p>
+            950 bin kişi ve ailesi yalnız değil. Gönüllü olarak, sponsor
+            desteğiyle ya da çalışmalarımızı paylaşarak bu harekete
+            katılabilirsin.
+          </p>
+        </div>
+        <div class="support-cards">
+          <a href="#" class="support-card reveal"
+            ><div class="ic">🤝</div>
+            <h4>Gönüllü Ol</h4>
+            <p>Çalışmalarımıza katılın, etkinliklerde aktif rol alın.</p></a
+          >
+          <a href="#" class="support-card reveal"
+            ><div class="ic">📍</div>
+            <h4>İl Temsilcisi Ol</h4>
+            <p>Bulunduğunuz ilde epilepsinin duyulmasını sağlayın.</p></a
+          >
+          <a href="#" class="support-card reveal"
+            ><div class="ic">📣</div>
+            <h4>Paylaş</h4>
+            <p>Sosyal medyada yaptığımız çalışmaları yayınlayın.</p></a
+          >
+          <a href="#" class="support-card reveal"
+            ><div class="ic">⭐</div>
+            <h4>Sponsor Ol</h4>
+            <p>Projelerimizin hızlanması için destek olun.</p></a
+          >
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ FOOTER ═══ -->
+    <footer>
+      <div class="footer-logo">
+        <div class="logo-stage">
+          <span class="wave"></span><span class="wave"></span
+          ><span class="wave"></span>
+          <svg
+            class="logo-mark"
+            viewBox="20 37 185 91"
+            fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg"
+            role="img"
+            aria-label="Epilepsi ve Yaşam Derneği logosu"
+          >
+            <g transform="translate(0,225) scale(0.1,-0.1)">
+              <path
+                d="M1049 1818 c-47 -64 -88 -158 -101 -229 -6 -35 -12 -65 -13 -66 -1 -2 -33 11 -72 27 -38 16 -95 32 -126 36 l-57 7 0 -40 c0 -51 16 -97 51 -151 16 -24 29 -45 29 -47 0 -2 -47 -4 -105 -4 l-104 -1 -16 31 c-23 44 -39 31 -50 -42 -6 -35 -13 -59 -17 -54 -3 6 -9 46 -13 90 -8 81 -21 124 -34 109 -4 -5 -20 -51 -36 -102 -28 -89 -44 -104 -45 -40 0 33 -9 58 -21 58 -5 0 -17 -16 -26 -35 -14 -29 -22 -35 -42 -33 -13 2 -26 -3 -28 -9 -3 -9 8 -13 36 -13 22 0 43 6 48 13 4 7 12 -14 18 -52 5 -36 15 -66 21 -68 7 -2 23 33 39 84 15 48 30 92 34 96 4 4 13 -44 20 -106 12 -108 23 -148 35 -136 4 3 13 48 22 100 9 52 17 94 18 94 0 0 39 -2 86 -5 l85 -5 -46 -27 c-69 -40 -77 -54 -50 -82 56 -60 185 -101 294 -95 l55 4 12 -38 c11 -39 56 -76 117 -98 63 -21 183 58 183 121 0 12 18 15 98 16 84 0 105 4 159 28 33 15 73 41 89 57 27 28 27 29 8 50 -10 12 -41 32 -69 45 l-50 24 80 0 c46 0 86 5 92 11 8 8 13 -1 18 -37 14 -105 30 -98 69 27 16 52 31 90 32 84 2 -5 10 -61 18 -123 8 -63 17 -116 19 -119 15 -14 25 14 37 97 7 50 17 93 21 96 5 3 9 0 9 -5 0 -7 29 -11 75 -11 60 0 75 3 75 15 0 12 -14 15 -65 15 -62 0 -65 1 -80 30 -21 40 -33 38 -41 -7 -3 -21 -10 -54 -14 -73 l-7 -35 -6 45 c-4 25 -10 72 -14 104 -12 87 -28 81 -59 -21 -14 -48 -30 -92 -34 -97 -5 -4 -12 16 -17 45 -4 29 -13 54 -19 56 -5 2 -18 -12 -27 -32 l-17 -35 -94 0 -95 0 35 66 c37 72 47 150 20 160 -23 9 -126 -16 -178 -42 -60 -31 -68 -30 -68 4 0 38 -27 127 -55 182 -25 49 -91 130 -106 130 -5 0 -23 -19 -40 -42z m88 -50 c18 -29 39 -70 48 -92 16 -37 16 -38 -2 -31 -62 26 -94 29 -141 13 -25 -10 -47 -16 -49 -15 -11 11 88 177 105 177 4 0 22 -24 39 -52z m31 -155 c28 -17 52 -70 52 -112 0 -67 -86 -121 -161 -101 -56 15 -89 54 -89 106 0 61 18 94 65 116 44 20 94 17 133 -9z m-300 -99 c39 -19 72 -40 72 -46 0 -6 -9 -8 -22 -3 -13 4 -49 9 -80 12 -67 6 -70 0 -43 -78 l16 -43 -26 24 c-33 31 -75 116 -75 152 0 27 1 28 43 22 23 -3 75 -21 115 -40z m612 14 c0 -41 -32 -107 -69 -142 l-29 -28 16 44 c24 67 13 82 -51 75 -28 -3 -63 -9 -77 -13 -23 -7 -24 -6 -11 10 20 24 80 53 144 71 74 20 77 19 77 -17z m-127 -149 c-29 -54 -101 -111 -156 -125 l-29 -7 25 49 c13 27 30 66 36 86 10 30 20 40 54 52 56 20 91 24 95 9 2 -7 -9 -36 -25 -64z m-440 55 c26 -13 37 -26 47 -58 6 -22 23 -60 36 -83 13 -23 24 -44 24 -47 0 -14 -118 55 -147 86 -27 27 -63 93 -63 113 0 12 72 4 103 -11z m184 -74 c21 0 51 7 67 15 l29 15 -7 -32 c-6 -32 -75 -148 -88 -148 -19 0 -108 143 -108 175 0 2 16 -3 35 -11 19 -7 51 -14 72 -14z m-213 -95 c27 -16 76 -36 110 -46 l61 -17 -50 -23 c-42 -20 -66 -24 -150 -24 -95 0 -104 2 -170 35 -40 20 -70 41 -70 50 0 35 162 87 200 65 11 -6 42 -25 69 -40z m643 13 c71 -34 68 -52 -13 -90 -92 -43 -193 -50 -293 -19 -38 12 -72 25 -75 30 -3 5 11 12 32 16 48 9 128 42 172 73 43 29 103 25 177 -10z m-442 -108 c5 -8 11 -8 19 0 10 7 28 4 64 -12 56 -25 65 -45 36 -86 -50 -72 -180 -68 -219 8 -23 44 -19 56 25 69 21 6 42 16 45 21 8 13 22 13 30 0z"
+              />
+              <path
+                d="M1063 1580 c-70 -28 -45 -140 32 -140 24 0 39 7 54 26 28 35 26 69 -4 99 -25 26 -45 30 -82 15z m73 -55 c9 -23 -15 -55 -42 -55 -17 0 -28 8 -36 26 -11 23 -10 29 11 45 18 15 27 16 42 8 11 -6 22 -16 25 -24z"
+              />
+              <path
+                d="M1086 1523 c-11 -11 -6 -23 9 -23 8 0 15 4 15 9 0 13 -16 22 -24 14z"
+              />
+            </g>
+          </svg>
+        </div>
+        <span class="footer-wordmark">Epilepsi <em>ve</em> Yaşam Derneği</span>
+      </div>
+
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="#" class="brand">
+            <span class="brand-text">
+              <span class="brand-main" style="color: var(--mercury)"
+                >Epilepsi ve Yaşam</span
+              >
+              <span class="brand-sub">Derneği</span>
+            </span>
+          </a>
+          <p>
+            2000'lerin başından bu yana epilepsili bireyler ve aileleri için
+            farkındalık yaratmakta, destek sağlamaktadır.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h5>Dernek</h5>
+          <ul>
+            <li><a href="#">Tarihçemiz</a></li>
+            <li><a href="#">Yönetim Kurulu</a></li>
+            <li><a href="#">Temsilcilerimiz</a></li>
+            <li><a href="#">Projeler</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Bilgi</h5>
+          <ul>
+            <li><a href="#">Epilepsi Nedir?</a></li>
+            <li><a href="#">Nöbet Türleri</a></li>
+            <li><a href="#">İlk Yardım</a></li>
+            <li><a href="#">Kitaplar</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>İletişim</h5>
+          <ul>
+            <li><a href="#">Bize Ulaşın</a></li>
+            <li><a href="#">Sosyal Medya</a></li>
+            <li><a href="#">Epilepsi TV</a></li>
+            <li><a href="#">Basın</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2025 Epilepsi ve Yaşam Derneği — Tüm hakları saklıdır.</span>
+        <div class="footer-social">
+          <a
+            href="https://www.facebook.com/epilepsiveyasamdernegi"
+            target="_blank"
+            rel="noopener"
+            aria-label="Facebook"
+            >f</a
+          >
+          <a
+            href="https://www.instagram.com/epilepsiveyasamdernegi/"
+            target="_blank"
+            rel="noopener"
+            aria-label="Instagram"
+            >ig</a
+          >
+          <a
+            href="https://www.youtube.com/@epilepsiveyasamdernegi"
+            target="_blank"
+            rel="noopener"
+            aria-label="YouTube"
+            >yt</a
+          >
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      const header = document.getElementById("site-header");
+      addEventListener(
+        "scroll",
+        () => header.classList.toggle("scrolled", scrollY > 30),
+        { passive: true },
+      );
+
+      const navToggle = document.querySelector(".nav-toggle");
+      const navWrap = document.getElementById("site-nav");
+      const navToggleLabel = document.querySelector(".nav-toggle-label");
+
+      const syncNavDrawer = () => {
+        if (!navToggle || !navWrap) return;
+        const rect = navToggle.getBoundingClientRect();
+        const right = Math.max(0, window.innerWidth - rect.right);
+        const gapBelowBtn = 24;
+        const gapBottom = 16;
+        navWrap.style.setProperty(
+          "--nav-top",
+          `${rect.bottom + gapBelowBtn}px`,
+        );
+        navWrap.style.setProperty("--nav-bottom", `${gapBottom}px`);
+        navWrap.style.setProperty("--nav-right", `${right}px`);
+        const mobile = window.matchMedia("(max-width: 767px)").matches;
+        if (mobile) {
+          navWrap.style.setProperty("--nav-width", "100vw");
+          navWrap.style.setProperty("--nav-right", "0px");
+        } else {
+          navWrap.style.setProperty(
+            "--nav-width",
+            `${Math.min(window.innerWidth * 0.5, rect.right)}px`,
+          );
+        }
+      };
+
+      const closeNav = () => {
+        header.classList.remove("nav-open");
+        navToggle?.setAttribute("aria-expanded", "false");
+        navToggle?.setAttribute("aria-label", "Menüyü aç");
+        navWrap?.setAttribute("aria-hidden", "true");
+        if (navToggleLabel) navToggleLabel.textContent = "Menü";
+        document.body.style.overflow = "";
+      };
+      navToggle?.addEventListener("click", () => {
+        const willOpen = !header.classList.contains("nav-open");
+        if (willOpen) syncNavDrawer();
+        const open = header.classList.toggle("nav-open");
+        navToggle.setAttribute("aria-expanded", String(open));
+        navToggle.setAttribute(
+          "aria-label",
+          open ? "Menüyü kapat" : "Menüyü aç",
+        );
+        navWrap?.setAttribute("aria-hidden", open ? "false" : "true");
+        if (navToggleLabel)
+          navToggleLabel.textContent = open ? "Kapat" : "Menü";
+        document.body.style.overflow = open ? "hidden" : "";
+      });
+      document.querySelectorAll("[data-nav-close]").forEach((el) => {
+        el.addEventListener("click", closeNav);
+      });
+      document
+        .querySelectorAll(".nav-primary a, .nav-group a")
+        .forEach((link) => {
+          link.addEventListener("click", closeNav);
+        });
+      addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeNav();
+      });
+      addEventListener("resize", syncNavDrawer);
+      addEventListener(
+        "scroll",
+        () => {
+          if (header.classList.contains("nav-open")) syncNavDrawer();
+        },
+        { passive: true },
+      );
+      syncNavDrawer();
+
+      // Yaşayanların Sesi carousel
+      (function () {
+        const slides = [...document.querySelectorAll("[data-quote-slide]")];
+        if (!slides.length) return;
+
+        const meta = [
+          {
+            name: "Ebru Öztürk",
+            role: "Kurucu & Başkan",
+            org: "Epilepsi ve Yaşam Derneği",
+          },
+          {
+            name: "Sezai Pınar",
+            role: "Sivas İl Temsilcisi",
+            org: "Epilepsi ve Yaşam Derneği",
+          },
+        ];
+
+        const brand = document.getElementById("quoteBrand");
+        const brandName = document.getElementById("quoteBrandName");
+        const brandRole = document.getElementById("quoteBrandRole");
+        const counter = document.getElementById("quoteCounter");
+        const attrName = document.getElementById("quoteAttrName");
+        const attrOrg = document.getElementById("quoteAttrOrg");
+        const prevBtn = document.querySelector("[data-quote-prev]");
+        const nextBtn = document.querySelector("[data-quote-next]");
+        let index = 0;
+
+        const pad = (n) => String(n).padStart(2, "0");
+
+        const updateMeta = (i) => {
+          const item = meta[i];
+          if (!item) return;
+          brand?.classList.add("is-changing");
+          window.setTimeout(() => {
+            if (brandName) brandName.textContent = item.name;
+            if (brandRole) brandRole.textContent = item.role;
+            if (counter)
+              counter.textContent = `${pad(i + 1)}/${pad(slides.length)}`;
+            if (attrName)
+              attrName.textContent = `${item.name}, ${item.role}`;
+            if (attrOrg) attrOrg.textContent = item.org;
+            brand?.classList.remove("is-changing");
+          }, 180);
+        };
+
+        const show = (i) => {
+          index = (i + slides.length) % slides.length;
+          slides.forEach((slide, idx) => {
+            slide.classList.toggle("is-active", idx === index);
+            slide.toggleAttribute("hidden", idx !== index);
+          });
+          updateMeta(index);
+          if (prevBtn) prevBtn.disabled = index === 0;
+          if (nextBtn) nextBtn.disabled = index === slides.length - 1;
+        };
+
+        prevBtn?.addEventListener("click", () => show(index - 1));
+        nextBtn?.addEventListener("click", () => show(index + 1));
+
+        const section = document.getElementById("yasayanlarin-sesi");
+        section?.addEventListener("keydown", (e) => {
+          if (e.key === "ArrowUp") {
+            e.preventDefault();
+            show(index - 1);
+          }
+          if (e.key === "ArrowDown") {
+            e.preventDefault();
+            show(index + 1);
+          }
+        });
+
+        show(0);
+      })();
+
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("in");
+              io.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.15 },
+      );
+      document
+        .querySelectorAll(".reveal, .lines, .stairs")
+        .forEach((el) => io.observe(el));
+
+      document.querySelectorAll(".acc-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const item = btn.closest(".acc-item");
+          const open = item.classList.contains("open");
+          item
+            .closest(".acc")
+            .querySelectorAll(".acc-item.open")
+            .forEach((o) => {
+              o.classList.remove("open");
+              o.querySelector(".acc-btn").setAttribute(
+                "aria-expanded",
+                "false",
+              );
+            });
+          if (!open) {
+            item.classList.add("open");
+            btn.setAttribute("aria-expanded", "true");
+          }
+        });
+      });
+
+      // Haberler carousel
+      (function () {
+        const rail = document.getElementById("newsRail");
+        if (!rail) return;
+        const prev = document.querySelector("[data-news-prev]");
+        const next = document.querySelector("[data-news-next]");
+        const step = () => {
+          const card = rail.querySelector(".news-card");
+          const gap = parseFloat(getComputedStyle(rail).columnGap) || 20;
+          return card
+            ? card.getBoundingClientRect().width + gap
+            : rail.clientWidth * 0.8;
+        };
+        const update = () => {
+          if (!prev || !next) return;
+          prev.disabled = rail.scrollLeft <= 4;
+          next.disabled =
+            rail.scrollLeft + rail.clientWidth >= rail.scrollWidth - 4;
+        };
+        prev &&
+          prev.addEventListener("click", () =>
+            rail.scrollBy({ left: -step(), behavior: "smooth" }),
+          );
+        next &&
+          next.addEventListener("click", () =>
+            rail.scrollBy({ left: step(), behavior: "smooth" }),
+          );
+        rail.addEventListener("scroll", update, { passive: true });
+        addEventListener("resize", update);
+        update();
+      })();
+    </script>
+  </body>
+</html>
