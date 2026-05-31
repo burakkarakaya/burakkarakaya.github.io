@@ -1,0 +1,1714 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Epilepside İlk Yardım — Epilepsi ve Yaşam Derneği</title>
+    <meta
+      name="description"
+      content="Epilepsi nöbeti sırasında yapılması ve yapılmaması gerekenler. Adım adım ilk yardım rehberi — Epilepsi ve Yaşam Derneği."
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --purple: #2a1a8c;
+        --purple-deep: #1c0f66;
+        --purple-bright: #6c3fd6;
+        --ink: #140a36;
+        --mercury: #e7e4dc;
+        --mercury-2: #efede7;
+        --cream: #f3f1eb;
+        --white: #ffffff;
+        --lilac: #b49bea;
+        --lilac-soft: #dcd2f2;
+        --muted: #6b6480;
+        --line: rgba(42, 26, 140, 0.18);
+        --line-light: rgba(231, 228, 220, 0.18);
+        --alert: #c0392b;
+        --pad: clamp(1.1rem, 3.2vw, 3.75rem);
+        --gap: clamp(0.6rem, 1.5vw, 0.94rem);
+        --header-bar-h: calc(0.85rem * 2 + 44px);
+      }
+
+      html {
+        scroll-behavior: smooth;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+      }
+      body {
+        font-family: "Inter", system-ui, sans-serif;
+        background: var(--mercury);
+        color: var(--ink);
+        overflow-x: hidden;
+        line-height: 1.4;
+      }
+
+      .mono {
+        font-family: "Space Mono", monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+      .grid12 {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        column-gap: var(--gap);
+      }
+      .wrap {
+        padding-inline: var(--pad);
+      }
+      .meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: var(--purple);
+      }
+      .meta .ref {
+        opacity: 0.5;
+      }
+      .on-dark .meta,
+      .intro .meta,
+      .quote-sec .meta,
+      .alert-sec .meta {
+        color: var(--lilac);
+      }
+
+      .giant {
+        font-weight: 500;
+        letter-spacing: -0.045em;
+        line-height: 0.86;
+        font-size: clamp(3rem, 15vw, 13rem);
+      }
+      .display {
+        font-weight: 600;
+        letter-spacing: -0.03em;
+        line-height: 0.96;
+        font-size: clamp(2rem, 5vw, 4.25rem);
+      }
+      .display em,
+      .giant em {
+        font-style: normal;
+        color: var(--purple);
+      }
+
+      /* HEADER */
+      header {
+        position: fixed;
+        inset: 0;
+        z-index: 1000;
+        pointer-events: none;
+      }
+      header::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: var(--header-bar-h);
+        z-index: 1003;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s ease, background 0.3s ease;
+      }
+      header.scrolled:not(.nav-open)::before {
+        opacity: 1;
+        background: rgba(231, 228, 220, 0.92);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--line);
+      }
+      header.nav-open::before {
+        opacity: 1;
+        background: var(--purple);
+      }
+      .header-brand {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1004;
+        display: flex;
+        align-items: center;
+        gap: 0.85rem;
+        height: var(--header-bar-h);
+        padding: 0.85rem var(--pad);
+        text-decoration: none;
+        pointer-events: auto;
+      }
+      .header-menu-zone {
+        position: fixed;
+        top: 0;
+        right: 0;
+        z-index: 1004;
+        width: auto;
+        max-width: 100%;
+        height: var(--header-bar-h);
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: clamp(0.75rem, 2vw, 1.5rem);
+        padding: 0.85rem var(--pad);
+        pointer-events: auto;
+      }
+      @media (min-width: 768px) {
+        .header-menu-zone {
+          width: 50%;
+        }
+      }
+      @media (max-width: 767px) {
+        header.nav-open .header-menu-zone {
+          width: 100%;
+        }
+      }
+      .logo-mark {
+        display: block;
+        color: var(--purple);
+        height: 44px;
+        width: auto;
+        transition: color 0.3s, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      header.nav-open .logo-mark {
+        color: var(--mercury);
+      }
+      header.scrolled:not(.nav-open) .header-brand .logo-mark {
+        transform: rotate(360deg);
+      }
+      .brand-text {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.08;
+        gap: 0.12rem;
+      }
+      .brand-main {
+        font-family: "Space Mono", monospace;
+        font-weight: 700;
+        font-size: clamp(0.78rem, 1.1vw, 0.92rem);
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--purple-deep);
+        transition: color 0.3s;
+      }
+      .brand-sub {
+        font-family: "Space Mono", monospace;
+        font-size: clamp(0.62rem, 0.85vw, 0.72rem);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted);
+        transition: color 0.3s;
+      }
+      header.nav-open .brand-main,
+      header.nav-open .brand-sub {
+        color: var(--mercury);
+      }
+      header.nav-open .brand-sub {
+        opacity: 0.72;
+      }
+      .header-quick {
+        display: none;
+        font-family: "Space Mono", monospace;
+        font-size: 0.64rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--purple-deep);
+        text-decoration: none;
+        opacity: 0.75;
+      }
+      @media (min-width: 768px) {
+        .header-quick {
+          display: inline-block;
+        }
+      }
+      header.nav-open .header-quick {
+        color: var(--mercury);
+        opacity: 0.9;
+      }
+      .nav-toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.65rem;
+        min-width: 44px;
+        height: 44px;
+        padding: 0 1rem;
+        border: 1px solid var(--line);
+        background: var(--white);
+        color: var(--purple);
+        cursor: pointer;
+        font-family: "Space Mono", monospace;
+        font-size: 0.66rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+      header.nav-open .nav-toggle {
+        background: var(--white);
+        border-color: var(--purple);
+      }
+      .nav-toggle-bars {
+        display: flex;
+        width: 16px;
+        height: 16px;
+        position: relative;
+        align-items: center;
+        justify-content: center;
+      }
+      header.nav-open .nav-toggle-bars {
+        display: none;
+      }
+      .nav-toggle-close {
+        display: none;
+        width: 14px;
+        height: 14px;
+        position: relative;
+      }
+      header.nav-open .nav-toggle-close {
+        display: block;
+      }
+      .nav-toggle-close::before,
+      .nav-toggle-close::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 14px;
+        height: 1.5px;
+        background: currentColor;
+      }
+      .nav-toggle-close::before {
+        transform: translate(-50%, -50%) rotate(45deg);
+      }
+      .nav-toggle-close::after {
+        transform: translate(-50%, -50%) rotate(-45deg);
+      }
+      .nav-toggle-bars span {
+        display: block;
+        width: 16px;
+        height: 1.5px;
+        background: currentColor;
+        position: relative;
+      }
+      .nav-toggle-bars span::before,
+      .nav-toggle-bars span::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        width: 16px;
+        height: 1.5px;
+        background: currentColor;
+      }
+      .nav-toggle-bars span::before {
+        top: -5px;
+      }
+      .nav-toggle-bars span::after {
+        top: 5px;
+      }
+      .nav-drawer {
+        position: fixed;
+        top: var(--nav-top, 4.35rem);
+        right: var(--nav-right, var(--pad));
+        width: var(--nav-width, 50vw);
+        height: calc(100dvh - var(--nav-top, 4.35rem) - var(--nav-bottom, 1rem));
+        z-index: 1001;
+        overflow: hidden;
+        visibility: hidden;
+        pointer-events: none;
+        transition: visibility 0s linear 0.48s;
+      }
+      header.nav-open .nav-drawer {
+        visibility: visible;
+        pointer-events: auto;
+        transition: visibility 0s linear 0s;
+      }
+      .nav-drawer-inner {
+        height: 100%;
+        background: var(--white);
+        overflow-y: auto;
+        border: 1px solid var(--line);
+        transform: translateX(100%);
+        transition: transform 0.48s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      header.nav-open .nav-drawer-inner {
+        transform: translateX(0);
+      }
+      .nav-drawer-content {
+        display: flex;
+        flex-direction: column;
+        min-height: min-content;
+        padding: clamp(1.25rem, 3vh, 2rem) var(--pad) clamp(2rem, 5vh, 3rem);
+      }
+      .nav-primary {
+        list-style: none;
+        border-top: 1px solid var(--line);
+      }
+      .nav-primary li {
+        border-bottom: 1px solid var(--line);
+      }
+      .nav-primary a {
+        display: flex;
+        align-items: center;
+        padding: clamp(0.75rem, 1.8vh, 1rem) 0;
+        font-size: clamp(1.85rem, 4.5vw, 3.35rem);
+        font-weight: 500;
+        letter-spacing: -0.03em;
+        color: var(--purple);
+        text-decoration: none;
+        transition: color 0.25s, transform 0.32s;
+      }
+      .nav-primary a[aria-current="page"] {
+        color: var(--purple-bright);
+      }
+      .nav-primary a::before {
+        content: "→";
+        font-family: "Space Mono", monospace;
+        font-size: 0.42em;
+        color: var(--purple-bright);
+        opacity: 0;
+        width: 0;
+        overflow: hidden;
+        transition: opacity 0.28s, width 0.28s, margin 0.28s;
+      }
+      .nav-primary a:hover {
+        color: var(--purple-bright);
+        transform: translateX(0.4rem);
+      }
+      .nav-primary a:hover::before {
+        opacity: 1;
+        width: 0.65em;
+        margin-right: 0.35rem;
+      }
+      .nav-foot {
+        margin-top: auto;
+        padding-top: clamp(1.25rem, 3vh, 2rem);
+      }
+      .nav-group {
+        display: grid;
+        grid-template-columns: minmax(88px, 120px) 1fr;
+        gap: 1rem 1.5rem;
+        padding-block: 1rem;
+        border-top: 1px solid var(--line);
+      }
+      .nav-group-label {
+        font-family: "Space Mono", monospace;
+        font-size: 0.62rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .nav-group ul {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.55rem;
+      }
+      .nav-group a {
+        font-family: "Space Mono", monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: var(--purple-deep);
+        text-decoration: none;
+      }
+      .nav-group a:hover,
+      .nav-group a[aria-current="page"] {
+        color: var(--purple-bright);
+      }
+      .nav-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 1000;
+        background: rgba(0, 0, 0, 0.72);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.4s;
+      }
+      header.nav-open .nav-backdrop {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      /* PAGE HERO */
+      .page-hero {
+        padding-top: calc(var(--header-bar-h) + clamp(2.5rem, 6vh, 4.5rem));
+        padding-bottom: clamp(2.5rem, 6vh, 4rem);
+        background: var(--mercury);
+      }
+      .page-hero .meta {
+        margin-bottom: 0.5rem;
+      }
+      .page-crumbs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem 1rem;
+        margin: 1.25rem 0 clamp(1.5rem, 4vh, 2.5rem);
+        color: var(--muted);
+      }
+      .page-crumbs a {
+        color: var(--purple);
+        text-decoration: none;
+      }
+      .page-crumbs a:hover {
+        color: var(--purple-bright);
+      }
+      .page-crumbs span[aria-hidden="true"] {
+        opacity: 0.4;
+      }
+      .page-hero .giant {
+        color: var(--purple);
+        font-size: clamp(2.5rem, 10vw, 8.5rem);
+        max-width: 14ch;
+      }
+      .page-lead {
+        margin-top: clamp(1.5rem, 4vh, 2.5rem);
+        max-width: 52ch;
+        font-size: clamp(1.05rem, 1.5vw, 1.2rem);
+        line-height: 1.6;
+        color: var(--purple-deep);
+      }
+      .page-hero-aside {
+        margin-top: 2rem;
+        padding: 1.25rem 1.4rem;
+        border: 1px solid var(--line);
+        background: var(--white);
+        max-width: 36ch;
+      }
+      .page-hero-aside strong {
+        display: block;
+        font-family: "Space Mono", monospace;
+        font-size: 0.62rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--purple);
+        margin-bottom: 0.5rem;
+      }
+      .page-hero-aside p {
+        font-size: 0.9rem;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+      @media (min-width: 1000px) {
+        .page-hero-grid {
+          display: grid;
+          grid-template-columns: repeat(12, 1fr);
+          column-gap: var(--gap);
+          align-items: end;
+        }
+        .page-hero-main {
+          grid-column: 1 / 9;
+        }
+        .page-hero-aside {
+          grid-column: 9 / -1;
+          margin-top: 0;
+        }
+      }
+
+      /* STAIRS + REVEAL + LINES */
+      .stairs {
+        position: relative;
+        height: clamp(45px, 5.5vw, 85px);
+        margin-top: clamp(2rem, 5vh, 4rem);
+        margin-inline: calc(var(--pad) * -1);
+        overflow: hidden;
+      }
+      .stairs .step {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 100%;
+        background: var(--mercury-2);
+        transform: scaleY(0);
+        transform-origin: bottom;
+        transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .stairs .step:nth-child(1) {
+        width: 38%;
+        z-index: 1;
+      }
+      .stairs .step:nth-child(2) {
+        width: 69%;
+        z-index: 2;
+        transition-delay: 0.08s;
+      }
+      .stairs .step:nth-child(3) {
+        width: 100%;
+        z-index: 3;
+        transition-delay: 0.16s;
+      }
+      .stairs.in .step {
+        transform: scaleY(1);
+      }
+      .lines .line {
+        display: block;
+        overflow: clip;
+        padding: 0.04em 0.04em 0.22em;
+        margin-bottom: -0.18em;
+      }
+      .lines .line > span {
+        display: block;
+        transform: translateY(125%);
+        transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .lines.in .line > span {
+        transform: translateY(0);
+      }
+      .lines.in .line:nth-child(2) > span {
+        transition-delay: 0.07s;
+      }
+      .lines.in .line:nth-child(3) > span {
+        transition-delay: 0.14s;
+      }
+      .reveal {
+        opacity: 0;
+        transform: translateY(26px);
+        transition: opacity 0.7s ease, transform 0.7s ease;
+      }
+      .reveal.in {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      section.block {
+        padding-block: clamp(4rem, 9vh, 7.5rem);
+      }
+      section.block.intro {
+        padding-bottom: 0;
+      }
+
+      /* INTRO */
+      .intro {
+        background: var(--purple);
+        color: var(--mercury);
+      }
+      .intro-lead {
+        grid-column: 1 / -1;
+        font-weight: 500;
+        letter-spacing: -0.025em;
+        line-height: 1.04;
+        font-size: clamp(1.5rem, 3.6vw, 3rem);
+      }
+      @media (min-width: 1000px) {
+        .intro-lead {
+          grid-column: 1 / 11;
+        }
+      }
+      .intro-cols {
+        grid-column: 1 / -1;
+        margin-top: clamp(2.5rem, 6vh, 4.5rem);
+        display: grid;
+        gap: 2rem;
+      }
+      @media (min-width: 1000px) {
+        .intro-cols {
+          grid-column: 7 / -1;
+          grid-template-columns: 1fr 1fr;
+          gap: 3rem;
+        }
+      }
+      .intro-cols p {
+        font-family: "Space Mono", monospace;
+        font-size: 0.74rem;
+        line-height: 1.55;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+        color: rgba(231, 228, 220, 0.72);
+      }
+
+      /* STEPS */
+      .proc {
+        background: var(--mercury);
+      }
+      .proc-grid {
+        align-items: start;
+        row-gap: 3rem;
+      }
+      .proc-head {
+        grid-column: 1 / -1;
+      }
+      @media (min-width: 1000px) {
+        .proc-head {
+          grid-column: 1 / 5;
+          position: sticky;
+          top: 6rem;
+          align-self: start;
+        }
+      }
+      .proc-head .display {
+        color: var(--purple);
+        margin-bottom: 1rem;
+      }
+      .proc-head p {
+        color: var(--muted);
+        max-width: 32ch;
+        line-height: 1.7;
+        font-size: 0.95rem;
+      }
+      .proc-note {
+        margin-top: 1.5rem;
+        padding: 1rem 1.2rem;
+        border-left: 3px solid var(--purple-bright);
+        background: var(--white);
+        font-size: 0.88rem;
+        color: var(--purple-deep);
+        line-height: 1.6;
+      }
+      .proc-cards {
+        grid-column: 1 / -1;
+        display: flex;
+        flex-direction: column;
+        gap: clamp(1.2rem, 2.5vw, 1.8rem);
+      }
+      @media (min-width: 1000px) {
+        .proc-cards {
+          grid-column: 5 / -1;
+        }
+      }
+      .pcard {
+        background: var(--white);
+        color: var(--purple);
+        border: 1px solid var(--line);
+        padding: 1.4rem clamp(1.2rem, 2.5vw, 1.6rem) 1.6rem;
+        transition: transform 0.4s, box-shadow 0.4s;
+      }
+      @media (min-width: 1000px) {
+        .pcard:nth-child(odd) {
+          transform: rotate(-0.8deg);
+          width: 98%;
+        }
+        .pcard:nth-child(even) {
+          transform: rotate(0.9deg) translateX(2%);
+          width: 98%;
+        }
+        .pcard:hover {
+          transform: rotate(0) translateX(0);
+          box-shadow: 0 24px 60px rgba(42, 26, 140, 0.14);
+          z-index: 2;
+        }
+      }
+      .pcard-top {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+      .pcard-top h3 {
+        font-weight: 500;
+        font-size: clamp(1.05rem, 1.8vw, 1.35rem);
+        letter-spacing: -0.02em;
+        line-height: 1.25;
+      }
+      .pcard-top .n {
+        font-family: "Space Mono", monospace;
+        font-size: 0.82rem;
+        color: var(--muted);
+        flex-shrink: 0;
+      }
+      .pcard hr {
+        border: 0;
+        border-top: 1px solid var(--line);
+        margin: 0.75rem 0 1rem;
+      }
+      .pcard p {
+        color: var(--muted);
+        font-size: 0.92rem;
+        line-height: 1.65;
+      }
+      .pcard .do {
+        color: var(--purple-deep);
+        font-weight: 500;
+      }
+      .pcard .dont {
+        color: var(--alert);
+        font-weight: 500;
+      }
+
+      /* ALERT / AMBULANS */
+      .alert-sec {
+        background: var(--purple-deep);
+        color: var(--mercury);
+      }
+      .alert-grid {
+        margin-top: clamp(2rem, 5vh, 3rem);
+      }
+      .alert-head {
+        grid-column: 1 / -1;
+        margin-bottom: clamp(2rem, 4vh, 3rem);
+      }
+      .alert-head .display {
+        color: var(--mercury);
+        max-width: 18ch;
+      }
+      .alert-head .display em {
+        color: var(--lilac);
+      }
+      .alert-head p {
+        margin-top: 1.25rem;
+        max-width: 48ch;
+        color: rgba(231, 228, 220, 0.65);
+        line-height: 1.65;
+        font-size: 0.95rem;
+      }
+      .alert-list {
+        grid-column: 1 / -1;
+        list-style: none;
+        display: grid;
+        gap: 0;
+        border-top: 1px solid var(--line-light);
+      }
+      @media (min-width: 768px) {
+        .alert-list {
+          grid-column: 1 / 8;
+        }
+      }
+      .alert-list li {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 1.25rem;
+        padding: 1.2rem 0;
+        border-bottom: 1px solid var(--line-light);
+        font-size: 0.95rem;
+        line-height: 1.55;
+        color: rgba(231, 228, 220, 0.88);
+      }
+      .alert-list .num {
+        font-family: "Space Mono", monospace;
+        font-size: 0.72rem;
+        color: var(--lilac);
+        padding-top: 0.15rem;
+      }
+      .alert-aside {
+        grid-column: 1 / -1;
+        margin-top: 2rem;
+        padding: 1.5rem;
+        border: 1px solid var(--line-light);
+        background: rgba(255, 255, 255, 0.04);
+      }
+      @media (min-width: 768px) {
+        .alert-aside {
+          grid-column: 8 / -1;
+          margin-top: 0;
+          align-self: start;
+          position: sticky;
+          top: 6rem;
+        }
+      }
+      .alert-aside h3 {
+        font-family: "Space Mono", monospace;
+        font-size: 0.62rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--lilac);
+        margin-bottom: 0.75rem;
+      }
+      .alert-aside p {
+        font-size: 0.9rem;
+        line-height: 1.65;
+        color: rgba(231, 228, 220, 0.7);
+      }
+
+      /* VIDEO */
+      .video-sec {
+        background: var(--mercury-2);
+        text-align: center;
+      }
+      .video-sec .display {
+        color: var(--purple);
+        margin: clamp(1.5rem, 4vh, 2.5rem) auto;
+        max-width: 20ch;
+      }
+      .video-sec p {
+        max-width: 42ch;
+        margin: 0 auto 2rem;
+        color: var(--muted);
+        line-height: 1.65;
+        font-size: 0.95rem;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.8rem 1.55rem;
+        border-radius: 100px;
+        font-size: 0.84rem;
+        font-weight: 500;
+        text-decoration: none;
+        border: 1px solid transparent;
+        transition: transform 0.2s, background 0.2s;
+      }
+      .btn-solid {
+        background: var(--purple);
+        color: var(--white);
+      }
+      .btn-solid:hover {
+        background: var(--purple-deep);
+        transform: translateY(-1px);
+      }
+      .btn-outline {
+        border-color: var(--line);
+        color: var(--purple);
+      }
+      .btn-outline:hover {
+        border-color: var(--purple);
+      }
+      .video-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        justify-content: center;
+      }
+
+      /* QUOTE */
+      .quote-sec {
+        background: var(--white);
+      }
+      .bigquote {
+        font-weight: 400;
+        letter-spacing: -0.02em;
+        line-height: 1.12;
+        color: var(--ink);
+        font-size: clamp(1.4rem, 3vw, 2.4rem);
+        margin: clamp(2rem, 5vh, 3.5rem) 0 1.5rem;
+        max-width: 28ch;
+      }
+      .bigquote em {
+        font-style: normal;
+        color: var(--purple);
+      }
+      .quote-attr {
+        font-family: "Space Mono", monospace;
+        font-size: 0.68rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .quote-attr strong {
+        display: block;
+        color: var(--purple);
+        font-size: 0.82rem;
+        margin-bottom: 0.35rem;
+        letter-spacing: 0.06em;
+      }
+
+      .bracket {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        font-family: "Space Mono", monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--purple);
+        text-decoration: none;
+      }
+      .bracket .br {
+        opacity: 0.45;
+      }
+      .bracket .arw {
+        transition: transform 0.25s;
+      }
+      .bracket:hover .arw {
+        transform: translateX(5px);
+      }
+
+      /* FOOTER */
+      footer {
+        background: var(--ink);
+        color: var(--mercury);
+        padding: clamp(3rem, 6vh, 4rem) var(--pad) 2rem;
+      }
+      .footer-logo {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.25rem;
+        margin-bottom: 3rem;
+      }
+      .logo-stage {
+        position: relative;
+        display: grid;
+        place-items: center;
+        padding: clamp(1.6rem, 5vw, 3.2rem);
+      }
+      .footer-logo .logo-mark {
+        position: relative;
+        z-index: 2;
+        width: clamp(110px, 18vw, 170px);
+        color: var(--lilac);
+        animation: logoBreath 4.5s ease-in-out infinite;
+      }
+      .logo-stage .wave {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: clamp(150px, 24vw, 235px);
+        aspect-ratio: 1;
+        border-radius: 50%;
+        border: 1px solid var(--lilac);
+        transform: translate(-50%, -50%) scale(0.5);
+        opacity: 0;
+        animation: logoWave 4.5s ease-out infinite;
+        pointer-events: none;
+      }
+      .logo-stage .wave:nth-child(2) {
+        animation-delay: 1.5s;
+      }
+      .logo-stage .wave:nth-child(3) {
+        animation-delay: 3s;
+      }
+      @keyframes logoWave {
+        0% {
+          opacity: 0.55;
+          transform: translate(-50%, -50%) scale(0.5);
+        }
+        70% {
+          opacity: 0.08;
+        }
+        100% {
+          opacity: 0;
+          transform: translate(-50%, -50%) scale(1.75);
+        }
+      }
+      @keyframes logoBreath {
+        0%,
+        100% {
+          transform: scale(1);
+          filter: drop-shadow(0 0 0 rgba(180, 155, 234, 0));
+        }
+        50% {
+          transform: scale(1.035);
+          filter: drop-shadow(0 0 16px rgba(180, 155, 234, 0.5));
+        }
+      }
+      .footer-wordmark {
+        font-family: "Space Mono", monospace;
+        font-size: clamp(0.8rem, 1.6vw, 1rem);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+      .footer-wordmark em {
+        font-style: normal;
+        color: var(--lilac);
+        opacity: 0.8;
+      }
+      .footer-top {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+        padding-bottom: 2.5rem;
+        border-bottom: 1px solid var(--line-light);
+        margin-bottom: 1.75rem;
+      }
+      @media (min-width: 720px) {
+        .footer-top {
+          grid-template-columns: 1.6fr 1fr 1fr 1fr;
+        }
+      }
+      .footer-brand p {
+        font-size: 0.85rem;
+        color: rgba(231, 228, 220, 0.45);
+        line-height: 1.7;
+        margin-top: 1rem;
+        max-width: 30ch;
+      }
+      .footer-col h5 {
+        font-family: "Space Mono", monospace;
+        font-size: 0.62rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--lilac);
+        margin-bottom: 1.1rem;
+      }
+      .footer-col ul {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.55rem;
+      }
+      .footer-col a {
+        font-size: 0.85rem;
+        color: rgba(231, 228, 220, 0.5);
+        text-decoration: none;
+      }
+      .footer-col a:hover {
+        color: var(--lilac);
+      }
+      .footer-bottom {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        justify-content: space-between;
+        align-items: center;
+        font-family: "Space Mono", monospace;
+        font-size: 0.64rem;
+        letter-spacing: 0.06em;
+        color: rgba(231, 228, 220, 0.35);
+        text-transform: uppercase;
+      }
+      .footer-social {
+        display: flex;
+        gap: 0.6rem;
+      }
+      .footer-social a {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        border: 1px solid var(--line-light);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: rgba(231, 228, 220, 0.5);
+        text-decoration: none;
+        font-size: 0.7rem;
+      }
+      .footer-social a:hover {
+        border-color: var(--lilac);
+        color: var(--lilac);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .reveal,
+        .lines .line > span,
+        .stairs .step,
+        .pcard {
+          transition: none !important;
+          opacity: 1 !important;
+          transform: none !important;
+        }
+        .footer-logo .logo-mark {
+          animation: none !important;
+        }
+        .logo-stage .wave {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header id="site-header" class="scrolled">
+      <a href="index.html" class="header-brand" aria-label="Ana sayfa">
+        <svg
+          class="logo-mark"
+          viewBox="20 37 185 91"
+          fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+        >
+          <g transform="translate(0,225) scale(0.1,-0.1)">
+            <path
+              d="M1049 1818 c-47 -64 -88 -158 -101 -229 -6 -35 -12 -65 -13 -66 -1 -2 -33 11 -72 27 -38 16 -95 32 -126 36 l-57 7 0 -40 c0 -51 16 -97 51 -151 16 -24 29 -45 29 -47 0 -2 -47 -4 -105 -4 l-104 -1 -16 31 c-23 44 -39 31 -50 -42 -6 -35 -13 -59 -17 -54 -3 6 -9 46 -13 90 -8 81 -21 124 -34 109 -4 -5 -20 -51 -36 -102 -28 -89 -44 -104 -45 -40 0 33 -9 58 -21 58 -5 0 -17 -16 -26 -35 -14 -29 -22 -35 -42 -33 -13 2 -26 -3 -28 -9 -3 -9 8 -13 36 -13 22 0 43 6 48 13 4 7 12 -14 18 -52 5 -36 15 -66 21 -68 7 -2 23 33 39 84 15 48 30 92 34 96 4 4 13 -44 20 -106 12 -108 23 -148 35 -136 4 3 13 48 22 100 9 52 17 94 18 94 0 0 39 -2 86 -5 l85 -5 -46 -27 c-69 -40 -77 -54 -50 -82 56 -60 185 -101 294 -95 l55 4 12 -38 c11 -39 56 -76 117 -98 63 -21 183 58 183 121 0 12 18 15 98 16 84 0 105 4 159 28 33 15 73 41 89 57 27 28 27 29 8 50 -10 12 -41 32 -69 45 l-50 24 80 0 c46 0 86 5 92 11 8 8 13 -1 18 -37 14 -105 30 -98 69 27 16 52 31 90 32 84 2 -5 10 -61 18 -123 8 -63 17 -116 19 -119 15 -14 25 14 37 97 7 50 17 93 21 96 5 3 9 0 9 -5 0 -7 29 -11 75 -11 60 0 75 3 75 15 0 12 -14 15 -65 15 -62 0 -65 1 -80 30 -21 40 -33 38 -41 -7 -3 -21 -10 -54 -14 -73 l-7 -35 -6 45 c-4 25 -10 72 -14 104 -12 87 -28 81 -59 -21 -14 -48 -30 -92 -34 -97 -5 -4 -12 16 -17 45 -4 29 -13 54 -19 56 -5 2 -18 -12 -27 -32 l-17 -35 -94 0 -95 0 35 66 c37 72 47 150 20 160 -23 9 -126 -16 -178 -42 -60 -31 -68 -30 -68 4 0 38 -27 127 -55 182 -25 49 -91 130 -106 130 -5 0 -23 -19 -40 -42z m88 -50 c18 -29 39 -70 48 -92 16 -37 16 -38 -2 -31 -62 26 -94 29 -141 13 -25 -10 -47 -16 -49 -15 -11 11 88 177 105 177 4 0 22 -24 39 -52z m31 -155 c28 -17 52 -70 52 -112 0 -67 -86 -121 -161 -101 -56 15 -89 54 -89 106 0 61 18 94 65 116 44 20 94 17 133 -9z m-300 -99 c39 -19 72 -40 72 -46 0 -6 -9 -8 -22 -3 -13 4 -49 9 -80 12 -67 6 -70 0 -43 -78 l16 -43 -26 24 c-33 31 -75 116 -75 152 0 27 1 28 43 22 23 -3 75 -21 115 -40z m612 14 c0 -41 -32 -107 -69 -142 l-29 -28 16 44 c24 67 13 82 -51 75 -28 -3 -63 -9 -77 -13 -23 -7 -24 -6 -11 10 20 24 80 53 144 71 74 20 77 19 77 -17z m-127 -149 c-29 -54 -101 -111 -156 -125 l-29 -7 25 49 c13 27 30 66 36 86 10 30 20 40 54 52 56 20 91 24 95 9 2 -7 -9 -36 -25 -64z m-440 55 c26 -13 37 -26 47 -58 6 -22 23 -60 36 -83 13 -23 24 -44 24 -47 0 -14 -118 55 -147 86 -27 27 -63 93 -63 113 0 12 72 4 103 -11z m184 -74 c21 0 51 7 67 15 l29 15 -7 -32 c-6 -32 -75 -148 -88 -148 -19 0 -108 143 -108 175 0 2 16 -3 35 -11 19 -7 51 -14 72 -14z m-213 -95 c27 -16 76 -36 110 -46 l61 -17 -50 -23 c-42 -20 -66 -24 -150 -24 -95 0 -104 2 -170 35 -40 20 -70 41 -70 50 0 35 162 87 200 65 11 -6 42 -25 69 -40z m643 13 c71 -34 68 -52 -13 -90 -92 -43 -193 -50 -293 -19 -38 12 -72 25 -75 30 -3 5 11 12 32 16 48 9 128 42 172 73 43 29 103 25 177 -10z m-442 -108 c5 -8 11 -8 19 0 10 7 28 4 64 -12 56 -25 65 -45 36 -86 -50 -72 -180 -68 -219 8 -23 44 -19 56 25 69 21 6 42 16 45 21 8 13 22 13 30 0z"
+            />
+            <path
+              d="M1063 1580 c-70 -28 -45 -140 32 -140 24 0 39 7 54 26 28 35 26 69 -4 99 -25 26 -45 30 -82 15z m73 -55 c9 -23 -15 -55 -42 -55 -17 0 -28 8 -36 26 -11 23 -10 29 11 45 18 15 27 16 42 8 11 -6 22 -16 25 -24z"
+            />
+            <path
+              d="M1086 1523 c-11 -11 -6 -23 9 -23 8 0 15 4 15 9 0 13 -16 22 -24 14z"
+            />
+          </g>
+        </svg>
+        <span class="brand-text">
+          <span class="brand-main">Epilepsi ve Yaşam</span>
+          <span class="brand-sub">Derneği</span>
+        </span>
+      </a>
+
+      <div class="header-menu-zone">
+        <a href="katil.html" class="header-quick">Destek olun</a>
+        <button
+          class="nav-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="site-nav"
+          aria-label="Menüyü aç"
+        >
+          <span class="nav-toggle-label">Menü</span>
+          <span class="nav-toggle-bars" aria-hidden="true"><span></span></span>
+          <span class="nav-toggle-close" aria-hidden="true"></span>
+        </button>
+      </div>
+
+      <div class="nav-drawer" id="site-nav" aria-hidden="true">
+        <div class="nav-drawer-inner">
+          <div class="nav-drawer-content">
+            <ul class="nav-primary">
+              <li><a href="tarihce.html">Kurumsal</a></li>
+              <li><a href="epilepsi-nedir.html">Epilepsi Nedir?</a></li>
+              <li><a href="etkinlikler.html">Etkinlikler</a></li>
+              <li><a href="projeler.html">Projeler</a></li>
+            </ul>
+            <div class="nav-foot">
+              <div class="nav-group">
+                <span class="nav-group-label">Dernek</span>
+                <ul>
+                  <li><a href="tarihce.html">Tarihçemiz</a></li>
+                  <li><a href="yonetim.html">Yönetim Kurulu</a></li>
+                  <li><a href="temsilciler.html">Temsilcilerimiz</a></li>
+                  <li><a href="katil.html">Gönüllü Ol</a></li>
+                </ul>
+              </div>
+              <div class="nav-group">
+                <span class="nav-group-label">Bilgi</span>
+                <ul>
+                  <li><a href="nobet-turleri.html">Nöbet Türleri</a></li>
+                  <li>
+                    <a href="ilk-yardim.html" aria-current="page">İlk Yardım</a>
+                  </li>
+                  <li><a href="kitaplar.html">Kitaplar</a></li>
+                </ul>
+              </div>
+              <div class="nav-group nav-group-contact">
+                <span class="nav-group-label">İletişim</span>
+                <ul>
+                  <li><a href="iletisim.html">Bize Ulaşın</a></li>
+                  <li>
+                    <a
+                      href="https://www.youtube.com/@epilepsiveyasamdernegi"
+                      target="_blank"
+                      rel="noopener"
+                      >Epilepsi TV</a
+                    >
+                  </li>
+                  <li>
+                    <a href="mailto:info@epilepsiveyasam.org.tr"
+                      >info@epilepsiveyasam.org.tr</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="nav-backdrop" data-nav-close aria-hidden="true"></div>
+    </header>
+
+    <main>
+      <!-- PAGE HERO -->
+      <section class="page-hero wrap">
+        <div class="meta mono reveal">
+          <span>Bilgi</span><span class="ref">[EYD.IY]</span>
+        </div>
+        <nav class="page-crumbs mono reveal" aria-label="Konum">
+          <a href="index.html">Ana Sayfa</a>
+          <span aria-hidden="true">/</span>
+          <span>İlk Yardım</span>
+        </nav>
+
+        <div class="page-hero-grid">
+          <div class="page-hero-main">
+            <h1 class="giant lines reveal" role="text">
+              <span class="line"><span>Epilepsi'de</span></span>
+              <span class="line"
+                ><span><em>İlk Yardım</em></span></span
+              >
+            </h1>
+            <p class="page-lead reveal">
+              Epilepsili birine büyük nöbet geldiğinde ne yapılması ve
+              yapılmaması gerektiğini bilmek, bazen hayat kurtarır. Aşağıda
+              adım adım, panik yapmadan uygulayabileceğiniz müdahaleyi
+              bulacaksınız.
+            </p>
+          </div>
+          <aside class="page-hero-aside reveal">
+            <strong>Önemli</strong>
+            <p>
+              Anlatılanların tamamı aynı kişide görülmeyebilir. Çoğu nöbet
+              <strong>1 dakikadan kısa</strong> sürer; bilinçli müdahale ve
+              tekrarlamayan nöbetlerde ambulansa gerek olmayabilir.
+            </p>
+          </aside>
+        </div>
+      </section>
+
+      <!-- INTRO -->
+      <section class="block intro wrap">
+        <div
+          class="meta mono reveal"
+          style="margin-bottom: clamp(2rem, 5vh, 4rem)"
+        >
+          <span>Ön Bilgi</span><span class="ref">[01]</span>
+        </div>
+        <div class="grid12">
+          <p class="intro-lead lines reveal">
+            <span class="line"
+              ><span>Birdenbire birisi fenalaştı —</span></span
+            >
+            <span class="line"
+              ><span>birkaç saniye içinde yapmanız</span></span
+            >
+            <span class="line"><span>gerekenleri biliyor musunuz?</span></span>
+          </p>
+          <div class="intro-cols reveal">
+            <p>
+              İlk yardımdan korkmayın. Bilmeden müdahale etmek yanlıştır; bilinçli
+              müdahale ise kalp krizi ve epilepside hayat kurtarabilir.
+            </p>
+            <p>
+              Epilepsinin ne olduğunu bugün bilmiyor olabilirsiniz; yarın bu
+              durumla karşılaşmayacağınız anlamına gelmez. Hepimiz, her hastalık
+              gibi, epilepsiye de adayız.
+            </p>
+          </div>
+        </div>
+        <div class="stairs" aria-hidden="true">
+          <span class="step"></span><span class="step"></span
+          ><span class="step"></span>
+        </div>
+      </section>
+
+      <!-- ADIMLAR -->
+      <section class="block proc wrap" id="adimlar">
+        <div class="meta mono reveal">
+          <span>Adım Adım</span><span class="ref">[02]</span>
+        </div>
+
+        <div
+          class="proc-grid grid12"
+          style="margin-top: clamp(2rem, 5vh, 3.5rem)"
+        >
+          <div class="proc-head reveal">
+            <h2 class="display">İlk <em>saniyeler</em></h2>
+            <p>
+              Nöbet başladığında sakin kalın ve aşağıdaki sırayı izleyin. Her
+              adım, farklı nöbet türlerinde geçerli olmayabilir — bağlama göre
+              uygulayın.
+            </p>
+            <div class="proc-note">
+              Tüm bu adımlar aynı kişide bir arada görülmez. Uzun gibi görünen
+              nöbetin süresi çoğu zaman bir dakikadan kısadır.
+            </div>
+          </div>
+
+          <div class="proc-cards">
+            <article class="pcard reveal">
+              <div class="pcard-top">
+                <h3>Başını koruyun</h3>
+                <span class="n">01</span>
+              </div>
+              <hr />
+              <p>
+                Hemen başının altına yumuşak bir cisim koyun; başın yere darbe
+                almasını önleyin. Bu darbe, yıllar sonra bile başka bir olumsuz
+                durumu tetikleyebilir. Çantanızı, montunuzu, hırkanızı
+                kullanabilirsiniz; hiçbir şey yoksa elinizi koyun.
+              </p>
+            </article>
+
+            <article class="pcard reveal">
+              <div class="pcard-top">
+                <h3>Çevreyi güvenli hale getirin</h3>
+                <span class="n">02</span>
+              </div>
+              <hr />
+              <p>
+                <span class="do">Panik olmayın.</span> Önce çevresinde kesici
+                alet var mı diye bakın — yemek yaparken bıçak, bardak; dikiş
+                sırasında makas gibi. Eşyaları uzağa itin. Halk etrafına
+                toplanmış olabilir; <span class="do">etrafını açın.</span>
+              </p>
+            </article>
+
+            <article class="pcard reveal">
+              <div class="pcard-top">
+                <h3>Sıkı giysileri gevşetin</h3>
+                <span class="n">03</span>
+              </div>
+              <hr />
+              <p>
+                Kravat, papyon, fular gibi boynu veya göğsü sıkan giysileri
+                gevşetin; nefes almayı kolaylaştırın.
+              </p>
+            </article>
+
+            <article class="pcard reveal">
+              <div class="pcard-top">
+                <h3>El ve ayakları tutmayın</h3>
+                <span class="n">04</span>
+              </div>
+              <hr />
+              <p>
+                Kişi elini ayağını vuruyor veya kasılıyorsa
+                <span class="dont">sakın tutmayın.</span> Bilinçsizce yapıyor;
+                tutarsanız kırılabilir.
+              </p>
+            </article>
+
+            <article class="pcard reveal">
+              <div class="pcard-top">
+                <h3>Düşüşe hazırlıklı olun</h3>
+                <span class="n">05</span>
+              </div>
+              <hr />
+              <p>
+                Kasılarak düştüğü gibi, ender de olsa ayaklarının üzerinde
+                duramayacak şekilde yere düşebilir. Mümkünse yanında kalın ve
+                düşüşü yumuşatmaya çalışın.
+              </p>
+            </article>
+
+            <article class="pcard reveal">
+              <div class="pcard-top">
+                <h3>Köpüklü nöbette başı yan çevirin</h3>
+                <span class="n">06</span>
+              </div>
+              <hr />
+              <p>
+                Ağzından köpük gelen bir nöbet ise başını yan çevirin; köpüğün
+                dışarı akmasını sağlayın. Nefes borusuna giderek tıkanma riski
+                çok ender de olsa karşılaşılabilir; beyne giden damarın
+                tıkanmasına ve ciddi sonuçlara yol açabilir.
+              </p>
+            </article>
+
+            <article class="pcard reveal">
+              <div class="pcard-top">
+                <h3>Ağza bir şey sokmayın</h3>
+                <span class="n">07</span>
+              </div>
+              <hr />
+              <p>
+                Ağzı kilitlenen bir nöbette
+                <span class="dont">ağzını açmaya çalışmayın</span> — zaten
+                kenetlenmiştir. Zorlarsanız çene kemiği kırılabilir. Dilini
+                ısırsa önemli değildir; dil ve koltuk altı kendi kendini
+                iyileştiren organlarımızdandır.
+              </p>
+            </article>
+
+            <article class="pcard reveal">
+              <div class="pcard-top">
+                <h3>Koku ve su kullanmayın</h3>
+                <span class="n">08</span>
+              </div>
+              <hr />
+              <p>
+                <span class="dont">Kolonya, soğan</span> gibi şeyler
+                koklatmayın. Ayılsın diye uğraşırken nöbet süresini
+                uzatabilirsiniz. Yüzünü yıkamaya çalışmayın; su genzine gidip
+                tıkanabilir.
+              </p>
+            </article>
+
+            <article class="pcard reveal">
+              <div class="pcard-top">
+                <h3>Nöbet bitince sakinleştirin</h3>
+                <span class="n">09</span>
+              </div>
+              <hr />
+              <p>
+                Kendine geldiğinde bilinç kaybından dolayı birkaç saniye
+                nerede olduğunu düşünerek gözünü açar. «Ne oldu, niye oldu»
+                demek yerine <span class="do">«Korkma, iş yerindesin»</span> veya
+                <span class="do">«Korkma, mağazadasın»</span> deyin — bu,
+                özellikle kadınlarda rahatlamayı sağlar.
+              </p>
+            </article>
+
+            <article class="pcard reveal">
+              <div class="pcard-top">
+                <h3>Ayağa kalkarken destek olun</h3>
+                <span class="n">10</span>
+              </div>
+              <hr />
+              <p>
+                Ayağa kalkarken destek olun. Birkaç saniye içinde baş dönmesi
+                geçer; kişi kendi yürüyebilir hale gelir.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- AMBULANS -->
+      <section class="block alert-sec wrap on-dark" id="ambulans">
+        <div class="meta mono reveal">
+          <span>Ne Zaman?</span><span class="ref">[03]</span>
+        </div>
+
+        <div class="alert-grid grid12">
+          <div class="alert-head reveal">
+            <h2 class="display">Ambulans <em>çağırın</em></h2>
+            <p>
+              İlk müdahaleyi bilinçli yaptıysanız ve nöbet tekrarlamıyorsa çoğu
+              durumda ambulansa gerek yoktur. Aşağıdaki hallerde ise mutlaka
+              112'yi arayın.
+            </p>
+          </div>
+
+          <ol class="alert-list reveal">
+            <li>
+              <span class="num">01</span>
+              <span>Nöbet 2 dakikayı geçiyor veya tekrarlıyorsa</span>
+            </li>
+            <li>
+              <span class="num">02</span>
+              <span
+                >İlk yardımı tam olarak bilmiyor veya panikten müdahale
+                edemiyorsanız</span
+              >
+            </li>
+            <li>
+              <span class="num">03</span>
+              <span>Fenalaşan kişi başını sert bir şekilde vurduysa</span>
+            </li>
+            <li>
+              <span class="num">04</span>
+              <span>Fenalaşan kişi hamile ise</span>
+            </li>
+            <li>
+              <span class="num">05</span>
+              <span>Arka arkaya nöbet tekrarı oluyorsa</span>
+            </li>
+            <li>
+              <span class="num">06</span>
+              <span>Denizde veya havuzda nöbet geçirdiyse</span>
+            </li>
+            <li>
+              <span class="num">07</span>
+              <span>Nöbetten sonra hâlâ nefes almakta zorlanıyorsa</span>
+            </li>
+          </ol>
+
+          <aside class="alert-aside reveal">
+            <h3>Nöroloğa yardımcı olun</h3>
+            <p>
+              Mümkünse nöbeti videoya çekin. Video, anlatmaya çalıştığınız
+              durumu nöroloğa en net şekilde ifade eder. Epilepsili olmayan
+              herkesi de bu konuda duyarlı olmaya davet ediyoruz.
+            </p>
+          </aside>
+        </div>
+      </section>
+
+      <!-- VİDEO -->
+      <section class="block video-sec wrap">
+        <div class="meta mono reveal" style="justify-content: center; gap: 3rem">
+          <span>Video</span><span class="ref">[04]</span>
+        </div>
+        <h2 class="display reveal">Görerek <em>öğrenin</em></h2>
+        <p class="reveal">
+          Anlatılanları bir de aşağıdaki ilk yardım videosundan izleyebilirsiniz.
+        </p>
+        <div class="video-actions reveal">
+          <a
+            href="https://www.youtube.com/watch?v=pXkCd12loU4"
+            class="btn btn-solid"
+            target="_blank"
+            rel="noopener"
+            >İlk Yardım Videosu →</a
+          >
+          <a href="index.html#bilgi" class="btn btn-outline"
+            >Epilepsi Nedir? →</a
+          >
+        </div>
+      </section>
+
+      <!-- ALINTI -->
+      <section class="block quote-sec wrap">
+        <div class="meta mono reveal">
+          <span>Kaynak</span><span class="ref">[EYD]</span>
+        </div>
+        <blockquote class="bigquote reveal">
+          «İlk yardımdan korkmayalım. Bilmeden müdahalede bulunmak yanlıştır;
+          bilinçli müdahale ile <em>hayat kurtarabilirsiniz.</em>»
+        </blockquote>
+        <p class="quote-attr reveal">
+          <strong>Ebru Öztürk</strong>
+          Epilepsi ve Yaşam Derneği Kurucusu &amp; Başkanı
+        </p>
+        <a href="index.html" class="bracket reveal"
+          ><span class="br">[</span>Ana Sayfaya Dön<span class="arw">→</span
+          ><span class="br">]</span></a
+        >
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-logo">
+        <div class="logo-stage">
+          <span class="wave"></span><span class="wave"></span
+          ><span class="wave"></span>
+          <svg
+            class="logo-mark"
+            viewBox="20 37 185 91"
+            fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <g transform="translate(0,225) scale(0.1,-0.1)">
+              <path
+                d="M1049 1818 c-47 -64 -88 -158 -101 -229 -6 -35 -12 -65 -13 -66 -1 -2 -33 11 -72 27 -38 16 -95 32 -126 36 l-57 7 0 -40 c0 -51 16 -97 51 -151 16 -24 29 -45 29 -47 0 -2 -47 -4 -105 -4 l-104 -1 -16 31 c-23 44 -39 31 -50 -42 -6 -35 -13 -59 -17 -54 -3 6 -9 46 -13 90 -8 81 -21 124 -34 109 -4 -5 -20 -51 -36 -102 -28 -89 -44 -104 -45 -40 0 33 -9 58 -21 58 -5 0 -17 -16 -26 -35 -14 -29 -22 -35 -42 -33 -13 2 -26 -3 -28 -9 -3 -9 8 -13 36 -13 22 0 43 6 48 13 4 7 12 -14 18 -52 5 -36 15 -66 21 -68 7 -2 23 33 39 84 15 48 30 92 34 96 4 4 13 -44 20 -106 12 -108 23 -148 35 -136 4 3 13 48 22 100 9 52 17 94 18 94 0 0 39 -2 86 -5 l85 -5 -46 -27 c-69 -40 -77 -54 -50 -82 56 -60 185 -101 294 -95 l55 4 12 -38 c11 -39 56 -76 117 -98 63 -21 183 58 183 121 0 12 18 15 98 16 84 0 105 4 159 28 33 15 73 41 89 57 27 28 27 29 8 50 -10 12 -41 32 -69 45 l-50 24 80 0 c46 0 86 5 92 11 8 8 13 -1 18 -37 14 -105 30 -98 69 27 16 52 31 90 32 84 2 -5 10 -61 18 -123 8 -63 17 -116 19 -119 15 -14 25 14 37 97 7 50 17 93 21 96 5 3 9 0 9 -5 0 -7 29 -11 75 -11 60 0 75 3 75 15 0 12 -14 15 -65 15 -62 0 -65 1 -80 30 -21 40 -33 38 -41 -7 -3 -21 -10 -54 -14 -73 l-7 -35 -6 45 c-4 25 -10 72 -14 104 -12 87 -28 81 -59 -21 -14 -48 -30 -92 -34 -97 -5 -4 -12 16 -17 45 -4 29 -13 54 -19 56 -5 2 -18 -12 -27 -32 l-17 -35 -94 0 -95 0 35 66 c37 72 47 150 20 160 -23 9 -126 -16 -178 -42 -60 -31 -68 -30 -68 4 0 38 -27 127 -55 182 -25 49 -91 130 -106 130 -5 0 -23 -19 -40 -42z m88 -50 c18 -29 39 -70 48 -92 16 -37 16 -38 -2 -31 -62 26 -94 29 -141 13 -25 -10 -47 -16 -49 -15 -11 11 88 177 105 177 4 0 22 -24 39 -52z m31 -155 c28 -17 52 -70 52 -112 0 -67 -86 -121 -161 -101 -56 15 -89 54 -89 106 0 61 18 94 65 116 44 20 94 17 133 -9z m-300 -99 c39 -19 72 -40 72 -46 0 -6 -9 -8 -22 -3 -13 4 -49 9 -80 12 -67 6 -70 0 -43 -78 l16 -43 -26 24 c-33 31 -75 116 -75 152 0 27 1 28 43 22 23 -3 75 -21 115 -40z m612 14 c0 -41 -32 -107 -69 -142 l-29 -28 16 44 c24 67 13 82 -51 75 -28 -3 -63 -9 -77 -13 -23 -7 -24 -6 -11 10 20 24 80 53 144 71 74 20 77 19 77 -17z m-127 -149 c-29 -54 -101 -111 -156 -125 l-29 -7 25 49 c13 27 30 66 36 86 10 30 20 40 54 52 56 20 91 24 95 9 2 -7 -9 -36 -25 -64z m-440 55 c26 -13 37 -26 47 -58 6 -22 23 -60 36 -83 13 -23 24 -44 24 -47 0 -14 -118 55 -147 86 -27 27 -63 93 -63 113 0 12 72 4 103 -11z m184 -74 c21 0 51 7 67 15 l29 15 -7 -32 c-6 -32 -75 -148 -88 -148 -19 0 -108 143 -108 175 0 2 16 -3 35 -11 19 -7 51 -14 72 -14z m-213 -95 c27 -16 76 -36 110 -46 l61 -17 -50 -23 c-42 -20 -66 -24 -150 -24 -95 0 -104 2 -170 35 -40 20 -70 41 -70 50 0 35 162 87 200 65 11 -6 42 -25 69 -40z m643 13 c71 -34 68 -52 -13 -90 -92 -43 -193 -50 -293 -19 -38 12 -72 25 -75 30 -3 5 11 12 32 16 48 9 128 42 172 73 43 29 103 25 177 -10z m-442 -108 c5 -8 11 -8 19 0 10 7 28 4 64 -12 56 -25 65 -45 36 -86 -50 -72 -180 -68 -219 8 -23 44 -19 56 25 69 21 6 42 16 45 21 8 13 22 13 30 0z"
+              />
+            </g>
+          </svg>
+        </div>
+        <span class="footer-wordmark">Epilepsi <em>ve</em> Yaşam Derneği</span>
+      </div>
+
+      <div class="footer-top">
+        <div class="footer-brand">
+          <span class="brand-text">
+            <span class="brand-main" style="color: var(--mercury)"
+              >Epilepsi ve Yaşam</span
+            >
+            <span class="brand-sub">Derneği</span>
+          </span>
+          <p>
+            2000'lerin başından bu yana epilepsili bireyler ve aileleri için
+            farkındalık yaratmakta, destek sağlamaktadır.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h5>Dernek</h5>
+          <ul>
+            <li><a href="tarihce.html">Tarihçemiz</a></li>
+            <li><a href="yonetim.html">Yönetim Kurulu</a></li>
+            <li><a href="projeler.html">Projeler</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Bilgi</h5>
+          <ul>
+            <li><a href="epilepsi-nedir.html">Epilepsi Nedir?</a></li>
+            <li><a href="ilk-yardim.html">İlk Yardım</a></li>
+            <li><a href="kitaplar.html">Kitaplar</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>İletişim</h5>
+          <ul>
+            <li><a href="iletisim.html">Bize Ulaşın</a></li>
+            <li>
+              <a
+                href="https://www.youtube.com/@epilepsiveyasamdernegi"
+                target="_blank"
+                rel="noopener"
+                >Epilepsi TV</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2025 Epilepsi ve Yaşam Derneği — Tüm hakları saklıdır.</span>
+        <div class="footer-social">
+          <a
+            href="https://www.facebook.com/epilepsiveyasamdernegi"
+            target="_blank"
+            rel="noopener"
+            aria-label="Facebook"
+            >f</a
+          >
+          <a
+            href="https://www.instagram.com/epilepsiveyasamdernegi/"
+            target="_blank"
+            rel="noopener"
+            aria-label="Instagram"
+            >ig</a
+          >
+          <a
+            href="https://www.youtube.com/@epilepsiveyasamdernegi"
+            target="_blank"
+            rel="noopener"
+            aria-label="YouTube"
+            >yt</a
+          >
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      const header = document.getElementById("site-header");
+      addEventListener(
+        "scroll",
+        () => header.classList.toggle("scrolled", scrollY > 30),
+        { passive: true },
+      );
+
+      const navToggle = document.querySelector(".nav-toggle");
+      const navWrap = document.getElementById("site-nav");
+      const navToggleLabel = document.querySelector(".nav-toggle-label");
+
+      const syncNavDrawer = () => {
+        if (!navToggle || !navWrap) return;
+        const rect = navToggle.getBoundingClientRect();
+        const right = Math.max(0, window.innerWidth - rect.right);
+        navWrap.style.setProperty("--nav-top", `${rect.bottom + 24}px`);
+        navWrap.style.setProperty("--nav-bottom", "16px");
+        navWrap.style.setProperty("--nav-right", `${right}px`);
+        const mobile = window.matchMedia("(max-width: 767px)").matches;
+        if (mobile) {
+          navWrap.style.setProperty("--nav-width", "100vw");
+          navWrap.style.setProperty("--nav-right", "0px");
+        } else {
+          navWrap.style.setProperty(
+            "--nav-width",
+            `${Math.min(window.innerWidth * 0.5, rect.right)}px`,
+          );
+        }
+      };
+
+      const closeNav = () => {
+        header.classList.remove("nav-open");
+        navToggle?.setAttribute("aria-expanded", "false");
+        navToggle?.setAttribute("aria-label", "Menüyü aç");
+        navWrap?.setAttribute("aria-hidden", "true");
+        if (navToggleLabel) navToggleLabel.textContent = "Menü";
+        document.body.style.overflow = "";
+      };
+      navToggle?.addEventListener("click", () => {
+        const willOpen = !header.classList.contains("nav-open");
+        if (willOpen) syncNavDrawer();
+        const open = header.classList.toggle("nav-open");
+        navToggle.setAttribute("aria-expanded", String(open));
+        navToggle.setAttribute(
+          "aria-label",
+          open ? "Menüyü kapat" : "Menüyü aç",
+        );
+        navWrap?.setAttribute("aria-hidden", open ? "false" : "true");
+        if (navToggleLabel)
+          navToggleLabel.textContent = open ? "Kapat" : "Menü";
+        document.body.style.overflow = open ? "hidden" : "";
+      });
+      document.querySelectorAll("[data-nav-close]").forEach((el) => {
+        el.addEventListener("click", closeNav);
+      });
+      document
+        .querySelectorAll(".nav-primary a, .nav-group a")
+        .forEach((link) => {
+          link.addEventListener("click", closeNav);
+        });
+      addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeNav();
+      });
+      addEventListener("resize", syncNavDrawer);
+      syncNavDrawer();
+
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("in");
+              io.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.15 },
+      );
+      document
+        .querySelectorAll(".reveal, .lines, .stairs")
+        .forEach((el) => io.observe(el));
+    </script>
+  </body>
+</html>
