@@ -574,6 +574,24 @@
               </svg>
               <span>DONDURULARAK<br />KURUTULMUŞ</span>
             </div>
+            <!-- 4 -->
+            <div class="mclaim">
+              <svg
+                class="mclaim-icon"
+                viewBox="0 0 52 52"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M20 8h12M22 8v13L13 35a7 7 0 0 0 6 10h14a7 7 0 0 0 6-10L30 21V8" />
+                <line x1="18" y1="33" x2="30" y2="43" />
+                <line x1="30" y1="33" x2="18" y2="43" />
+              </svg>
+              <span>KATKI MADDESİ<br />YOK</span>
+            </div>
           </div>
         </div>
       </section>
@@ -777,9 +795,15 @@
               Gerçek meyvelerle yapılan, damağınıza iyi gelen tarifler.
             </p>
           </div>
-          <a href="#" class="btn btn-outline recipes-all-btn"
-            >Tüm Tarifler <span aria-hidden="true">→</span></a
-          >
+          <div class="recipes-nav">
+            <button class="rc-nav-btn rc-prev" id="rcPrev" aria-label="Önceki tarifler">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+            </button>
+            <button class="rc-nav-btn rc-next" id="rcNext" aria-label="Sonraki tarifler">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
+            <a href="#" class="rc-see-all">↳ Tümünü Gör</a>
+          </div>
         </div>
 
         <div class="recipes-scroll">
@@ -1563,6 +1587,45 @@
         triggerBurst(slides[0]);
 
         resetTimer();
+      })();
+
+      /* ── Recipes prev/next navigation ── */
+      (function () {
+        var scroll = document.querySelector('.recipes-scroll');
+        var prev   = document.getElementById('rcPrev');
+        var next   = document.getElementById('rcNext');
+        if (!scroll || !prev || !next) return;
+
+        function getStep() {
+          var card = scroll.querySelector('.recipe-card');
+          return card ? card.offsetWidth + 16 : 280;
+        }
+
+        function updateBtns() {
+          prev.disabled = scroll.scrollLeft <= 4;
+          next.disabled = scroll.scrollLeft >= scroll.scrollWidth - scroll.clientWidth - 4;
+        }
+
+        prev.addEventListener('click', function () {
+          scroll.scrollBy({ left: -getStep() * 2, behavior: 'smooth' });
+        });
+        next.addEventListener('click', function () {
+          scroll.scrollBy({ left: getStep() * 2, behavior: 'smooth' });
+        });
+
+        scroll.addEventListener('scroll', updateBtns, { passive: true });
+        updateBtns();
+      })();
+
+      /* ── Social marquee — items klonlanarak seamless loop ── */
+      (function () {
+        var track = document.querySelector('.social-track');
+        if (!track) return;
+        Array.from(track.children).forEach(function (item) {
+          var clone = item.cloneNode(true);
+          clone.setAttribute('aria-hidden', 'true');
+          track.appendChild(clone);
+        });
       })();
 
       /* ── Footer fruit animation ── */

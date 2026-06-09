@@ -378,18 +378,18 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--red);
+  background: var(--red-deep);
   border: none;
   color: var(--white);
   cursor: pointer;
   transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
   flex-shrink: 0;
-  box-shadow: 0 3px 14px rgba(217, 58, 40, 0.5);
+  box-shadow: 0 3px 14px rgba(173, 34, 24, 0.55);
 }
 .hdr-cart-btn:hover {
-  background: var(--red-deep);
+  background: #8f1a12;
   transform: translateY(-2px);
-  box-shadow: 0 6px 22px rgba(217, 58, 40, 0.65);
+  box-shadow: 0 6px 22px rgba(173, 34, 24, 0.7);
 }
 .hdr-cart-btn.is-open {
   background: var(--dark);
@@ -1432,6 +1432,10 @@ button {
 .site-footer {
   position: relative;
   z-index: 2;
+  /* iOS Safari: sticky hero'nun scroll sırasında ani görünmesini önler.
+     Bu section'lar kendi GPU composite layer'larına alınarak önceden boyatılır. */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -1461,13 +1465,14 @@ button {
   line-height: 0.9;
   pointer-events: none;
   user-select: none;
+  text-align: center;
 }
 
 .mh-row {
   display: block;
   font-family: var(--font-editorial);
   font-weight: 900;
-  font-size: clamp(3.2rem, 11vw, 11.5rem);
+  font-size: clamp(1.6rem, 11vw, 11.5rem);
   color: var(--red);
   letter-spacing: -0.02em;
   text-transform: uppercase;
@@ -1488,25 +1493,23 @@ button {
 }
 
 .mf-mango {
-  width: clamp(110px, 13vw, 175px);
-  top: -16px;
-  left: 20%;
-  transform: rotate(-14deg);
+  width: clamp(100px, 10vw, 155px);
+  top: 50%;
+  left: 1.5%;
   filter: drop-shadow(0 14px 32px rgba(0, 0, 0, 0.16));
   animation: mf-bob 4.8s ease-in-out infinite;
 }
 .mf-cilek {
-  width: clamp(90px, 10vw, 148px);
-  top: -8px;
-  right: 6%;
-  transform: rotate(10deg);
+  width: clamp(84px, 8vw, 130px);
+  top: 50%;
+  right: 1.5%;
   filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.13));
   animation: mf-bob 5.4s ease-in-out infinite 0.6s;
 }
 
 @keyframes mf-bob {
-  0%, 100% { transform: rotate(var(--rot, -14deg)) translateY(0); }
-  50%       { transform: rotate(var(--rot, -14deg)) translateY(-10px); }
+  0%, 100% { transform: rotate(var(--rot, -14deg)) translateY(-50%); }
+  50%       { transform: rotate(var(--rot, -14deg)) translateY(calc(-50% - 10px)); }
 }
 .mf-mango { --rot: -14deg; }
 .mf-cilek { --rot: 10deg; }
@@ -1530,9 +1533,9 @@ button {
 /* ── Claims icon row ── */
 .manifesto-claims {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 32px 24px;
-  max-width: 820px;
+  max-width: 900px;
   margin: 0 auto;
 }
 
@@ -1544,10 +1547,12 @@ button {
 }
 
 .mclaim-icon {
-  width: 54px;
-  height: 54px;
-  color: var(--red);
+  width: 58px;
+  height: 58px;
+  color: var(--red-deep);
   flex-shrink: 0;
+  stroke-width: 2.2;
+  filter: drop-shadow(0 1px 3px rgba(173, 34, 24, 0.18));
 }
 
 .mclaim span {
@@ -1556,7 +1561,7 @@ button {
   font-size: 0.68rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--red);
+  color: var(--red-deep);
   text-align: center;
   line-height: 1.6;
 }
@@ -2487,11 +2492,55 @@ button {
 
 .recipes-hdr-left { flex: 1; min-width: 240px; }
 
-.recipes-all-btn {
+.recipes-nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   flex-shrink: 0;
   align-self: flex-end;
   margin-bottom: 4px;
 }
+
+.rc-nav-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  border: 2px solid var(--cream-deep);
+  background: var(--cream);
+  color: var(--dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, transform 0.15s, box-shadow 0.2s;
+  flex-shrink: 0;
+}
+.rc-nav-btn:hover {
+  border-color: var(--red);
+  background: var(--white);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+}
+.rc-nav-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+  transform: none;
+  box-shadow: none;
+}
+
+.rc-see-all {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--dark-navy);
+  text-decoration: none;
+  margin-left: 6px;
+  white-space: nowrap;
+  transition: opacity 0.15s;
+}
+.rc-see-all:hover { opacity: 0.6; }
 
 /* Horizontal scroll container */
 .recipes-scroll {
@@ -2681,14 +2730,11 @@ button {
 
 /* ── Scroll container ── */
 .social-scroll {
-  overflow-x: auto;
-  overflow-y: visible;
-  padding: 10px 28px 32px;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
-  scroll-snap-type: x mandatory;
+  overflow: hidden;
+  padding: 10px 0 32px;
+  -webkit-mask: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
+  mask: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
 }
-.social-scroll::-webkit-scrollbar { display: none; }
 
 .social-track {
   display: flex;
@@ -2696,6 +2742,17 @@ button {
   gap: 12px;
   width: max-content;
   padding-bottom: 12px;
+  animation: marquee-scroll 48s linear infinite;
+}
+
+.social-scroll:hover .social-track,
+.social-scroll:focus-within .social-track {
+  animation-play-state: paused;
+}
+
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
 }
 
 /* ── Base card ── */
@@ -2703,7 +2760,6 @@ button {
   border-radius: 20px;
   overflow: hidden;
   flex-shrink: 0;
-  scroll-snap-align: start;
   cursor: pointer;
   width: 258px;
   height: 370px;
@@ -3085,7 +3141,8 @@ button {
 
   /* Recipes section responsive */
   .recipes-hdr { flex-direction: column; align-items: flex-start; }
-  .recipes-all-btn { align-self: flex-start; }
+  .recipes-nav { align-self: flex-start; }
+  .rc-nav-btn { width: 42px; height: 42px; border-radius: 12px; }
 
   /* Social section responsive */
   .social-banner { padding: 14px 24px; gap: 8px; flex-wrap: wrap; justify-content: center; }
@@ -3129,8 +3186,20 @@ button {
   .rc-visual      { height: 196px; }
 
   /* Social section mobile */
-  .social-scroll { padding: 8px 16px 28px; }
-  .sc-card       { width: 224px; height: 318px; }
+  .social-scroll {
+    padding: 8px 16px 28px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    -webkit-mask: none;
+    mask: none;
+    scrollbar-width: none;
+  }
+  .social-scroll::-webkit-scrollbar { display: none; }
+  .social-scroll .social-track {
+    animation: none;
+    transform: none;
+  }
+  .sc-card { width: 224px; height: 318px; }
   .sg-headline   { font-size: 2.1rem; }
   .sg-emoji      { font-size: 2.4rem; top: 16px; right: 16px; }
 
@@ -3181,9 +3250,8 @@ button {
   /* Manifesto mobile */
   .manifesto-section { padding: 60px 0 72px; }
   .manifesto-text-wrap { margin-bottom: 48px; }
-  .manifesto-claims { grid-template-columns: repeat(3, 1fr); gap: 32px 16px; max-width: 560px; }
-  .mf-mango { width: clamp(80px, 16vw, 120px); left: 16%; top: -10px; }
-  .mf-cilek { width: clamp(70px, 12vw, 100px); right: 4%; top: -6px; }
+  .manifesto-claims { grid-template-columns: repeat(2, 1fr); gap: 28px 16px; max-width: 480px; }
+  .mf-mango, .mf-cilek { display: none; }
 
 
   /* Footer mobile */
@@ -3194,6 +3262,22 @@ button {
   .ff-3, .ff-6 { display: none; }
 
   .form-row { flex-direction: column; }
+}
+
+/* ── iOS Safari: backdrop-filter + sticky = scroll flicker ─────────────
+   Hero içindeki backdrop-filter elemanları sticky katmanını gereksiz
+   yere yeniden composite ettirir. iOS'ta solid fallback kullanılır.   */
+@supports (-webkit-touch-callout: none) {
+  .btn-discover {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: rgba(255, 255, 255, 0.55);
+  }
+  .fc-qty-wrap {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: rgba(255, 255, 255, 0.28);
+  }
 }
 
 @media (max-width: 420px) {
