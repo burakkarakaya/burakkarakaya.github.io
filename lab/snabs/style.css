@@ -1753,314 +1753,164 @@ button {
   box-shadow: 0 40px 72px rgba(0, 0, 0, 0.22);
 }
 
-/* Card gradients */
-.fc-mango     { background: linear-gradient(168deg, #FFE050 0%, #FFAF10 38%, #E07800 100%); }
-.fc-cilek     { background: linear-gradient(168deg, #FF7090 0%, #E8194A 42%, #9A0030 100%); }
-.fc-incir     { background: linear-gradient(168deg, #C888FF 0%, #8235C8 44%, #420080 100%); }
-.fc-mix-card  { background: linear-gradient(168deg, #70F0B8 0%, #2CC480 42%, #0A7840 100%); }
+/* Card pastel backgrounds */
+.fc-mango    { background: #FFFBDE; border: 2px solid #F0D878; }
+.fc-mango    .fc-cta { background: #E8A800; }
+.fc-cilek    { background: #FFF0F2; border: 2px solid #F5C0C8; }
+.fc-cilek    .fc-cta { background: var(--red); }
+.fc-incir    { background: #F4F0FF; border: 2px solid #C8B0E8; }
+.fc-incir    .fc-cta { background: #7030B8; }
+.fc-mix-card { background: #F0FFF6; border: 2px solid #90DDB0; }
+.fc-mix-card .fc-cta { background: #18A060; }
 
-/* Polka dot texture — z-index 0, beneath everything */
-.flavor-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: radial-gradient(circle, rgba(255,255,255,0.13) 1.5px, transparent 1.5px);
-  background-size: 18px 18px;
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* Header text — z-index 4, always on top */
 .fc-header {
-  position: relative;
-  z-index: 4;
   padding: 28px 24px 0;
   text-align: center;
-  color: var(--white);
-}
-.fc-stars {
-  font-size: 0.72rem;
-  letter-spacing: 0.25em;
-  color: rgba(255,255,255,0.92);
-  margin-bottom: 10px;
-  display: block;
-  filter: drop-shadow(0 1px 3px rgba(0,0,0,0.2));
 }
 .fc-name {
   font-family: var(--font-display);
   font-size: clamp(1.9rem, 2.4vw, 2.8rem);
-  color: var(--white);
+  color: var(--dark);
   letter-spacing: 0.04em;
   line-height: 1;
   margin-bottom: 7px;
-  text-shadow: 0 3px 12px rgba(0,0,0,0.18);
 }
 .fc-badge {
   font-size: 0.77rem;
   font-weight: 600;
   letter-spacing: 0.1em;
-  color: rgba(255,255,255,0.85);
+  color: var(--dark-mid);
 }
 
-/* Visual area — z-index 3, image sits on top of burst */
 .fc-visual {
-  position: relative;
-  z-index: 3;
   flex: 1;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
-  padding: 24px 20px 88px;
+  padding: 20px 20px 16px;
 }
 .fc-img {
-  height: clamp(180px, 24vw, 300px);
+  height: clamp(200px, 26vw, 340px);
   width: auto;
   max-width: 100%;
   object-fit: contain;
-  filter: drop-shadow(0 24px 48px rgba(0,0,0,0.32));
+  filter: drop-shadow(0 16px 32px rgba(0,0,0,0.14));
   transition: transform 0.42s cubic-bezier(0.34, 1.4, 0.64, 1);
   will-change: transform;
-  position: relative;
-  z-index: 3;
 }
 .flavor-card:hover .fc-img {
-  transform: translateY(-12px) scale(1.06);
+  transform: translateY(-10px) scale(1.05);
 }
 
-/* ── CARD BURST FRUITS ─────────────────────────────────── */
-/*
-  .fc-burst is the FIRST child inside .flavor-card.
-  z-index: 2 → sits ABOVE the dot-texture (z-index:0)
-             → but BELOW the image (z-index:3) and header (z-index:4)
-  Origin anchored at the vertical center of the image area (~58% down).
-  Fruits start at scale(0.05) behind the image, burst outward and
-  spread across the card — all clipped cleanly by overflow:hidden.
-*/
-.fc-burst {
-  position: absolute;
-  top: 58%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  z-index: 2;
-  pointer-events: none;
-}
-
-/* Each burst fruit starts hidden at origin */
-.cbf {
-  position: absolute;
-  top: 0;
-  left: 0;
-  transform: translate(-50%, -50%) scale(0.05);
-  line-height: 1;
-  opacity: 0;
-  pointer-events: none;
-  user-select: none;
-  will-change: transform, opacity;
-  filter: drop-shadow(0 6px 12px rgba(0,0,0,0.22));
-  transition: opacity 0.4s ease;
-}
-
-/* Varied sizes */
-.cbf-1 { font-size: 2.0rem; }
-.cbf-2 { font-size: 2.8rem; }
-.cbf-3 { font-size: 1.5rem; }
-.cbf-4 { font-size: 2.2rem; }
-.cbf-5 { font-size: 2.6rem; }
-.cbf-6 { font-size: 1.3rem; }
-.cbf-7 { font-size: 1.9rem; }
-.cbf-8 { font-size: 2.4rem; }
-
-/* Trigger burst on card hover */
-.flavor-card:hover .cbf-1 {
-  animation:
-    cbf-burst-1 0.75s cubic-bezier(0.12, 0.88, 0.32, 1.02) 0.04s forwards,
-    cbf-drift-1 4.0s  ease-in-out 0.79s infinite;
-}
-.flavor-card:hover .cbf-2 {
-  animation:
-    cbf-burst-2 0.72s cubic-bezier(0.12, 0.88, 0.32, 1.02) 0.08s forwards,
-    cbf-drift-2 3.6s  ease-in-out 0.80s infinite;
-}
-.flavor-card:hover .cbf-3 {
-  animation:
-    cbf-burst-3 0.78s cubic-bezier(0.12, 0.88, 0.32, 1.02) 0.12s forwards,
-    cbf-drift-3 4.4s  ease-in-out 0.90s infinite;
-}
-.flavor-card:hover .cbf-4 {
-  animation:
-    cbf-burst-4 0.74s cubic-bezier(0.12, 0.88, 0.32, 1.02) 0.06s forwards,
-    cbf-drift-4 4.8s  ease-in-out 0.80s infinite;
-}
-.flavor-card:hover .cbf-5 {
-  animation:
-    cbf-burst-5 0.80s cubic-bezier(0.12, 0.88, 0.32, 1.02) 0.15s forwards,
-    cbf-drift-5 4.2s  ease-in-out 0.95s infinite;
-}
-.flavor-card:hover .cbf-6 {
-  animation:
-    cbf-burst-6 0.70s cubic-bezier(0.12, 0.88, 0.32, 1.02) 0.10s forwards,
-    cbf-drift-6 3.4s  ease-in-out 0.80s infinite;
-}
-.flavor-card:hover .cbf-7 {
-  animation:
-    cbf-burst-7 0.82s cubic-bezier(0.12, 0.88, 0.32, 1.02) 0.03s forwards,
-    cbf-drift-7 4.6s  ease-in-out 0.85s infinite;
-}
-.flavor-card:hover .cbf-8 {
-  animation:
-    cbf-burst-8 0.71s cubic-bezier(0.12, 0.88, 0.32, 1.02) 0.18s forwards,
-    cbf-drift-8 3.8s  ease-in-out 0.89s infinite;
-}
-
-/* ── BURST keyframes (origin → target) ── */
-@keyframes cbf-burst-1 {
-  0%   { transform: translate(-50%,-50%) scale(0.05) rotate(0deg); opacity: 0; }
-  14%  { opacity: 0.95; }
-  100% { transform: translate(calc(-50% - 115px), calc(-50% - 90px)) scale(1) rotate(-38deg); opacity: 0.88; }
-}
-@keyframes cbf-burst-2 {
-  0%   { transform: translate(-50%,-50%) scale(0.05) rotate(0deg); opacity: 0; }
-  14%  { opacity: 0.95; }
-  100% { transform: translate(calc(-50% + 108px), calc(-50% - 80px)) scale(1) rotate(42deg); opacity: 0.88; }
-}
-@keyframes cbf-burst-3 {
-  0%   { transform: translate(-50%,-50%) scale(0.05) rotate(0deg); opacity: 0; }
-  14%  { opacity: 0.95; }
-  100% { transform: translate(calc(-50% - 130px), calc(-50% + 12px)) scale(1) rotate(22deg); opacity: 0.84; }
-}
-@keyframes cbf-burst-4 {
-  0%   { transform: translate(-50%,-50%) scale(0.05) rotate(0deg); opacity: 0; }
-  14%  { opacity: 0.95; }
-  100% { transform: translate(calc(-50% + 122px), calc(-50% + 18px)) scale(1) rotate(-28deg); opacity: 0.84; }
-}
-@keyframes cbf-burst-5 {
-  0%   { transform: translate(-50%,-50%) scale(0.05) rotate(0deg); opacity: 0; }
-  14%  { opacity: 0.95; }
-  100% { transform: translate(calc(-50% - 100px), calc(-50% + 105px)) scale(1) rotate(-55deg); opacity: 0.82; }
-}
-@keyframes cbf-burst-6 {
-  0%   { transform: translate(-50%,-50%) scale(0.05) rotate(0deg); opacity: 0; }
-  14%  { opacity: 0.95; }
-  100% { transform: translate(calc(-50% + 95px), calc(-50% + 98px)) scale(1) rotate(50deg); opacity: 0.82; }
-}
-@keyframes cbf-burst-7 {
-  0%   { transform: translate(-50%,-50%) scale(0.05) rotate(0deg); opacity: 0; }
-  14%  { opacity: 0.95; }
-  100% { transform: translate(calc(-50% - 40px), calc(-50% - 130px)) scale(1) rotate(14deg); opacity: 0.90; }
-}
-@keyframes cbf-burst-8 {
-  0%   { transform: translate(-50%,-50%) scale(0.05) rotate(0deg); opacity: 0; }
-  14%  { opacity: 0.95; }
-  100% { transform: translate(calc(-50% + 52px), calc(-50% - 118px)) scale(1) rotate(-20deg); opacity: 0.90; }
-}
-
-/* ── DRIFT keyframes (gentle float at target position) ── */
-@keyframes cbf-drift-1 {
-  0%,100% { transform: translate(calc(-50% - 115px), calc(-50% - 90px))  scale(1.00) rotate(-38deg); opacity: 0.88; }
-  50%     { transform: translate(calc(-50% - 120px), calc(-50% - 100px)) scale(0.96) rotate(-35deg); opacity: 0.82; }
-}
-@keyframes cbf-drift-2 {
-  0%,100% { transform: translate(calc(-50% + 108px), calc(-50% - 80px))  scale(1.00) rotate(42deg);  opacity: 0.88; }
-  50%     { transform: translate(calc(-50% + 113px), calc(-50% - 92px))  scale(0.95) rotate(39deg);  opacity: 0.82; }
-}
-@keyframes cbf-drift-3 {
-  0%,100% { transform: translate(calc(-50% - 130px), calc(-50% + 12px))  scale(1.00) rotate(22deg);  opacity: 0.84; }
-  50%     { transform: translate(calc(-50% - 135px), calc(-50% + 4px))   scale(0.97) rotate(25deg);  opacity: 0.78; }
-}
-@keyframes cbf-drift-4 {
-  0%,100% { transform: translate(calc(-50% + 122px), calc(-50% + 18px))  scale(1.00) rotate(-28deg); opacity: 0.84; }
-  50%     { transform: translate(calc(-50% + 127px), calc(-50% + 8px))   scale(0.97) rotate(-25deg); opacity: 0.78; }
-}
-@keyframes cbf-drift-5 {
-  0%,100% { transform: translate(calc(-50% - 100px), calc(-50% + 105px)) scale(1.00) rotate(-55deg); opacity: 0.82; }
-  50%     { transform: translate(calc(-50% - 105px), calc(-50% + 94px))  scale(0.96) rotate(-52deg); opacity: 0.76; }
-}
-@keyframes cbf-drift-6 {
-  0%,100% { transform: translate(calc(-50% + 95px),  calc(-50% + 98px))  scale(1.00) rotate(50deg);  opacity: 0.82; }
-  50%     { transform: translate(calc(-50% + 100px), calc(-50% + 87px))  scale(0.97) rotate(53deg);  opacity: 0.76; }
-}
-@keyframes cbf-drift-7 {
-  0%,100% { transform: translate(calc(-50% - 40px),  calc(-50% - 130px)) scale(1.00) rotate(14deg);  opacity: 0.90; }
-  50%     { transform: translate(calc(-50% - 44px),  calc(-50% - 141px)) scale(0.97) rotate(11deg);  opacity: 0.84; }
-}
-@keyframes cbf-drift-8 {
-  0%,100% { transform: translate(calc(-50% + 52px),  calc(-50% - 118px)) scale(1.00) rotate(-20deg); opacity: 0.90; }
-  50%     { transform: translate(calc(-50% + 57px),  calc(-50% - 130px)) scale(0.97) rotate(-17deg); opacity: 0.84; }
-}
-
-/* CTA — slides up on hover */
+/* CTA — always visible; default shows name+price, hover reveals qty+add */
 .fc-cta {
+  position: relative;
+  overflow: hidden;
+  min-height: 54px;
+}
+
+.fc-cta-default {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 14px 16px;
+  transition: opacity 0.2s ease, transform 0.25s ease;
+}
+.flavor-card:hover .fc-cta-default,
+.flavor-card.is-active .fc-cta-default {
+  opacity: 0;
+  transform: translateY(-110%);
+  pointer-events: none;
+}
+
+.fc-cta-label {
+  font-family: var(--font-body);
+  font-size: 0.83rem;
+  font-weight: 700;
+  color: var(--white);
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fc-cta-price {
+  background: var(--white);
+  color: var(--dark);
+  border-radius: var(--r-full);
+  padding: 6px 14px;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.fc-cta-hover {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 5;
-  padding: 14px 14px 18px;
+  inset: 0;
   display: flex;
   align-items: center;
   gap: 8px;
-  background: linear-gradient(to top, rgba(0,0,0,0.22) 0%, transparent 100%);
+  padding: 10px 14px;
+  opacity: 0;
   transform: translateY(110%);
-  transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity 0.22s ease, transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
 }
-.flavor-card:hover .fc-cta {
+.flavor-card:hover .fc-cta-hover,
+.flavor-card.is-active .fc-cta-hover {
+  opacity: 1;
   transform: translateY(0);
+  pointer-events: auto;
 }
 
-.fc-qty-wrap {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 10px 15px;
-  background: rgba(255,255,255,0.22);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+.fc-qty-select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding: 9px 28px 9px 14px;
+  background: rgba(255,255,255,0.22) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='white' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 10px center;
   border-radius: var(--r-full);
-  border: 1.5px solid rgba(255,255,255,0.35);
+  border: 1.5px solid rgba(255,255,255,0.4);
   color: var(--white);
   font-family: var(--font-body);
   font-size: 0.8rem;
   font-weight: 700;
   flex-shrink: 0;
   cursor: pointer;
-  transition: background 0.2s, border-color 0.2s;
+  transition: background-color 0.2s;
+  min-width: 82px;
 }
-.fc-qty-wrap:hover {
-  background: rgba(255,255,255,0.35);
-  border-color: rgba(255,255,255,0.55);
+.fc-qty-select option {
+  background: var(--dark);
+  color: var(--white);
+}
+.fc-qty-select:hover {
+  background-color: rgba(255,255,255,0.34);
+}
+.fc-qty-select:focus {
+  outline: none;
+  border-color: rgba(255,255,255,0.7);
 }
 
 .fc-add-btn {
   flex: 1;
-  padding: 10px 14px;
+  padding: 9px 14px;
   background: var(--white);
   color: var(--dark);
   border-radius: var(--r-full);
   font-family: var(--font-body);
   font-size: 0.82rem;
   font-weight: 800;
-  letter-spacing: 0.01em;
   border: none;
   cursor: pointer;
   white-space: nowrap;
-  transition: transform 0.15s, box-shadow 0.2s, background 0.15s;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+  transition: transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.14);
 }
 .fc-add-btn:hover {
   transform: translateY(-1px);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.22);
-  background: var(--cream);
-}
-
-/* Floating animation for fruit accents */
-@keyframes float-a {
-  0%, 100% { transform: translateY(0) rotate(-8deg); }
-  50%       { transform: translateY(-14px) rotate(-5deg); }
-}
-@keyframes float-b {
-  0%, 100% { transform: translateY(0) rotate(7deg); }
-  50%       { transform: translateY(-10px) rotate(4deg); }
+  box-shadow: 0 6px 16px rgba(0,0,0,0.2);
 }
 
 /* ── STORY SECTION ───────────────────────────────────────── */
@@ -3134,10 +2984,9 @@ button {
   /* Flavor cards: 2 columns on tablet */
   .flavor-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
   .flavor-card { min-height: 420px; }
-
-  /* Tüm kartlar: adet üstte, sepete ekle altta */
-  .fc-cta { flex-direction: column; align-items: stretch; }
-  .fc-qty-wrap { justify-content: center; }
+  .flavor-card:hover { transform: translateY(-6px) scale(1.01); }
+  .fc-cta-default { padding: 12px 14px; }
+  .fc-cta-hover   { padding: 8px 12px; }
 
   /* Recipes section responsive */
   .recipes-hdr { flex-direction: column; align-items: flex-start; }
@@ -3170,15 +3019,20 @@ button {
 
   /* Flavor cards: 2 columns, shorter on mobile */
   .flavor-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 0 16px; }
-  .flavor-card { min-height: 340px; border-radius: 20px; }
-  .fc-header { padding: 20px 16px 0; }
-  .fc-name { font-size: 1.5rem; }
-  .fc-img { height: clamp(120px, 30vw, 180px); }
+  .flavor-card { min-height: 300px; border-radius: 20px; }
+  .flavor-card:hover { transform: translateY(-3px) scale(1.005); box-shadow: 0 16px 40px rgba(0,0,0,0.16); }
+  .fc-header { padding: 16px 14px 0; }
+  .fc-name { font-size: 1.4rem; }
+  .fc-img { height: clamp(110px, 28vw, 160px); }
   .fc-emoji { font-size: clamp(3.5rem, 14vw, 5.5rem); }
   .fc-emoji-multi { font-size: clamp(2rem, 9vw, 3.5rem); }
-  .fc-cta { padding: 10px 10px 14px; gap: 6px; }
-  .fc-qty-wrap { padding: 8px 11px; font-size: 0.72rem; }
-  .fc-add-btn { font-size: 0.72rem; padding: 8px 10px; }
+  .fc-cta { min-height: 46px; }
+  .fc-cta-default { padding: 10px 12px; }
+  .fc-cta-hover   { padding: 7px 10px; gap: 6px; }
+  .fc-cta-label   { font-size: 0.72rem; }
+  .fc-cta-price   { font-size: 0.72rem; padding: 4px 10px; }
+  .fc-qty-select  { padding: 7px 24px 7px 10px; font-size: 0.7rem; min-width: 72px; }
+  .fc-add-btn     { font-size: 0.7rem; padding: 7px 10px; }
 
   /* Recipes section mobile */
   .recipes-scroll { padding: 8px 16px 28px; }
@@ -3273,11 +3127,6 @@ button {
     -webkit-backdrop-filter: none;
     background: rgba(255, 255, 255, 0.55);
   }
-  .fc-qty-wrap {
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-    background: rgba(255, 255, 255, 0.28);
-  }
 }
 
 @media (max-width: 420px) {
@@ -3287,4 +3136,12 @@ button {
   .bgw-1, .bgw-2, .bgw-3 { display: none; }
   .slide-layout { padding-top: 100px; }
   .slide-bottom { padding-bottom: 32px; }
+}
+
+/* Touch devices: disable hover CTA trigger, use .is-active instead */
+@media (hover: none) {
+  .flavor-card:hover { transform: none; box-shadow: none; }
+  .flavor-card:hover .fc-cta-default { opacity: 1; transform: none; pointer-events: auto; }
+  .flavor-card:hover .fc-cta-hover   { opacity: 0; transform: translateY(110%); pointer-events: none; }
+  .flavor-card.is-active { transform: none; box-shadow: 0 8px 28px rgba(0,0,0,0.14); }
 }
