@@ -1196,87 +1196,50 @@
         </div>
       </section>
 
+      <!-- ░░ NEWSLETTER ░░ -->
+      <section class="newsletter-section">
+        <div class="container">
+          <div class="newsletter-inner">
+            <div class="newsletter-copy">
+              <p class="overline">Haberdar Ol</p>
+              <h3>Gerçek lezzet.<br />Gerçek haberler.</h3>
+              <p>
+                Yeni ürünler, sahne arkası ve zaman zaman tarifler. Spam yok.
+                Hiç.
+              </p>
+            </div>
+            <form class="newsletter-form" onsubmit="return false;">
+              <div class="form-row">
+                <input
+                  type="email"
+                  placeholder="e-posta@adresin.com"
+                  aria-label="E-posta adresi"
+                  class="email-input"
+                />
+                <button type="submit" class="btn btn-primary">Abone Ol</button>
+              </div>
+              <p class="form-note">
+                Abone olarak e-posta pazarlaması almayı kabul etmiş olursunuz.
+                İstediğiniz zaman aboneliğinizi iptal edebilirsiniz.
+              </p>
+            </form>
+          </div>
+        </div>
+      </section>
     </main>
 
     <!-- ░░ FOOTER ░░ -->
     <footer class="site-footer">
-
-      <div class="ft-divider" aria-hidden="true"></div>
-
-      <!-- Newsletter + 2-column nav row -->
-      <div class="ft-links-row">
-        <div class="ft-links-inner">
-
-          <!-- Newsletter box -->
-          <div class="ft-newsletter-box">
-            <p class="ft-nl-overline">Haberdar Ol</p>
-            <h3 class="ft-nl-title">Spam Yok,<br />Sadece Snack.</h3>
-            <p class="ft-nl-desc">Yeni ürünler, sahne arkası ve zaman zaman tarifler.</p>
-            <form class="ft-nl-form" id="ft-nl-form" onsubmit="return false;">
-              <label class="ft-nl-label" for="ft-email">E-POSTA ADRESİ</label>
-              <input id="ft-email" type="email" placeholder="e-posta@adresin.com" class="ft-nl-input" aria-label="E-posta adresi" required />
-              <div class="ft-nl-check-wrap">
-                <input type="checkbox" id="ft-consent" class="ft-nl-checkbox" />
-                <label for="ft-consent" class="ft-nl-check-label">
-                  <a href="#" class="ft-nl-check-link">E-Bülten Üyelik Sözleşmesi</a>'ni okudum ve onaylıyorum.
-                </label>
-              </div>
-              <button type="submit" class="btn btn-primary ft-nl-btn" id="ft-nl-submit" disabled aria-disabled="true">Abone Ol</button>
-            </form>
-          </div>
-
-          <!-- 2-column nav -->
-          <nav class="ft-nav-cols" aria-label="Footer navigasyon">
-
-            <div class="ft-nav-group is-open">
-              <button class="ft-group-toggle" aria-expanded="true" aria-controls="fnav-help">
-                <span class="ft-group-icon" aria-hidden="true">🌍</span>
-                <span>YARDIM</span>
-                <svg class="ft-chevron" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false"><polyline points="4 6 8 10 12 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </button>
-              <ul id="fnav-help" class="ft-group-list">
-                <li><a href="#">SSS</a></li>
-                <li><a href="#">Sipariş Takibi</a></li>
-                <li><a href="#">Kargo &amp; Teslimat</a></li>
-                <li><a href="#">İade &amp; Değişim</a></li>
-                <li><a href="#social">İletişim</a></li>
-              </ul>
-            </div>
-
-            <div class="ft-nav-group">
-              <button class="ft-group-toggle" aria-expanded="true" aria-controls="fnav-legal">
-                <span class="ft-group-icon" aria-hidden="true">🌍</span>
-                <span>SÖZLEŞMELER</span>
-                <svg class="ft-chevron" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false"><polyline points="4 6 8 10 12 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </button>
-              <ul id="fnav-legal" class="ft-group-list">
-                <li><a href="#">Üyelik Sözleşmesi</a></li>
-                <li><a href="#">Ön Bilgilendirme Formu</a></li>
-                <li><a href="#">Mesafeli Satış Sözleşmesi</a></li>
-                <li><a href="#">Çerez Politikası</a></li>
-                <li><a href="#">İade ve Değişim Politikası</a></li>
-                <li><a href="#">Gizlilik ve KVKK Politikası</a></li>
-                <li><a href="#">ETK</a></li>
-                <li><a href="#">E-Bülten Üyelik Sözleşmesi</a></li>
-              </ul>
-            </div>
-
-          </nav>
-        </div>
-      </div>
-
-            <!-- Top strip: main nav + copyright (original style) -->
+      <!-- Top strip: nav + copyright -->
       <div class="ft-top">
-        <div class="ft-top-inner">
-          <nav class="ft-nav" aria-label="Footer navigasyon">
-            <a href="#">Ana Sayfa</a>
-            <a href="#products">Ürünler</a>
-            <a href="#recipes">Tarifler</a>
-            <a href="#story">Hikayemiz</a>
-            <a href="#social">İletişim</a>
-          </nav>
-          <p class="ft-legal-top">© 2026 Snab's · Türkiye'de üretildi.</p>
-        </div>
+        <nav class="ft-nav" aria-label="Footer navigasyon">
+          <a href="#">Ana Sayfa</a>
+          <a href="#products">Ürünler</a>
+          <a href="#recipes">Tarifler</a>
+          <a href="#story">Hikayemiz</a>
+          <a href="#social">İletişim</a>
+        </nav>
+        <p class="ft-legal">© 2026 Snab's · Türkiye'de üretildi.</p>
       </div>
 
       <div class="ft-divider" aria-hidden="true"></div>
@@ -1346,6 +1309,358 @@
       </div>
     </footer>
 
-    <script src="assets/js/main.js" defer></script>
+    <script>
+      /* ── Header: scroll effect + menu/cart toggle ── */
+      (function () {
+        var header = document.getElementById("site-header");
+        var menuBtn = document.getElementById("menuToggle");
+        var navOverlay = document.getElementById("navOverlay");
+        var navClose = document.getElementById("navClose");
+        var cartBtn = document.getElementById("cartToggle");
+        var cartPanel = document.getElementById("cartPanel");
+        var cartClose = document.getElementById("cartClose");
+        var backdrop = document.getElementById("overlayBackdrop");
+
+        /* Scroll: hide on down, show on up */
+        var lastScrollY = 0;
+        var scrollThreshold = 120;
+
+        window.addEventListener(
+          "scroll",
+          function () {
+            var currentScrollY = window.scrollY;
+
+            if (
+              navOverlay.classList.contains("is-open") ||
+              cartPanel.classList.contains("is-open")
+            ) {
+              header.classList.remove("hdr-hidden");
+              lastScrollY = currentScrollY;
+              return;
+            }
+
+            if (currentScrollY <= scrollThreshold) {
+              header.classList.remove("hdr-hidden");
+            } else if (currentScrollY > lastScrollY + 4) {
+              header.classList.add("hdr-hidden");
+            } else if (currentScrollY < lastScrollY - 4) {
+              header.classList.remove("hdr-hidden");
+            }
+
+            lastScrollY = currentScrollY;
+          },
+          { passive: true },
+        );
+
+        function lockScroll() {
+          document.body.style.overflow = "hidden";
+        }
+        function unlockScroll() {
+          if (
+            !navOverlay.classList.contains("is-open") &&
+            !cartPanel.classList.contains("is-open")
+          ) {
+            document.body.style.overflow = "";
+          }
+        }
+
+        function openMenu() {
+          navOverlay.classList.add("is-open");
+          navOverlay.setAttribute("aria-hidden", "false");
+          menuBtn.classList.add("is-open");
+          menuBtn.setAttribute("aria-expanded", "true");
+          backdrop.classList.add("is-visible");
+          lockScroll();
+        }
+        function closeMenu() {
+          navOverlay.classList.remove("is-open");
+          navOverlay.setAttribute("aria-hidden", "true");
+          menuBtn.classList.remove("is-open");
+          menuBtn.setAttribute("aria-expanded", "false");
+          if (!cartPanel.classList.contains("is-open")) {
+            backdrop.classList.remove("is-visible");
+          }
+          unlockScroll();
+        }
+
+        function openCart() {
+          cartPanel.classList.add("is-open");
+          cartPanel.setAttribute("aria-hidden", "false");
+          cartBtn.classList.add("is-open");
+          cartBtn.setAttribute("aria-expanded", "true");
+          backdrop.classList.add("is-visible");
+          lockScroll();
+        }
+        function closeCart() {
+          cartPanel.classList.remove("is-open");
+          cartPanel.setAttribute("aria-hidden", "true");
+          cartBtn.classList.remove("is-open");
+          cartBtn.setAttribute("aria-expanded", "false");
+          if (!navOverlay.classList.contains("is-open")) {
+            backdrop.classList.remove("is-visible");
+          }
+          unlockScroll();
+        }
+
+        menuBtn.addEventListener("click", function () {
+          if (navOverlay.classList.contains("is-open")) {
+            closeMenu();
+          } else {
+            closeCart();
+            openMenu();
+          }
+        });
+        navClose.addEventListener("click", closeMenu);
+
+        cartBtn.addEventListener("click", function () {
+          if (cartPanel.classList.contains("is-open")) {
+            closeCart();
+          } else {
+            closeMenu();
+            openCart();
+          }
+        });
+        cartClose.addEventListener("click", closeCart);
+
+        backdrop.addEventListener("click", function () {
+          closeMenu();
+          closeCart();
+        });
+
+        document.addEventListener("keydown", function (e) {
+          if (e.key === "Escape") {
+            closeMenu();
+            closeCart();
+          }
+        });
+
+        /* Close nav on any link or shop button click */
+        document.querySelectorAll(".nav-link").forEach(function (el) {
+          el.addEventListener("click", closeMenu);
+        });
+      })();
+
+      /* ── Hero slider ── */
+      (function () {
+        var hero = document.querySelector(".hero");
+        if (!hero) return;
+        var slides = Array.from(hero.querySelectorAll(".slide"));
+        var dots = Array.from(hero.querySelectorAll(".sdot"));
+        var prev = hero.querySelector(".nav-prev");
+        var next = hero.querySelector(".nav-next");
+        var cur = 0;
+        var timer;
+
+        function triggerBurst(slide) {
+          var fruits = slide.querySelectorAll(".bf");
+          fruits.forEach(function (bf) {
+            bf.style.animationName = "none";
+          });
+          /* Force reflow so animation restarts cleanly */
+          slide.offsetHeight; // eslint-disable-line no-unused-expressions
+          fruits.forEach(function (bf) {
+            bf.style.animationName = "";
+          });
+        }
+
+        function goTo(n) {
+          slides[cur].classList.remove("is-active");
+          dots[cur].classList.remove("is-active");
+          dots[cur].setAttribute("aria-selected", "false");
+
+          cur = ((n % slides.length) + slides.length) % slides.length;
+
+          slides[cur].classList.add("is-active");
+          dots[cur].classList.add("is-active");
+          dots[cur].setAttribute("aria-selected", "true");
+
+          /* Strawberry slide (index 1) has dark bg — use light nav elements */
+          hero.classList.toggle("hero-dark", cur === 1);
+
+          triggerBurst(slides[cur]);
+        }
+
+        function resetTimer() {
+          clearInterval(timer);
+          timer = setInterval(function () {
+            goTo(cur + 1);
+          }, 5000);
+        }
+
+        prev.addEventListener("click", function () {
+          goTo(cur - 1);
+          resetTimer();
+        });
+        next.addEventListener("click", function () {
+          goTo(cur + 1);
+          resetTimer();
+        });
+        dots.forEach(function (d, i) {
+          d.addEventListener("click", function () {
+            goTo(i);
+            resetTimer();
+          });
+        });
+
+        /* Keyboard navigation */
+        hero.addEventListener("keydown", function (e) {
+          if (e.key === "ArrowLeft") {
+            goTo(cur - 1);
+            resetTimer();
+          }
+          if (e.key === "ArrowRight") {
+            goTo(cur + 1);
+            resetTimer();
+          }
+        });
+
+        /* Touch / swipe */
+        var touchX = 0;
+        hero.addEventListener(
+          "touchstart",
+          function (e) {
+            touchX = e.touches[0].clientX;
+          },
+          { passive: true },
+        );
+        hero.addEventListener(
+          "touchend",
+          function (e) {
+            var dx = touchX - e.changedTouches[0].clientX;
+            if (Math.abs(dx) > 48) {
+              goTo(cur + (dx > 0 ? 1 : -1));
+              resetTimer();
+            }
+          },
+          { passive: true },
+        );
+
+        /* Trigger burst on the initial slide (mango) */
+        triggerBurst(slides[0]);
+
+        resetTimer();
+      })();
+
+      /* ── Recipes prev/next navigation ── */
+      (function () {
+        var scroll = document.querySelector('.recipes-scroll');
+        var prev   = document.getElementById('rcPrev');
+        var next   = document.getElementById('rcNext');
+        if (!scroll || !prev || !next) return;
+
+        function getStep() {
+          var card = scroll.querySelector('.recipe-card');
+          return card ? card.offsetWidth + 16 : 280;
+        }
+
+        function updateBtns() {
+          prev.disabled = scroll.scrollLeft <= 4;
+          next.disabled = scroll.scrollLeft >= scroll.scrollWidth - scroll.clientWidth - 4;
+        }
+
+        prev.addEventListener('click', function () {
+          scroll.scrollBy({ left: -getStep() * 2, behavior: 'smooth' });
+        });
+        next.addEventListener('click', function () {
+          scroll.scrollBy({ left: getStep() * 2, behavior: 'smooth' });
+        });
+
+        scroll.addEventListener('scroll', updateBtns, { passive: true });
+        updateBtns();
+      })();
+
+      /* ── Social marquee — items klonlanarak seamless loop ── */
+      (function () {
+        var track = document.querySelector('.social-track');
+        if (!track) return;
+        Array.from(track.children).forEach(function (item) {
+          var clone = item.cloneNode(true);
+          clone.setAttribute('aria-hidden', 'true');
+          track.appendChild(clone);
+        });
+      })();
+
+      /* ── Footer fruit animation ── */
+      (function () {
+        var footer = document.querySelector(".site-footer");
+        if (!footer) return;
+
+        var fruits = Array.prototype.slice.call(
+          footer.querySelectorAll(".ft-fruit"),
+        );
+        var activated = false;
+
+        /* Randomise horizontal launch position and x-drift for one fruit.
+           Called once before first launch, then on every animationiteration
+           so each toss lands/launches from a different spot. */
+        function randomiseFruit(el) {
+          var left = (5 + Math.random() * 82).toFixed(1); /* 5 – 87 % */
+          var drift = (Math.random() * 9 - 4.5).toFixed(
+            2,
+          ); /* –4.5 to +4.5 vw */
+          el.style.left = left + "%";
+          el.style.setProperty("--ft-drift", drift + "vw");
+        }
+
+        function initFruits() {
+          fruits.forEach(function (el) {
+            randomiseFruit(el);
+            el.addEventListener("animationiteration", function () {
+              randomiseFruit(el);
+            });
+          });
+        }
+
+        var io = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                if (!activated) {
+                  footer.classList.add("ft-active");
+                  initFruits();
+                  activated = true;
+                }
+                footer.classList.add("ft-visible");
+              } else {
+                footer.classList.remove("ft-visible");
+              }
+            });
+          },
+          { threshold: 0.08 },
+        );
+
+        io.observe(footer);
+      })();
+
+      /* ── Flavor card: mobile touch toggle ── */
+      (function () {
+        var isTouchDevice = window.matchMedia('(hover: none)').matches;
+        if (!isTouchDevice) return;
+
+        var cards = Array.from(document.querySelectorAll('.flavor-card'));
+
+        cards.forEach(function (card) {
+          card.addEventListener('click', function (e) {
+            var isOpen = card.classList.contains('is-active');
+
+            /* Tapping the add button or select while card is active — let it through */
+            if (isOpen && (e.target.closest('.fc-add-btn') || e.target.closest('.fc-qty-select'))) return;
+
+            /* Close all cards first */
+            cards.forEach(function (c) { c.classList.remove('is-active'); });
+
+            if (!isOpen) {
+              card.classList.add('is-active');
+              e.stopPropagation();
+            }
+          });
+        });
+
+        /* Tap outside closes all */
+        document.addEventListener('click', function () {
+          cards.forEach(function (c) { c.classList.remove('is-active'); });
+        });
+      })();
+    </script>
   </body>
 </html>
