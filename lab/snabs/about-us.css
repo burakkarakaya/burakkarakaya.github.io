@@ -1,0 +1,552 @@
+/* ============================================================
+   SNAB'S — About Us Page
+   ============================================================ */
+
+/* ── HERO ────────────────────────────────────────────────── */
+.au-hero {
+  background: var(--cream-warm);
+  padding: 96px 0 56px;
+  border-bottom: 2px solid var(--border);
+  overflow: hidden;
+  position: relative;
+}
+.au-hero-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.au-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.au-breadcrumb a {
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.au-breadcrumb a:hover { color: var(--red); }
+.au-breadcrumb span[aria-current] {
+  color: var(--dark);
+  font-weight: 700;
+}
+.au-hero-title {
+  font-family: var(--font-editorial);
+  font-weight: 900;
+  font-size: clamp(2rem, 4.5vw, 3.2rem);
+  line-height: 1.05;
+  color: var(--dark);
+}
+.au-hero-title em {
+  font-family: var(--font-editorial);
+  font-style: italic;
+  color: var(--red);
+}
+.au-hero-desc {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 560px;
+}
+
+/* ── STORY SECTION ──────────────────────────────────────── */
+.au-story {
+  padding: 80px 0;
+  background: var(--cream);
+}
+.au-story-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: center;
+}
+.au-story-visual {
+  position: relative;
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  aspect-ratio: 4/3;
+  background: var(--cream-warm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.au-story-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--r-xl);
+  border: 2px solid var(--border);
+}
+.au-story-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.au-story-content .overline {
+  margin-bottom: 0;
+}
+.au-story-heading {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  line-height: 1.1;
+  color: var(--dark);
+}
+.au-story-heading em {
+  font-family: var(--font-editorial);
+  font-style: italic;
+  color: var(--red);
+}
+.au-story-text {
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  color: var(--dark-mid);
+  line-height: 1.8;
+}
+.au-story-highlight {
+  background: var(--red-light);
+  border-left: 4px solid var(--red);
+  border-radius: 0 var(--r-sm) var(--r-sm) 0;
+  padding: 20px 24px;
+  margin-top: 4px;
+}
+.au-story-highlight p {
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--red-deep);
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* ── STATS BANNER ───────────────────────────────────────── */
+.au-stats {
+  background: var(--red);
+  padding: 48px 0;
+  overflow: hidden;
+}
+.au-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  text-align: center;
+}
+.au-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.au-stat-number {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  color: var(--white);
+  line-height: 1;
+}
+.au-stat-label {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+  letter-spacing: 0.04em;
+}
+
+/* ── MISSION & VISION ───────────────────────────────────── */
+.au-mv {
+  padding: 80px 0;
+  background: var(--cream);
+}
+.au-mv-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+.au-mv-card {
+  background: var(--white);
+  border: 2px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 40px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.au-mv-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(26, 8, 2, 0.08);
+}
+.au-mv-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--r-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.au-mv-card--mission .au-mv-icon {
+  background: var(--red-light);
+  color: var(--red);
+}
+.au-mv-card--vision .au-mv-icon {
+  background: var(--mango-light);
+  color: var(--mango-deep);
+}
+.au-mv-label {
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.au-mv-card--mission .au-mv-label { color: var(--red); }
+.au-mv-card--vision .au-mv-label { color: var(--mango-deep); }
+
+.au-mv-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+  line-height: 1.15;
+  color: var(--dark);
+}
+.au-mv-title em {
+  font-family: var(--font-editorial);
+  font-style: italic;
+  color: var(--red);
+}
+.au-mv-text {
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  color: var(--dark-mid);
+  line-height: 1.8;
+}
+
+/* ── FOUNDERS ───────────────────────────────────────────── */
+.au-founders {
+  padding: 80px 0;
+  background: var(--cream-warm);
+  border-top: 2px solid var(--border);
+  border-bottom: 2px solid var(--border);
+}
+.au-founders-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+.au-founders-header .overline {
+  margin-bottom: 12px;
+}
+.au-founders-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  line-height: 1.1;
+  color: var(--dark);
+  margin-bottom: 12px;
+}
+.au-founders-title em {
+  font-family: var(--font-editorial);
+  font-style: italic;
+  color: var(--red);
+}
+.au-founders-subtitle {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--muted);
+  line-height: 1.6;
+  max-width: 520px;
+  margin: 0 auto;
+}
+.au-founders-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 24px;
+}
+.au-founder-card {
+  background: var(--white);
+  border: 2px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 28px 20px 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.au-founder-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 48px rgba(26, 8, 2, 0.1);
+}
+.au-founder-avatar {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  border: 3px solid var(--border);
+  flex-shrink: 0;
+}
+.au-founder-avatar--1 { background: var(--red-light); }
+.au-founder-avatar--2 { background: var(--mango-light); }
+.au-founder-avatar--3 { background: var(--strawberry-light); }
+.au-founder-avatar--4 { background: var(--fig-light); }
+.au-founder-avatar--5 { background: var(--mix-light); }
+
+.au-founder-name {
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: var(--dark);
+}
+.au-founder-role {
+  font-family: var(--font-body);
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--red);
+  letter-spacing: 0.06em;
+}
+.au-founder-desc {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* ── VALUES ─────────────────────────────────────────────── */
+.au-values {
+  padding: 80px 0;
+  background: var(--cream);
+}
+.au-values-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+.au-values-header .overline {
+  margin-bottom: 12px;
+}
+.au-values-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  line-height: 1.1;
+  color: var(--dark);
+}
+.au-values-title em {
+  font-family: var(--font-editorial);
+  font-style: italic;
+  color: var(--red);
+}
+.au-values-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.au-value-card {
+  background: var(--white);
+  border: 2px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 32px 28px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.au-value-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 36px rgba(26, 8, 2, 0.08);
+}
+.au-value-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--r-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.au-value-icon svg {
+  width: 28px;
+  height: 28px;
+}
+.au-value-card:nth-child(1) .au-value-icon { background: var(--red-light); color: var(--red); }
+.au-value-card:nth-child(2) .au-value-icon { background: var(--mango-light); color: var(--mango-deep); }
+.au-value-card:nth-child(3) .au-value-icon { background: var(--strawberry-light); color: var(--strawberry); }
+.au-value-card:nth-child(4) .au-value-icon { background: var(--fig-light); color: var(--fig); }
+.au-value-card:nth-child(5) .au-value-icon { background: var(--mix-light); color: var(--mix-deep); }
+.au-value-card:nth-child(6) .au-value-icon { background: var(--cream-warm); color: var(--dark-mid); }
+
+.au-value-name {
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: var(--dark);
+}
+.au-value-desc {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+/* ── CTA BANNER ─────────────────────────────────────────── */
+.au-cta {
+  padding: 64px 0;
+  background: var(--dark);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.au-cta-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  position: relative;
+  z-index: 1;
+}
+.au-cta-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  line-height: 1.1;
+  color: var(--white);
+}
+.au-cta-title em {
+  font-family: var(--font-editorial);
+  font-style: italic;
+  color: var(--mango);
+}
+.au-cta-desc {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.6;
+  max-width: 460px;
+}
+.au-cta-buttons {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 4px;
+}
+.au-cta-fruit {
+  position: absolute;
+  font-size: 3rem;
+  opacity: 0.15;
+  user-select: none;
+  pointer-events: none;
+}
+.au-cta-fruit:nth-child(1) { top: 15%; left: 5%; transform: rotate(-20deg); }
+.au-cta-fruit:nth-child(2) { top: 20%; right: 8%; transform: rotate(15deg); }
+.au-cta-fruit:nth-child(3) { bottom: 15%; left: 12%; transform: rotate(10deg); }
+.au-cta-fruit:nth-child(4) { bottom: 20%; right: 5%; transform: rotate(-25deg); }
+
+/* ── RESPONSIVE ─────────────────────────────────────────── */
+
+@media (max-width: 1024px) {
+  .au-story-grid {
+    gap: 40px;
+  }
+  .au-founders-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .au-values-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .au-mv-grid {
+    gap: 24px;
+  }
+  .au-mv-card {
+    padding: 32px 28px;
+  }
+}
+
+@media (max-width: 768px) {
+  .au-hero {
+    padding: 84px 0 40px;
+  }
+  .au-story {
+    padding: 56px 0;
+  }
+  .au-story-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .au-story-visual {
+    order: -1;
+  }
+  .au-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+  .au-mv {
+    padding: 56px 0;
+  }
+  .au-mv-grid {
+    grid-template-columns: 1fr;
+  }
+  .au-founders {
+    padding: 56px 0;
+  }
+  .au-founders-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .au-founder-card:last-child {
+    grid-column: 1 / -1;
+    max-width: 280px;
+    margin: 0 auto;
+  }
+  .au-values {
+    padding: 56px 0;
+  }
+  .au-values-grid {
+    grid-template-columns: 1fr;
+  }
+  .au-cta {
+    padding: 48px 0;
+  }
+}
+
+@media (max-width: 500px) {
+  .au-hero-title {
+    font-size: 1.8rem;
+  }
+  .au-story-heading {
+    font-size: 1.6rem;
+  }
+  .au-stats-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .au-stat-number {
+    font-size: 2rem;
+  }
+  .au-founders-grid {
+    grid-template-columns: 1fr;
+  }
+  .au-founder-card:last-child {
+    max-width: 100%;
+  }
+  .au-founder-avatar {
+    width: 72px;
+    height: 72px;
+    font-size: 1.8rem;
+  }
+  .au-cta-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .au-cta-buttons .btn {
+    justify-content: center;
+  }
+}

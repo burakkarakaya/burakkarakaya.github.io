@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tarifler — Snab's</title>
+    <title>Mesafeli Satış Sözleşmesi — Snab's</title>
     <meta
       name="description"
-      content="Snab's dondurularak kurutulmuş meyvelerle yapılan smoothie kaseler, parfeler, tatlılar ve daha fazlası için tarifler."
+      content="Snab's mesafeli satış sözleşmesi. Tüm yasal bilgilendirme ve kullanım koşulları."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -15,7 +15,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="recipes.css" />
+    <link rel="stylesheet" href="content-page.css" />
   </head>
   <body>
 
@@ -90,7 +90,7 @@
         <li><a href="/" class="nav-link">Ana Sayfa</a></li>
         <li><a href="/#story" class="nav-link">Hikayemiz</a></li>
         <li><a href="/#products" class="nav-link">Ürünler</a></li>
-        <li><a href="recipes-list.html" class="nav-link" aria-current="page">Tariflerimiz</a></li>
+        <li><a href="recipes-list.html" class="nav-link">Tariflerimiz</a></li>
         <li><a href="#" class="nav-link">İletişim</a></li>
       </ul>
       <div class="nav-overlay-foot">
@@ -181,375 +181,110 @@
 
     <main>
 
-      <!-- ░░ RECIPES HERO ░░ -->
-      <section class="rl-hero">
-        <div class="rl-hero-inner container">
-          <h1 class="rl-hero-title">TARİFLER</h1>
-          <p class="rl-hero-desc">
-            Snab's ile mutfağa gir — dondurularak kurutulmuş meyvelerle yapılan
-            smoothie kaseler, parfeler, unlu mamuller ve daha lezzetli tarifler.
-          </p>
+      <!-- ░░ PAGE HERO ░░ -->
+      <section class="cp-hero">
+        <div class="cp-hero-inner container">
+          <nav class="cp-breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Ana Sayfa</a>
+            <span aria-hidden="true">/</span>
+            <span aria-current="page">Sözleşmeler</span>
+          </nav>
+          <h1 class="cp-hero-title">Mesafeli Satış<br><em>Sözleşmesi</em></h1>
         </div>
       </section>
 
-      <!-- ░░ FILTER BAR ░░ -->
-      <div class="rl-bar">
-        <div class="rl-bar-inner container">
-          <div class="rl-filters" role="group" aria-label="Kategori filtresi">
-            <button class="rl-filter is-active" data-filter="all">Tümü</button>
-            <button class="rl-filter" data-filter="desserts">Tatlılar</button>
-            <button class="rl-filter" data-filter="snacks">Atıştırmalık</button>
-            <button class="rl-filter" data-filter="breakfast">Kahvaltı</button>
-            <button class="rl-filter" data-filter="smoothie">Smoothie</button>
-            <button class="rl-filter" data-filter="meals">Ana Yemek</button>
-          </div>
-          <p class="rl-count-wrap">
-            <strong id="rl-count">12</strong> tarif
-          </p>
-        </div>
-      </div>
+      <!-- ░░ CONTENT LAYOUT ░░ -->
+      <section class="cp-layout">
+        <div class="cp-layout-inner container">
 
-      <!-- ░░ RECIPE GRID ░░ -->
-      <section class="rl-grid-section" aria-label="Tarif listesi">
-        <div class="rl-grid container">
+          <!-- SIDEBAR — desktop: sticky, mobile: dropdown -->
+          <aside class="cp-sidebar" aria-label="Sayfa navigasyonu">
 
-          <!-- 1 -->
-          <article class="rl-card" data-cat="desserts" data-video="https://www.ohmefoods.com/cdn/shop/videos/c/vp/d8f1fc9fe59d45b586f92b76d90149ba/d8f1fc9fe59d45b586f92b76d90149ba.HD-1080p-2.5Mbps-84323019.mp4?v=0">
-            <div class="rl-card-media">
-              <img
-                src="https://www.ohmefoods.com/cdn/shop/articles/IMG_0091_Medium_8e229490-ae31-46cd-85ad-7a905bc5eda0_600x.jpg?v=1779066291"
-                alt="Banana Japanese Cheesecake"
-                class="rl-img"
-                loading="lazy"
-              />
-              <video class="rl-video" muted loop playsinline preload="none">
-                <source src="" type="video/mp4" />
-              </video>
-              <span class="rc-cat">Tatlılar</span>
-            </div>
-            <div class="rl-card-body">
-              <div class="rl-meta">
-                <h3 class="rl-title">Banana Japanese Cheesecake</h3>
-                <div class="rc-time">
-                  <span class="rc-clock">⏱</span>
-                  <span>20 dk</span>
-                </div>
+            <!-- Mobile dropdown trigger -->
+            <button class="cp-sidebar-toggle" id="cpSidebarToggle" aria-expanded="false">
+              <svg class="cp-sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="14" y2="18"/></svg>
+              <span class="cp-sidebar-toggle-text">Sözleşmeler</span>
+              <svg class="cp-sidebar-chevron" width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><polyline points="4 6 8 10 12 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+
+            <!-- Nav list -->
+            <nav class="cp-sidebar-nav" id="cpSidebarNav">
+              <ul class="cp-sidebar-list">
+                <li><a href="#" class="cp-sidebar-link">Üyelik Sözleşmesi</a></li>
+                <li><a href="#" class="cp-sidebar-link">Ön Bilgilendirme Formu</a></li>
+                <li><a href="#" class="cp-sidebar-link is-active" aria-current="page">Mesafeli Satış Sözleşmesi</a></li>
+                <li><a href="#" class="cp-sidebar-link">Çerez Politikası</a></li>
+                <li><a href="#" class="cp-sidebar-link">İade ve Değişim Politikası</a></li>
+                <li><a href="#" class="cp-sidebar-link">Gizlilik ve KVKK Politikası</a></li>
+                <li><a href="#" class="cp-sidebar-link">ETK İzin Metni</a></li>
+                <li><a href="#" class="cp-sidebar-link">E-Bülten Üyelik Sözleşmesi</a></li>
+              </ul>
+            </nav>
+          </aside>
+
+          <!-- CONTENT -->
+          <article class="cp-content">
+
+            <div class="cp-content-body">
+
+              <h2>1. Taraflar</h2>
+              <p>İşbu Mesafeli Satış Sözleşmesi ("Sözleşme"), aşağıda bilgileri yer alan Satıcı ile Alıcı arasında, 6502 sayılı Tüketicinin Korunması Hakkında Kanun ve Mesafeli Sözleşmeler Yönetmeliği hükümleri uyarınca akdedilmiştir.</p>
+
+              <div class="cp-info-box">
+                <p><strong>SATICI BİLGİLERİ</strong></p>
+                <p>Ünvan: Snab's Gıda Sanayi ve Ticaret A.Ş.</p>
+                <p>Adres: Levent Mah. Büyükdere Cad. No:185 Şişli / İstanbul</p>
+                <p>Telefon: +90 (212) 000 00 00</p>
+                <p>E-posta: info@snabs.com.tr</p>
+                <p>Mersis No: 0000000000000000</p>
               </div>
-              <a href="https://www.ohmefoods.com/blogs/recipes/banana-japanese-cheesecake" target="_blank" rel="noopener" class="rc-btn">Tarifi Gör <span aria-hidden="true">→</span></a>
-            </div>
-          </article>
 
-          <!-- 2 -->
-          <article class="rl-card" data-cat="desserts" data-video="https://www.ohmefoods.com/cdn/shop/videos/c/vp/5b2317ba393c4667b1b016c22a2f541d/5b2317ba393c4667b1b016c22a2f541d.HD-1080p-2.5Mbps-84323166.mp4?v=0">
-            <div class="rl-card-media">
-              <img
-                src="https://www.ohmefoods.com/cdn/shop/articles/922A3776_Medium_82087616-772e-4603-a07a-5a1c72aa5b22_600x.jpg?v=1779066276"
-                alt="Banana Date Bark"
-                class="rl-img"
-                loading="lazy"
-              />
-              <video class="rl-video" muted loop playsinline preload="none">
-                <source src="" type="video/mp4" />
-              </video>
-              <span class="rc-cat">Tatlılar</span>
-            </div>
-            <div class="rl-card-body">
-              <div class="rl-meta">
-                <h3 class="rl-title">Banana Date Bark</h3>
-                <div class="rc-time">
-                  <span class="rc-clock">⏱</span>
-                  <span>10 dk</span>
-                </div>
-              </div>
-              <a href="https://www.ohmefoods.com/blogs/recipes/banana-date-bark" target="_blank" rel="noopener" class="rc-btn">Tarifi Gör <span aria-hidden="true">→</span></a>
-            </div>
-          </article>
+              <h2>2. Sözleşmenin Konusu</h2>
+              <p>İşbu sözleşmenin konusu, Alıcı'nın Satıcı'ya ait <a href="/">snabs.com.tr</a> internet sitesinden elektronik ortamda sipariş verdiği, sözleşmede bahsi geçen nitelikleri haiz ve yine sözleşmede satış fiyatı belirtilen ürün/ürünlerin satışı ve teslimi ile ilgili olarak 6502 sayılı Tüketicinin Korunması Hakkında Kanun ve Mesafeli Sözleşmeler Yönetmeliği hükümleri gereğince tarafların hak ve yükümlülüklerinin belirlenmesidir.</p>
 
-          <!-- 3 -->
-          <article class="rl-card" data-cat="smoothie" data-video="https://www.ohmefoods.com/cdn/shop/videos/c/vp/be1eb319e3de4f489454868c8b6c3d05/be1eb319e3de4f489454868c8b6c3d05.HD-1080p-2.5Mbps-84323167.mp4?v=0">
-            <div class="rl-card-media">
-              <img
-                src="https://www.ohmefoods.com/cdn/shop/articles/922A3752_Medium_8e38e1fa-9d31-4ebe-84f8-d8a773103ff7_600x.jpg?v=1779066263"
-                alt="Tropical Smoothie Bowl"
-                class="rl-img"
-                loading="lazy"
-              />
-              <video class="rl-video" muted loop playsinline preload="none">
-                <source src="" type="video/mp4" />
-              </video>
-              <span class="rc-cat">Smoothie</span>
-            </div>
-            <div class="rl-card-body">
-              <div class="rl-meta">
-                <h3 class="rl-title">Tropical Smoothie Bowl</h3>
-                <div class="rc-time">
-                  <span class="rc-clock">⏱</span>
-                  <span>10 dk</span>
-                </div>
-              </div>
-              <a href="https://www.ohmefoods.com/blogs/recipes/tropical-smoothie-bowl" target="_blank" rel="noopener" class="rc-btn">Tarifi Gör <span aria-hidden="true">→</span></a>
-            </div>
-          </article>
+              <h2>3. Sözleşme Konusu Ürün Bilgileri</h2>
+              <p>Malın/ürünün/hizmetin türü, miktarı, marka/modeli, rengi, adedi, satış bedeli, ödeme şekli, siparişin sonuçlandığı anda Alıcı'ya gönderilen sipariş özet sayfasında ve e-postasında belirtildiği gibidir. Sipariş özeti bilgileri, fatura ile birlikte gönderilecektir.</p>
 
-          <!-- 4 -->
-          <article class="rl-card" data-cat="desserts" data-video="https://www.ohmefoods.com/cdn/shop/videos/c/vp/77ddcdb0d492456083873922c430318a/77ddcdb0d492456083873922c430318a.HD-1080p-2.5Mbps-84322978.mp4?v=0">
-            <div class="rl-card-media">
-              <img
-                src="https://www.ohmefoods.com/cdn/shop/articles/922A3763_Medium_5e6a2239-fe6d-45e0-8819-c64e9a5f0785_600x.jpg?v=1779066244"
-                alt="4-Ingredient Berry Chocolate Bark"
-                class="rl-img"
-                loading="lazy"
-              />
-              <video class="rl-video" muted loop playsinline preload="none">
-                <source src="" type="video/mp4" />
-              </video>
-              <span class="rc-cat">Tatlılar</span>
-            </div>
-            <div class="rl-card-body">
-              <div class="rl-meta">
-                <h3 class="rl-title">4-Ingredient Berry Chocolate Bark</h3>
-                <div class="rc-time">
-                  <span class="rc-clock">⏱</span>
-                  <span>15 dk</span>
-                </div>
-              </div>
-              <a href="https://www.ohmefoods.com/blogs/recipes/4-ingredient-berry-chocolate-bark" target="_blank" rel="noopener" class="rc-btn">Tarifi Gör <span aria-hidden="true">→</span></a>
-            </div>
-          </article>
+              <h3>3.1. Ürün Özellikleri</h3>
+              <p>Sipariş edilen ürünlerin cinsi, türü, miktarı, rengi, fiyatı ve varsa taksit adedi gibi ürünlere ilişkin tüm bilgiler aşağıda yer almaktadır. Bu bilgiler Satıcı tarafından doğru bir şekilde sunulmuş olup, Alıcı tarafından da onaylanmıştır.</p>
 
-          <!-- 5 -->
-          <article class="rl-card" data-cat="snacks" data-video="https://www.ohmefoods.com/cdn/shop/videos/c/vp/0a8e2686854147e18f7fd07f406769d7/0a8e2686854147e18f7fd07f406769d7.HD-1080p-2.5Mbps-85488746.mp4?v=0">
-            <div class="rl-card-media">
-              <img
-                src="https://www.ohmefoods.com/cdn/shop/articles/IMG_0038_Medium_b4bc8843-1cfe-485e-aed7-05a243ff3aaf_600x.jpg?v=1778963451"
-                alt="Apple Fries & Peanut Butter Yogurt Dip"
-                class="rl-img"
-                loading="lazy"
-              />
-              <video class="rl-video" muted loop playsinline preload="none">
-                <source src="" type="video/mp4" />
-              </video>
-              <span class="rc-cat">Atıştırmalık</span>
-            </div>
-            <div class="rl-card-body">
-              <div class="rl-meta">
-                <h3 class="rl-title">Apple Fries &amp; Peanut Butter Yogurt Dip</h3>
-                <div class="rc-time">
-                  <span class="rc-clock">⏱</span>
-                  <span>10 dk</span>
-                </div>
-              </div>
-              <a href="https://www.ohmefoods.com/blogs/recipes/apple-fries-peanut-butter-yogurt-dip" target="_blank" rel="noopener" class="rc-btn">Tarifi Gör <span aria-hidden="true">→</span></a>
-            </div>
-          </article>
+              <h3>3.2. Fiyatlandırma</h3>
+              <p>Sözleşme konusu ürün veya ürünlerin vergiler dahil satış fiyatları sipariş sırasında belirtilen şekildedir. Ürün fiyatlarına teslimat ücreti dahil değildir. Teslimat ücreti Alıcı'ya aittir ve sipariş esnasında Alıcı'ya bildirilir.</p>
 
-          <!-- 6 -->
-          <article class="rl-card" data-cat="desserts" data-video="https://www.ohmefoods.com/cdn/shop/videos/c/vp/d51d99baf9a04b9aa975dc0f1cbd7dd7/d51d99baf9a04b9aa975dc0f1cbd7dd7.HD-1080p-2.5Mbps-83994921.mp4?v=0">
-            <div class="rl-card-media">
-              <img
-                src="https://www.ohmefoods.com/cdn/shop/articles/IMG_7377_4be65337-13d5-4579-bcb7-3be36d3f77a4_600x.jpg?v=1778961988"
-                alt="Strawberry Chocolate Dates"
-                class="rl-img"
-                loading="lazy"
-              />
-              <video class="rl-video" muted loop playsinline preload="none">
-                <source src="" type="video/mp4" />
-              </video>
-              <span class="rc-cat">Tatlılar</span>
-            </div>
-            <div class="rl-card-body">
-              <div class="rl-meta">
-                <h3 class="rl-title">Strawberry Chocolate Dates</h3>
-                <div class="rc-time">
-                  <span class="rc-clock">⏱</span>
-                  <span>15 dk</span>
-                </div>
-              </div>
-              <a href="https://www.ohmefoods.com/blogs/recipes/strawberry-chocolate-dates" target="_blank" rel="noopener" class="rc-btn">Tarifi Gör <span aria-hidden="true">→</span></a>
-            </div>
-          </article>
+              <h2>4. Genel Hükümler</h2>
+              <p>Alıcı, sözleşme konusu ürünün temel nitelikleri, satış fiyatı, ödeme şekli, teslimat koşulları ve benzeri satışa konu ürün hakkında tüm ön bilgileri okuyup bilgi sahibi olduğunu ve elektronik ortamda gerekli teyidi verdiğini beyan eder.</p>
+              <p>Sözleşme konusu ürün, yasal 30 günlük süreyi aşmamak koşulu ile her bir ürün için Alıcı'nın yerleşim yerinin uzaklığına bağlı olarak internet sitesinde ön bilgiler içinde açıklanan süre içinde Alıcı veya gösterdiği adresteki kişi/kuruluşa teslim edilir.</p>
 
-          <!-- 7 -->
-          <article class="rl-card" data-cat="desserts" data-video="">
-            <div class="rl-card-media">
-              <img
-                src="https://www.ohmefoods.com/cdn/shop/articles/IMG_8445_a01b6595-188a-4781-bde6-0747574ad4d6_600x.jpg?v=1778961130"
-                alt="Chocolate Strawberry Edible Cookie Dough"
-                class="rl-img"
-                loading="lazy"
-              />
-              <video class="rl-video" muted loop playsinline preload="none">
-                <source src="" type="video/mp4" />
-              </video>
-              <span class="rc-cat">Tatlılar</span>
-            </div>
-            <div class="rl-card-body">
-              <div class="rl-meta">
-                <h3 class="rl-title">Chocolate Strawberry Edible Cookie Dough</h3>
-                <div class="rc-time">
-                  <span class="rc-clock">⏱</span>
-                  <span>20 dk</span>
-                </div>
-              </div>
-              <button class="rc-btn">Tarifi Gör <span aria-hidden="true">→</span></button>
-            </div>
-          </article>
+              <h2>5. Cayma Hakkı</h2>
+              <p>Alıcı, sözleşme konusu ürünün kendisine veya gösterdiği adresteki kişi/kuruluşa tesliminden itibaren <strong>14 (on dört) gün</strong> içinde cayma hakkına sahiptir. Cayma hakkının kullanılması için bu süre içinde Satıcı'ya bildirimde bulunulması şarttır.</p>
 
-          <!-- 8 -->
-          <article class="rl-card" data-cat="breakfast" data-video="https://www.ohmefoods.com/cdn/shop/videos/c/vp/ba84a64b760546a08871ba2202e1a1d7/ba84a64b760546a08871ba2202e1a1d7.HD-1080p-2.5Mbps-85488748.mp4?v=0">
-            <div class="rl-card-media">
-              <img
-                src="https://www.ohmefoods.com/cdn/shop/articles/IMG_8433_cde3cad6-6a93-43c2-896a-ac7a5b02f547_600x.jpg?v=1778961560"
-                alt="Breakfast Yogurt Bark"
-                class="rl-img"
-                loading="lazy"
-              />
-              <video class="rl-video" muted loop playsinline preload="none">
-                <source src="" type="video/mp4" />
-              </video>
-              <span class="rc-cat">Kahvaltı</span>
-            </div>
-            <div class="rl-card-body">
-              <div class="rl-meta">
-                <h3 class="rl-title">Breakfast Yogurt Bark</h3>
-                <div class="rc-time">
-                  <span class="rc-clock">⏱</span>
-                  <span>10 dk</span>
-                </div>
-              </div>
-              <a href="https://www.ohmefoods.com/blogs/recipes/breakfast-yogurt-bark" target="_blank" rel="noopener" class="rc-btn">Tarifi Gör <span aria-hidden="true">→</span></a>
-            </div>
-          </article>
+              <h3>5.1. Cayma Hakkı Kullanılamayacak Ürünler</h3>
+              <p>Tüketicinin Korunması Hakkında Kanun ve Mesafeli Sözleşmeler Yönetmeliği gereğince aşağıdaki durumlarda cayma hakkı kullanılamaz:</p>
+              <ul>
+                <li>Çabuk bozulabilen veya son kullanma tarihi geçebilecek ürünlerin teslimine ilişkin sözleşmeler.</li>
+                <li>Tesliminden sonra ambalaj, bant, mühür, paket gibi koruyucu unsurları açılmış olan ürünlerin teslimine ilişkin sözleşmeler (hijyen ve sağlık açısından iade edilemeyecek ürünler).</li>
+                <li>Tesliminden sonra başka ürünlerle karışan ve doğası gereği ayrıştırılması mümkün olmayan ürünler.</li>
+              </ul>
 
-          <!-- 9 -->
-          <article class="rl-card" data-cat="smoothie" data-video="">
-            <div class="rl-card-media">
-              <img
-                src="https://www.ohmefoods.com/cdn/shop/articles/4FAF640E-B32E-4903-BCB7-7F34A71DCA08_6d10d412-f296-4472-8e40-28a0be7d593c_600x.jpg?v=1778961823"
-                alt="Dragon Fruit Smoothie Bowl"
-                class="rl-img"
-                loading="lazy"
-              />
-              <video class="rl-video" muted loop playsinline preload="none">
-                <source src="" type="video/mp4" />
-              </video>
-              <span class="rc-cat">Smoothie</span>
-            </div>
-            <div class="rl-card-body">
-              <div class="rl-meta">
-                <h3 class="rl-title">Dragon Fruit Smoothie Bowl</h3>
-                <div class="rc-time">
-                  <span class="rc-clock">⏱</span>
-                  <span>10 dk</span>
-                </div>
-              </div>
-              <button class="rc-btn">Tarifi Gör <span aria-hidden="true">→</span></button>
-            </div>
-          </article>
+              <h2>6. Teslimat</h2>
+              <p>Sipariş onayının ardından ürün, anlaşmalı kargo firması aracılığıyla Alıcı'nın sipariş formunda belirttiği adrese gönderilir. Teslimat süresi, ödemenin onaylanmasını takiben <strong>1-5 iş günü</strong> içindedir. Teslimat sırasında Alıcı'nın adresinde bulunmaması durumunda dahi Satıcı edimini tam ve eksiksiz olarak yerine getirmiş olarak kabul edilir.</p>
 
-          <!-- 10 -->
-          <article class="rl-card" data-cat="smoothie" data-video="">
-            <div class="rl-card-media">
-              <img
-                src="https://www.ohmefoods.com/cdn/shop/articles/IMG_9767_600x.jpg?v=1776270083"
-                alt="Strawberry Yogurt Bowl"
-                class="rl-img"
-                loading="lazy"
-              />
-              <video class="rl-video" muted loop playsinline preload="none">
-                <source src="" type="video/mp4" />
-              </video>
-              <span class="rc-cat">Smoothie</span>
-            </div>
-            <div class="rl-card-body">
-              <div class="rl-meta">
-                <h3 class="rl-title">Strawberry Yogurt Bowl</h3>
-                <div class="rc-time">
-                  <span class="rc-clock">⏱</span>
-                  <span>5 dk</span>
-                </div>
-              </div>
-              <button class="rc-btn">Tarifi Gör <span aria-hidden="true">→</span></button>
-            </div>
-          </article>
+              <h2>7. Ödeme ve Temerrüt</h2>
+              <p>Alıcı, sipariş bedelini kredi kartı, banka kartı veya havale/EFT yoluyla ödeyebilir. Kredi kartı ile yapılan alışverişlerde taksit imkânı sunulabilir; taksit koşulları ödeme ekranında Alıcı'ya bildirilir.</p>
 
-          <!-- 11 -->
-          <article class="rl-card" data-cat="desserts" data-video="">
-            <div class="rl-card-media">
-              <img
-                src="https://www.ohmefoods.com/cdn/shop/articles/IMG_8971_6fd79ce2-febe-4e99-98d4-b75f4a561730_600x.jpg?v=1776321528"
-                alt="Valentine's Day Yogurt Bark"
-                class="rl-img"
-                loading="lazy"
-              />
-              <video class="rl-video" muted loop playsinline preload="none">
-                <source src="" type="video/mp4" />
-              </video>
-              <span class="rc-cat">Tatlılar</span>
-            </div>
-            <div class="rl-card-body">
-              <div class="rl-meta">
-                <h3 class="rl-title">Valentine's Day Yogurt Bark</h3>
-                <div class="rc-time">
-                  <span class="rc-clock">⏱</span>
-                  <span>5 dk</span>
-                </div>
-              </div>
-              <button class="rc-btn">Tarifi Gör <span aria-hidden="true">→</span></button>
-            </div>
-          </article>
+              <h2>8. Uyuşmazlık Çözümü</h2>
+              <p>İşbu sözleşmeden doğan uyuşmazlıklarda, Gümrük ve Ticaret Bakanlığınca ilan edilen değere kadar Tüketici Hakem Heyetleri, bu değerin üzerindeki uyuşmazlıklarda ise Tüketici Mahkemeleri yetkilidir. Alıcı, bu sözleşmeyi elektronik ortamda onaylayarak tüm maddeleri okuduğunu ve kabul ettiğini beyan eder.</p>
 
-          <!-- 12 -->
-          <article class="rl-card" data-cat="meals" data-video="">
-            <div class="rl-card-media">
-              <img
-                src="https://www.ohmefoods.com/cdn/shop/articles/IMG_8956_660fc555-039e-4e39-9843-f7a305c095a6_600x.jpg?v=1776321408"
-                alt="Mango Sticky Coconut Rice"
-                class="rl-img"
-                loading="lazy"
-              />
-              <video class="rl-video" muted loop playsinline preload="none">
-                <source src="" type="video/mp4" />
-              </video>
-              <span class="rc-cat">Ana Yemek</span>
-            </div>
-            <div class="rl-card-body">
-              <div class="rl-meta">
-                <h3 class="rl-title">Mango Sticky Coconut Rice</h3>
-                <div class="rc-time">
-                  <span class="rc-clock">⏱</span>
-                  <span>5 dk</span>
-                </div>
+              <div class="cp-info-box cp-info-box--highlight">
+                <p><strong>ÖNEMLİ NOT</strong></p>
+                <p>Bu sözleşme örnek amaçlıdır ve gerçek bir hukuki belge niteliği taşımamaktadır. Gerçek sözleşmeler için lütfen hukuk danışmanınıza başvurun.</p>
               </div>
-              <button class="rc-btn">Tarifi Gör <span aria-hidden="true">→</span></button>
+
             </div>
+
           </article>
 
         </div>
-
-        <!-- Pagination -->
-        <nav class="rl-pagination container" aria-label="Sayfalama">
-          <button class="rl-pg-btn" id="rlPgPrev" aria-label="Önceki sayfa">
-            <svg width="32" height="14" viewBox="0 0 32 14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <line x1="32" y1="7" x2="0" y2="7"/>
-              <polyline points="8,1 1,7 8,13"/>
-            </svg>
-          </button>
-          <div class="rl-pg-dots" id="rlPgDots">
-            <button class="rl-pg-dot" aria-label="1. sayfa">1</button>
-            <button class="rl-pg-dot is-active" aria-label="2. sayfa" aria-current="page">2</button>
-            <button class="rl-pg-dot" aria-label="3. sayfa">3</button>
-            <button class="rl-pg-dot" aria-label="4. sayfa">4</button>
-            <button class="rl-pg-dot" aria-label="5. sayfa">5</button>
-          </div>
-          <button class="rl-pg-btn" id="rlPgNext" aria-label="Sonraki sayfa">
-            <svg width="32" height="14" viewBox="0 0 32 14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <line x1="0" y1="7" x2="32" y2="7"/>
-              <polyline points="24,1 31,7 24,13"/>
-            </svg>
-          </button>
-        </nav>
-
       </section>
 
     </main>
@@ -677,6 +412,6 @@
     </footer>
 
     <script src="assets/js/main.js" defer></script>
-    <script src="assets/js/recipes.js" defer></script>
+    <script src="assets/js/content-page.js" defer></script>
   </body>
 </html>
