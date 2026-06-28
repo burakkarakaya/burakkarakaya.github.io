@@ -1,0 +1,812 @@
+/* ═══════════════════════════════════════════════════════════
+   Snab's — Alternatif Ürün Kartı Varyantları
+   ═══════════════════════════════════════════════════════════ */
+
+.apc-group { margin-bottom: 64px; }
+.apc-group-head { margin-bottom: 22px; }
+.apc-group-head h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 3.5vw, 1.75rem);
+  color: var(--dark);
+  margin: 0 0 6px;
+}
+.apc-group-head p {
+  font-family: var(--font-body);
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.55;
+  margin: 0;
+  max-width: 58ch;
+}
+
+/* Shared controls */
+.vpc-add {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-weight: 800;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.vpc-add svg { flex-shrink: 0; }
+.vpc-add.is-loading:not(.sp-cta) { pointer-events: none; }
+.vpc-add.is-added:not(.sp-cta) { background: var(--mix-light) !important; color: var(--mix-deep) !important; }
+.sp-cta.is-loading,
+.sp-cta.is-added {
+  pointer-events: none;
+}
+
+/* ── Cart burst (sepete ekle patlaması) ── */
+.cart-burst {
+  position: fixed;
+  z-index: 9999;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  overflow: visible;
+}
+.cart-burst__bit {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--size);
+  height: var(--size);
+  transform: translate(-50%, -50%) scale(0.12);
+  opacity: 0;
+  animation: cart-burst-fly var(--dur, 760ms)
+    cubic-bezier(0.12, 0.88, 0.32, 1.02) var(--delay, 0ms) forwards;
+  will-change: transform, opacity;
+}
+.cart-burst__bit img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.2));
+  pointer-events: none;
+  user-select: none;
+}
+@keyframes cart-burst-fly {
+  0% {
+    transform: translate(-50%, -50%) scale(0.12) rotate(0deg);
+    opacity: 0;
+  }
+  14% {
+    opacity: 1;
+  }
+  52% {
+    transform: translate(calc(-50% + var(--bx)), calc(-50% + var(--by)))
+      scale(1) rotate(var(--rot));
+    opacity: 1;
+  }
+  100% {
+    transform: translate(
+        calc(-50% + var(--bx) * 1.12),
+        calc(-50% + var(--by) * 1.12 + 8px)
+      )
+      scale(0.35) rotate(calc(var(--rot) + 18deg));
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cart-burst {
+    display: none !important;
+  }
+}
+.vpc-qty {
+  appearance: none;
+  -webkit-appearance: none;
+  font-family: var(--font-body);
+  font-weight: 700;
+  cursor: pointer;
+}
+.vpc-old { text-decoration: line-through; opacity: 0.55; margin-right: 4px; }
+
+/* ── GRUP 2 · Snab's Pop ─────────────────────────────────── */
+.pl-card--pop {
+  overflow: hidden;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.08);
+}
+.pl-card--pop:hover {
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.14);
+}
+
+.pl-card--pop.is-out { cursor: default; }
+.pl-card--pop.is-out:hover { transform: none; box-shadow: 0 10px 26px rgba(0, 0, 0, 0.08); }
+.pl-card--pop.is-out .pl-card-img { filter: grayscale(1); opacity: 0.4; }
+.pl-card--pop.is-out:hover .pl-card-img { transform: none; }
+
+/* Alt bölüm — kart zemininin devamı */
+.pl-pop-foot {
+  padding: 4px 14px 14px;
+  flex-shrink: 0;
+  margin-top: auto;
+}
+.pl-pop-head {
+  display: grid;
+  grid-template-columns: minmax(0, 65%) minmax(0, 1fr);
+  gap: 8px;
+  align-items: start;
+  margin-bottom: 10px;
+}
+.pl-pop-title {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--dark);
+  line-height: 1.35;
+  margin: 0;
+  min-width: 0;
+  min-height: 2.7em;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.pl-pop-price {
+  justify-self: end;
+  align-self: flex-start;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: nowrap;
+  gap: 4px;
+  white-space: nowrap;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--dark);
+  text-align: right;
+  line-height: 1.35;
+  padding-top: 1px;
+  min-width: 0;
+}
+.pl-pop-price .old {
+  text-decoration: line-through;
+  opacity: 0.55;
+  font-weight: 600;
+  font-size: 0.8rem;
+  flex-shrink: 0;
+}
+
+.pl-pop-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 36px;
+}
+.pl-pop-slot {
+  flex: 1;
+  position: relative;
+  min-height: 36px;
+  height: 36px;
+  min-width: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: stretch;
+}
+
+.pl-pop-slot .vpc-qty {
+  position: relative;
+  inset: auto;
+  width: 100%;
+  height: 36px;
+  min-height: 36px;
+  box-sizing: border-box;
+  padding: 0 24px 0 10px;
+  border-radius: var(--r-full);
+  border: 1px solid rgba(26, 8, 2, 0.14);
+  background: rgba(255, 255, 255, 0.65) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%233D2A1A' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 8px center;
+  font-size: 0.66rem;
+  font-weight: 600;
+  line-height: 1;
+  box-shadow: none;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.pl-card--pop .vpc-add {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  min-height: 36px;
+  border-radius: 50%;
+  background: var(--red);
+  color: #fff;
+  border: none;
+  box-shadow: none;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
+  padding: 0;
+}
+.pl-card--pop .vpc-add:hover { background: var(--red-deep); transform: none; }
+.pl-card--pop.is-out .vpc-add:disabled {
+  width: auto;
+  min-width: 44px;
+  height: 36px;
+  min-height: 36px;
+  flex: 1;
+  border-radius: var(--r-full);
+  padding: 0 14px;
+  font-size: 0.72rem;
+  background: var(--dark-mid);
+  box-shadow: none;
+  border-color: var(--dark-mid);
+}
+.pl-card--pop.is-out .pl-pop-row {
+  min-height: 36px;
+}
+
+/* ── RESPONSIVE ──────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .apc-group { margin-bottom: 32px; }
+  .apc-group-head { margin-bottom: 12px; }
+  .apc-group-head h2 {
+    font-size: clamp(1.05rem, 4.5vw, 1.25rem);
+    margin-bottom: 4px;
+  }
+  .apc-group-head p {
+    font-size: 0.82rem;
+    line-height: 1.45;
+  }
+}
+
+@media (hover: none), (max-width: 640px) {
+  .pl-card--pop { min-height: 0; }
+  .pl-card--pop:hover { transform: none; box-shadow: 0 10px 26px rgba(0, 0, 0, 0.08); }
+  .pl-card--pop:hover .pl-card-img { transform: scale(1.06); }
+  .pl-pop-row { min-height: 36px; gap: 5px; }
+  .pl-pop-head { margin-bottom: 8px; gap: 6px; }
+  .pl-pop-title { font-size: 0.74rem; min-height: 2.6em; }
+  .pl-pop-price { font-size: 0.82rem; }
+  .pl-pop-price .old { font-size: 0.72rem; }
+  .pl-pop-foot { padding: 2px 10px 10px; }
+  .pl-pop-slot .vpc-qty {
+    width: 100%;
+    height: 36px;
+    min-height: 36px;
+  }
+}
+
+/* ── GRUP 3 · Split Pill ──────────────────────────────────── */
+.sp-grid {
+  align-items: stretch;
+}
+
+.sp-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border: 2.5px solid var(--red);
+  border-radius: 22px;
+  overflow: hidden;
+  background: #fff;
+  min-height: 540px;
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+.sp-card:hover {
+  box-shadow: 0 18px 40px rgba(217, 58, 40, 0.12);
+  transform: translateY(-3px);
+}
+
+.sp-card[data-flavor="cilek"]  { background: #FFF0F2; }
+.sp-card[data-flavor="mango"]  { background: #FFFBDE; }
+.sp-card[data-flavor="incir"]  { background: #F4F0FF; }
+.sp-card[data-flavor="mix"]    { background: #F0FFF6; }
+.sp-card[data-flavor="elma"]   { background: #FFEDE8; }
+.sp-card[data-flavor="armut"]  { background: #EEFAF0; }
+.sp-card[data-flavor="ananas"] { background: #FFF8E6; }
+.sp-card[data-flavor="muz"]    { background: #FFF9DE; }
+
+.sp-seal {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 5;
+  width: 72px;
+  height: 72px;
+  transform: rotate(7deg);
+  filter: drop-shadow(0 5px 12px rgba(217, 58, 40, 0.32));
+  pointer-events: none;
+}
+.seal-text {
+  font-family: var(--font-hero);
+  font-size: 19px;
+  letter-spacing: 0.4px;
+  fill: var(--cream);
+  stroke: var(--cream);
+  stroke-width: 0.9px;
+  paint-order: stroke;
+}
+.seal-stars {
+  fill: var(--cream);
+}
+
+.sp-tag {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 4;
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: var(--r-full);
+}
+.sp-tag.is-disc { background: var(--red); box-shadow: 0 2px 8px rgba(217, 58, 40, 0.3); }
+.sp-tag.is-new  { background: var(--mix-deep); box-shadow: 0 2px 8px rgba(26, 144, 96, 0.28); }
+.sp-tag.is-best { background: var(--dark); box-shadow: 0 2px 8px rgba(26, 8, 2, 0.22); }
+.sp-tag.is-out  { background: var(--dark); }
+
+.sp-frame {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px 12px 16px;
+  min-height: 420px;
+}
+.sp-img {
+  width: auto;
+  max-width: 98%;
+  height: clamp(300px, 28vw, 400px);
+  object-fit: contain;
+  filter: drop-shadow(0 16px 32px rgba(0, 0, 0, 0.16));
+  transition: transform 0.38s cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+.sp-card:not(.is-out):hover .sp-img {
+  transform: translateY(-6px) scale(1.04);
+}
+
+.sp-foot {
+  padding: 0 12px 12px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+/* Desktop — split pill bar */
+.sp-split {
+  display: flex;
+  align-items: stretch;
+  border: 2.5px solid var(--red);
+  border-radius: var(--r-full);
+  overflow: hidden;
+  background: #fff;
+  transition: opacity 0.2s ease;
+}
+.sp-name {
+  flex: 1;
+  min-width: 0;
+  background: var(--red);
+  color: #fff;
+  padding: 10px 14px;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 800;
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
+}
+.sp-price {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 10px 14px;
+  color: var(--red);
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  font-weight: 800;
+  border-left: 2.5px solid var(--red);
+  background: #fff;
+  white-space: nowrap;
+}
+.sp-price .vpc-old {
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+/* Desktop hover — Sepete Ekle satırı */
+.sp-hover {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  display: flex;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+.sp-hover .vpc-qty { display: none; }
+.sp-cta {
+  flex: 1;
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 16px;
+  border-radius: var(--r-full);
+  background: var(--red);
+  color: #fff;
+  border: 2.5px solid var(--red);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  box-shadow: none;
+}
+.sp-cta:hover { background: var(--red-deep); transform: none; }
+
+.sp-card:not(.is-out):hover .sp-split { opacity: 0; }
+.sp-card:not(.is-out):hover .sp-hover { opacity: 1; pointer-events: auto; }
+
+/* Mobile — stacked layout */
+.sp-stack {
+  display: none;
+  flex-direction: column;
+  gap: 8px;
+}
+.sp-m-head {
+  border: 2.5px solid var(--red);
+  border-radius: var(--r-full);
+  overflow: hidden;
+  background: var(--red);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  min-height: 40px;
+}
+.sp-m-name {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  width: 100%;
+  color: #fff;
+  padding: 8px 12px;
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 800;
+  line-height: 1.32;
+  min-width: 0;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+.sp-m-actions {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  min-height: 40px;
+  padding: 3px;
+  border: 2.5px solid var(--red);
+  border-radius: var(--r-full);
+  background: #fff;
+  overflow: hidden;
+}
+.sp-m-action-price {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  text-align: left;
+  color: var(--red);
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 800;
+  white-space: nowrap;
+  padding: 0 8px 0 12px;
+}
+.sp-m-action-price .vpc-old {
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+.sp-m-actions .vpc-add {
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
+  min-height: 34px;
+  border-radius: 50%;
+  background: var(--red);
+  color: #fff;
+  flex-shrink: 0;
+  padding: 0;
+  box-shadow: none;
+}
+.sp-m-actions .vpc-add:hover { background: var(--red-deep); transform: none; }
+.sp-m-actions .sp-m-out {
+  flex: 1;
+  width: auto;
+  height: 34px;
+  min-height: 34px;
+  border-radius: var(--r-full);
+  padding: 0 12px;
+  font-size: 0.68rem;
+  background: var(--dark-mid);
+  color: #fff;
+  border: none;
+  cursor: not-allowed;
+}
+
+/* Out of stock */
+.sp-card.is-out { cursor: default; }
+.sp-card.is-out:hover { transform: none; box-shadow: none; }
+.sp-card.is-out .sp-img { filter: grayscale(1); opacity: 0.42; }
+.sp-card.is-out:hover .sp-img { transform: none; }
+
+@media (max-width: 640px) {
+  .sp-card {
+    border: none;
+    border-radius: 0;
+    background: transparent !important;
+    box-shadow: none;
+    min-height: 0;
+    gap: 8px;
+  }
+  .sp-card:hover { transform: none; box-shadow: none; }
+
+  .sp-seal {
+    width: 54px;
+    height: 54px;
+    top: 8px;
+    right: 8px;
+  }
+  .sp-tag {
+    top: 8px;
+    right: 8px;
+    font-size: 0.56rem;
+    padding: 4px 8px;
+  }
+
+  .sp-frame {
+    border: 2.5px solid var(--red);
+    border-radius: 12px;
+    min-height: clamp(260px, 64vw, 340px);
+    padding: 18px 10px 16px;
+  }
+  .sp-card[data-flavor="cilek"]  .sp-frame { background: #FFF0F2; }
+  .sp-card[data-flavor="mango"]  .sp-frame { background: #FFFBDE; }
+  .sp-card[data-flavor="incir"]  .sp-frame { background: #F4F0FF; }
+  .sp-card[data-flavor="mix"]    .sp-frame { background: #F0FFF6; }
+  .sp-card[data-flavor="elma"]   .sp-frame { background: #FFEDE8; }
+  .sp-card[data-flavor="armut"]  .sp-frame { background: #EEFAF0; }
+  .sp-card[data-flavor="ananas"] .sp-frame { background: #FFF8E6; }
+  .sp-card[data-flavor="muz"]    .sp-frame { background: #FFF9DE; }
+
+  .sp-img {
+    height: clamp(210px, 54vw, 280px);
+    max-width: 100%;
+  }
+  .sp-card:not(.is-out):hover .sp-img { transform: scale(1.03); }
+
+  .sp-foot {
+    padding: 0 2px 0;
+    margin-top: 0;
+  }
+  .sp-split,
+  .sp-hover { display: none !important; }
+  .sp-stack {
+    display: flex;
+    gap: 6px;
+  }
+
+  #grup-3 .sp-grid {
+    gap: 16px;
+  }
+}
+
+@media (min-width: 641px) {
+  .sp-stack { display: none; }
+  .sp-foot { min-height: 52px; }
+}
+
+@media (hover: none) and (min-width: 641px) {
+  .sp-card:not(.is-out) .sp-split { opacity: 0; }
+  .sp-card:not(.is-out) .sp-hover { opacity: 1; pointer-events: auto; }
+}
+
+/* ── GRUP 4 · Split Pill + Başlık ─────────────────────────── */
+.sp-card--headed {
+  min-height: 580px;
+}
+.sp-card--headed .sp-card-header {
+  padding: 22px 20px 0;
+  text-align: center;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
+}
+.sp-card--headed .sp-card-header .pl-card-name {
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 1.9vw, 2rem);
+  color: var(--dark);
+  letter-spacing: 0.04em;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.sp-card--headed .sp-card-header .pl-card-badge {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--dark-mid);
+}
+.sp-card--headed .sp-frame {
+  min-height: 340px;
+  padding: 12px 12px 16px;
+}
+.sp-card--headed .sp-card-top {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+.sp-card--headed .sp-seal {
+  top: 14px;
+}
+
+@media (max-width: 640px) {
+  .sp-card.sp-card--headed {
+    min-height: 0;
+    gap: 0;
+  }
+  .sp-card--headed .sp-card-top {
+    border: 2.5px solid var(--red);
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .sp-card--headed[data-flavor="cilek"] .sp-card-top { background: #FFF0F2; }
+  .sp-card--headed[data-flavor="mango"] .sp-card-top { background: #FFFBDE; }
+  .sp-card--headed[data-flavor="incir"] .sp-card-top { background: #F4F0FF; }
+  .sp-card--headed[data-flavor="mix"]   .sp-card-top { background: #F0FFF6; }
+  .sp-card--headed[data-flavor="elma"]  .sp-card-top { background: #FFEDE8; }
+  .sp-card--headed .sp-card-header {
+    padding: 12px 10px 4px;
+    border: none;
+    border-radius: 0;
+    margin: 0;
+    background: transparent;
+  }
+  .sp-card--headed .sp-card-header .pl-card-name {
+    font-size: clamp(1.05rem, 4.2vw, 1.3rem);
+    margin-bottom: 3px;
+    letter-spacing: 0.03em;
+  }
+  .sp-card--headed .sp-card-header .pl-card-badge {
+    font-size: 0.58rem;
+    letter-spacing: 0.07em;
+    font-weight: 500;
+    opacity: 0.75;
+  }
+  .sp-card--headed .sp-frame {
+    border: none;
+    border-radius: 0;
+    min-height: clamp(220px, 58vw, 300px);
+    padding: 0 10px 16px;
+    margin: 0;
+    background: transparent;
+  }
+  .sp-card--headed .sp-seal {
+    top: 8px;
+    right: 8px;
+  }
+  .sp-card--headed .sp-tag {
+    top: 8px;
+    right: 8px;
+  }
+  .sp-card--headed .sp-foot {
+    margin-top: 8px;
+  }
+
+  #grup-4 .sp-grid {
+    gap: 16px;
+  }
+}
+
+/* ── Site pages · Split Pill integration ─────────────────── */
+.pl-grid-section .pl-grid.sp-grid,
+.products-section .pl-grid.sp-grid {
+  align-items: stretch;
+}
+
+.products-section .pl-grid.sp-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  max-width: 1400px;
+  padding: 0 28px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 1024px) {
+  .products-section .pl-grid.sp-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+}
+
+@media (max-width: 640px) {
+  .products-section .pl-grid.sp-grid {
+    padding: 0 16px;
+    gap: 10px;
+  }
+}
+
+/* ── Add-to-cart feedback ─────────────────────────────────── */
+@keyframes cart-btn-spin {
+  to { transform: rotate(360deg); }
+}
+.pl-add-btn.is-loading,
+.vpc-add.is-loading,
+.sp-cta.is-loading {
+  pointer-events: none;
+}
+.pl-add-btn.is-icon-mode,
+.vpc-add.is-icon-mode {
+  position: relative;
+  flex: 0 0 auto;
+  overflow: hidden;
+}
+.pl-add-btn.is-icon-mode.is-loading .pl-add-icon,
+.pl-add-btn.is-icon-mode.is-loading svg,
+.vpc-add.is-icon-mode.is-loading svg {
+  opacity: 0;
+}
+.pl-add-btn.is-icon-mode.is-loading::after,
+.vpc-add.is-icon-mode.is-loading::after {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: cart-btn-spin 0.65s linear infinite;
+}
+.pl-add-btn.is-icon-mode.is-loading::after {
+  border-color: rgba(26, 8, 2, 0.15);
+  border-top-color: var(--dark);
+}
+.pl-add-btn.is-icon-mode.is-added .pl-add-icon,
+.pl-add-btn.is-icon-mode.is-added svg,
+.vpc-add.is-icon-mode.is-added svg {
+  opacity: 0;
+}
+.pl-add-btn.is-icon-mode.is-added::after,
+.vpc-add.is-icon-mode.is-added::after {
+  content: "✓";
+  position: absolute;
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1;
+}
+.sp-cta.is-added {
+  background: var(--mix-light) !important;
+  color: var(--mix-deep) !important;
+  border-color: var(--mix-light) !important;
+  box-shadow: none;
+}
+@keyframes badge-pop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.55); }
+  100% { transform: scale(1); }
+}
+.hdr-cart-badge.pop {
+  animation: badge-pop 0.5s ease;
+}

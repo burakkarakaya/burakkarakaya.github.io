@@ -15,8 +15,23 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="alternate-product-cards.css" />
   </head>
   <body>
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true" focusable="false">
+      <symbol id="seal" viewBox="0 0 157 155">
+        <path stroke-linejoin="round" stroke-linecap="round" stroke-width="3.43" stroke="#E33526" fill="#E33526" d="M71.1086 4.40082L59.3786 14.8408L43.8686 12.4008C38.5486 11.5608 33.4486 14.8408 31.9986 20.0308L27.7686 35.1508L13.3986 41.4808C8.46864 43.6508 5.95864 49.1708 7.52864 54.3208L12.1486 69.3308L3.48864 82.4308C0.518644 86.9208 1.37864 92.9208 5.49864 96.4008L17.4986 106.531L17.2886 122.231C17.2186 127.621 21.1886 132.201 26.5286 132.901L42.0986 134.931L50.4086 148.251C53.2586 152.821 59.0886 154.531 63.9486 152.231L78.1486 145.521L92.3486 152.231C97.2186 154.531 103.039 152.821 105.889 148.251L114.209 134.931L129.779 132.901C135.119 132.201 139.089 127.621 139.019 122.231L138.809 106.531L150.809 96.4008C154.919 92.9308 155.789 86.9208 152.819 82.4308L144.159 69.3308L148.779 54.3208C150.359 49.1808 147.849 43.6508 142.909 41.4808L128.539 35.1508L124.309 20.0308C122.859 14.8508 117.759 11.5708 112.439 12.4008L96.9286 14.8408L85.1986 4.40082C81.1786 0.82082 75.1086 0.82082 71.0886 4.40082H71.1186H71.1086Z"/>
+        <mask id="sealMask" maskUnits="userSpaceOnUse" x="0" y="0" width="157" height="155" style="mask-type: alpha">
+          <path fill="#fff" d="M71.1086 4.40082L59.3786 14.8408L43.8686 12.4008C38.5486 11.5608 33.4486 14.8408 31.9986 20.0308L27.7686 35.1508L13.3986 41.4808C8.46864 43.6508 5.95864 49.1708 7.52864 54.3208L12.1486 69.3308L3.48864 82.4308C0.518644 86.9208 1.37864 92.9208 5.49864 96.4008L17.4986 106.531L17.2886 122.231C17.2186 127.621 21.1886 132.201 26.5286 132.901L42.0986 134.931L50.4086 148.251C53.2586 152.821 59.0886 154.531 63.9486 152.231L78.1486 145.521L92.3486 152.231C97.2186 154.531 103.039 152.821 105.889 148.251L114.209 134.931L129.779 132.901C135.119 132.201 139.089 127.621 139.019 122.231L138.809 106.531L150.809 96.4008C154.919 92.9308 155.789 86.9208 152.819 82.4308L144.159 69.3308L148.779 54.3208C150.359 49.1808 147.849 43.6508 142.909 41.4808L128.539 35.1508L124.309 20.0308C122.859 14.8508 117.759 11.5708 112.439 12.4008L96.9286 14.8408L85.1986 4.40082C81.1786 0.82082 75.1086 0.82082 71.0886 4.40082H71.1186H71.1086Z"/>
+        </mask>
+        <g mask="url(#sealMask)">
+          <path fill="#FF4313" d="M78 35C145.379 35 200 68.6432 200 110.144C200 118.855 197.592 127.219 193.165 135C180.566 101.765 132.157 77.0088 74.3594 77.0088C21.1248 77.0088 -24.1459 98.0095 -40.8066 127.294C-42.8947 121.785 -43.9999 116.044 -44 110.144C-44 68.6432 10.6213 35 78 35Z"/>
+        </g>
+        <path id="sealArc" d="M 38 75 A 58 58 0 0 1 118 75" fill="none"/>
+        <text class="seal-text" text-anchor="middle"><textPath href="#sealArc" startOffset="50%">EN ÇOK SATAN</textPath></text>
+      </symbol>
+    </svg>
+
     <!-- ░░ HEADER ░░ -->
     <header class="site-header" id="site-header">
       <div class="hdr-inner">
@@ -609,131 +624,103 @@
           </div>
         </div>
 
-        <!-- FLAVOR CARDS -->
-        <div class="flavor-grid">
-          <!-- Card 01: Mango -->
-          <div class="flavor-card fc-mango">
-            <div class="fc-header">
-              <h3 class="fc-name">MANGO</h3>
-              <p class="fc-badge">+ dondurularak kurutulmuş</p>
+        <div class="pl-grid sp-grid">
+          <article class="sp-card" data-flavor="mango">
+            <div class="sp-frame">
+              <img src="assets/mango.png" alt="Snab's Mango Dilimleri" class="sp-img" loading="lazy" />
             </div>
-            <div class="fc-visual">
-              <img
-                src="assets/mango.png"
-                alt="Snab's Mango Dilimleri"
-                class="fc-img"
-              />
-            </div>
-            <div class="fc-cta">
-              <div class="fc-cta-default">
-                <span class="fc-cta-label">Mango Dilimleri</span>
-                <span class="fc-cta-price">₺89</span>
+            <div class="sp-foot">
+              <div class="sp-split">
+                <span class="sp-name">Mango Dilimleri</span>
+                <span class="sp-price">₺89</span>
               </div>
-              <div class="fc-cta-hover">
-                <select class="fc-qty-select" aria-label="Adet seç">
-                  <option value="1">1 adet</option>
-                  <option value="2">2 adet</option>
-                  <option value="3">3 adet</option>
-                  <option value="4">4 adet</option>
-                  <option value="5">5 adet</option>
-                </select>
-                <button class="fc-add-btn">Sepete Ekle — ₺89</button>
+              <div class="sp-stack">
+                <div class="sp-m-head">
+                  <span class="sp-m-name">Mango Dilimleri</span>
+                </div>
+                <div class="sp-m-actions">
+                  <span class="sp-m-action-price">₺89</span>
+                  <button class="vpc-add" data-price="89" aria-label="Sepete ekle"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg></button>
+                </div>
+              </div>
+              <div class="sp-hover">
+                <button class="sp-cta vpc-add" data-price="89">Sepete Ekle</button>
               </div>
             </div>
-          </div>
+          </article>
 
-          <!-- Card 02: Çilek -->
-          <div class="flavor-card fc-cilek">
-            <div class="fc-header">
-              <h3 class="fc-name">ÇİLEK</h3>
-              <p class="fc-badge">+ dondurularak kurutulmuş</p>
+          <article class="sp-card" data-flavor="cilek">
+            <svg class="sp-seal" role="img" aria-label="En çok satan"><use href="#seal" /></svg>
+            <div class="sp-frame">
+              <img src="assets/cilek.png" alt="Snab's Çilek Dilimleri" class="sp-img" loading="lazy" />
             </div>
-            <div class="fc-visual">
-              <img
-                src="assets/cilek.png"
-                alt="Snab's Çilek Dilimleri"
-                class="fc-img"
-              />
-            </div>
-            <div class="fc-cta">
-              <div class="fc-cta-default">
-                <span class="fc-cta-label">Çilek Dilimleri</span>
-                <span class="fc-cta-price">₺89</span>
+            <div class="sp-foot">
+              <div class="sp-split">
+                <span class="sp-name">Çilek Dilimleri</span>
+                <span class="sp-price">₺89</span>
               </div>
-              <div class="fc-cta-hover">
-                <select class="fc-qty-select" aria-label="Adet seç">
-                  <option value="1">1 adet</option>
-                  <option value="2">2 adet</option>
-                  <option value="3">3 adet</option>
-                  <option value="4">4 adet</option>
-                  <option value="5">5 adet</option>
-                </select>
-                <button class="fc-add-btn">Sepete Ekle — ₺89</button>
+              <div class="sp-stack">
+                <div class="sp-m-head">
+                  <span class="sp-m-name">Çilek Dilimleri</span>
+                </div>
+                <div class="sp-m-actions">
+                  <span class="sp-m-action-price">₺89</span>
+                  <button class="vpc-add" data-price="89" aria-label="Sepete ekle"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg></button>
+                </div>
+              </div>
+              <div class="sp-hover">
+                <button class="sp-cta vpc-add" data-price="89">Sepete Ekle</button>
               </div>
             </div>
-          </div>
+          </article>
 
-          <!-- Card 03: İncir -->
-          <div class="flavor-card fc-incir">
-            <div class="fc-header">
-              <h3 class="fc-name">İNCİR</h3>
-              <p class="fc-badge">+ antioksidan destek</p>
+          <article class="sp-card" data-flavor="incir">
+            <div class="sp-frame">
+              <img src="assets/cilek.png" alt="Snab's İncir Dilimleri" class="sp-img" loading="lazy" />
             </div>
-            <div class="fc-visual">
-              <img
-                src="assets/cilek.png"
-                alt="Snab's İncir Dilimleri"
-                class="fc-img"
-              />
-            </div>
-            <div class="fc-cta">
-              <div class="fc-cta-default">
-                <span class="fc-cta-label">İncir Dilimleri</span>
-                <span class="fc-cta-price">₺95</span>
+            <div class="sp-foot">
+              <div class="sp-split">
+                <span class="sp-name">İncir Dilimleri</span>
+                <span class="sp-price">₺95</span>
               </div>
-              <div class="fc-cta-hover">
-                <select class="fc-qty-select" aria-label="Adet seç">
-                  <option value="1">1 adet</option>
-                  <option value="2">2 adet</option>
-                  <option value="3">3 adet</option>
-                  <option value="4">4 adet</option>
-                  <option value="5">5 adet</option>
-                </select>
-                <button class="fc-add-btn">Sepete Ekle — ₺95</button>
+              <div class="sp-stack">
+                <div class="sp-m-head">
+                  <span class="sp-m-name">İncir Dilimleri</span>
+                </div>
+                <div class="sp-m-actions">
+                  <span class="sp-m-action-price">₺95</span>
+                  <button class="vpc-add" data-price="95" aria-label="Sepete ekle"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg></button>
+                </div>
+              </div>
+              <div class="sp-hover">
+                <button class="sp-cta vpc-add" data-price="95">Sepete Ekle</button>
               </div>
             </div>
-          </div>
+          </article>
 
-          <!-- Card 04: Mix -->
-          <div class="flavor-card fc-mix-card">
-            <div class="fc-header">
-              <h3 class="fc-name">MIX</h3>
-              <p class="fc-badge">çilek + muz + ananas</p>
+          <article class="sp-card" data-flavor="mix">
+            <div class="sp-frame">
+              <img src="assets/mango.png" alt="Snab's Mix Paketi" class="sp-img" loading="lazy" />
             </div>
-            <div class="fc-visual">
-              <img
-                src="assets/mango.png"
-                alt="Snab's Mix Dilimleri"
-                class="fc-img"
-              />
-            </div>
-            <div class="fc-cta">
-              <div class="fc-cta-default">
-                <span class="fc-cta-label">Mix Paketi</span>
-                <span class="fc-cta-price">₺99</span>
+            <div class="sp-foot">
+              <div class="sp-split">
+                <span class="sp-name">Mix Paketi</span>
+                <span class="sp-price">₺99</span>
               </div>
-              <div class="fc-cta-hover">
-                <select class="fc-qty-select" aria-label="Adet seç">
-                  <option value="1">1 adet</option>
-                  <option value="2">2 adet</option>
-                  <option value="3">3 adet</option>
-                  <option value="4">4 adet</option>
-                  <option value="5">5 adet</option>
-                </select>
-                <button class="fc-add-btn">Sepete Ekle — ₺99</button>
+              <div class="sp-stack">
+                <div class="sp-m-head">
+                  <span class="sp-m-name">Mix Paketi</span>
+                </div>
+                <div class="sp-m-actions">
+                  <span class="sp-m-action-price">₺99</span>
+                  <button class="vpc-add" data-price="99" aria-label="Sepete ekle"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg></button>
+                </div>
+              </div>
+              <div class="sp-hover">
+                <button class="sp-cta vpc-add" data-price="99">Sepete Ekle</button>
               </div>
             </div>
-          </div>
+          </article>
         </div>
       </section>
 
@@ -1346,5 +1333,7 @@
     </footer>
 
     <script src="assets/js/main.js" defer></script>
+    <script src="assets/js/cart-burst.js" defer></script>
+    <script src="assets/js/cart-add.js" defer></script>
   </body>
 </html>
