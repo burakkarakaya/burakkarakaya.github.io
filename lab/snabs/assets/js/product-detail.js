@@ -107,6 +107,7 @@
   var qtyPlus = $("pdpQtyPlus");
   var stickyPrice = $("pdpStickyPrice");
   var stickyName = $("pdpStickyName");
+  var stickyThumb = $("pdpStickyThumb");
   var titleEl = $("pdpTitle");
   var qty = 1;
   var packPrice = 89;
@@ -166,6 +167,10 @@
       var price = parseInt(v.getAttribute("data-price"), 10);
       if (name && titleEl) titleEl.textContent = name;
       if (name && stickyName) stickyName.textContent = name;
+      if (stickyThumb) {
+        var vImg = v.querySelector("img");
+        if (vImg) stickyThumb.src = vImg.src;
+      }
       if (!isNaN(price) && packs[0]) {
         packs[0].setAttribute("data-price", String(price));
         var pp = packs[0].querySelector(".pdp-pack-price");
@@ -205,24 +210,27 @@
 
   if (addBtn) addBtn.addEventListener("click", function () { doAdd(addBtn); });
 
+  /* Basit metin butonları (güven kartı + sticky) — kendi "Ekleniyor/Eklendi" geri bildirimi */
+  function addToCartSimple(btn) {
+    if (!btn || btn.dataset.busy) return;
+    btn.dataset.busy = "1";
+    var prev = btn.textContent.trim();
+    btn.textContent = "Ekleniyor...";
+    setTimeout(function () {
+      btn.textContent = "Eklendi ✓";
+      bumpBadge(qty);
+      if (window.cartBurstFromBtn) window.cartBurstFromBtn(btn);
+      setTimeout(function () {
+        btn.textContent = prev;
+        delete btn.dataset.busy;
+      }, 1000);
+    }, 600);
+  }
+
   /* Güven kartındaki "Hemen Sepete Ekle" — doğrudan sepete ekler */
   var confidenceCta = $("pdpConfidenceCta");
   if (confidenceCta) {
-    confidenceCta.addEventListener("click", function () {
-      if (confidenceCta.dataset.busy) return;
-      confidenceCta.dataset.busy = "1";
-      var prev = confidenceCta.textContent.trim();
-      confidenceCta.textContent = "Ekleniyor...";
-      setTimeout(function () {
-        confidenceCta.textContent = "Eklendi ✓";
-        bumpBadge(qty);
-        if (window.cartBurstFromBtn) window.cartBurstFromBtn(confidenceCta);
-        setTimeout(function () {
-          confidenceCta.textContent = prev;
-          delete confidenceCta.dataset.busy;
-        }, 1000);
-      }, 600);
-    });
+    confidenceCta.addEventListener("click", function () { addToCartSimple(confidenceCta); });
   }
 
   /* ── Benzer lezzetler scroll ────────────────────────────── */
@@ -250,7 +258,7 @@
     }, { threshold: 0 });
     io.observe(addBtn);
   }
-  if (stickyAdd) stickyAdd.addEventListener("click", function () { doAdd(stickyAdd); });
+  if (stickyAdd) stickyAdd.addEventListener("click", function () { addToCartSimple(stickyAdd); });
 
   syncPrices();
 })();
