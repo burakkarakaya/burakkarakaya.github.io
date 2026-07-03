@@ -1,0 +1,617 @@
+/* ============================================================
+   SNAB'S — PRODUCT DETAIL PAGE v2
+   OHME-inspired · full-width · large cards · premium D2C
+   Referans: ohmefoods.com product pages
+   ============================================================ */
+
+@import url("product-detail.css");
+
+/* ─── Design System — Full Width ─── */
+.pdp-page--v2 {
+  /* Gutter-only layout — no narrow max-width cap */
+  --pdp-gutter: clamp(24px, 4vw, 56px);
+  --pdp-gutter-sm: clamp(16px, 3vw, 32px);
+  --pdp-edge: 16px;
+
+  /* Layout edge tokens — media query ile güncellenir */
+  --pdp-hero-margin-right: var(--pdp-gutter);
+  --pdp-section-pad-left: var(--pdp-gutter);
+  --pdp-section-pad-right: var(--pdp-gutter);
+  --pdp-showcase-pad-left: var(--pdp-gutter);
+  --pdp-showcase-pad-right: var(--pdp-gutter);
+  --pdp-scroll-pad: var(--pdp-edge); /* yatay scroll inset — snap uyumlu */
+  --pdp-scroll-pad-block: 14px;      /* hover lift + gölge için dikey alan */
+  --pdp-scroll-pad-block-lg: 20px;   /* recipe kartları -8px kalkıyor */
+
+  /* Dikey ritim — ince ayar */
+  --pdp-section-y-lg: clamp(48px, 5vw, 68px);
+  --pdp-section-y: clamp(36px, 4vw, 52px);
+  --pdp-section-y-sm: clamp(20px, 2.5vw, 32px);
+  --pdp-section-y-tight: clamp(32px, 3.5vw, 44px);
+  --pdp-section-hdr-gap: clamp(22px, 2.5vw, 28px);
+
+  /* Yüzeyler — ara ton ile yumuşak geçiş */
+  --pdp-surface: #fff8e7;
+  --pdp-surface-mid: #fff6eb;
+  --pdp-surface-alt: var(--cream);
+  --pdp-surface-warm: #fff4e8;
+
+  /* 8pt spacing */
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-5: 48px;
+  --space-6: 64px;
+  --space-7: 96px;
+  --space-8: 128px;
+
+  /* Card scale — OHME uses oversized product cards */
+  --pdp-card-width: clamp(300px, 28vw, 420px);
+  --pdp-card-min-h: 580px;
+  --pdp-recipe-width: clamp(280px, 24vw, 360px);
+
+  /* Typography — bolder hierarchy at large sizes */
+  --pdp-text-h1: clamp(2rem, 4.5vw, 3.5rem);
+  --pdp-text-h2: clamp(2.25rem, 5vw, 4.25rem);
+  --pdp-text-body-lg: clamp(1.0625rem, 1.25vw, 1.25rem);
+  --pdp-lh-body: 1.72;
+  --pdp-lh-heading: 1.06;
+
+  background: var(--pdp-surface-alt);
+}
+
+/* Kill narrow container — edge tokens ile hizala */
+.pdp-page--v2 .container {
+  max-width: none;
+  width: 100%;
+  margin-inline: auto;
+  padding-left: var(--pdp-section-pad-left);
+  padding-right: var(--pdp-section-pad-right);
+  box-sizing: border-box;
+}
+
+/* Header — full-width gutter (footer style.css'ten gelir, override yok) */
+body:has(.pdp-page--v2) .hdr-inner {
+  max-width: none;
+  padding-inline: var(--pdp-gutter);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   HERO — Full-bleed OHME layout
+   ═══════════════════════════════════════════════════════════ */
+.pdp-page--v2 .pdp-product {
+  padding: clamp(88px, 10vh, 116px) 0 var(--pdp-section-y-tight);
+  background: var(--pdp-surface);
+}
+
+.pdp-page--v2 .pdp-product__card {
+  margin-right: var(--pdp-hero-margin-right);
+  margin-left: 0;
+  border-left: none;
+  border-radius: 0 2.5rem 2.5rem 0;
+}
+
+@media (min-width: 900px) {
+  .pdp-page--v2 {
+    --pdp-hero-margin-right: var(--pdp-edge);
+    --pdp-section-pad-left: var(--pdp-edge);
+    --pdp-section-pad-right: var(--pdp-edge);
+    --pdp-showcase-pad-left: var(--pdp-edge);
+    --pdp-showcase-pad-right: var(--pdp-edge);
+  }
+
+  .pdp-page--v2 .pdp-product__layout {
+    grid-template-columns: 1.12fr 0.88fr;
+  }
+
+  /* Galeri — thumb & ok butonları 16px */
+  .pdp-page--v2 .pdp-product__thumbs {
+    top: var(--pdp-edge);
+    left: var(--pdp-edge);
+    gap: var(--space-2);
+  }
+
+  .pdp-page--v2 .pdp-product__thumb {
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 10px;
+  }
+
+  .pdp-page--v2 .pdp-gallery-arrows {
+    left: var(--pdp-edge);
+    right: var(--pdp-edge);
+    bottom: var(--pdp-edge);
+  }
+
+  /* Showcase — tab + kart hero genişliğinde */
+  .pdp-page--v2 .pdp-showcase__tabs {
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+  }
+
+  .pdp-page--v2 .pdp-showcase__tab {
+    flex: 0 0 auto;
+  }
+
+  .pdp-page--v2 .pdp-showcase__card {
+    width: 100%;
+  }
+
+  .pdp-page--v2 .pdp-showcase__panel.is-active {
+    grid-template-columns: 1.1fr 0.9fr;
+  }
+
+  .pdp-page--v2 .pdp-showcase__media {
+    min-height: clamp(360px, 42vw, 560px);
+  }
+
+  .pdp-page--v2 .pdp-showcase__text {
+    padding: clamp(40px, 5vw, 80px) clamp(32px, 4vw, 72px);
+  }
+
+  .pdp-page--v2 .pdp-product__details {
+    padding: clamp(32px, 3vw, 56px) clamp(28px, 3vw, 48px) clamp(24px, 2vw, 40px);
+  }
+
+  .pdp-page--v2 .pdp-faq-grid {
+    grid-template-columns: 0.75fr 1.25fr;
+  }
+}
+
+@media (min-width: 1440px) {
+  .pdp-page--v2 .pdp-product__layout {
+    grid-template-columns: 1.15fr 0.85fr;
+  }
+}
+
+.pdp-page--v2 .pdp-product__title {
+  font-size: var(--pdp-text-h1);
+  line-height: var(--pdp-lh-heading);
+  max-width: 18ch;
+  margin-bottom: var(--space-2);
+}
+
+.pdp-page--v2 .pdp-product__subheading {
+  font-size: 0.8125rem;
+  letter-spacing: 0.09em;
+  margin-bottom: var(--space-3);
+}
+
+.pdp-page--v2 .pdp-product-desc {
+  font-size: var(--pdp-text-body-lg);
+  line-height: var(--pdp-lh-body);
+  max-width: 48ch;
+  margin-bottom: var(--space-3);
+}
+
+/* Primary CTA — dominant, wide */
+.pdp-page--v2 .pdp-add-btn {
+  height: 58px;
+  min-height: 58px;
+  font-size: 0.875rem;
+  letter-spacing: 0.11em;
+  gap: var(--space-3);
+  box-shadow: 0 4px 18px rgba(217, 58, 40, 0.22);
+  transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+
+.pdp-page--v2 .pdp-add-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(217, 58, 40, 0.28);
+}
+
+.pdp-page--v2 .pdp-add-btn:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 3px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SHOWCASE — hero ile aynı yüzey, kesintisiz akış
+   ═══════════════════════════════════════════════════════════ */
+.pdp-page--v2 .pdp-showcase {
+  padding: 0 0 var(--pdp-section-y-sm);
+  background: linear-gradient(
+    180deg,
+    var(--pdp-surface) 0%,
+    var(--pdp-surface) 55%,
+    var(--pdp-surface-mid) 82%,
+    var(--pdp-surface-warm) 100%
+  );
+}
+
+.pdp-page--v2 .pdp-showcase .container {
+  padding-left: var(--pdp-showcase-pad-left);
+  padding-right: var(--pdp-showcase-pad-right);
+  max-width: none;
+  margin: 0;
+  min-width: 0;
+}
+
+.pdp-page--v2 .pdp-showcase__tab {
+  padding: 14px clamp(20px, 2.5vw, 32px);
+  font-size: clamp(0.68rem, 0.9vw, 0.8rem);
+}
+
+.pdp-page--v2 .pdp-showcase__headline {
+  font-size: var(--pdp-text-h2);
+  line-height: var(--pdp-lh-heading);
+  margin-bottom: var(--pdp-section-hdr-gap);
+}
+
+.pdp-page--v2 .pdp-showcase__body {
+  font-size: var(--pdp-text-body-lg);
+  line-height: var(--pdp-lh-body);
+  max-width: 52ch;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   PICKS — warm yüzey, showcase'den yumuşak geçiş
+   ═══════════════════════════════════════════════════════════ */
+.pdp-page--v2 .pdp-picks {
+  padding: var(--pdp-section-y-sm) 0 var(--pdp-section-y);
+  background: linear-gradient(
+    180deg,
+    var(--pdp-surface-warm) 0%,
+    var(--pdp-surface-warm) 50%,
+    var(--pdp-surface-mid) 78%,
+    var(--pdp-surface-alt) 100%
+  );
+}
+
+.pdp-page--v2 .pdp-picks-hdr {
+  margin-bottom: var(--pdp-section-hdr-gap);
+}
+
+.pdp-page--v2 .pdp-picks-hdr .section-title {
+  font-size: var(--pdp-text-h2);
+  line-height: var(--pdp-lh-heading);
+}
+
+.pdp-page--v2 .pdp-picks-scroll {
+  padding: 0 var(--pdp-scroll-pad);
+  scroll-padding-inline: var(--pdp-scroll-pad);
+  overflow-x: auto;
+}
+
+.pdp-page--v2 .pdp-picks-track {
+  padding-inline: 0;
+  padding-block: var(--pdp-scroll-pad-block);
+  gap: clamp(20px, 2.5vw, 32px);
+}
+
+.pdp-page--v2 .pdp-picks-track .sp-card {
+  width: var(--pdp-card-width);
+  min-height: var(--pdp-card-min-h);
+  border-radius: 26px;
+}
+
+.pdp-page--v2 .pdp-picks-track .sp-frame {
+  min-height: clamp(420px, 38vw, 520px);
+  padding: 32px 16px 20px;
+}
+
+.pdp-page--v2 .pdp-picks-track .sp-img {
+  height: clamp(320px, 30vw, 460px);
+}
+
+.pdp-page--v2 .pdp-picks-track .sp-name {
+  font-size: clamp(0.78rem, 1vw, 0.9rem);
+  padding: 12px 16px;
+}
+
+.pdp-page--v2 .pdp-picks-track .sp-price {
+  font-size: clamp(1rem, 1.2vw, 1.2rem);
+  padding: 12px 18px;
+}
+
+.pdp-page--v2 .pdp-picks-btn {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RECIPES — cream yüzey, picks ile bitişik
+   ═══════════════════════════════════════════════════════════ */
+.pdp-page--v2 .recipes-section {
+  padding: 0 0 var(--pdp-section-y-sm);
+  background: var(--pdp-surface-alt);
+}
+
+.pdp-page--v2 .recipes-hdr {
+  margin-bottom: 0;
+  padding-bottom: var(--pdp-section-hdr-gap);
+}
+
+.pdp-page--v2 .recipes-hdr .section-title {
+  font-size: var(--pdp-text-h2);
+  line-height: var(--pdp-lh-heading);
+}
+
+.pdp-page--v2 .recipes-hdr .section-body {
+  font-size: var(--pdp-text-body-lg);
+  line-height: var(--pdp-lh-body);
+  max-width: 52ch;
+}
+
+.pdp-page--v2 .recipes-scroll {
+  padding: 0 var(--pdp-scroll-pad);
+  scroll-padding-inline: var(--pdp-scroll-pad);
+  overflow-x: auto;
+}
+
+.pdp-page--v2 .recipes-track {
+  gap: clamp(16px, 2vw, 24px);
+  padding-block: var(--pdp-scroll-pad-block-lg);
+}
+
+.pdp-page--v2 .recipe-card {
+  width: var(--pdp-recipe-width);
+  border-radius: 26px;
+}
+
+.pdp-page--v2 .rc-visual {
+  height: clamp(228px, 22vw, 320px);
+}
+
+.pdp-page--v2 .rc-title {
+  font-size: clamp(1rem, 1.1vw, 1.125rem);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   FAQ + CONFIDENCE — recipes ile aynı yüzey, üst boşluk yok
+   ═══════════════════════════════════════════════════════════ */
+.pdp-page--v2 .pdp-faq {
+  padding: var(--pdp-section-y-sm) 0 var(--pdp-section-y);
+  background: var(--pdp-surface-alt);
+}
+
+.pdp-page--v2 .pdp-faq.fq-section {
+  padding: var(--pdp-section-y-sm) 0 var(--pdp-section-y);
+}
+
+.pdp-page--v2 .pdp-faq-hdr {
+  margin-bottom: var(--pdp-section-hdr-gap);
+}
+
+.pdp-page--v2 .pdp-faq-hdr .section-title {
+  font-size: var(--pdp-text-h2);
+  line-height: var(--pdp-lh-heading);
+}
+
+.pdp-page--v2 .pdp-faq-grid {
+  gap: clamp(24px, 3.5vw, 48px);
+}
+
+.pdp-page--v2 .pdp-confidence {
+  padding: clamp(24px, 3.5vw, 44px);
+  border-radius: 24px;
+  background: var(--pdp-surface);
+  box-shadow: 0 1px 0 rgba(217, 58, 40, 0.06);
+}
+
+.pdp-page--v2 .pdp-confidence-title {
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  line-height: var(--pdp-lh-heading);
+}
+
+.pdp-page--v2 .pdp-confidence-list li {
+  font-size: var(--pdp-text-body-lg);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SOCIAL — FAQ ile bitişik cream bloğu
+   ═══════════════════════════════════════════════════════════ */
+.pdp-page--v2 .social-section {
+  padding: var(--pdp-section-y) 0 var(--pdp-section-y-lg);
+  background: linear-gradient(
+    180deg,
+    var(--pdp-surface-alt) 0%,
+    var(--pdp-surface-alt) 92%,
+    var(--cream-warm) 100%
+  );
+  border-top: 1px solid rgba(217, 58, 40, 0.06);
+}
+
+.pdp-page--v2 .social-top {
+  margin-bottom: clamp(20px, 2.5vw, 32px);
+}
+
+.pdp-page--v2 .sc-card {
+  width: clamp(240px, 18vw, 300px);
+  height: clamp(360px, 28vw, 440px);
+  border-radius: 24px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SHARED SECTION TYPOGRAPHY
+   ═══════════════════════════════════════════════════════════ */
+.pdp-page--v2 .section-title {
+  font-size: var(--pdp-text-h2);
+  line-height: var(--pdp-lh-heading);
+  margin-bottom: var(--space-1);
+}
+
+.pdp-page--v2 .overline {
+  font-size: 0.8125rem;
+  letter-spacing: 0.2em;
+  margin-bottom: var(--space-1);
+}
+
+@media (max-width: 899px) {
+  .pdp-page--v2 .pdp-product__main-shell {
+    position: relative;
+    aspect-ratio: 1;
+    flex-shrink: 0;
+    min-width: 0;
+  }
+
+  .pdp-page--v2 .pdp-product__main-wrap {
+    width: 100%;
+    height: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    touch-action: pan-x;
+  }
+
+  .pdp-page--v2 .pdp-product__main-wrap::-webkit-scrollbar {
+    display: none;
+  }
+
+  .pdp-page--v2 .pdp-product__main-track {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    height: 100%;
+    min-height: inherit;
+  }
+
+  .pdp-page--v2 .pdp-product__main-slide {
+    flex: 0 0 100%;
+    width: 100%;
+    height: 100%;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    position: relative;
+  }
+
+  .pdp-page--v2 .pdp-product__main-slide .pdp-product__main-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .pdp-page--v2 .pdp-product__main-image--solo {
+    display: none;
+  }
+
+  /* Ok butonları scroll dışında — shell'e sabitlenir */
+  .pdp-page--v2 .pdp-product__main-shell .pdp-gallery-arrows {
+    position: absolute;
+    left: var(--pdp-edge);
+    right: var(--pdp-edge);
+    bottom: var(--pdp-edge);
+    z-index: 10;
+    pointer-events: none;
+  }
+}
+
+@media (min-width: 900px) {
+  .pdp-page--v2 .pdp-product__main-shell {
+    position: relative;
+    height: 100%;
+    min-height: inherit;
+  }
+
+  .pdp-page--v2 .pdp-product__main-track {
+    display: none;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   STICKY BAR — Full width
+   ═══════════════════════════════════════════════════════════ */
+.pdp-page--v2 .pdp-stickybar-inner {
+  max-width: none;
+  padding: var(--space-2) var(--pdp-section-pad-right) var(--space-2) var(--pdp-section-pad-left);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   LARGE VIEWPORT — Prevent stretch, keep premium scale
+   ═══════════════════════════════════════════════════════════ */
+@media (min-width: 1920px) {
+  .pdp-page--v2 {
+    --pdp-gutter: 64px;
+    --pdp-card-width: 400px;
+    --pdp-recipe-width: 340px;
+  }
+}
+
+@media (min-width: 2560px) {
+  .pdp-page--v2 {
+    --pdp-gutter: 80px;
+    /* Cap card growth so ultra-wide doesn't look stretched */
+    --pdp-card-width: 420px;
+    --pdp-recipe-width: 360px;
+  }
+
+  .pdp-page--v2 .pdp-product__layout {
+    grid-template-columns: 1.2fr 0.8fr;
+  }
+}
+
+@media (max-width: 899px) {
+  .pdp-page--v2 {
+    --pdp-hero-margin-right: var(--pdp-gutter-sm);
+    --pdp-section-pad-left: var(--pdp-edge);
+    --pdp-section-pad-right: var(--pdp-edge);
+    --pdp-showcase-pad-left: var(--pdp-edge);
+    --pdp-showcase-pad-right: var(--pdp-gutter-sm);
+    --pdp-scroll-pad: var(--pdp-edge);
+    --pdp-section-y-lg: clamp(40px, 6.5vw, 52px);
+    --pdp-section-y: clamp(32px, 5vw, 44px);
+    --pdp-section-y-sm: clamp(16px, 3vw, 24px);
+    --pdp-section-y-tight: clamp(24px, 4vw, 36px);
+    --pdp-section-hdr-gap: clamp(16px, 2.8vw, 22px);
+  }
+
+  .pdp-page--v2 .pdp-showcase__tabs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 100%;
+  }
+
+  .pdp-page--v2 .pdp-showcase__tab {
+    min-width: 0;
+    padding: 11px 6px;
+    font-size: 0.5625rem;
+    letter-spacing: 0.03em;
+    line-height: 1.2;
+    text-align: center;
+  }
+
+  .pdp-page--v2 .pdp-showcase__text {
+    padding: var(--space-3) var(--pdp-edge);
+  }
+
+  .pdp-page--v2 .pdp-picks-track .sp-card {
+    width: 280px;
+    min-height: 520px;
+  }
+}
+
+@media (max-width: 640px) {
+  .pdp-page--v2 {
+    --pdp-scroll-pad-block: 4px;
+  }
+
+  .pdp-page--v2 .pdp-picks-track .sp-card {
+    width: min(280px, 78vw);
+    min-height: 0;
+    border: none;
+    border-radius: 0;
+    background: transparent !important;
+    overflow: visible;
+    box-shadow: none;
+  }
+
+  .pdp-page--v2 .pdp-picks-track .sp-frame {
+    border: 2.5px solid var(--red);
+    border-radius: 14px;
+    overflow: hidden;
+    min-height: clamp(260px, 64vw, 340px);
+    padding: 18px 10px 16px;
+  }
+
+  .pdp-page--v2 .pdp-picks-track .sp-img {
+    height: clamp(210px, 54vw, 280px);
+    max-width: 100%;
+  }
+}
