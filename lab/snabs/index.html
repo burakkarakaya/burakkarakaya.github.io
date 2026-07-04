@@ -725,7 +725,13 @@
       </section>
 
       <!-- ░░ RECIPES ░░ -->
-      <section class="recipes-section" id="recipes">
+      <section
+        class="scroller recipes-section"
+        id="recipes"
+        data-scroll-nav
+        data-scroll-item=".recipe-card"
+        data-scroll-disable-edges
+      >
         <div class="recipes-hdr container">
           <div class="recipes-hdr-left">
             <p class="overline">Mutfakta</p>
@@ -735,17 +741,17 @@
             </p>
           </div>
           <div class="recipes-nav">
-            <button class="rc-nav-btn rc-prev" id="rcPrev" aria-label="Önceki tarifler">
+            <button class="rc-nav-btn rc-prev scroller__prev" id="rcPrev" aria-label="Önceki tarifler">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
             </button>
-            <button class="rc-nav-btn rc-next" id="rcNext" aria-label="Sonraki tarifler">
+            <button class="rc-nav-btn rc-next scroller__next" id="rcNext" aria-label="Sonraki tarifler">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
             </button>
             <a href="#" class="rc-see-all">↳ Tümünü Gör</a>
           </div>
         </div>
 
-        <div class="recipes-scroll">
+        <div class="recipes-scroll scroller__viewport">
           <div class="recipes-track">
             <article class="recipe-card">
               <div class="rc-visual">
@@ -1332,6 +1338,7 @@
       </div>
     </footer>
 
+    <script src="assets/js/horizontal-scroll-nav.js" defer></script>
     <script src="assets/js/main.js" defer></script>
     <script src="assets/js/cart-burst.js" defer></script>
     <script src="assets/js/cart-add.js" defer></script>

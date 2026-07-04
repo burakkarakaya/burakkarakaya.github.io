@@ -233,18 +233,6 @@
     confidenceCta.addEventListener("click", function () { addToCartSimple(confidenceCta); });
   }
 
-  /* ── Benzer lezzetler scroll ────────────────────────────── */
-  var picksScroll = $("pdpPicksScroll");
-  if (picksScroll && $("pdpPicksPrev") && $("pdpPicksNext")) {
-    var step = 340;
-    $("pdpPicksPrev").addEventListener("click", function () {
-      picksScroll.scrollBy({ left: -step, behavior: "smooth" });
-    });
-    $("pdpPicksNext").addEventListener("click", function () {
-      picksScroll.scrollBy({ left: step, behavior: "smooth" });
-    });
-  }
-
   /* ── Mobil sticky bar ───────────────────────────────────── */
   var stickybar = $("pdpStickybar");
   var stickyAdd = $("pdpStickyAdd");

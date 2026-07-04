@@ -898,7 +898,12 @@
       </section>
 
       <!-- ░░ BENZER LEZZETLER ░░ -->
-      <section class="pdp-picks" aria-label="Benzer lezzetler">
+      <section
+        class="scroller pdp-picks"
+        aria-label="Benzer lezzetler"
+        data-scroll-nav
+        data-scroll-item=".sp-card"
+      >
         <div class="container">
           <div class="pdp-picks-hdr">
             <div>
@@ -907,7 +912,7 @@
             </div>
             <div class="pdp-picks-nav">
               <button
-                class="pdp-picks-btn"
+                class="pdp-picks-btn scroller__prev"
                 id="pdpPicksPrev"
                 type="button"
                 aria-label="Önceki"
@@ -926,7 +931,7 @@
                 </svg>
               </button>
               <button
-                class="pdp-picks-btn"
+                class="pdp-picks-btn scroller__next"
                 id="pdpPicksNext"
                 type="button"
                 aria-label="Sonraki"
@@ -947,7 +952,7 @@
             </div>
           </div>
         </div>
-        <div class="pdp-picks-scroll" id="pdpPicksScroll">
+        <div class="pdp-picks-scroll scroller__viewport" id="pdpPicksScroll">
           <div class="pdp-picks-track">
             <article class="sp-card" data-flavor="cilek">
               <span class="sp-tag is-best">En Çok Satan</span>
@@ -1149,7 +1154,13 @@
       </section>
 
       <!-- ░░ TARİFLER ░░ -->
-      <section class="recipes-section" id="recipes">
+      <section
+        class="scroller recipes-section"
+        id="recipes"
+        data-scroll-nav
+        data-scroll-item=".recipe-card"
+        data-scroll-disable-edges
+      >
         <div class="recipes-hdr container">
           <div class="recipes-hdr-left">
             <p class="overline">Mutfakta</p>
@@ -1160,7 +1171,7 @@
           </div>
           <div class="recipes-nav">
             <button
-              class="rc-nav-btn rc-prev"
+              class="rc-nav-btn rc-prev scroller__prev"
               id="rcPrev"
               aria-label="Önceki tarifler"
             >
@@ -1179,7 +1190,7 @@
               </svg>
             </button>
             <button
-              class="rc-nav-btn rc-next"
+              class="rc-nav-btn rc-next scroller__next"
               id="rcNext"
               aria-label="Sonraki tarifler"
             >
@@ -1200,7 +1211,7 @@
             <a href="recipes-list.html" class="rc-see-all">↳ Tümünü Gör</a>
           </div>
         </div>
-        <div class="recipes-scroll">
+        <div class="recipes-scroll scroller__viewport">
           <div class="recipes-track">
             <article class="recipe-card">
               <div class="rc-visual">
@@ -1858,6 +1869,7 @@
       </div>
     </div>
 
+    <script src="assets/js/horizontal-scroll-nav.js" defer></script>
     <script src="assets/js/main.js" defer></script>
     <script src="assets/js/cart-burst.js" defer></script>
     <script src="assets/js/cart-add.js" defer></script>

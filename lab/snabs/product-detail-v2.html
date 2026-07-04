@@ -22,16 +22,32 @@
     <meta property="og:type" content="product" />
     <meta property="og:locale" content="tr_TR" />
 
+    <link rel="preload" href="assets/mango.png" as="image" fetchpriority="high" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Mouse+Memoirs&family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Mouse+Memoirs&family=DM+Sans:wght@400;600;700;800&family=Playfair+Display:ital,wght@1,700;1,900&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="alternate-product-cards.css" />
-    <link rel="stylesheet" href="faq-content-page.css" />
+    <link rel="stylesheet" href="product-detail.css" />
     <link rel="stylesheet" href="product-detail-v2.css" />
+    <link
+      rel="stylesheet"
+      href="alternate-product-cards.css"
+      media="print"
+      onload="this.media='all'"
+    />
+    <link
+      rel="stylesheet"
+      href="faq-content-page.css"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link rel="stylesheet" href="alternate-product-cards.css" />
+      <link rel="stylesheet" href="faq-content-page.css" />
+    </noscript>
 
     <script type="application/ld+json">
       {
@@ -103,7 +119,7 @@
           <button
             class="hdr-menu-btn"
             id="menuToggle"
-            aria-label="Menüyü aç"
+            aria-labelledby="menuToggleLabel"
             aria-expanded="false"
             aria-controls="navOverlay"
           >
@@ -112,12 +128,19 @@
               <span></span>
               <span></span>
             </span>
-            <span class="menu-label">MENU</span>
+            <span class="menu-label" id="menuToggleLabel">MENU</span>
           </button>
         </div>
 
         <a href="index.html" class="hdr-logo" aria-label="Snab's ana sayfa">
-          <img src="assets/logo.svg" alt="Snab's" class="hdr-logo-img" />
+          <img
+            src="assets/logo.svg"
+            alt="Snab's"
+            class="hdr-logo-img"
+            width="120"
+            height="40"
+            decoding="async"
+          />
         </a>
 
         <div class="hdr-right">
@@ -168,11 +191,18 @@
       class="nav-overlay"
       id="navOverlay"
       aria-hidden="true"
+      inert
       aria-label="Site navigasyonu"
     >
       <div class="nav-overlay-top">
         <a href="index.html" class="nav-overlay-logo" aria-label="Snab's">
-          <img src="assets/logo.svg" alt="Snab's" />
+          <img
+            src="assets/logo.svg"
+            alt="Snab's"
+            width="120"
+            height="40"
+            decoding="async"
+          />
         </a>
         <button class="nav-close-btn" id="navClose" aria-label="Menüyü kapat">
           <svg
@@ -243,6 +273,7 @@
       class="cart-panel"
       id="cartPanel"
       aria-hidden="true"
+      inert
       aria-label="Sepetiniz"
     >
       <div class="cart-panel-inner">
@@ -373,6 +404,11 @@
                       class="pdp-product__main-image pdp-product__main-image--solo is-contain"
                       src="assets/mango.png"
                       alt="Snab's Mango Dilimleri paketi"
+                      width="800"
+                      height="800"
+                      loading="eager"
+                      fetchpriority="high"
+                      decoding="async"
                     />
                   </div>
                   <div class="pdp-gallery-arrows">
@@ -456,7 +492,14 @@
                       data-fit="contain"
                       aria-label="Paket görünümü"
                     >
-                      <img src="assets/mango.png" alt="" />
+                      <img
+                        src="assets/images/gallery/thumbs/mango-pack.png"
+                        alt=""
+                        width="72"
+                        height="72"
+                        loading="eager"
+                        decoding="async"
+                      />
                     </button>
                     <button
                       class="pdp-product__thumb"
@@ -466,8 +509,11 @@
                       aria-label="Yakın çekim"
                     >
                       <img
-                        src="assets/images/gallery/mango-detail-gallery-02.png"
+                        data-src="assets/images/gallery/thumbs/mango-detail-gallery-02.png"
                         alt=""
+                        width="72"
+                        height="72"
+                        decoding="async"
                       />
                     </button>
                     <button
@@ -478,8 +524,11 @@
                       aria-label="Doku"
                     >
                       <img
-                        src="assets/images/gallery/mango-detail-gallery-03.png"
+                        data-src="assets/images/gallery/thumbs/mango-detail-gallery-03.png"
                         alt=""
+                        width="72"
+                        height="72"
+                        decoding="async"
                       />
                     </button>
                     <button
@@ -490,8 +539,11 @@
                       aria-label="Kullanım"
                     >
                       <img
-                        src="assets/images/gallery/mango-detail-gallery-04.png"
+                        data-src="assets/images/gallery/thumbs/mango-detail-gallery-04.png"
                         alt=""
+                        width="72"
+                        height="72"
+                        decoding="async"
                       />
                     </button>
                     <button
@@ -502,8 +554,11 @@
                       aria-label="Lifestyle"
                     >
                       <img
-                        src="assets/images/gallery/mango-detail-gallery-05.png"
+                        data-src="assets/images/gallery/thumbs/mango-detail-gallery-05.png"
                         alt=""
+                        width="72"
+                        height="72"
+                        decoding="async"
                       />
                     </button>
                   </div>
@@ -520,7 +575,12 @@
 
               <div class="pdp-feature-pills">
                 <div class="pdp-feature-pills-track">
-                  <button class="pdp-feature-pill is-active" type="button">
+                  <button
+                    class="pdp-feature-pill is-active"
+                    type="button"
+                    aria-label="Sadece gerçek meyve"
+                    aria-pressed="true"
+                  >
                     <span class="pdp-feature-pill__icon">
                       <svg
                         viewBox="0 0 52 52"
@@ -546,7 +606,12 @@
                       >
                     </span>
                   </button>
-                  <button class="pdp-feature-pill" type="button">
+                  <button
+                    class="pdp-feature-pill"
+                    type="button"
+                    aria-label="Sıfır eklenmiş şeker"
+                    aria-pressed="false"
+                  >
                     <span class="pdp-feature-pill__icon">
                       <svg
                         viewBox="0 0 52 52"
@@ -568,7 +633,12 @@
                       >
                     </span>
                   </button>
-                  <button class="pdp-feature-pill" type="button">
+                  <button
+                    class="pdp-feature-pill"
+                    type="button"
+                    aria-label="Dondurularak kurutulmuş"
+                    aria-pressed="false"
+                  >
                     <span class="pdp-feature-pill__icon">
                       <svg
                         viewBox="0 0 52 52"
@@ -594,7 +664,12 @@
                       >
                     </span>
                   </button>
-                  <button class="pdp-feature-pill" type="button">
+                  <button
+                    class="pdp-feature-pill"
+                    type="button"
+                    aria-label="Katkı maddesi yok"
+                    aria-pressed="false"
+                  >
                     <span class="pdp-feature-pill__icon">
                       <svg
                         viewBox="0 0 52 52"
@@ -638,7 +713,13 @@
                   data-price="89"
                   data-images='[{"src":"assets/mango.png","fit":"contain","alt":"Snab%27s Mango Dilimleri"},{"src":"assets/images/gallery/mango-detail-gallery-02.png","fit":"cover","alt":"Yakın çekim"},{"src":"assets/images/gallery/mango-detail-gallery-03.png","fit":"cover","alt":"Doku"},{"src":"assets/images/gallery/mango-detail-gallery-04.png","fit":"cover","alt":"Kullanım"},{"src":"assets/images/gallery/mango-detail-gallery-05.png","fit":"cover","alt":"Lifestyle"}]'
                 >
-                  <img src="assets/mango.png" alt="Mango" />
+                  <img
+                    data-src="assets/mango.png"
+                    alt="Mango"
+                    width="52"
+                    height="52"
+                    decoding="async"
+                  />
                 </button>
                 <button
                   class="pdp-variant"
@@ -647,7 +728,13 @@
                   data-price="89"
                   data-images='[{"src":"assets/cilek.png","fit":"contain","alt":"Çilek Dilimleri"},{"src":"https://www.ohmefoods.com/cdn/shop/articles/IMG_8433_cde3cad6-6a93-43c2-896a-ac7a5b02f547_600x.jpg?v=1778961560","fit":"cover","alt":"Kullanım"}]'
                 >
-                  <img src="assets/cilek.png" alt="Çilek" />
+                  <img
+                    data-src="assets/cilek.png"
+                    alt="Çilek"
+                    width="52"
+                    height="52"
+                    decoding="async"
+                  />
                 </button>
                 <button
                   class="pdp-variant"
@@ -656,7 +743,13 @@
                   data-price="79"
                   data-images='[{"src":"assets/cilek.png","fit":"contain","alt":"İncir Dilimleri"},{"src":"https://www.ohmefoods.com/cdn/shop/articles/IMG_0091_Medium_8e229490-ae31-46cd-85ad-7a905bc5eda0_600x.jpg?v=1779066291","fit":"cover","alt":"Kullanım"}]'
                 >
-                  <img src="assets/cilek.png" alt="İncir" />
+                  <img
+                    data-src="assets/cilek.png"
+                    alt="İncir"
+                    width="52"
+                    height="52"
+                    decoding="async"
+                  />
                 </button>
                 <button
                   class="pdp-variant"
@@ -665,7 +758,13 @@
                   data-price="99"
                   data-images='[{"src":"assets/mango.png","fit":"contain","alt":"Mix Paketi"},{"src":"assets/cilek.png","fit":"contain","alt":"İçerik"}]'
                 >
-                  <img src="assets/mango.png" alt="Mix" />
+                  <img
+                    data-src="assets/mango.png"
+                    alt="Mix"
+                    width="52"
+                    height="52"
+                    decoding="async"
+                  />
                 </button>
               </div>
 
@@ -914,9 +1013,11 @@
               </div>
               <div class="pdp-showcase__media">
                 <img
-                  src="assets/images/gallery/mango-detail-gallery-05.png"
+                  data-src="assets/images/gallery/mango-detail-gallery-05.png"
                   alt="Kaselerde Snab's dondurularak kurutulmuş mango dilimleri"
-                  loading="lazy"
+                  width="1200"
+                  height="900"
+                  decoding="async"
                 />
               </div>
             </div>
@@ -940,9 +1041,11 @@
               </div>
               <div class="pdp-showcase__media">
                 <img
-                  src="assets/images/gallery/mango-detail-gallery-03.png"
+                  data-src="assets/images/gallery/mango-detail-gallery-03.png"
                   alt="Snab's Mango Dilimleri paketi arkası — besin değerleri tablosu"
-                  loading="lazy"
+                  width="1200"
+                  height="900"
+                  decoding="async"
                 />
               </div>
             </div>
@@ -966,9 +1069,11 @@
               </div>
               <div class="pdp-showcase__media">
                 <img
-                  src="https://www.ohmefoods.com/cdn/shop/articles/922A3752_Medium_8e38e1fa-9d31-4ebe-84f8-d8a773103ff7_600x.jpg?v=1779066263"
+                  data-src="https://www.ohmefoods.com/cdn/shop/articles/922A3752_Medium_8e38e1fa-9d31-4ebe-84f8-d8a773103ff7_600x.jpg?v=1779066263"
                   alt="Mango ile hazırlanmış smoothie bowl"
-                  loading="lazy"
+                  width="600"
+                  height="400"
+                  decoding="async"
                 />
               </div>
             </div>
@@ -977,7 +1082,12 @@
       </section>
 
       <!-- ░░ BENZER LEZZETLER ░░ -->
-      <section class="pdp-picks" aria-label="Benzer lezzetler">
+      <section
+        class="scroller pdp-picks"
+        aria-label="Benzer lezzetler"
+        data-scroll-nav
+        data-scroll-item=".sp-card"
+      >
         <div class="container">
           <div class="pdp-picks-hdr">
             <div>
@@ -986,7 +1096,7 @@
             </div>
             <div class="pdp-picks-nav">
               <button
-                class="pdp-picks-btn"
+                class="pdp-picks-btn scroller__prev"
                 id="pdpPicksPrev"
                 type="button"
                 aria-label="Önceki"
@@ -1005,7 +1115,7 @@
                 </svg>
               </button>
               <button
-                class="pdp-picks-btn"
+                class="pdp-picks-btn scroller__next"
                 id="pdpPicksNext"
                 type="button"
                 aria-label="Sonraki"
@@ -1026,16 +1136,18 @@
             </div>
           </div>
         </div>
-        <div class="pdp-picks-scroll" id="pdpPicksScroll">
+        <div class="pdp-picks-scroll scroller__viewport" id="pdpPicksScroll">
           <div class="pdp-picks-track">
             <article class="sp-card" data-flavor="cilek">
               <span class="sp-tag is-best">En Çok Satan</span>
               <div class="sp-frame">
                 <img
-                  src="assets/cilek.png"
+                  data-src="assets/cilek.png"
                   alt="Snab's Çilek Dilimleri"
                   class="sp-img"
-                  loading="lazy"
+                  width="800"
+                  height="800"
+                  decoding="async"
                 />
               </div>
               <div class="sp-foot">
@@ -1080,10 +1192,12 @@
               <span class="sp-tag is-disc">İndirim</span>
               <div class="sp-frame">
                 <img
-                  src="assets/cilek.png"
+                  data-src="assets/cilek.png"
                   alt="Snab's İncir Dilimleri"
                   class="sp-img"
-                  loading="lazy"
+                  width="800"
+                  height="800"
+                  decoding="async"
                 />
               </div>
               <div class="sp-foot">
@@ -1132,10 +1246,12 @@
             <article class="sp-card" data-flavor="mix">
               <div class="sp-frame">
                 <img
-                  src="assets/mango.png"
+                  data-src="assets/mango.png"
                   alt="Snab's Muz Dilimleri"
                   class="sp-img"
-                  loading="lazy"
+                  width="800"
+                  height="800"
+                  decoding="async"
                 />
               </div>
               <div class="sp-foot">
@@ -1179,10 +1295,12 @@
             <article class="sp-card" data-flavor="mix">
               <div class="sp-frame">
                 <img
-                  src="assets/mango.png"
+                  data-src="assets/mango.png"
                   alt="Snab's Mix Paketi"
                   class="sp-img"
-                  loading="lazy"
+                  width="800"
+                  height="800"
+                  decoding="async"
                 />
               </div>
               <div class="sp-foot">
@@ -1228,7 +1346,13 @@
       </section>
 
       <!-- ░░ TARİFLER ░░ -->
-      <section class="recipes-section" id="recipes">
+      <section
+        class="scroller recipes-section"
+        id="recipes"
+        data-scroll-nav
+        data-scroll-item=".recipe-card"
+        data-scroll-disable-edges
+      >
         <div class="recipes-hdr container">
           <div class="recipes-hdr-left">
             <p class="overline">Mutfakta</p>
@@ -1239,7 +1363,7 @@
           </div>
           <div class="recipes-nav">
             <button
-              class="rc-nav-btn rc-prev"
+              class="rc-nav-btn rc-prev scroller__prev"
               id="rcPrev"
               aria-label="Önceki tarifler"
             >
@@ -1258,7 +1382,7 @@
               </svg>
             </button>
             <button
-              class="rc-nav-btn rc-next"
+              class="rc-nav-btn rc-next scroller__next"
               id="rcNext"
               aria-label="Sonraki tarifler"
             >
@@ -1279,15 +1403,17 @@
             <a href="recipes-list.html" class="rc-see-all">↳ Tümünü Gör</a>
           </div>
         </div>
-        <div class="recipes-scroll">
+        <div class="recipes-scroll scroller__viewport">
           <div class="recipes-track">
             <article class="recipe-card">
               <div class="rc-visual">
                 <img
-                  src="https://www.ohmefoods.com/cdn/shop/articles/922A3752_Medium_8e38e1fa-9d31-4ebe-84f8-d8a773103ff7_600x.jpg?v=1779066263"
+                  data-src="https://www.ohmefoods.com/cdn/shop/articles/922A3752_Medium_8e38e1fa-9d31-4ebe-84f8-d8a773103ff7_600x.jpg?v=1779066263"
                   alt="Tropikal Smoothie Bowl"
                   class="rc-img"
-                  loading="lazy"
+                  width="600"
+                  height="400"
+                  decoding="async"
                 />
                 <span class="rc-cat">Smoothie</span>
               </div>
@@ -1306,10 +1432,12 @@
             <article class="recipe-card">
               <div class="rc-visual">
                 <img
-                  src="https://www.ohmefoods.com/cdn/shop/articles/IMG_0091_Medium_8e229490-ae31-46cd-85ad-7a905bc5eda0_600x.jpg?v=1779066291"
+                  data-src="https://www.ohmefoods.com/cdn/shop/articles/IMG_0091_Medium_8e229490-ae31-46cd-85ad-7a905bc5eda0_600x.jpg?v=1779066291"
                   alt="Mango Cheesecake"
                   class="rc-img"
-                  loading="lazy"
+                  width="600"
+                  height="400"
+                  decoding="async"
                 />
                 <span class="rc-cat">Tatlılar</span>
               </div>
@@ -1328,10 +1456,12 @@
             <article class="recipe-card">
               <div class="rc-visual">
                 <img
-                  src="https://www.ohmefoods.com/cdn/shop/articles/IMG_8433_cde3cad6-6a93-43c2-896a-ac7a5b02f547_600x.jpg?v=1778961560"
+                  data-src="https://www.ohmefoods.com/cdn/shop/articles/IMG_8433_cde3cad6-6a93-43c2-896a-ac7a5b02f547_600x.jpg?v=1778961560"
                   alt="Kahvaltılık Yoğurt Bark"
                   class="rc-img"
-                  loading="lazy"
+                  width="600"
+                  height="400"
+                  decoding="async"
                 />
                 <span class="rc-cat">Kahvaltı</span>
               </div>
@@ -1350,10 +1480,12 @@
             <article class="recipe-card">
               <div class="rc-visual">
                 <img
-                  src="https://www.ohmefoods.com/cdn/shop/articles/4FAF640E-B32E-4903-BCB7-7F34A71DCA08_6d10d412-f296-4472-8e40-28a0be7d593c_600x.jpg?v=1778961823"
+                  data-src="https://www.ohmefoods.com/cdn/shop/articles/4FAF640E-B32E-4903-BCB7-7F34A71DCA08_6d10d412-f296-4472-8e40-28a0be7d593c_600x.jpg?v=1778961823"
                   alt="Ejder Meyveli Bowl"
                   class="rc-img"
-                  loading="lazy"
+                  width="600"
+                  height="400"
+                  decoding="async"
                 />
                 <span class="rc-cat">Smoothie</span>
               </div>
@@ -1372,10 +1504,12 @@
             <article class="recipe-card">
               <div class="rc-visual">
                 <img
-                  src="https://www.ohmefoods.com/cdn/shop/articles/IMG_0038_Medium_b4bc8843-1cfe-485e-aed7-05a243ff3aaf_600x.jpg?v=1778963451"
+                  data-src="https://www.ohmefoods.com/cdn/shop/articles/IMG_0038_Medium_b4bc8843-1cfe-485e-aed7-05a243ff3aaf_600x.jpg?v=1778963451"
                   alt="Meyve Cipsi + Dip"
                   class="rc-img"
-                  loading="lazy"
+                  width="600"
+                  height="400"
+                  decoding="async"
                 />
                 <span class="rc-cat">Atıştırmalık</span>
               </div>
@@ -1616,10 +1750,12 @@
             <div class="sc-card sc-photo">
               <div class="sc-img-wrap">
                 <img
-                  src="https://www.ohmefoods.com/cdn/shop/articles/922A3752_Medium_8e38e1fa-9d31-4ebe-84f8-d8a773103ff7_600x.jpg?v=1779066263"
+                  data-src="https://www.ohmefoods.com/cdn/shop/articles/922A3752_Medium_8e38e1fa-9d31-4ebe-84f8-d8a773103ff7_600x.jpg?v=1779066263"
                   alt=""
                   class="sc-img"
-                  loading="lazy"
+                  width="258"
+                  height="370"
+                  decoding="async"
                 />
                 <div class="sc-play" aria-hidden="true">▶</div>
                 <div class="sc-caption">
@@ -1637,10 +1773,12 @@
             <div class="sc-card sc-photo">
               <div class="sc-img-wrap">
                 <img
-                  src="https://www.ohmefoods.com/cdn/shop/articles/IMG_7377_4be65337-13d5-4579-bcb7-3be36d3f77a4_600x.jpg?v=1778961988"
+                  data-src="https://www.ohmefoods.com/cdn/shop/articles/IMG_7377_4be65337-13d5-4579-bcb7-3be36d3f77a4_600x.jpg?v=1778961988"
                   alt=""
                   class="sc-img"
-                  loading="lazy"
+                  width="258"
+                  height="370"
+                  decoding="async"
                 />
                 <div class="sc-caption">
                   <p>Çikolata + meyve. Her zaman doğru 🍫</p>
@@ -1650,10 +1788,12 @@
             <div class="sc-card sc-photo">
               <div class="sc-img-wrap">
                 <img
-                  src="https://www.ohmefoods.com/cdn/shop/articles/IMG_0038_Medium_b4bc8843-1cfe-485e-aed7-05a243ff3aaf_600x.jpg?v=1778963451"
+                  data-src="https://www.ohmefoods.com/cdn/shop/articles/IMG_0038_Medium_b4bc8843-1cfe-485e-aed7-05a243ff3aaf_600x.jpg?v=1778963451"
                   alt=""
                   class="sc-img"
-                  loading="lazy"
+                  width="258"
+                  height="370"
+                  decoding="async"
                 />
                 <div class="sc-play" aria-hidden="true">▶</div>
                 <div class="sc-caption">
@@ -1671,10 +1811,12 @@
             <div class="sc-card sc-photo">
               <div class="sc-img-wrap">
                 <img
-                  src="https://www.ohmefoods.com/cdn/shop/articles/4FAF640E-B32E-4903-BCB7-7F34A71DCA08_6d10d412-f296-4472-8e40-28a0be7d593c_600x.jpg?v=1778961823"
+                  data-src="https://www.ohmefoods.com/cdn/shop/articles/4FAF640E-B32E-4903-BCB7-7F34A71DCA08_6d10d412-f296-4472-8e40-28a0be7d593c_600x.jpg?v=1778961823"
                   alt=""
                   class="sc-img"
-                  loading="lazy"
+                  width="258"
+                  height="370"
+                  decoding="async"
                 />
                 <div class="sc-caption">
                   <p>Ejder meyvesiyle renk katıyoruz 💜</p>
@@ -1684,10 +1826,12 @@
             <div class="sc-card sc-photo">
               <div class="sc-img-wrap">
                 <img
-                  src="https://www.ohmefoods.com/cdn/shop/articles/IMG_8433_cde3cad6-6a93-43c2-896a-ac7a5b02f547_600x.jpg?v=1778961560"
+                  data-src="https://www.ohmefoods.com/cdn/shop/articles/IMG_8433_cde3cad6-6a93-43c2-896a-ac7a5b02f547_600x.jpg?v=1778961560"
                   alt=""
                   class="sc-img"
-                  loading="lazy"
+                  width="258"
+                  height="370"
+                  decoding="async"
                 />
                 <div class="sc-caption"><p>Kahvaltı güzel başlar 🌅</p></div>
               </div>
@@ -1851,7 +1995,7 @@
         <p class="ft-tagline" aria-hidden="true">
           GERÇEK MALZEME · CESUR LEZZET
         </p>
-        <div class="ft-brand-wrap" aria-label="Snab's">
+        <div class="ft-brand-wrap">
           <svg
             class="ft-brand-logo"
             viewBox="61 310 666 168"
@@ -1910,7 +2054,7 @@
     </footer>
 
     <!-- ░░ STICKY SATIN ALMA BARI (mobil + masaüstü) ░░ -->
-    <div class="pdp-stickybar" id="pdpStickybar" aria-hidden="true">
+    <div class="pdp-stickybar" id="pdpStickybar" aria-hidden="true" inert>
       <div class="pdp-stickybar-inner">
         <div class="pdp-stickybar-lead">
           <img
@@ -1918,6 +2062,9 @@
             id="pdpStickyThumb"
             src="assets/mango.png"
             alt=""
+            width="48"
+            height="48"
+            decoding="async"
           />
           <div class="pdp-stickybar-info">
             <span class="pdp-stickybar-name" id="pdpStickyName"
@@ -1937,10 +2084,11 @@
       </div>
     </div>
 
+    <script src="assets/js/lazy-images.js" defer></script>
+    <script src="assets/js/horizontal-scroll-nav.js" defer></script>
     <script src="assets/js/main.js" defer></script>
     <script src="assets/js/cart-burst.js" defer></script>
     <script src="assets/js/cart-add.js" defer></script>
-    <script src="assets/js/faq-content-page.js" defer></script>
     <script src="product-detail-v2.js" defer></script>
   </body>
 </html>

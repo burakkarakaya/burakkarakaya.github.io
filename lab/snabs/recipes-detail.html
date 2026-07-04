@@ -314,7 +314,13 @@
       </section>
 
       <!-- ░░ RELATED RECIPES ░░ -->
-      <section class="rd-related" id="rd-related">
+      <section
+        class="scroller rd-related"
+        id="rd-related"
+        data-scroll-nav
+        data-scroll-item=".recipe-card"
+        data-scroll-disable-edges
+      >
         <div class="rd-related-banner">
           <span class="rd-related-emoji" aria-hidden="true">🍌</span>
           <span class="rd-related-text">LEZZETLİ VE BESLEYİCİ TARİFLER DEVAM EDİYOR</span>
@@ -322,15 +328,15 @@
         </div>
 
         <div class="rd-related-nav">
-          <button class="rc-nav-btn rd-rel-prev" id="rdRelPrev" aria-label="Önceki tarifler">
+          <button class="rc-nav-btn rd-rel-prev scroller__prev" id="rdRelPrev" aria-label="Önceki tarifler">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
           </button>
-          <button class="rc-nav-btn rd-rel-next" id="rdRelNext" aria-label="Sonraki tarifler">
+          <button class="rc-nav-btn rd-rel-next scroller__next" id="rdRelNext" aria-label="Sonraki tarifler">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
           </button>
         </div>
 
-        <div class="rd-related-scroll">
+        <div class="rd-related-scroll scroller__viewport">
           <div class="rd-related-track">
 
             <article class="recipe-card">
@@ -629,6 +635,7 @@
       </div>
     </footer>
 
+    <script src="assets/js/horizontal-scroll-nav.js" defer></script>
     <script src="assets/js/main.js" defer></script>
     <script src="assets/js/recipes-detail.js" defer></script>
   </body>

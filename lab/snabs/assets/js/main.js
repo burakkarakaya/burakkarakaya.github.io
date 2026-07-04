@@ -39,6 +39,16 @@
     { passive: true },
   );
 
+  function setPanelHidden(el, hidden) {
+    if (!el) return;
+    el.setAttribute("aria-hidden", hidden ? "true" : "false");
+    if (hidden) {
+      el.setAttribute("inert", "");
+    } else {
+      el.removeAttribute("inert");
+    }
+  }
+
   function lockScroll() {
     document.body.style.overflow = "hidden";
   }
@@ -53,7 +63,7 @@
 
   function openMenu() {
     navOverlay.classList.add("is-open");
-    navOverlay.setAttribute("aria-hidden", "false");
+    setPanelHidden(navOverlay, false);
     menuBtn.classList.add("is-open");
     menuBtn.setAttribute("aria-expanded", "true");
     backdrop.classList.add("is-visible");
@@ -61,7 +71,7 @@
   }
   function closeMenu() {
     navOverlay.classList.remove("is-open");
-    navOverlay.setAttribute("aria-hidden", "true");
+    setPanelHidden(navOverlay, true);
     menuBtn.classList.remove("is-open");
     menuBtn.setAttribute("aria-expanded", "false");
     if (!cartPanel.classList.contains("is-open")) {
@@ -72,7 +82,7 @@
 
   function openCart() {
     cartPanel.classList.add("is-open");
-    cartPanel.setAttribute("aria-hidden", "false");
+    setPanelHidden(cartPanel, false);
     cartBtn.classList.add("is-open");
     cartBtn.setAttribute("aria-expanded", "true");
     backdrop.classList.add("is-visible");
@@ -80,7 +90,7 @@
   }
   function closeCart() {
     cartPanel.classList.remove("is-open");
-    cartPanel.setAttribute("aria-hidden", "true");
+    setPanelHidden(cartPanel, true);
     cartBtn.classList.remove("is-open");
     cartBtn.setAttribute("aria-expanded", "false");
     if (!navOverlay.classList.contains("is-open")) {
@@ -88,6 +98,9 @@
     }
     unlockScroll();
   }
+
+  setPanelHidden(navOverlay, true);
+  setPanelHidden(cartPanel, true);
 
   menuBtn.addEventListener("click", function () {
     if (navOverlay.classList.contains("is-open")) {
@@ -219,35 +232,6 @@
 
   triggerBurst(slides[0]);
   resetTimer();
-})();
-
-/* ── Recipes section: prev/next scroll navigation ── */
-(function () {
-  var scroll = document.querySelector(".recipes-scroll");
-  var prev = document.getElementById("rcPrev");
-  var next = document.getElementById("rcNext");
-  if (!scroll || !prev || !next) return;
-
-  function getStep() {
-    var card = scroll.querySelector(".recipe-card");
-    return card ? card.offsetWidth + 16 : 280;
-  }
-
-  function updateBtns() {
-    prev.disabled = scroll.scrollLeft <= 4;
-    next.disabled =
-      scroll.scrollLeft >= scroll.scrollWidth - scroll.clientWidth - 4;
-  }
-
-  prev.addEventListener("click", function () {
-    scroll.scrollBy({ left: -getStep() * 2, behavior: "smooth" });
-  });
-  next.addEventListener("click", function () {
-    scroll.scrollBy({ left: getStep() * 2, behavior: "smooth" });
-  });
-
-  scroll.addEventListener("scroll", updateBtns, { passive: true });
-  updateBtns();
 })();
 
 /* ── Social marquee: seamless loop via cloned items ── */

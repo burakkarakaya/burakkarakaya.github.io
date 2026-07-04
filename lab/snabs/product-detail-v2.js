@@ -26,9 +26,48 @@
   var thumbsTrack = document.querySelector(".pdp-product__thumbs-track");
   var galleryMq = window.matchMedia("(max-width: 899px)");
 
+  var THUMB_DIR = "assets/images/gallery/thumbs/";
+
+  function galleryThumbSrc(src) {
+    if (!src) return src;
+    if (src === "assets/mango.png") return THUMB_DIR + "mango-pack.png";
+    if (src === "assets/cilek.png") return THUMB_DIR + "cilek-pack.png";
+    var prefix = "assets/images/gallery/";
+    if (src.indexOf(prefix) === 0) {
+      return THUMB_DIR + src.slice(prefix.length);
+    }
+    return src;
+  }
+
   function applyFit(img, fit) {
     if (!img) return;
     img.classList.toggle("is-contain", fit === "contain");
+  }
+
+  function imgDimsForFit(fit) {
+    return fit === "contain" ? { w: 800, h: 800 } : { w: 1200, h: 900 };
+  }
+
+  function applyImgHints(im, opts) {
+    opts = opts || {};
+    var dims =
+      opts.w != null && opts.h != null
+        ? { w: opts.w, h: opts.h }
+        : imgDimsForFit(opts.fit || "cover");
+    im.width = dims.w;
+    im.height = dims.h;
+    im.decoding = "async";
+    if (opts.loading) im.loading = opts.loading;
+    if (opts.fetchPriority === "high") {
+      im.setAttribute("fetchpriority", "high");
+    } else {
+      im.removeAttribute("fetchpriority");
+    }
+  }
+
+  function lazyObserve(root) {
+    if (!root || !window.SnabsLazyImages) return;
+    window.SnabsLazyImages.observe(root.querySelectorAll("img[data-src]"));
   }
 
   function rebuildMainTrack() {
@@ -39,13 +78,23 @@
       slide.className = "pdp-product__main-slide";
       slide.setAttribute("data-index", String(i));
       var im = document.createElement("img");
-      im.src = img.src;
       im.alt = img.alt || "";
       im.className = "pdp-product__main-image" + (img.fit === "contain" ? " is-contain" : "");
-      im.loading = i === 0 ? "eager" : "lazy";
+      if (i === 0) {
+        im.src = img.src;
+        applyImgHints(im, {
+          fit: img.fit,
+          loading: "eager",
+          fetchPriority: "high"
+        });
+      } else {
+        im.setAttribute("data-src", img.src);
+        applyImgHints(im, { fit: img.fit });
+      }
       slide.appendChild(im);
       mainTrack.appendChild(slide);
     });
+    lazyObserve(mainTrack);
   }
 
   function scrollMainToIndex(i, smooth) {
@@ -56,6 +105,27 @@
       left: slide.offsetLeft,
       behavior: smooth ? "smooth" : "auto"
     });
+    clampScrollLeft(mainWrap);
+  }
+
+  function clampScrollLeft(el) {
+    if (!el) return;
+    var max = Math.max(0, el.scrollWidth - el.clientWidth);
+    if (el.scrollLeft > max) el.scrollLeft = max;
+    if (el.scrollLeft < 0) el.scrollLeft = 0;
+  }
+
+  var galleryNavLock = false;
+
+  function goGallery(delta) {
+    if (galleryNavLock) return;
+    setGallery(galleryIndex + delta);
+    if (!galleryMq.matches) return;
+    galleryNavLock = true;
+    setTimeout(function () {
+      galleryNavLock = false;
+      clampScrollLeft(mainWrap);
+    }, 380);
   }
 
   function syncThumbActive() {
@@ -78,6 +148,11 @@
       mainImg.src = img.src;
       mainImg.alt = img.alt || "";
       applyFit(mainImg, img.fit || "cover");
+      applyImgHints(mainImg, {
+        fit: img.fit,
+        loading: i === 0 ? "eager" : undefined,
+        fetchPriority: i === 0 ? "high" : null
+      });
     }
   }
 
@@ -92,14 +167,20 @@
       btn.setAttribute("data-fit", img.fit || "cover");
       btn.setAttribute("aria-label", img.alt || "Görsel " + (i + 1));
       var im = document.createElement("img");
-      im.src = img.src;
       im.alt = "";
-      im.loading = "lazy";
+      if (i === 0) {
+        im.src = galleryThumbSrc(img.src);
+        applyImgHints(im, { w: 72, h: 72, loading: "eager" });
+      } else {
+        im.setAttribute("data-src", galleryThumbSrc(img.src));
+        applyImgHints(im, { w: 72, h: 72 });
+      }
       btn.appendChild(im);
       btn.addEventListener("click", function () { setGallery(+btn.dataset.index); });
       thumbsTrack.appendChild(btn);
     });
     thumbs = slice(document.querySelectorAll(".pdp-product__thumb"));
+    lazyObserve(thumbsTrack);
   }
 
   function setGallery(i, fromScroll) {
@@ -129,10 +210,10 @@
   rebuildMainTrack();
 
   if ($("pdpGalleryPrev")) {
-    $("pdpGalleryPrev").addEventListener("click", function () { setGallery(galleryIndex - 1); });
+    $("pdpGalleryPrev").addEventListener("click", function () { goGallery(-1); });
   }
   if ($("pdpGalleryNext")) {
-    $("pdpGalleryNext").addEventListener("click", function () { setGallery(galleryIndex + 1); });
+    $("pdpGalleryNext").addEventListener("click", function () { goGallery(1); });
   }
 
   thumbs.forEach(function (btn) {
@@ -144,8 +225,10 @@
     pill.addEventListener("click", function () {
       slice(document.querySelectorAll(".pdp-feature-pill")).forEach(function (p) {
         p.classList.remove("is-active");
+        p.setAttribute("aria-pressed", "false");
       });
       pill.classList.add("is-active");
+      pill.setAttribute("aria-pressed", "true");
     });
   });
 
@@ -161,6 +244,8 @@
       slice(document.querySelectorAll("[data-showcase-panel]")).forEach(function (p) {
         p.classList.toggle("is-active", p.getAttribute("data-showcase-panel") === id);
       });
+      var activePanel = document.querySelector(".pdp-showcase__panel.is-active");
+      lazyObserve(activePanel);
     });
   });
 
@@ -238,7 +323,9 @@
       if (name && stickyName) stickyName.textContent = name;
       if (stickyThumb) {
         var vImg = v.querySelector("img");
-        if (vImg) stickyThumb.src = vImg.src;
+        if (vImg) {
+          stickyThumb.src = vImg.src || vImg.getAttribute("data-src") || "";
+        }
       }
       if (!isNaN(price) && packs[0]) {
         packs[0].setAttribute("data-price", String(price));
@@ -302,18 +389,6 @@
     confidenceCta.addEventListener("click", function () { addToCartSimple(confidenceCta); });
   }
 
-  /* ── Benzer lezzetler scroll ────────────────────────────── */
-  var picksScroll = $("pdpPicksScroll");
-  if (picksScroll && $("pdpPicksPrev") && $("pdpPicksNext")) {
-    var step = 452;
-    $("pdpPicksPrev").addEventListener("click", function () {
-      picksScroll.scrollBy({ left: -step, behavior: "smooth" });
-    });
-    $("pdpPicksNext").addEventListener("click", function () {
-      picksScroll.scrollBy({ left: step, behavior: "smooth" });
-    });
-  }
-
   /* ── Sticky bar — CTA kaybolunca göster, footer yaklaşınca gizle ── */
   var stickybar = $("pdpStickybar");
   var stickyAdd = $("pdpStickyAdd");
@@ -326,6 +401,11 @@
     var show = stickyWantShow && !stickyNearFooter;
     stickybar.classList.toggle("is-visible", show);
     stickybar.setAttribute("aria-hidden", show ? "false" : "true");
+    if (show) {
+      stickybar.removeAttribute("inert");
+    } else {
+      stickybar.setAttribute("inert", "");
+    }
   }
 
   if (stickybar && addBtn && "IntersectionObserver" in window) {
@@ -352,6 +432,49 @@
     }
   }
   if (stickyAdd) stickyAdd.addEventListener("click", function () { addToCartSimple(stickyAdd); });
+  updateStickyBar();
+
+  /* ── SSS accordion (below-fold; faq-content-page.js yerine) ── */
+  slice(document.querySelectorAll(".fq-question")).forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var item = btn.closest(".fq-item");
+      if (!item || !item.parentElement) return;
+      var isOpen = item.classList.contains("is-open");
+
+      item.parentElement.querySelectorAll(".fq-item.is-open").forEach(function (other) {
+        other.classList.remove("is-open");
+        var q = other.querySelector(".fq-question");
+        if (q) q.setAttribute("aria-expanded", "false");
+      });
+
+      if (!isOpen) {
+        item.classList.add("is-open");
+        btn.setAttribute("aria-expanded", "true");
+      }
+    });
+  });
+
+  /* ── Social marquee: CSS transform IO'yu yanıltır — bölüm görününce hepsini yükle ── */
+  var socialSection = document.getElementById("social");
+  if (socialSection && window.SnabsLazyImages) {
+    function loadSocialImages() {
+      socialSection.querySelectorAll("img[data-src]").forEach(function (img) {
+        window.SnabsLazyImages.load(img);
+      });
+    }
+    if ("IntersectionObserver" in window) {
+      var socialIo = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (!en.isIntersecting) return;
+          loadSocialImages();
+          socialIo.disconnect();
+        });
+      }, { rootMargin: "300px 0px", threshold: 0 });
+      socialIo.observe(socialSection);
+    } else {
+      loadSocialImages();
+    }
+  }
 
   galleryIndex = 0;
   applyMainImage(0, false);

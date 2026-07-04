@@ -53,31 +53,5 @@
   });
 })();
 
-/* ── Related recipes: prev/next scroll navigation ── */
-(function () {
-  var scroll = document.querySelector(".rd-related-scroll");
-  var prev = document.getElementById("rdRelPrev");
-  var next = document.getElementById("rdRelNext");
-  if (!scroll || !prev || !next) return;
 
-  function getStep() {
-    var card = scroll.querySelector(".recipe-card");
-    return card ? card.offsetWidth + 16 : 288;
-  }
-
-  function updateBtns() {
-    prev.disabled = scroll.scrollLeft <= 4;
-    next.disabled =
-      scroll.scrollLeft >= scroll.scrollWidth - scroll.clientWidth - 4;
-  }
-
-  prev.addEventListener("click", function () {
-    scroll.scrollBy({ left: -getStep() * 2, behavior: "smooth" });
-  });
-  next.addEventListener("click", function () {
-    scroll.scrollBy({ left: getStep() * 2, behavior: "smooth" });
-  });
-
-  scroll.addEventListener("scroll", updateBtns, { passive: true });
-  updateBtns();
-})();
+/* ── Related recipes scroll: horizontal-scroll-nav.js (data-scroll-nav) ── */

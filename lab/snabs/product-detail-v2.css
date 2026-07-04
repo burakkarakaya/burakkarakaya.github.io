@@ -2,9 +2,8 @@
    SNAB'S — PRODUCT DETAIL PAGE v2
    OHME-inspired · full-width · large cards · premium D2C
    Referans: ohmefoods.com product pages
+   Requires product-detail.css before this file in HTML.
    ============================================================ */
-
-@import url("product-detail.css");
 
 /* ─── Design System — Full Width ─── */
 .pdp-page--v2 {
@@ -614,4 +613,55 @@ body:has(.pdp-page--v2) .hdr-inner {
     height: clamp(210px, 54vw, 280px);
     max-width: 100%;
   }
+}
+
+/* Lazy placeholder — data-src varken CLS koruması */
+.pdp-page--v2 img[data-src] {
+  background: var(--cream);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Lighthouse — kontrast & okunabilirlik (PDP v2)
+   ═══════════════════════════════════════════════════════════ */
+body:has(.pdp-page--v2) {
+  --muted: #6b5e54;
+}
+
+.pdp-page--v2 .overline,
+.pdp-page--v2 .pdp-confidence .overline {
+  color: var(--red-deep);
+}
+
+.pdp-page--v2 .pdp-buy-label em,
+.pdp-page--v2 .pdp-showcase__tab:not(.is-active) {
+  color: var(--red-deep);
+}
+
+.pdp-page--v2 .pdp-add-price {
+  color: var(--white);
+  opacity: 1;
+}
+
+.pdp-page--v2 .pdp-pack-save {
+  background: var(--mix-light);
+  color: #0a4a2e;
+}
+
+.pdp-page--v2 .pdp-picks .vpc-old {
+  color: #7a5049;
+  opacity: 1;
+}
+
+.pdp-page--v2 .rc-title,
+.pdp-page--v2 .rc-time span:not(.rc-clock) {
+  color: var(--red-deep);
+}
+
+.pdp-page--v2 .fq-question span {
+  color: var(--red-deep);
+}
+
+body:has(.pdp-page--v2) .social-banner-text {
+  color: var(--white);
+  opacity: 1;
 }
