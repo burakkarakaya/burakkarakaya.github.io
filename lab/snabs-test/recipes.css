@@ -1,0 +1,296 @@
+/* ============================================================
+   SNAB'S — Recipes List Page
+   ============================================================ */
+
+/* ── HERO ─────────────────────────────────────────────────── */
+.rl-hero {
+  background: #C9E8D8;
+  padding: 80px 0 52px;
+  position: relative;
+  overflow: hidden;
+}
+.rl-hero::after {
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: var(--cream);
+  clip-path: ellipse(55% 100% at 50% 100%);
+}
+.rl-hero-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.rl-hero-title {
+  font-family: var(--font-editorial);
+  font-style: italic;
+  font-weight: 900;
+  font-size: clamp(3.5rem, 9vw, 7.5rem);
+  color: var(--red);
+  line-height: 0.96;
+  letter-spacing: -0.02em;
+}
+.rl-hero-desc {
+  font-size: 1rem;
+  color: var(--dark-mid);
+  max-width: 540px;
+  line-height: 1.75;
+}
+
+/* ── FILTER BAR ───────────────────────────────────────────── */
+.rl-bar {
+  background: var(--cream);
+  border-bottom: 2px solid var(--border);
+  padding: 0;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  transition: top 0.3s ease;
+}
+.rl-bar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-block: 16px;
+}
+.rl-filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  flex: 1;
+}
+.rl-filter {
+  padding: 8px 20px;
+  border: 2px solid var(--border-strong);
+  border-radius: var(--r-full);
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--dark-mid);
+  background: transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.18s, color 0.18s, border-color 0.18s;
+}
+.rl-filter:hover {
+  border-color: var(--red);
+  color: var(--red);
+}
+.rl-filter.is-active {
+  background: var(--red);
+  border-color: var(--red);
+  color: var(--white);
+}
+.rl-count-wrap {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.rl-count-wrap strong {
+  color: var(--dark);
+}
+
+/* ── GRID ─────────────────────────────────────────────────── */
+.rl-grid-section {
+  padding: 48px 0 96px;
+}
+.rl-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+/* ── RECIPE CARD ──────────────────────────────────────────── */
+.rl-card {
+  position: relative;
+  background: var(--white);
+  border: 2.5px solid var(--red);
+  border-radius: 24px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: transform 0.32s cubic-bezier(0.34, 1.4, 0.64, 1),
+    box-shadow 0.32s ease;
+}
+.rl-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 56px rgba(217, 58, 40, 0.15);
+}
+.rl-card.rl-hidden {
+  display: none;
+}
+
+/* Media wrapper: image + optional hover video */
+.rl-card-media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: var(--cream-deep);
+}
+.rl-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease, opacity 0.35s ease;
+}
+.rl-card:hover .rl-img {
+  transform: scale(1.06);
+}
+.rl-img.rl-img-hidden {
+  opacity: 0;
+}
+
+.rl-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+.rl-video.rl-video-visible {
+  opacity: 1;
+}
+
+/* Card body */
+.rl-card-body {
+  padding: 16px 18px 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  background: #FFF8F4;
+  gap: 14px;
+}
+.rl-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+  flex: 1;
+}
+.rl-title {
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--red);
+}
+
+/* ── PAGINATION ───────────────────────────────────────────── */
+.rl-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  padding-top: 56px;
+}
+.rl-pg-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 60px;
+  padding: 0 36px;
+  background: var(--red);
+  color: var(--white);
+  border: none;
+  border-radius: var(--r-full);
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.18s, transform 0.15s;
+}
+.rl-pg-btn:hover:not(:disabled) {
+  background: var(--red-deep);
+  transform: translateY(-2px);
+}
+.rl-pg-btn:disabled {
+  opacity: 0.32;
+  cursor: default;
+  transform: none;
+}
+.rl-pg-dots {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+.rl-pg-dot {
+  width: 42px;
+  height: 42px;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  font-family: var(--font-editorial);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--red);
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.18s;
+}
+.rl-pg-dot:hover {
+  border-color: var(--red);
+}
+.rl-pg-dot.is-active {
+  border-color: var(--red);
+}
+
+/* ── RESPONSIVE ───────────────────────────────────────────── */
+@media (max-width: 1200px) {
+  .rl-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 840px) {
+  .rl-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .rl-hero { padding: 88px 0 44px; }
+  .rl-bar-inner { gap: 10px; }
+  .rl-bar .container { padding-left: 0; padding-right: 0; }
+  .rl-filters {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 0 var(--layout-inline) 2px;
+    scroll-padding-inline: var(--scroll-pad);
+  }
+  .rl-filters::-webkit-scrollbar { display: none; }
+  .rl-filter { flex-shrink: 0; }
+  .rl-count-wrap { display: none; }
+}
+@media (max-width: 640px) {
+  .rl-pagination { gap: 16px; }
+  .rl-pg-btn { height: 48px; padding: 0 20px; }
+  .rl-pg-btn svg { width: 24px; }
+  .rl-pg-dots { gap: 10px; }
+  .rl-pg-dot { width: 34px; height: 34px; font-size: 0.9rem; }
+}
+@media (max-width: 500px) {
+  .rl-grid { grid-template-columns: 1fr; }
+  .rl-filters { gap: 6px; }
+  .rl-filter { padding: 7px 14px; font-size: 0.68rem; }
+  .rl-pagination { gap: 10px; }
+  .rl-pg-btn { height: 42px; padding: 0 16px; }
+  .rl-pg-btn svg { width: 20px; }
+  .rl-pg-dots { gap: 6px; }
+  .rl-pg-dot { width: 30px; height: 30px; font-size: 0.82rem; }
+}
