@@ -1,0 +1,1517 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ürün Kartı — Snab's</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Mouse+Memoirs&family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="product-list.css" />
+    <link rel="stylesheet" href="alternate-product-cards.css" />
+    <style>
+      /* Mevcut ürün kartından (.pl-card) türetilmiştir.
+         Masaüstü: "Sepete Ekle" hover ile açılır (mevcut davranış).
+         Mobil/dokunmatik: isim + fiyat + adet + Sepete Ekle her zaman görünür. */
+
+      .apc-page {
+        padding: 96px 0 80px;
+        background: var(--cream);
+      }
+      .apc-head {
+        margin: 0 0 40px;
+      }
+      .apc-head h1 {
+        font-family: var(--font-display);
+        font-size: clamp(1.5rem, 5vw, 2.3rem);
+        color: var(--dark);
+        margin: 0 0 8px;
+      }
+      .apc-head p {
+        font-family: var(--font-body);
+        color: var(--muted);
+        font-size: 0.96rem;
+        line-height: 1.6;
+        max-width: 64ch;
+        margin: 0;
+      }
+      .apc-group--original {
+        margin-bottom: 64px;
+      }
+
+      /* ── Best-seller seal (reused via <use href="#seal">) ── */
+      .seal-badge {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        z-index: 5;
+        width: 82px;
+        height: 82px;
+        transform: rotate(7deg);
+        filter: drop-shadow(0 6px 14px rgba(217, 58, 40, 0.35));
+        pointer-events: none;
+      }
+      .seal-text {
+        font-family: var(--font-hero);
+        font-size: 19px;
+        letter-spacing: 0.4px;
+        fill: var(--cream);
+        stroke: var(--cream);
+        stroke-width: 0.9px;
+        paint-order: stroke;
+      }
+      .seal-stars {
+        fill: var(--cream);
+      }
+
+      /* ── Status pills (top-right — başlıkla çakışmaz) ── */
+      .apc-tag {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        left: auto;
+        z-index: 4;
+        font-family: var(--font-body);
+        font-weight: 800;
+        font-size: 0.62rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: #fff;
+        padding: 5px 10px;
+        border-radius: var(--r-full);
+      }
+      .apc-tag.is-disc {
+        background: var(--red);
+        box-shadow: 0 2px 8px rgba(217, 58, 40, 0.3);
+      }
+      .apc-tag.is-out {
+        background: var(--dark);
+      }
+
+      /* ── Ürün adı — max 2 satır (Grup 1) ── */
+      #grup-1 .pl-cta-label {
+        white-space: normal;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        min-width: 0;
+        line-height: 1.32;
+        word-break: break-word;
+        overflow-wrap: anywhere;
+      }
+
+      /* ── Discount price (Grup 1) ── */
+      #grup-1 .pl-cta-price .old {
+        text-decoration: line-through;
+        opacity: 0.55;
+        font-weight: 600;
+        font-size: 0.82em;
+        margin-right: 6px;
+      }
+
+      /* ── Out of stock (Grup 1) ── */
+      #grup-1 .pl-card.is-out {
+        cursor: default;
+      }
+      #grup-1 .pl-card.is-out:hover {
+        transform: none;
+        box-shadow: 0 10px 26px rgba(0, 0, 0, 0.08);
+      }
+      #grup-1 .pl-card.is-out .pl-card-img {
+        filter: grayscale(1);
+        opacity: 0.4;
+      }
+      #grup-1 .pl-card.is-out:hover .pl-card-img {
+        transform: none;
+      }
+      #grup-1 .pl-card.is-out .pl-cta {
+        background: #b8a898 !important;
+      }
+      #grup-1 .pl-card.is-out:hover .pl-cta-default {
+        opacity: 1;
+        transform: none;
+        pointer-events: auto;
+      }
+      #grup-1 .pl-card.is-out:hover .pl-cta-hover {
+        opacity: 0;
+        transform: translateY(110%);
+        pointer-events: none;
+      }
+
+      /* ── Sepete Ekle ikon + etiket (Grup 1 mobil) ── */
+      #grup-1 .pl-add-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+      }
+      #grup-1 .pl-add-icon {
+        display: none;
+        flex-shrink: 0;
+      }
+
+      /* ── Add-to-cart feedback ── */
+      @keyframes cart-btn-spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .pl-add-btn.is-loading,
+      .vpc-add.is-loading,
+      .sp-cta.is-loading {
+        pointer-events: none;
+      }
+      .pl-add-btn.is-icon-mode,
+      .vpc-add.is-icon-mode {
+        position: relative;
+        flex: 0 0 auto;
+        overflow: hidden;
+      }
+      .pl-card--pop .vpc-add.is-icon-mode {
+        width: 36px;
+        min-width: 36px;
+        max-width: 36px;
+        height: 36px;
+        min-height: 36px;
+        padding: 0;
+        border-radius: 50%;
+      }
+      .pl-add-btn.is-icon-mode.is-loading .pl-add-icon,
+      .pl-add-btn.is-icon-mode.is-loading svg,
+      .vpc-add.is-icon-mode.is-loading svg {
+        opacity: 0;
+      }
+      .pl-add-btn.is-icon-mode.is-loading::after,
+      .vpc-add.is-icon-mode.is-loading::after {
+        content: "";
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        border: 2px solid rgba(255, 255, 255, 0.35);
+        border-top-color: #fff;
+        border-radius: 50%;
+        animation: cart-btn-spin 0.65s linear infinite;
+      }
+      .pl-add-btn.is-icon-mode.is-loading::after {
+        border-color: rgba(26, 8, 2, 0.15);
+        border-top-color: var(--dark);
+      }
+      .pl-add-btn.is-icon-mode.is-added .pl-add-icon,
+      .pl-add-btn.is-icon-mode.is-added svg,
+      .vpc-add.is-icon-mode.is-added svg {
+        opacity: 0;
+      }
+      .pl-add-btn.is-icon-mode.is-added::after,
+      .vpc-add.is-icon-mode.is-added::after {
+        content: "✓";
+        position: absolute;
+        font-size: 1rem;
+        font-weight: 800;
+        line-height: 1;
+      }
+      #grup-1 .pl-add-btn.is-added,
+      .sp-cta.is-added {
+        background: var(--mix-light) !important;
+        color: var(--mix-deep) !important;
+        border-color: var(--mix-light) !important;
+        box-shadow: none;
+      }
+      #grup-1 .pl-add-btn.is-added {
+        background: var(--mix-light);
+        color: var(--mix-deep);
+      }
+      @keyframes badge-pop {
+        0% {
+          transform: scale(1);
+        }
+        40% {
+          transform: scale(1.55);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+      .hdr-cart-badge.pop {
+        animation: badge-pop 0.5s ease;
+      }
+
+      /* ════════════════════════════════════════════════════════
+         GRUP 1 · MOBİL — minimalist CTA (sadece #grup-1)
+         ════════════════════════════════════════════════════════ */
+      @media (hover: none), (max-width: 640px) {
+        #grup-1 .pl-card {
+          cursor: default;
+        }
+
+        #grup-1 .pl-card:hover {
+          transform: none;
+          box-shadow: 0 10px 26px rgba(0, 0, 0, 0.08);
+        }
+        #grup-1 .pl-card:hover .pl-card-img {
+          transform: scale(1.06);
+        }
+        #grup-1 .pl-add-btn:hover {
+          transform: none;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.14);
+        }
+        #grup-1 .pl-qty-select:hover {
+          background-color: rgba(255, 255, 255, 0.22);
+        }
+
+        #grup-1 .pl-card-header {
+          padding: 12px 10px 0;
+          flex-shrink: 0;
+        }
+        #grup-1 .pl-card-name {
+          font-size: clamp(1.05rem, 4.2vw, 1.3rem);
+          margin-bottom: 3px;
+          letter-spacing: 0.03em;
+        }
+        #grup-1 .pl-card-badge {
+          font-size: 0.58rem;
+          letter-spacing: 0.07em;
+          font-weight: 500;
+          opacity: 0.75;
+        }
+
+        #grup-1 .pl-card-visual {
+          flex: 1 1 auto;
+          padding: 2px 6px 10px;
+          min-height: 0;
+          position: relative;
+          z-index: 2;
+          align-items: center;
+        }
+        #grup-1 .pl-card-img {
+          height: clamp(150px, 46vw, 220px);
+          max-height: none;
+          transform: scale(1.06);
+          filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.2));
+        }
+
+        #grup-1 .pl-cta {
+          position: relative;
+          z-index: 1;
+          min-height: 0;
+          flex-shrink: 0;
+        }
+
+        #grup-1 .seal-badge {
+          width: 56px;
+          height: 56px;
+          top: 6px;
+          right: 6px;
+        }
+
+        #grup-1 .apc-tag {
+          top: 8px;
+          right: 8px;
+          font-size: 0.56rem;
+          padding: 4px 8px;
+        }
+
+        #grup-1 .pl-card:hover .pl-cta-default,
+        #grup-1 .pl-cta-default {
+          opacity: 1;
+          transform: none;
+          pointer-events: auto;
+          padding: 7px 10px 2px;
+          gap: 6px;
+        }
+        #grup-1 .pl-cta-label {
+          font-size: 0.7rem;
+          font-weight: 600;
+          letter-spacing: 0.01em;
+        }
+        #grup-1 .pl-cta-price {
+          font-size: 0.68rem;
+          font-weight: 700;
+          padding: 3px 8px;
+        }
+        #grup-1 .pl-cta-price .old {
+          font-size: 0.75em;
+          margin-right: 4px;
+        }
+
+        #grup-1 .pl-cta-hover {
+          position: static;
+          inset: auto;
+          opacity: 1;
+          transform: none;
+          pointer-events: auto;
+          border-top: none;
+          padding: 4px 10px 8px;
+          gap: 5px;
+        }
+        #grup-1 .pl-card.is-out .pl-cta-hover,
+        #grup-1 .pl-card.is-out:hover .pl-cta-hover {
+          opacity: 1;
+          transform: none;
+          pointer-events: auto;
+        }
+
+        #grup-1 .pl-qty-select {
+          flex: 1;
+          min-height: 36px;
+          padding: 5px 22px 5px 10px;
+          font-size: 0.66rem;
+          font-weight: 600;
+          min-width: 0;
+          border-width: 1px;
+          background-position: right 8px center;
+        }
+        #grup-1 .pl-add-btn {
+          flex: 0 0 36px;
+          width: 36px;
+          min-width: 36px;
+          min-height: 36px;
+          padding: 0;
+          border-radius: 50%;
+        }
+        #grup-1 .pl-add-btn .pl-add-label {
+          display: none;
+        }
+        #grup-1 .pl-add-icon {
+          display: block;
+          width: 18px;
+          height: 18px;
+        }
+
+        #grup-1 .pl-add-btn:disabled {
+          flex: 1;
+          width: auto;
+          min-height: 36px;
+          padding: 6px 12px;
+          border-radius: var(--r-full);
+          font-size: 0.68rem;
+        }
+        #grup-1 .pl-add-btn:disabled .pl-add-label {
+          display: inline;
+        }
+        #grup-1 .pl-add-btn:disabled .pl-add-icon {
+          display: none;
+        }
+      }
+
+      /* ════════════════════════════════════════════════════════
+         MOBİL SAYFA DÜZENİ — gereksiz boşlukları azalt
+         ════════════════════════════════════════════════════════ */
+      @media (max-width: 640px) {
+        .apc-page {
+          padding: 72px 0 36px;
+        }
+        .apc-head {
+          margin-bottom: 22px;
+        }
+        .apc-head h1 {
+          font-size: clamp(1.3rem, 5.5vw, 1.65rem);
+          margin-bottom: 6px;
+        }
+        .apc-head p {
+          font-size: 0.86rem;
+          line-height: 1.45;
+        }
+        .apc-group--original {
+          margin-bottom: 32px;
+        }
+        /* Grid sits inside .container — avoid double gutter */
+        .apc-page .pl-grid {
+          padding-left: 0;
+          padding-right: 0;
+          gap: 8px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .apc-page {
+          padding: 68px 0 28px;
+        }
+        .apc-head {
+          margin-bottom: 18px;
+        }
+        .apc-page .pl-grid {
+          gap: 6px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Reusable best-seller seal (referenced via <use href="#seal">) -->
+    <svg
+      width="0"
+      height="0"
+      style="position: absolute"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <symbol id="seal" viewBox="0 0 157 155">
+        <path
+          stroke-linejoin="round"
+          stroke-linecap="round"
+          stroke-width="3.43"
+          stroke="#E33526"
+          fill="#E33526"
+          d="M71.1086 4.40082L59.3786 14.8408L43.8686 12.4008C38.5486 11.5608 33.4486 14.8408 31.9986 20.0308L27.7686 35.1508L13.3986 41.4808C8.46864 43.6508 5.95864 49.1708 7.52864 54.3208L12.1486 69.3308L3.48864 82.4308C0.518644 86.9208 1.37864 92.9208 5.49864 96.4008L17.4986 106.531L17.2886 122.231C17.2186 127.621 21.1886 132.201 26.5286 132.901L42.0986 134.931L50.4086 148.251C53.2586 152.821 59.0886 154.531 63.9486 152.231L78.1486 145.521L92.3486 152.231C97.2186 154.531 103.039 152.821 105.889 148.251L114.209 134.931L129.779 132.901C135.119 132.201 139.089 127.621 139.019 122.231L138.809 106.531L150.809 96.4008C154.919 92.9308 155.789 86.9208 152.819 82.4308L144.159 69.3308L148.779 54.3208C150.359 49.1808 147.849 43.6508 142.909 41.4808L128.539 35.1508L124.309 20.0308C122.859 14.8508 117.759 11.5708 112.439 12.4008L96.9286 14.8408L85.1986 4.40082C81.1786 0.82082 75.1086 0.82082 71.0886 4.40082H71.1186H71.1086Z"
+        />
+        <mask
+          id="sealMask"
+          maskUnits="userSpaceOnUse"
+          x="0"
+          y="0"
+          width="157"
+          height="155"
+          style="mask-type: alpha"
+        >
+          <path
+            fill="#fff"
+            d="M71.1086 4.40082L59.3786 14.8408L43.8686 12.4008C38.5486 11.5608 33.4486 14.8408 31.9986 20.0308L27.7686 35.1508L13.3986 41.4808C8.46864 43.6508 5.95864 49.1708 7.52864 54.3208L12.1486 69.3308L3.48864 82.4308C0.518644 86.9208 1.37864 92.9208 5.49864 96.4008L17.4986 106.531L17.2886 122.231C17.2186 127.621 21.1886 132.201 26.5286 132.901L42.0986 134.931L50.4086 148.251C53.2586 152.821 59.0886 154.531 63.9486 152.231L78.1486 145.521L92.3486 152.231C97.2186 154.531 103.039 152.821 105.889 148.251L114.209 134.931L129.779 132.901C135.119 132.201 139.089 127.621 139.019 122.231L138.809 106.531L150.809 96.4008C154.919 92.9308 155.789 86.9208 152.819 82.4308L144.159 69.3308L148.779 54.3208C150.359 49.1808 147.849 43.6508 142.909 41.4808L128.539 35.1508L124.309 20.0308C122.859 14.8508 117.759 11.5708 112.439 12.4008L96.9286 14.8408L85.1986 4.40082C81.1786 0.82082 75.1086 0.82082 71.0886 4.40082H71.1186H71.1086Z"
+          />
+        </mask>
+        <g mask="url(#sealMask)">
+          <path
+            fill="#FF4313"
+            d="M78 35C145.379 35 200 68.6432 200 110.144C200 118.855 197.592 127.219 193.165 135C180.566 101.765 132.157 77.0088 74.3594 77.0088C21.1248 77.0088 -24.1459 98.0095 -40.8066 127.294C-42.8947 121.785 -43.9999 116.044 -44 110.144C-44 68.6432 10.6213 35 78 35Z"
+          />
+        </g>
+        <path id="sealArc" d="M 38 75 A 58 58 0 0 1 118 75" fill="none" />
+        <text class="seal-text" text-anchor="middle">
+          <textPath href="#sealArc" startOffset="50%">EN ÇOK SATAN</textPath>
+        </text>
+        <path
+          class="seal-stars"
+          transform="translate(-13 0)"
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M59.7469 104.118C59.3633 104.229 59.0903 104.58 58.292 105.994C57.4704 107.448 57.2358 107.746 56.8608 107.812C56.6142 107.855 55.5964 107.992 54.599 108.117C52.4584 108.383 52 108.584 52 109.254C52 109.66 52.2454 109.936 53.6958 111.159C55.3914 112.588 55.3914 112.588 55.0055 114.451C54.7934 115.476 54.6624 116.464 54.7145 116.648C54.7665 116.832 55.0482 117.087 55.3403 117.215C55.8662 117.446 55.8932 117.438 58.0454 116.495C60.2193 115.543 60.2193 115.543 62.332 116.476C64.212 117.307 64.4974 117.392 64.9241 117.255C65.1876 117.17 65.4622 117.023 65.534 116.927C65.7432 116.648 65.6894 115.839 65.3506 114.164C65.0341 112.6 65.0341 112.6 66.7363 111.164C68.4679 109.704 68.6624 109.399 68.2627 108.767C68.0507 108.432 67.339 108.264 65.1141 108.025C64.1897 107.925 63.3622 107.805 63.2754 107.758C63.1885 107.712 62.6865 106.945 62.16 106.055C60.9873 104.072 60.7016 103.843 59.7469 104.118ZM77.7556 104.138C77.4962 104.245 76.9983 104.885 76.3733 105.916C75.8361 106.802 75.3213 107.597 75.2294 107.682C75.1375 107.767 74.2922 107.92 73.351 108.021C71.0951 108.264 70.3846 108.431 70.172 108.767C69.7868 109.376 69.9815 109.68 71.7108 111.173C73.4256 112.652 73.4256 112.652 73.0967 114.263C72.6788 116.31 72.68 116.716 73.105 117.041C73.6511 117.46 74.1785 117.356 76.2723 116.417C78.2465 115.532 78.2465 115.532 80.1433 116.385C82.5273 117.456 83.0978 117.542 83.5923 116.904C83.8529 116.567 83.8448 116.403 83.4741 114.557C83.0756 112.572 83.0756 112.572 84.7551 111.145C86.15 109.96 86.4347 109.642 86.4347 109.268C86.4347 108.567 86.0244 108.385 83.8391 108.117C82.7446 107.983 81.7041 107.826 81.5269 107.767C81.3468 107.708 80.7358 106.891 80.1426 105.915C79.0054 104.045 78.641 103.774 77.7556 104.138ZM113.948 104.075C113.604 104.144 113.297 104.522 112.453 105.912C111.859 106.891 111.249 107.708 111.069 107.767C110.892 107.826 109.851 107.983 108.757 108.117C106.571 108.385 106.161 108.567 106.161 109.268C106.161 109.642 106.446 109.96 107.841 111.145C109.52 112.572 109.52 112.572 109.125 114.541C108.69 116.707 108.741 117.01 109.582 117.28C109.981 117.409 110.32 117.306 112.202 116.483C114.364 115.538 114.364 115.538 116.331 116.42C118.417 117.356 118.945 117.46 119.491 117.041C119.916 116.716 119.917 116.31 119.499 114.263C119.17 112.652 119.17 112.652 120.885 111.173C122.614 109.68 122.809 109.376 122.424 108.767C122.212 108.432 121.5 108.264 119.275 108.025C118.351 107.925 117.523 107.805 117.436 107.758C117.35 107.712 116.848 106.945 116.321 106.055C115.169 104.108 114.9 103.883 113.948 104.075ZM131.937 104.109C131.597 104.207 131.264 104.635 130.472 105.991C129.907 106.957 129.327 107.775 129.181 107.808C129.035 107.842 128.215 107.947 127.358 108.04C125.235 108.273 124.54 108.439 124.333 108.767C123.938 109.391 124.133 109.698 125.871 111.185C127.585 112.652 127.585 112.652 127.263 114.117C126.919 115.68 126.85 116.645 127.062 116.927C127.133 117.023 127.407 117.17 127.67 117.254C128.094 117.391 128.383 117.304 130.262 116.473C132.376 115.538 132.376 115.538 134.54 116.489C136.507 117.353 136.745 117.423 137.16 117.263C137.957 116.955 138.012 116.613 137.605 114.497C137.234 112.574 137.234 112.574 138.915 111.146C140.341 109.935 140.596 109.647 140.596 109.248C140.596 108.585 140.132 108.383 137.997 108.117C136.999 107.992 135.985 107.856 135.742 107.813C135.378 107.75 135.12 107.427 134.279 105.988C133.189 104.123 132.848 103.849 131.937 104.109ZM95.4806 104.261C95.3806 104.366 94.8618 105.191 94.3276 106.096C93.5955 107.336 93.2609 107.758 92.967 107.812C92.7528 107.852 91.725 107.987 90.6829 108.112C88.7804 108.341 88.2806 108.526 88.0733 109.078C87.9102 109.513 88.2773 109.945 89.9375 111.267C91.5075 112.518 91.5075 112.518 91.134 114.306C90.6746 116.507 90.6727 116.713 91.1089 117.048C91.6651 117.474 92.2789 117.354 94.3399 116.416C96.2754 115.536 96.2754 115.536 98.2333 116.407C100.411 117.376 101.034 117.484 101.517 116.979C101.917 116.562 101.915 116.476 101.462 114.309C101.089 112.523 101.089 112.523 102.661 111.27C104.32 109.947 104.686 109.515 104.522 109.078C104.311 108.516 103.817 108.338 101.824 108.105C100.736 107.978 99.7001 107.826 99.5229 107.768C99.3425 107.708 98.7328 106.89 98.1386 105.91C97.0765 104.158 97.0765 104.158 96.3695 104.114C95.9409 104.088 95.5906 104.146 95.4806 104.261Z"
+        />
+      </symbol>
+    </svg>
+
+    <!-- ░░ HEADER ░░ -->
+    <header class="site-header" id="site-header">
+      <div class="hdr-inner">
+        <div class="hdr-left">
+          <button
+            class="hdr-menu-btn"
+            id="menuToggle"
+            aria-label="Menüyü aç"
+            aria-expanded="false"
+            aria-controls="navOverlay"
+          >
+            <span class="menu-icon" aria-hidden="true"
+              ><span></span><span></span><span></span
+            ></span>
+            <span class="menu-label">MENU</span>
+          </button>
+        </div>
+        <a href="/" class="hdr-logo" aria-label="Snab's ana sayfa">
+          <img src="assets/logo.svg" alt="Snab's" class="hdr-logo-img" />
+        </a>
+        <div class="hdr-right">
+          <button class="hdr-icon-btn hdr-user-btn" aria-label="Hesabım">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+          </button>
+          <button
+            class="hdr-cart-btn"
+            id="cartToggle"
+            aria-label="Sepetim"
+            aria-expanded="false"
+            aria-controls="cartPanel"
+          >
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.3"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <path d="M16 10a4 4 0 0 1-8 0" />
+            </svg>
+            <span class="hdr-cart-badge" id="cartBadge">2</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- ░░ NAV OVERLAY ░░ -->
+    <nav
+      class="nav-overlay"
+      id="navOverlay"
+      aria-hidden="true"
+      aria-label="Site navigasyonu"
+    >
+      <div class="nav-overlay-top">
+        <a href="/" class="nav-overlay-logo" aria-label="Snab's"
+          ><img src="assets/logo.svg" alt="Snab's"
+        /></a>
+        <button class="nav-close-btn" id="navClose" aria-label="Menüyü kapat">
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+          >
+            <path d="M18 6 6 18M6 6l12 12" />
+          </svg>
+          KAPAT
+        </button>
+      </div>
+      <ul class="nav-links">
+        <li><a href="/" class="nav-link">Ana Sayfa</a></li>
+        <li><a href="about-us.html" class="nav-link">Hikayemiz</a></li>
+        <li><a href="product-list.html" class="nav-link">Ürünler</a></li>
+        <li><a href="recipes-list.html" class="nav-link">Tariflerimiz</a></li>
+        <li><a href="contact-us.html" class="nav-link">İletişim</a></li>
+      </ul>
+    </nav>
+
+    <div class="overlay-backdrop" id="overlayBackdrop"></div>
+
+    <main class="apc-page">
+      <div class="container">
+        <div class="apc-head">
+          <h1>Ürün Kartı Varyantları</h1>
+          <p>
+            Snab's konseptine uygun 4 kart tasarımı: hover kartı, Snab's Pop,
+            Split pill ve Split pill + başlık.
+          </p>
+        </div>
+
+        <!-- ░░ GRUP 1 — Mevcut hover kart ░░ -->
+        <section class="apc-group apc-group--original" id="grup-1">
+          <div class="apc-group-head">
+            <h2>Grup 1 — Hover CTA</h2>
+            <p>
+              Mevcut ürün listesi kartı. Masaüstünde hover ile adet + sepete
+              ekle açılır; mobilde her zaman görünür.
+            </p>
+          </div>
+          <div class="pl-grid">
+            <!-- 01: Çilek — En çok satan -->
+            <article class="pl-card" data-flavor="cilek">
+              <svg class="seal-badge" role="img" aria-label="En çok satan">
+                <use href="#seal" />
+              </svg>
+              <div class="pl-card-header">
+                <h2 class="pl-card-name">ÇİLEK</h2>
+                <p class="pl-card-badge">+ dondurularak kurutulmuş</p>
+              </div>
+              <div class="pl-card-visual">
+                <img
+                  src="assets/cilek.png"
+                  alt="Snab's Çilek Dilimleri"
+                  class="pl-card-img"
+                  loading="lazy"
+                />
+              </div>
+              <div class="pl-cta">
+                <div class="pl-cta-default">
+                  <span class="pl-cta-label">Çilek Dilimleri</span>
+                  <span class="pl-cta-price">₺89</span>
+                </div>
+                <div class="pl-cta-hover">
+                  <select class="pl-qty-select" aria-label="Adet seç">
+                    <option value="1">1 adet</option>
+                    <option value="2">2 adet</option>
+                    <option value="3">3 adet</option>
+                    <option value="4">4 adet</option>
+                    <option value="5">5 adet</option>
+                  </select>
+                  <button
+                    class="pl-add-btn"
+                    data-price="89"
+                    aria-label="Sepete ekle"
+                  >
+                    <svg
+                      class="pl-add-icon"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2.4"
+                      stroke-linecap="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M12 5v14" />
+                      <path d="M5 12h14" />
+                    </svg>
+                    <span class="pl-add-label">Sepete Ekle — ₺89</span>
+                  </button>
+                </div>
+              </div>
+            </article>
+
+            <!-- 02: Mango -->
+            <article class="pl-card" data-flavor="mango">
+              <div class="pl-card-header">
+                <h2 class="pl-card-name">MANGO</h2>
+                <p class="pl-card-badge">+ dondurularak kurutulmuş</p>
+              </div>
+              <div class="pl-card-visual">
+                <img
+                  src="assets/mango.png"
+                  alt="Snab's Mango Dilimleri"
+                  class="pl-card-img"
+                  loading="lazy"
+                />
+              </div>
+              <div class="pl-cta">
+                <div class="pl-cta-default">
+                  <span class="pl-cta-label">Mango Dilimleri</span>
+                  <span class="pl-cta-price">₺89</span>
+                </div>
+                <div class="pl-cta-hover">
+                  <select class="pl-qty-select" aria-label="Adet seç">
+                    <option value="1">1 adet</option>
+                    <option value="2">2 adet</option>
+                    <option value="3">3 adet</option>
+                    <option value="4">4 adet</option>
+                    <option value="5">5 adet</option>
+                  </select>
+                  <button
+                    class="pl-add-btn"
+                    data-price="89"
+                    aria-label="Sepete ekle"
+                  >
+                    <svg
+                      class="pl-add-icon"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2.4"
+                      stroke-linecap="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M12 5v14" />
+                      <path d="M5 12h14" />
+                    </svg>
+                    <span class="pl-add-label">Sepete Ekle — ₺89</span>
+                  </button>
+                </div>
+              </div>
+            </article>
+
+            <!-- 03: İncir — İndirimli -->
+            <article class="pl-card" data-flavor="incir">
+              <span class="apc-tag is-disc">İndirim</span>
+              <div class="pl-card-header">
+                <h2 class="pl-card-name">İNCİR</h2>
+                <p class="pl-card-badge">+ dondurularak kurutulmuş</p>
+              </div>
+              <div class="pl-card-visual">
+                <img
+                  src="assets/cilek.png"
+                  alt="Snab's İncir Dilimleri"
+                  class="pl-card-img"
+                  loading="lazy"
+                />
+              </div>
+              <div class="pl-cta">
+                <div class="pl-cta-default">
+                  <span class="pl-cta-label">İncir Dilimleri</span>
+                  <span class="pl-cta-price"
+                    ><span class="old">₺95</span>₺71</span
+                  >
+                </div>
+                <div class="pl-cta-hover">
+                  <select class="pl-qty-select" aria-label="Adet seç">
+                    <option value="1">1 adet</option>
+                    <option value="2">2 adet</option>
+                    <option value="3">3 adet</option>
+                    <option value="4">4 adet</option>
+                    <option value="5">5 adet</option>
+                  </select>
+                  <button
+                    class="pl-add-btn"
+                    data-price="71"
+                    aria-label="Sepete ekle"
+                  >
+                    <svg
+                      class="pl-add-icon"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2.4"
+                      stroke-linecap="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M12 5v14" />
+                      <path d="M5 12h14" />
+                    </svg>
+                    <span class="pl-add-label">Sepete Ekle — ₺71</span>
+                  </button>
+                </div>
+              </div>
+            </article>
+
+            <!-- 04: Karışık Mix — uzun isim -->
+            <article class="pl-card" data-flavor="mix">
+              <div class="pl-card-header">
+                <h2 class="pl-card-name">MIX</h2>
+                <p class="pl-card-badge">+ karışık meyve paketi</p>
+              </div>
+              <div class="pl-card-visual">
+                <img
+                  src="assets/mango.png"
+                  alt="Snab's Karışık Meyve Atıştırmalık Paketi (3'lü)"
+                  class="pl-card-img"
+                  loading="lazy"
+                />
+              </div>
+              <div class="pl-cta">
+                <div class="pl-cta-default">
+                  <span class="pl-cta-label">Karışık Meyve Atıştırmalık Paketi (3'lü)</span>
+                  <span class="pl-cta-price">₺99</span>
+                </div>
+                <div class="pl-cta-hover">
+                  <select class="pl-qty-select" aria-label="Adet seç">
+                    <option value="1">1 adet</option>
+                    <option value="2">2 adet</option>
+                    <option value="3">3 adet</option>
+                    <option value="4">4 adet</option>
+                    <option value="5">5 adet</option>
+                  </select>
+                  <button
+                    class="pl-add-btn"
+                    data-price="99"
+                    aria-label="Sepete ekle"
+                  >
+                    <svg
+                      class="pl-add-icon"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2.4"
+                      stroke-linecap="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M12 5v14" />
+                      <path d="M5 12h14" />
+                    </svg>
+                    <span class="pl-add-label">Sepete Ekle — ₺99</span>
+                  </button>
+                </div>
+              </div>
+            </article>
+
+            <!-- 05: Muz -->
+            <article class="pl-card" data-flavor="muz">
+              <div class="pl-card-header">
+                <h2 class="pl-card-name">MUZ</h2>
+                <p class="pl-card-badge">+ dondurularak kurutulmuş</p>
+              </div>
+              <div class="pl-card-visual">
+                <img
+                  src="assets/mango.png"
+                  alt="Snab's Muz Dilimleri"
+                  class="pl-card-img"
+                  loading="lazy"
+                />
+              </div>
+              <div class="pl-cta">
+                <div class="pl-cta-default">
+                  <span class="pl-cta-label">Muz Dilimleri</span>
+                  <span class="pl-cta-price">₺85</span>
+                </div>
+                <div class="pl-cta-hover">
+                  <select class="pl-qty-select" aria-label="Adet seç">
+                    <option value="1">1 adet</option>
+                    <option value="2">2 adet</option>
+                    <option value="3">3 adet</option>
+                    <option value="4">4 adet</option>
+                    <option value="5">5 adet</option>
+                  </select>
+                  <button
+                    class="pl-add-btn"
+                    data-price="85"
+                    aria-label="Sepete ekle"
+                  >
+                    <svg
+                      class="pl-add-icon"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2.4"
+                      stroke-linecap="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M12 5v14" />
+                      <path d="M5 12h14" />
+                    </svg>
+                    <span class="pl-add-label">Sepete Ekle — ₺85</span>
+                  </button>
+                </div>
+              </div>
+            </article>
+
+            <!-- 06: Elma — Tükendi -->
+            <article class="pl-card is-out" data-flavor="elma">
+              <span class="apc-tag is-out">Tükendi</span>
+              <div class="pl-card-header">
+                <h2 class="pl-card-name">ELMA</h2>
+                <p class="pl-card-badge">+ dondurularak kurutulmuş</p>
+              </div>
+              <div class="pl-card-visual">
+                <img
+                  src="assets/cilek.png"
+                  alt="Snab's Elma Cipsi"
+                  class="pl-card-img"
+                  loading="lazy"
+                />
+              </div>
+              <div class="pl-cta">
+                <div class="pl-cta-default">
+                  <span class="pl-cta-label">Elma Cipsi</span>
+                  <span class="pl-cta-price">₺79</span>
+                </div>
+                <div class="pl-cta-hover">
+                  <button class="pl-add-btn" disabled>
+                    <span class="pl-add-label">Tükendi</span>
+                  </button>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <!-- ░░ GRUP 2 — Snab's Pop (birleşik) ░░ -->
+        <section class="apc-group" id="grup-2">
+          <div class="apc-group-head">
+            <h2>Grup 2 — Snab's Pop</h2>
+            <p>
+              Grup 1'in pastel üst alanı + flat alt bölüm. Ürün adı ve fiyat
+              üst satırda; adet seçici ve + butonu her zaman görünür.
+            </p>
+          </div>
+          <div class="pl-grid">
+            <article class="pl-card pl-card--pop" data-flavor="cilek">
+              <svg class="seal-badge" role="img" aria-label="En çok satan"><use href="#seal" /></svg>
+              <div class="pl-card-header">
+                <h2 class="pl-card-name">ÇİLEK</h2>
+                <p class="pl-card-badge">+ dondurularak kurutulmuş</p>
+              </div>
+              <div class="pl-card-visual">
+                <img src="assets/cilek.png" alt="Snab's Çilek Dilimleri" class="pl-card-img" loading="lazy" />
+              </div>
+              <div class="pl-pop-foot">
+                <div class="pl-pop-head">
+                  <h3 class="pl-pop-title">Çilek Dilimleri</h3>
+                  <span class="pl-pop-price">₺89</span>
+                </div>
+                <div class="pl-pop-row">
+                  <div class="pl-pop-slot">
+                    <select class="vpc-qty" aria-label="Adet seç"><option value="1">1 adet</option><option value="2">2 adet</option><option value="3">3 adet</option><option value="4">4 adet</option><option value="5">5 adet</option></select>
+                  </div>
+                  <button class="vpc-add" data-price="89" aria-label="Sepete ekle"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg></button>
+                </div>
+              </div>
+            </article>
+
+            <article class="pl-card pl-card--pop" data-flavor="mango">
+              <div class="pl-card-header">
+                <h2 class="pl-card-name">MANGO</h2>
+                <p class="pl-card-badge">+ dondurularak kurutulmuş</p>
+              </div>
+              <div class="pl-card-visual">
+                <img src="assets/mango.png" alt="Snab's Mango Dilimleri" class="pl-card-img" loading="lazy" />
+              </div>
+              <div class="pl-pop-foot">
+                <div class="pl-pop-head">
+                  <h3 class="pl-pop-title">Mango Dilimleri</h3>
+                  <span class="pl-pop-price">₺89</span>
+                </div>
+                <div class="pl-pop-row">
+                  <div class="pl-pop-slot">
+                    <select class="vpc-qty" aria-label="Adet seç"><option value="1">1 adet</option><option value="2">2 adet</option><option value="3">3 adet</option></select>
+                  </div>
+                  <button class="vpc-add" data-price="89" aria-label="Sepete ekle"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg></button>
+                </div>
+              </div>
+            </article>
+
+            <article class="pl-card pl-card--pop" data-flavor="incir">
+              <span class="apc-tag is-disc">İndirim</span>
+              <div class="pl-card-header">
+                <h2 class="pl-card-name">İNCİR</h2>
+                <p class="pl-card-badge">+ dondurularak kurutulmuş</p>
+              </div>
+              <div class="pl-card-visual">
+                <img src="assets/cilek.png" alt="Snab's İncir Dilimleri" class="pl-card-img" loading="lazy" />
+              </div>
+              <div class="pl-pop-foot">
+                <div class="pl-pop-head">
+                  <h3 class="pl-pop-title">İncir Dilimleri</h3>
+                  <span class="pl-pop-price"><span class="old">₺95</span><span>₺71</span></span>
+                </div>
+                <div class="pl-pop-row">
+                  <div class="pl-pop-slot">
+                    <select class="vpc-qty" aria-label="Adet seç"><option value="1">1 adet</option><option value="2">2 adet</option><option value="3">3 adet</option></select>
+                  </div>
+                  <button class="vpc-add" data-price="71" aria-label="Sepete ekle"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg></button>
+                </div>
+              </div>
+            </article>
+
+            <article class="pl-card pl-card--pop" data-flavor="mix">
+              <div class="pl-card-header">
+                <h2 class="pl-card-name">MIX</h2>
+                <p class="pl-card-badge">+ karışık meyve paketi</p>
+              </div>
+              <div class="pl-card-visual">
+                <img src="assets/mango.png" alt="Snab's Karışık Mix" class="pl-card-img" loading="lazy" />
+              </div>
+              <div class="pl-pop-foot">
+                <div class="pl-pop-head">
+                  <h3 class="pl-pop-title">Karışık Meyve Atıştırmalık Paketi (3'lü)</h3>
+                  <span class="pl-pop-price">₺99</span>
+                </div>
+                <div class="pl-pop-row">
+                  <div class="pl-pop-slot">
+                    <select class="vpc-qty" aria-label="Adet seç"><option value="1">1 adet</option><option value="2">2 adet</option></select>
+                  </div>
+                  <button class="vpc-add" data-price="99" aria-label="Sepete ekle"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg></button>
+                </div>
+              </div>
+            </article>
+
+            <article class="pl-card pl-card--pop" data-flavor="muz">
+              <div class="pl-card-header">
+                <h2 class="pl-card-name">MUZ</h2>
+                <p class="pl-card-badge">+ dondurularak kurutulmuş</p>
+              </div>
+              <div class="pl-card-visual">
+                <img src="assets/mango.png" alt="Snab's Muz Dilimleri" class="pl-card-img" loading="lazy" />
+              </div>
+              <div class="pl-pop-foot">
+                <div class="pl-pop-head">
+                  <h3 class="pl-pop-title">Dondurularak Kurutulmuş Muz Dilimleri</h3>
+                  <span class="pl-pop-price">₺85</span>
+                </div>
+                <div class="pl-pop-row">
+                  <div class="pl-pop-slot">
+                    <select class="vpc-qty" aria-label="Adet seç"><option value="1">1 adet</option><option value="2">2 adet</option></select>
+                  </div>
+                  <button class="vpc-add" data-price="85" aria-label="Sepete ekle"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg></button>
+                </div>
+              </div>
+            </article>
+
+            <article class="pl-card pl-card--pop is-out" data-flavor="elma">
+              <span class="apc-tag is-out">Tükendi</span>
+              <div class="pl-card-header">
+                <h2 class="pl-card-name">ELMA</h2>
+                <p class="pl-card-badge">+ dondurularak kurutulmuş</p>
+              </div>
+              <div class="pl-card-visual">
+                <img src="assets/cilek.png" alt="Snab's Elma Cipsi" class="pl-card-img" loading="lazy" />
+              </div>
+              <div class="pl-pop-foot">
+                <div class="pl-pop-head">
+                  <h3 class="pl-pop-title">Elma Cipsi — Organik Elma</h3>
+                  <span class="pl-pop-price">₺79</span>
+                </div>
+                <div class="pl-pop-row">
+                  <button class="vpc-add" disabled>Tükendi</button>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <!-- ░░ GRUP 3 — Split Pill ░░ -->
+        <section class="apc-group" id="grup-3">
+          <div class="apc-group-head">
+            <h2>Grup 3 — Split Pill</h2>
+            <p>
+              Üst başlık yok, ambalaj ön planda. Masaüstünde isim +
+              fiyat split bar; mobilde isim üst satır, fiyat + sepete ekle alt satır.
+            </p>
+          </div>
+          <div class="pl-grid sp-grid">
+
+            <article class="sp-card" data-flavor="cilek">
+              <svg class="sp-seal" role="img" aria-label="En çok satan"><use href="#seal" /></svg>
+              <div class="sp-frame">
+                <img src="assets/cilek.png" alt="Snab's Çilek Dilimleri" class="sp-img" loading="lazy" />
+              </div>
+              <div class="sp-foot">
+                <div class="sp-split">
+                  <span class="sp-name"><span class="sp-name-text">Çilek Dilimleri</span></span>
+                  <span class="sp-price">₺89</span>
+                </div>
+                <div class="sp-stack">
+                  <div class="sp-m-head">
+                    <span class="sp-m-name">Çilek Dilimleri</span>
+                  </div>
+                  <div class="sp-m-actions">
+                    <span class="sp-m-action-price">₺89</span>
+                    <button class="vpc-add" data-price="89" aria-label="Sepete ekle"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg></button>
+                  </div>
+                </div>
+                <div class="sp-hover">
+                  <button class="sp-cta vpc-add" data-price="89">Sepete Ekle</button>
+                </div>
+              </div>
+            </article>
+
+            <article class="sp-card" data-flavor="mango">
+              <div class="sp-frame">
+                <img src="assets/mango.png" alt="Snab's Mango Dilimleri" class="sp-img" loading="lazy" />
+              </div>
+              <div class="sp-foot">
+                <div class="sp-split">
+                  <span class="sp-name"><span class="sp-name-text">Mango Dilimleri</span></span>
+                  <span class="sp-price">₺89</span>
+                </div>
+                <div class="sp-stack">
+                  <div class="sp-m-head">
+                    <span class="sp-m-name">Mango Dilimleri</span>
+                  </div>
+                  <div class="sp-m-actions">
+                    <span class="sp-m-action-price">₺89</span>
+                    <button class="vpc-add" data-price="89" aria-label="Sepete ekle"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg></button>
+                  </div>
+                </div>
+                <div class="sp-hover">
+                  <button class="sp-cta vpc-add" data-price="89">Sepete Ekle</button>
+                </div>
+              </div>
+            </article>
+
+            <article class="sp-card" data-flavor="incir">
+              <span class="sp-tag is-disc">İndirim</span>
+              <div class="sp-frame">
+                <img src="assets/cilek.png" alt="Snab's İncir Dilimleri" class="sp-img" loading="lazy" />
+              </div>
+              <div class="sp-foot">
+                <div class="sp-split">
+                  <span class="sp-name"><span class="sp-name-text">İncir Dilimleri</span></span>
+                  <span class="sp-price"><span class="vpc-old">₺95</span> ₺71</span>
+                </div>
+                <div class="sp-stack">
+                  <div class="sp-m-head">
+                    <span class="sp-m-name">İncir Dilimleri</span>
+                  </div>
+                  <div class="sp-m-actions">
+                    <span class="sp-m-action-price"><span class="vpc-old">₺95</span> ₺71</span>
+                    <button class="vpc-add" data-price="71" aria-label="Sepete ekle"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg></button>
+                  </div>
+                </div>
+                <div class="sp-hover">
+                  <button class="sp-cta vpc-add" data-price="71">Sepete Ekle</button>
+                </div>
+              </div>
+            </article>
+
+            <article class="sp-card" data-flavor="mix">
+              <div class="sp-frame">
+                <img src="assets/mango.png" alt="Snab's Karışık Mix" class="sp-img" loading="lazy" />
+              </div>
+              <div class="sp-foot">
+                <div class="sp-split">
+                  <span class="sp-name"><span class="sp-name-text">Karışık Meyve Atıştırmalık Paketi (3'lü)</span></span>
+                  <span class="sp-price">₺99</span>
+                </div>
+                <div class="sp-stack">
+                  <div class="sp-m-head">
+                    <span class="sp-m-name">Karışık Meyve Atıştırmalık Paketi (3'lü)</span>
+                  </div>
+                  <div class="sp-m-actions">
+                    <span class="sp-m-action-price">₺99</span>
+                    <button class="vpc-add" data-price="99" aria-label="Sepete ekle"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg></button>
+                  </div>
+                </div>
+                <div class="sp-hover">
+                  <button class="sp-cta vpc-add" data-price="99">Sepete Ekle</button>
+                </div>
+              </div>
+            </article>
+
+            <article class="sp-card is-out" data-flavor="elma">
+              <span class="sp-tag is-out">Tükendi</span>
+              <div class="sp-frame">
+                <img src="assets/cilek.png" alt="Snab's Elma Cipsi" class="sp-img" loading="lazy" />
+              </div>
+              <div class="sp-foot">
+                <div class="sp-split">
+                  <span class="sp-name"><span class="sp-name-text">Elma Cipsi</span></span>
+                  <span class="sp-price">₺79</span>
+                </div>
+                <div class="sp-stack">
+                  <div class="sp-m-head">
+                    <span class="sp-m-name">Elma Cipsi</span>
+                  </div>
+                  <div class="sp-m-actions">
+                    <span class="sp-m-action-price">₺79</span>
+                    <button class="vpc-add sp-m-out" disabled>Tükendi</button>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+          </div>
+        </section>
+
+        <!-- ░░ GRUP 4 — Split Pill + Başlık ░░ -->
+        <section class="apc-group" id="grup-4">
+          <div class="apc-group-head">
+            <h2>Grup 4 — Split Pill + Başlık</h2>
+            <p>
+              Grup 3'ün split pill alt bölümü + Grup 1'in üst başlık alanı
+              (flavor adı + badge). Masaüstünde başlık, ambalaj ve split bar;
+              mobilde başlık + görsel + isim / fiyat pill.
+            </p>
+          </div>
+          <div class="pl-grid sp-grid">
+
+            <article class="sp-card sp-card--headed" data-flavor="cilek">
+              <svg class="sp-seal" role="img" aria-label="En çok satan"><use href="#seal" /></svg>
+              <div class="sp-card-top">
+                <div class="sp-card-header">
+                  <h2 class="pl-card-name">ÇİLEK</h2>
+                  <p class="pl-card-badge">+ dondurularak kurutulmuş</p>
+                </div>
+                <div class="sp-frame">
+                  <img src="assets/cilek.png" alt="Snab's Çilek Dilimleri" class="sp-img" loading="lazy" />
+                </div>
+              </div>
+              <div class="sp-foot">
+                <div class="sp-split">
+                  <span class="sp-name"><span class="sp-name-text">Çilek Dilimleri</span></span>
+                  <span class="sp-price">₺89</span>
+                </div>
+                <div class="sp-stack">
+                  <div class="sp-m-head">
+                    <span class="sp-m-name">Çilek Dilimleri</span>
+                  </div>
+                  <div class="sp-m-actions">
+                    <span class="sp-m-action-price">₺89</span>
+                    <button class="vpc-add" data-price="89" aria-label="Sepete ekle"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg></button>
+                  </div>
+                </div>
+                <div class="sp-hover">
+                  <button class="sp-cta vpc-add" data-price="89">Sepete Ekle</button>
+                </div>
+              </div>
+            </article>
+
+            <article class="sp-card sp-card--headed" data-flavor="mango">
+              <div class="sp-card-top">
+                <div class="sp-card-header">
+                  <h2 class="pl-card-name">MANGO</h2>
+                  <p class="pl-card-badge">+ dondurularak kurutulmuş</p>
+                </div>
+                <div class="sp-frame">
+                  <img src="assets/mango.png" alt="Snab's Mango Dilimleri" class="sp-img" loading="lazy" />
+                </div>
+              </div>
+              <div class="sp-foot">
+                <div class="sp-split">
+                  <span class="sp-name"><span class="sp-name-text">Mango Dilimleri</span></span>
+                  <span class="sp-price">₺89</span>
+                </div>
+                <div class="sp-stack">
+                  <div class="sp-m-head">
+                    <span class="sp-m-name">Mango Dilimleri</span>
+                  </div>
+                  <div class="sp-m-actions">
+                    <span class="sp-m-action-price">₺89</span>
+                    <button class="vpc-add" data-price="89" aria-label="Sepete ekle"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg></button>
+                  </div>
+                </div>
+                <div class="sp-hover">
+                  <button class="sp-cta vpc-add" data-price="89">Sepete Ekle</button>
+                </div>
+              </div>
+            </article>
+
+            <article class="sp-card sp-card--headed" data-flavor="incir">
+              <span class="sp-tag is-disc">İndirim</span>
+              <div class="sp-card-top">
+                <div class="sp-card-header">
+                  <h2 class="pl-card-name">İNCİR</h2>
+                  <p class="pl-card-badge">+ dondurularak kurutulmuş</p>
+                </div>
+                <div class="sp-frame">
+                  <img src="assets/cilek.png" alt="Snab's İncir Dilimleri" class="sp-img" loading="lazy" />
+                </div>
+              </div>
+              <div class="sp-foot">
+                <div class="sp-split">
+                  <span class="sp-name"><span class="sp-name-text">İncir Dilimleri</span></span>
+                  <span class="sp-price"><span class="vpc-old">₺95</span> ₺71</span>
+                </div>
+                <div class="sp-stack">
+                  <div class="sp-m-head">
+                    <span class="sp-m-name">İncir Dilimleri</span>
+                  </div>
+                  <div class="sp-m-actions">
+                    <span class="sp-m-action-price"><span class="vpc-old">₺95</span> ₺71</span>
+                    <button class="vpc-add" data-price="71" aria-label="Sepete ekle"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg></button>
+                  </div>
+                </div>
+                <div class="sp-hover">
+                  <button class="sp-cta vpc-add" data-price="71">Sepete Ekle</button>
+                </div>
+              </div>
+            </article>
+
+            <article class="sp-card sp-card--headed" data-flavor="mix">
+              <div class="sp-card-top">
+                <div class="sp-card-header">
+                  <h2 class="pl-card-name">MIX</h2>
+                  <p class="pl-card-badge">+ karışık meyve paketi</p>
+                </div>
+                <div class="sp-frame">
+                  <img src="assets/mango.png" alt="Snab's Karışık Mix" class="sp-img" loading="lazy" />
+                </div>
+              </div>
+              <div class="sp-foot">
+                <div class="sp-split">
+                  <span class="sp-name"><span class="sp-name-text">Karışık Meyve Atıştırmalık Paketi (3'lü)</span></span>
+                  <span class="sp-price">₺99</span>
+                </div>
+                <div class="sp-stack">
+                  <div class="sp-m-head">
+                    <span class="sp-m-name">Karışık Meyve Atıştırmalık Paketi (3'lü)</span>
+                  </div>
+                  <div class="sp-m-actions">
+                    <span class="sp-m-action-price">₺99</span>
+                    <button class="vpc-add" data-price="99" aria-label="Sepete ekle"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg></button>
+                  </div>
+                </div>
+                <div class="sp-hover">
+                  <button class="sp-cta vpc-add" data-price="99">Sepete Ekle</button>
+                </div>
+              </div>
+            </article>
+
+            <article class="sp-card sp-card--headed is-out" data-flavor="elma">
+              <span class="sp-tag is-out">Tükendi</span>
+              <div class="sp-card-top">
+                <div class="sp-card-header">
+                  <h2 class="pl-card-name">ELMA</h2>
+                  <p class="pl-card-badge">+ dondurularak kurutulmuş</p>
+                </div>
+                <div class="sp-frame">
+                  <img src="assets/cilek.png" alt="Snab's Elma Cipsi" class="sp-img" loading="lazy" />
+                </div>
+              </div>
+              <div class="sp-foot">
+                <div class="sp-split">
+                  <span class="sp-name"><span class="sp-name-text">Elma Cipsi</span></span>
+                  <span class="sp-price">₺79</span>
+                </div>
+                <div class="sp-stack">
+                  <div class="sp-m-head">
+                    <span class="sp-m-name">Elma Cipsi</span>
+                  </div>
+                  <div class="sp-m-actions">
+                    <span class="sp-m-action-price">₺79</span>
+                    <button class="vpc-add sp-m-out" disabled>Tükendi</button>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+    <!-- ░░ FOOTER ░░ -->
+    <footer class="site-footer">
+      <div class="ft-divider" aria-hidden="true"></div>
+      <div class="ft-top">
+        <div class="ft-top-inner">
+          <nav class="ft-nav" aria-label="Footer navigasyon">
+            <a href="/">Ana Sayfa</a>
+            <a href="product-list.html">Ürünler</a>
+            <a href="recipes-list.html">Tarifler</a>
+            <a href="about-us.html">Hikayemiz</a>
+            <a href="contact-us.html">İletişim</a>
+          </nav>
+          <p class="ft-legal-top">
+            &copy; 2026 Snab's &middot; Türkiye'de üretildi.
+          </p>
+        </div>
+      </div>
+      <div class="ft-divider" aria-hidden="true"></div>
+      <div class="ft-body">
+        <p class="ft-tagline" aria-hidden="true">
+          GERÇEK MALZEME &middot; CESUR LEZZET
+        </p>
+        <div class="ft-brand-wrap" aria-label="Snab's">
+          <svg
+            class="ft-brand-logo"
+            viewBox="61 310 666 168"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <defs>
+              <clipPath id="ft-logo-clip" clipPathUnits="userSpaceOnUse">
+                <path d="M 0,591 H 591 V 0 H 0 Z" />
+              </clipPath>
+            </defs>
+            <g transform="matrix(1.3333333,0,0,-1.3333333,0,788)">
+              <g clip-path="url(#ft-logo-clip)">
+                <g transform="translate(61.2166,315.2919)">
+                  <path
+                    fill="currentColor"
+                    d="m 0,0 c 2.144,4.418 5.711,8.078 10.695,10.981 4.984,2.903 10.287,4.701 15.902,5.395 5.616,0.694 11.106,0.694 16.471,0 5.366,-0.694 9.876,-2.525 13.538,-5.491 C 60.266,7.92 62.159,4.291 62.285,0 c 0.125,-2.775 -0.664,-5.237 -2.367,-7.381 -1.704,-2.147 -3.913,-3.63 -6.625,-4.451 -2.715,-0.822 -5.556,-1.105 -8.521,-0.852 -2.966,0.251 -5.774,1.26 -8.424,3.028 -2.65,1.769 -4.671,4.228 -6.059,7.384 3.66,1.01 5.899,2.555 6.721,4.639 0.821,2.081 0.348,3.942 -1.418,5.585 -1.768,1.641 -4.103,2.525 -7.006,2.65 C 25.177,10.728 22.715,9.623 21.202,7.289 19.687,4.954 19.184,2.587 19.689,0.19 c 0.126,-0.631 0.281,-1.199 0.471,-1.705 0.191,-0.506 0.506,-1.042 0.947,-1.608 0.441,-0.569 0.822,-1.075 1.137,-1.516 0.316,-0.441 0.789,-0.914 1.42,-1.42 0.632,-0.506 1.105,-0.914 1.421,-1.23 0.315,-0.315 0.914,-0.789 1.798,-1.42 0.882,-0.631 1.483,-1.039 1.798,-1.23 0.316,-0.19 0.977,-0.598 1.987,-1.229 1.009,-0.632 1.64,-1.075 1.896,-1.325 14.512,-9.468 23.346,-15.399 26.502,-17.796 4.794,-3.535 8.486,-6.943 11.073,-10.225 2.588,-3.281 4.198,-7.005 4.829,-11.168 0.757,-5.05 -0.032,-9.561 -2.367,-13.536 -2.334,-3.977 -5.773,-7.163 -10.316,-9.56 -4.544,-2.4 -9.531,-4.198 -14.956,-5.395 -5.428,-1.2 -11.108,-1.864 -17.04,-1.989 -16.28,-0.253 -28.017,1.956 -35.211,6.625 -7.193,4.669 -10.665,10.412 -10.412,17.23 0.125,4.037 1.733,7.381 4.827,10.031 3.091,2.65 7.256,4.04 12.493,4.166 5.238,0.125 11.329,-1.704 18.272,-5.491 -2.905,-2.271 -4.671,-5.017 -5.302,-8.235 -0.632,-3.219 -0.286,-6.152 1.042,-8.802 1.325,-2.65 3.564,-4.891 6.72,-6.72 3.156,-1.831 6.69,-2.682 10.602,-2.557 4.669,0.25 7.95,2.206 9.844,5.868 1.009,1.513 1.357,3.124 1.042,4.827 -0.316,1.703 -0.855,3.218 -1.611,4.543 -0.756,1.325 -1.924,2.746 -3.502,4.261 -1.577,1.513 -3.188,2.903 -4.829,4.165 -1.64,1.263 -3.534,2.555 -5.678,3.88 -2.146,1.325 -4.07,2.492 -5.773,3.504 -1.703,1.01 -3.472,2.052 -5.3,3.124 -1.831,1.072 -3.314,2.051 -4.451,2.935 -5.049,3.659 -8.929,7.825 -11.642,12.494 -2.715,4.668 -4.103,9.182 -4.165,13.535 C -2.81,-8.426 -1.894,-4.165 0,0"
+                  />
+                </g>
+                <g transform="translate(180.3262,279.8904)">
+                  <path
+                    fill="currentColor"
+                    d="m 0,0 c 0,-21.077 1.641,-35.592 4.922,-43.542 h -42.976 c 2.144,4.794 3.692,11.547 4.639,20.256 0.946,8.709 1.292,17.322 1.042,25.841 -0.253,8.518 -0.884,16.438 -1.894,23.759 -1.012,7.319 -2.274,12.306 -3.787,14.959 13.125,1.259 25.811,4.035 38.054,8.328 L 0,15.715 c 4.669,17.162 10.788,28.017 18.362,32.561 2.397,1.387 5.047,2.304 7.95,2.745 2.903,0.441 5.901,0.253 8.994,-0.569 3.091,-0.821 5.899,-2.271 8.424,-4.353 2.524,-2.084 4.606,-5.237 6.246,-9.465 1.641,-4.228 2.463,-9.245 2.463,-15.051 0,-0.381 -0.033,-2.59 -0.096,-6.627 -0.062,-4.038 -0.062,-7.289 0,-9.749 0.063,-2.462 0.126,-5.996 0.191,-10.602 0.062,-4.609 0.188,-8.551 0.378,-11.832 0.19,-3.282 0.473,-6.753 0.852,-10.412 0.378,-3.662 0.851,-6.848 1.42,-9.561 0.568,-2.715 1.295,-4.829 2.179,-6.342 H 15.902 c 1.263,1.638 2.335,6.34 3.219,14.102 0.882,7.762 1.45,15.965 1.703,24.611 0.251,8.646 -0.16,16.471 -1.232,23.477 C 18.52,25.651 16.721,29.28 14.197,29.533 11.421,29.658 8.959,27.324 6.815,22.527 4.669,17.731 2.585,11.231 0.566,3.031 0.313,2.019 0.125,1.009 0,0"
+                  />
+                </g>
+                <g transform="translate(379.1389,305.4484)">
+                  <path
+                    fill="currentColor"
+                    d="m 0,0 c -0.631,-1.137 -1.262,-2.367 -1.894,-3.692 -0.631,-1.325 -1.137,-2.525 -1.515,-3.597 -0.381,-1.072 -0.821,-2.397 -1.325,-3.975 -0.506,-1.578 -0.947,-2.81 -1.325,-3.692 0,-20.824 0.882,-36.601 2.65,-47.329 4.794,4.922 8.802,11.422 12.02,19.5 3.219,8.075 5.27,16.027 6.154,23.854 0.378,1.766 0.474,3.943 0.283,6.53 -0.19,2.588 -0.506,5.05 -0.946,7.384 -0.441,2.334 -1.388,4.291 -2.838,5.869 C 9.811,2.43 7.887,3.219 5.49,3.219 3.597,3.091 1.766,2.019 0,0 M -1.706,52.441 C -2.337,51.682 -2.938,48.874 -3.504,44.015 -4.073,39.156 -4.579,33.824 -5.019,28.018 -5.46,22.212 -5.681,17.102 -5.681,12.684 c -0.38,-0.631 -0.884,-1.453 -1.515,-2.46 -2.525,-4.671 -6.688,-14.452 -12.494,-29.345 -2.524,-6.562 -4.072,-10.507 -4.638,-11.832 -0.569,-1.328 -1.611,-3.599 -3.124,-6.815 -1.515,-3.219 -2.872,-5.774 -4.07,-7.667 -1.199,-1.894 -2.715,-3.978 -4.543,-6.25 -1.831,-2.271 -3.692,-4.165 -5.586,-5.678 2.019,13.125 2.838,31.049 2.46,53.766 -0.378,22.718 -2.144,37.042 -5.3,42.976 14.262,2.019 28.524,6.372 42.785,13.062 m -85.19,-64.747 c -0.38,-0.253 -0.884,-0.759 -1.515,-1.515 -2.778,-2.775 -4.924,-5.047 -6.437,-6.815 -1.515,-1.769 -3.189,-4.419 -5.017,-7.953 -1.831,-3.534 -3.061,-7.193 -3.692,-10.978 -0.506,-3.031 -0.441,-5.428 0.19,-7.193 0.632,-1.769 1.641,-2.65 3.029,-2.65 1.893,0.125 3.722,1.48 5.49,4.067 1.766,2.588 3.186,5.553 4.258,8.9 1.072,3.343 2.241,7.604 3.504,12.779 0.125,5.299 0.19,9.087 0.19,11.358 M 14.197,24.233 c 6.815,1.766 13.189,0.566 19.121,-3.597 5.931,-4.293 9.908,-10.54 11.927,-18.742 2.019,-8.206 2.334,-16.346 0.947,-24.424 -1.388,-8.078 -3.85,-15.146 -7.384,-21.202 -4.418,-7.825 -10.097,-14.104 -17.037,-18.838 -6.943,-4.734 -14.768,-6.911 -23.477,-6.53 -3.156,0 -7.729,0.221 -13.725,0.661 -5.997,0.441 -10.54,0.694 -13.631,0.759 -3.091,0.063 -7.983,-0.157 -14.67,-0.663 -3.409,-0.506 -6.345,-0.885 -8.804,-1.135 -2.462,-0.253 -5.145,-0.378 -8.048,-0.378 -2.903,0 -5.362,0.188 -7.381,0.566 -2.019,0.378 -4.103,0.977 -6.247,1.798 -2.146,0.822 -3.945,2.019 -5.398,3.597 -1.452,1.578 -2.777,3.471 -3.975,5.681 -1.199,2.209 -2.083,4.889 -2.65,8.045 -0.568,3.156 -0.851,6.752 -0.851,10.793 -1.012,-3.409 -1.989,-6.44 -2.936,-9.09 -0.946,-2.65 -2.239,-5.49 -3.879,-8.519 -1.643,-3.03 -3.442,-5.522 -5.398,-7.479 -1.956,-1.956 -4.386,-3.596 -7.289,-4.921 -2.903,-1.325 -6.121,-1.987 -9.653,-1.987 -7.068,0 -12.654,2.493 -16.756,7.477 -4.103,4.984 -5.931,10.918 -5.491,17.796 0.441,6.878 3.124,12.841 8.048,17.891 2.903,3.028 6.374,5.678 10.412,7.95 4.038,2.272 7.857,4.07 11.454,5.395 3.597,1.325 7.066,2.683 10.412,4.07 3.344,1.388 6.214,3.219 8.614,5.491 2.397,2.271 4.037,5.049 4.924,8.33 1.007,4.166 0.849,8.048 -0.476,11.645 -1.325,3.596 -4.133,5.583 -8.423,5.963 -2.147,0.126 -4.261,-0.443 -6.342,-1.705 -2.084,-1.263 -3.662,-2.871 -4.734,-4.827 -1.072,-1.959 -1.292,-4.356 -0.661,-7.196 0.631,-2.84 2.334,-5.648 5.112,-8.423 -2.653,-3.282 -6.249,-5.461 -10.793,-6.533 -4.543,-1.072 -8.867,-0.598 -12.969,1.421 -4.103,2.018 -6.72,5.427 -7.855,10.224 -0.884,6.815 3.219,12.684 12.306,17.605 9.968,5.3 21.012,7.131 33.129,5.491 14.513,-1.769 24.296,-8.268 29.345,-19.499 2.144,-4.797 3.219,-10.287 3.219,-16.471 l 0.188,-34.833 c 0,-13.759 3.156,-19.943 9.468,-18.553 5.3,1.135 10.221,4.699 14.765,10.695 4.543,5.994 8.391,12.935 11.547,20.824 3.155,7.888 6.216,15.775 9.182,23.665 2.965,7.887 6.374,14.828 10.224,20.824 3.847,5.996 8.045,9.626 12.589,10.888"
+                  />
+                </g>
+                <g transform="translate(440.7246,339.1468)">
+                  <path
+                    fill="currentColor"
+                    d="m 0,0 c 2.019,0 3.847,-0.506 5.488,-1.515 1.64,-1.01 2.965,-2.335 3.977,-3.975 1.01,-1.643 1.516,-3.472 1.516,-5.491 0,-2.524 -0.506,-5.082 -1.516,-7.669 -1.012,-2.587 -2.432,-4.922 -4.26,-7.003 -1.831,-2.084 -3.82,-3.755 -5.964,-5.017 l -0.756,1.325 c 2.524,1.893 4.353,4.669 5.49,8.331 C 2.713,-21.52 1.388,-21.771 0,-21.771 c -3.031,0 -5.585,1.04 -7.669,3.123 -2.084,2.082 -3.124,4.637 -3.124,7.667 0,3.029 1.04,5.616 3.124,7.762 C -5.585,-1.075 -3.031,0 0,0"
+                  />
+                </g>
+                <g transform="translate(469.8841,315.2919)">
+                  <path
+                    fill="currentColor"
+                    d="m 0,0 c 2.144,4.418 5.711,8.078 10.695,10.981 4.984,2.903 10.287,4.701 15.902,5.395 5.616,0.694 11.106,0.694 16.471,0 5.366,-0.694 9.876,-2.525 13.538,-5.491 C 60.266,7.92 62.159,4.291 62.285,0 c 0.125,-2.775 -0.664,-5.237 -2.367,-7.381 -1.704,-2.147 -3.913,-3.63 -6.625,-4.451 -2.715,-0.822 -5.556,-1.105 -8.521,-0.852 -2.966,0.251 -5.774,1.26 -8.424,3.028 -2.65,1.769 -4.671,4.228 -6.059,7.384 3.66,1.01 5.899,2.555 6.721,4.639 0.821,2.081 0.348,3.942 -1.418,5.585 -1.768,1.641 -4.103,2.525 -7.006,2.65 C 25.177,10.728 22.715,9.623 21.202,7.289 19.687,4.954 19.184,2.587 19.689,0.19 c 0.126,-0.631 0.281,-1.199 0.471,-1.705 0.191,-0.506 0.506,-1.042 0.947,-1.608 0.441,-0.569 0.822,-1.075 1.137,-1.516 0.316,-0.441 0.789,-0.914 1.42,-1.42 0.632,-0.506 1.105,-0.914 1.421,-1.23 0.315,-0.315 0.914,-0.789 1.798,-1.42 0.882,-0.631 1.483,-1.039 1.798,-1.23 0.316,-0.19 0.977,-0.598 1.987,-1.229 1.009,-0.632 1.64,-1.075 1.896,-1.325 14.512,-9.468 23.346,-15.399 26.502,-17.796 4.794,-3.535 8.486,-6.943 11.073,-10.225 2.588,-3.281 4.198,-7.005 4.829,-11.168 0.757,-5.05 -0.032,-9.561 -2.367,-13.536 -2.334,-3.977 -5.773,-7.163 -10.316,-9.56 -4.544,-2.4 -9.531,-4.198 -14.956,-5.395 -5.428,-1.2 -11.108,-1.864 -17.04,-1.989 -16.28,-0.253 -28.017,1.956 -35.211,6.625 -7.193,4.669 -10.665,10.412 -10.412,17.23 0.125,4.037 1.733,7.381 4.827,10.031 3.091,2.65 7.256,4.04 12.493,4.166 5.238,0.125 11.329,-1.704 18.272,-5.491 -2.905,-2.271 -4.671,-5.017 -5.302,-8.235 -0.632,-3.219 -0.286,-6.152 1.042,-8.802 1.325,-2.65 3.564,-4.891 6.72,-6.72 3.156,-1.831 6.69,-2.682 10.602,-2.557 4.669,0.25 7.95,2.206 9.844,5.868 1.009,1.513 1.357,3.124 1.042,4.827 -0.316,1.703 -0.855,3.218 -1.611,4.543 -0.756,1.325 -1.924,2.746 -3.502,4.261 -1.577,1.513 -3.188,2.903 -4.829,4.165 -1.64,1.263 -3.534,2.555 -5.678,3.88 -2.146,1.325 -4.07,2.492 -5.773,3.504 -1.703,1.01 -3.472,2.052 -5.3,3.124 -1.831,1.072 -3.314,2.051 -4.451,2.935 -5.049,3.659 -8.929,7.825 -11.642,12.494 -2.715,4.668 -4.103,9.182 -4.165,13.535 C -2.81,-8.426 -1.894,-4.165 0,0"
+                  />
+                </g>
+              </g>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </footer>
+
+    <script src="assets/js/main.js" defer></script>
+    <script src="assets/js/cart-burst.js" defer></script>
+    <script>
+      (function () {
+        var badge = document.getElementById("cartBadge");
+
+        function bumpBadge(qty) {
+          if (!badge) return;
+          var n = parseInt(badge.textContent || "0", 10) || 0;
+          badge.textContent = n + qty;
+          badge.classList.remove("pop");
+          void badge.offsetWidth;
+          badge.classList.add("pop");
+        }
+
+        function isTextCartBtn(btn) {
+          if (btn.classList.contains("sp-cta")) return true;
+          var label = btn.querySelector(".pl-add-label");
+          if (!label) return false;
+          return window.getComputedStyle(label).display !== "none";
+        }
+
+        function resetCartBtn(btn, label, prevText, wasText) {
+          btn.classList.remove("is-loading", "is-added", "is-icon-mode", "is-text-mode");
+          delete btn.dataset.busy;
+          if (wasText) {
+            if (label) label.textContent = prevText;
+            else btn.textContent = prevText;
+          }
+        }
+
+        /* Touch cihazlarda hover yerine kalıcı aksiyon satırı */
+        if (window.matchMedia("(hover: none)").matches) {
+          document.querySelectorAll(".pl-card--pop").forEach(function (el) {
+            el.classList.add("is-touch");
+          });
+        }
+
+        document
+          .querySelectorAll(".pl-add-btn, .vpc-add")
+          .forEach(function (btn) {
+            btn.addEventListener("click", function (e) {
+              e.preventDefault();
+              e.stopPropagation();
+              if (btn.disabled || btn.dataset.busy) return;
+
+              var card = btn.closest(".pl-cta, .vpc-card, .pl-card, .sp-card");
+              var actionRoot = btn.closest(
+                ".sp-m-actions, .sp-hover, .pl-pop-row, .pl-cta-hover"
+              );
+              var sel =
+                (actionRoot &&
+                  actionRoot.querySelector(".pl-qty-select, .vpc-qty")) ||
+                (card && card.querySelector(".pl-qty-select, .vpc-qty"));
+              var qty = sel ? parseInt(sel.value, 10) || 1 : 1;
+
+              var label = btn.querySelector(".pl-add-label");
+              var prevText = label
+                ? label.textContent
+                : btn.textContent.trim();
+              var wasText = isTextCartBtn(btn);
+
+              btn.dataset.busy = "1";
+              btn.classList.add("is-loading");
+
+              if (wasText) {
+                btn.classList.add("is-text-mode");
+                if (label) label.textContent = "Ekleniyor...";
+                else btn.textContent = "Ekleniyor...";
+              } else {
+                btn.classList.add("is-icon-mode");
+              }
+
+              setTimeout(function () {
+                btn.classList.remove("is-loading");
+                btn.classList.add("is-added");
+
+                if (wasText) {
+                  if (label) label.textContent = "Eklendi...";
+                  else btn.textContent = "Eklendi...";
+                }
+
+                bumpBadge(qty);
+                if (window.cartBurstFromBtn) window.cartBurstFromBtn(btn);
+
+                setTimeout(function () {
+                  resetCartBtn(btn, label, prevText, wasText);
+                }, 900);
+              }, 700);
+            });
+          });
+      })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,252 @@
+Claude Code için promptu daha teknik ve yönlendirici yazmak lazım. Amaç "tasarım üret" değil, "önce referansları analiz et, sonra kendi yorumunu oluştur, sonra kodla" olmalı.
+
+---
+
+# CLAUDE CODE PROMPT
+
+Sen ödüllü bir Creative Director, Senior UI Designer ve Frontend Developer'sın.
+
+Görevin sadece bir landing page yapmak değil.
+
+Önce proje klasöründeki tasarım referanslarını analiz et.
+Sonra bu referansları yorumlayarak SNAB'S markasına özel yeni bir konsept oluştur.
+Sonrasında bu konsepti HTML + CSS ile kodla.
+
+## Öncelikli Görev
+
+Proje dizinindeki aşağıdaki dosyaları incele:
+
+### design/header.png
+
+Bu görsel sitenin hero ve üst bölüm için hedeflenen hissi gösteriyor.
+
+Analiz et:
+
+* kompozisyon
+* renk kullanımı
+* tipografi yaklaşımı
+* ürün yerleşimi
+* enerji seviyesi
+* hareket hissi
+
+### design/site.png
+
+Bu görsel sitenin genel tasarım dili için referans.
+
+Analiz et:
+
+* bölüm yapısı
+* görsel yoğunluk
+* boşluk kullanımı
+* kullanıcı akışı
+* marka hissi
+
+Bu iki görseli birebir kopyalama.
+
+Ama bu iki referansın güçlü yönlerini birleştirerek SNAB'S için özgün bir tasarım dili oluştur.
+
+---
+
+# Marka Bilgileri
+
+Marka Adı:
+
+SNAB'S
+
+Slogan:
+
+Gerçek içerik.
+Cesur lezzet.
+Sıfır karmaşa.
+
+---
+
+# Marka Misyonu
+
+SNAB'S modern yaşam temposuna uygun, sade içerikli ve güçlü lezzetli atıştırmalıklar üretir.
+
+İnsanların ne yediğini bilmesini önemser.
+
+Gereksiz vaatlerden uzak durur.
+
+---
+
+# Marka Değerleri
+
+* Sadelik
+* Güven
+* Lezzet
+* Modernlik
+* Keyif
+
+---
+
+# Ürünler
+
+İlk lansman ürünleri:
+
+1. Dondurularak Kurutulmuş Mango
+2. Dondurularak Kurutulmuş Çilek
+3. Dondurularak Kurutulmuş İncir
+4. Çilek + Muz + Ananas Karışımı
+
+---
+
+# Dosyalar
+
+docs klasörü içerisinde:
+
+* marka logosu
+* ürün paket tasarımları
+* ambalaj görselleri
+
+bulunmaktadır.
+
+Bu dosyaları incele.
+
+Ürün renklerini, paket tasarımlarını ve marka dilini anlamaya çalış.
+
+Tasarım kararlarını bu materyallere göre ver.
+
+Renkleri veya görsel dili uydurma.
+
+Mümkün olduğunca ambalajlardan beslen.
+
+---
+
+# Tasarım Stratejisi
+
+Amaç:
+
+Türkiye'deki klasik kuruyemiş sitesi görünümünden tamamen uzaklaşmak.
+
+Aşağıdaki hissiyat oluşmalı:
+
+* modern startup markası
+* global DTC marka
+* premium ama ulaşılabilir
+* enerjik
+* iştah açıcı
+* sosyal medyada paylaşılabilir
+
+Kullanıcı ilk 3 saniyede:
+
+"Bu sıradan bir atıştırmalık markası değil."
+
+demeli.
+
+---
+
+# Tasarım Referansları
+
+İlham al:
+
+* Ohme Foods
+* Micha Asia
+* Graza
+* Oatly
+* Liquid Death
+
+Ancak hiçbirini kopyalama.
+
+---
+
+# Görsel Dil
+
+Kullan:
+
+* dev tipografi
+* katmanlı kompozisyonlar
+* organik şekiller
+* floating meyveler
+* renk patlamaları
+* sticker benzeri detaylar
+* büyük CTA alanları
+
+Kaçın:
+
+* stock photo görünümü
+* klasik ecommerce gridleri
+* kurumsal görünüm
+* sağlık ürünü sitesi hissi
+* WordPress teması hissi
+
+---
+
+# İlk Odak Noktası
+
+Önce aşağıdaki bölümleri mükemmel tasarla:
+
+## Hero
+
+Site açıldığında ekranın tamamını kaplasın.
+
+Ürün paketi merkezde büyük yer alsın.
+
+Paketin etrafında:
+
+* mango parçaları
+* çilekler
+* incir dilimleri
+* meyve patlamaları
+
+bulunsun.
+
+Hero tasarım kalitesi tüm sitenin kalitesini belirleyecek.
+
+Bu bölüme ekstra zaman ayır.
+
+---
+
+## Ürün Vitrini
+
+4 ürünü klasik kartlarla gösterme.
+
+Daha yaratıcı bir çözüm geliştir.
+
+Örneğin:
+
+* yatay hikaye akışı
+* büyük renk blokları
+* slider benzeri deneyim
+* editoryal yerleşim
+
+---
+
+## Marka Hikayesi
+
+Uzun metin yerine güçlü görsel anlatım kullan.
+
+---
+
+# Teknik Beklentiler
+
+İlk aşamada Shopify kodu üretme.
+
+Sadece konsept tasarım oluştur.
+
+Çıktı:
+
+* index.html
+* style.css
+
+Dosyaları temiz ve okunabilir yaz.
+
+Responsive olsun.
+
+Mobil deneyimi masaüstü kadar önemli.
+
+---
+
+# Çalışma Şekli
+
+1. Önce design klasöründeki referansları analiz et.
+2. Sonra docs klasöründeki logo ve ürün ambalajlarını incele.
+3. Ardından kısa bir tasarım yaklaşımı yaz.
+4. Son olarak HTML + CSS kodunu üret.
+
+Referansları incelemeden tasarıma başlama.
+
+Amaç sadece güzel görünmek değil.
+
+Amaç yatırım alabilecek, global ölçekte büyüyebilecek yeni nesil bir snack markası hissi yaratmak. 🚀
