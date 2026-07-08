@@ -3227,7 +3227,8 @@ a.rc-btn {
   .ft-links-row  { padding: 44px var(--layout-inline); }
   .ft-links-inner { flex-direction: column; gap: 36px; }
   .ft-newsletter-box { flex: none; width: 100%; max-width: none; }
-  .ft-nav-cols   { flex-flow: row wrap; gap: clamp(32px, 5vw, 48px); }
+  .ft-nav-cols   { flex-flow: row nowrap; gap: clamp(24px, 4vw, 48px); width: 100%; align-items: flex-start; }
+  .ft-nav-group  { flex: 1 1 0; width: auto; min-width: 0; }
   .ft-divider    { margin: 0 var(--layout-inline); }
   .ft-body       { padding: 20px var(--layout-inline) 28px; }
   .ft-brand-logo { width: clamp(200px, 50vw, 680px); }
@@ -3335,7 +3336,8 @@ a.rc-btn {
   .ft-links-row  { padding: 32px var(--layout-inline); }
   .ft-links-inner { gap: 32px; }
   .ft-newsletter-box { flex: none; width: 100%; max-width: none; padding: 28px 24px; }
-  .ft-nav-cols   { flex-direction: column; gap: 0; width: 100%; }
+  .ft-nav-cols   { flex-direction: column; flex-wrap: nowrap; gap: 0; width: 100%; }
+  .ft-nav-group  { flex: none; width: 100%; }
 
   /* Show chevron, make button interactive */
   .ft-chevron    { display: block; }

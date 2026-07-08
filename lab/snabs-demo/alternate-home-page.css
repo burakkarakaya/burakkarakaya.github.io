@@ -11,16 +11,13 @@
   overflow: hidden;
   background: #fff5e9;
   outline: none;
+  --hb-header-clear: clamp(64px, 11vw, 80px);
+  margin-top: var(--hb-header-clear);
 }
 
 @media (min-width: 769px) {
   .hero-banner {
     --hb-header-clear: clamp(88px, 10vh, 116px);
-    padding-top: var(--hb-header-clear);
-  }
-
-  .hero-banner .hb-slide {
-    top: var(--hb-header-clear);
   }
 }
 
@@ -82,12 +79,6 @@
 .hero-banner .pdp-gallery-nav:hover {
   opacity: 0.85;
   transform: translateY(calc(-50% - 2px));
-}
-
-@media (min-width: 769px) {
-  .hero-banner .pdp-gallery-nav {
-    top: calc(var(--hb-header-clear) + (100% - var(--hb-header-clear)) * 0.5);
-  }
 }
 
 .hero-banner .pdp-gallery-nav svg {
